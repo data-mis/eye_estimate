@@ -35,9 +35,17 @@ const ContentStudent = (prop) => {
     setDataStudent(await FetchController.fetchStudent(year, usertoken));
   };
 
-  const imgCanvasPreview = () => {
+  const imgCanvasPreview = (e) => {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+
     let canvas = document.getElementById("canvasPreview");
     let ctx = canvas.getContext("2d");
+    let url = reader.readAsDataURL(file);
+
+    console.log("img", file);
+    console.log("reader", reader);
+    console.log("url", url);
   };
 
   const modalContent = () => {
@@ -94,7 +102,16 @@ const ContentStudent = (prop) => {
             <img src={picURL}></img>
           </div>
           <div className="input-picture">
-            <input className="input-picture-file" type="file" ref={inputPic}></input>
+            <input
+              className="input-picture-file"
+              type="file"
+              ref={inputPic}
+              multiple={true}
+              onChange={(e) => {
+                console.log(e);
+                imgCanvasPreview(e);
+              }}
+            ></input>
             <button type="button" className="btn-add-filePicture">
               UPLOAD
             </button>
