@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FetchController, { handleFatch } from "../data/fetchConroller";
 import { searching } from "../config/searchConfig";
 import ModalBox from "../modal/modalBox";
@@ -14,6 +14,9 @@ const ContentStudent = (prop) => {
   const [osce, setOsce] = useState();
   const [meq, setMeq] = useState();
   const [book, setBook] = useState();
+
+  const [picURL, setPicURL] = useState();
+  const inputPic = useRef(null);
 
   const cookie = new Cookies();
   const usertoken = cookie.get("token");
@@ -32,9 +35,10 @@ const ContentStudent = (prop) => {
     setDataStudent(await FetchController.fetchStudent(year, usertoken));
   };
 
-  const imgCanvasPreview = ()=>{
-      
-  }
+  const imgCanvasPreview = () => {
+    let canvas = document.getElementById("canvasPreview");
+    let ctx = canvas.getContext("2d");
+  };
 
   const modalContent = () => {
     return (
@@ -87,9 +91,10 @@ const ContentStudent = (prop) => {
         <div className="form-picture">
           <div className="preview-picture">
             <canvas className="canvas-perview" id="canvasPreview"></canvas>
+            <img src={picURL}></img>
           </div>
           <div className="input-picture">
-            <input className="input-picture-file" type="file"></input>
+            <input className="input-picture-file" type="file" ref={inputPic}></input>
             <button type="button" className="btn-add-filePicture">
               UPLOAD
             </button>
