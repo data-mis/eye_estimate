@@ -1,0 +1,666 @@
+@import url("https://fonts.googleapis.com/css2?family=KoHo:wght@300&display=swap");
+* {
+  margin: 0;
+  box-sizing: border-box;
+  color: #424242;
+  font-family: "KoHo", sans-serif;
+}
+
+html .content-Login-admin-estimate, body .content-Login-admin-estimate {
+  margin: 0;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+html .box-info-login, body .box-info-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+}
+html .header-title-login, body .header-title-login {
+  text-align: center;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .box-form-login, body .box-form-login {
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+}
+html .form-login-boxContent, body .form-login-boxContent {
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+html .box-info-formLogin, body .box-info-formLogin {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .box-info-formLogin span, body .box-info-formLogin span {
+  padding-right: 20px;
+}
+html .box-info-formLogin input, body .box-info-formLogin input {
+  width: 50%;
+  height: 25px;
+  border: 1px solid #424242;
+  border-radius: 5px;
+  font-size: 20px;
+}
+html .btn-submit, body .btn-submit {
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid #424242;
+}
+html .btn-submit:hover, body .btn-submit:hover {
+  background-color: #424242;
+  color: #fefefe;
+}
+html .inputPassword, body .inputPassword {
+  width: 50%;
+  height: auto;
+  position: relative;
+}
+html .inputPassword input, body .inputPassword input {
+  width: 100%;
+  height: 25px;
+  border: 1px solid #424242;
+  border-radius: 5px;
+}
+html .btn-eye-password, html .btn-eye-text, body .btn-eye-password, body .btn-eye-text {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  width: 7%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1px;
+  border: none;
+  display: flex;
+}
+html .btn-eye-text, body .btn-eye-text {
+  display: none;
+}
+html .body-content-navigatepage, body .body-content-navigatepage {
+  margin: 0;
+  height: 100vh;
+  width: 100%;
+}
+html .box-content-navigatepage, body .box-content-navigatepage {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+html .header-navigatepage, body .header-navigatepage {
+  height: 5vh;
+  width: 100%;
+  background-color: #607d8b;
+  position: absolute;
+  top: 0;
+  border-bottom: 2px solid #546e7a;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+html .header-navigatepage-col-1, body .header-navigatepage-col-1 {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background-color: #607d8b;
+}
+html .header-navigatepage-col-2, body .header-navigatepage-col-2 {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 0 10px;
+  background-color: #607d8b;
+}
+html .header-navigatepage span, body .header-navigatepage span {
+  background-color: #607d8b;
+  color: #fefefe;
+  font-size: 22px;
+}
+html .btn-header-menuBar, body .btn-header-menuBar {
+  border: none;
+  width: auto;
+  background-color: #607d8b;
+  display: none;
+  width: 30%;
+  border: 2px solid red;
+}
+html .bi-x, body .bi-x {
+  display: none;
+}
+html .btn-header-menuBar i, body .btn-header-menuBar i {
+  background: none;
+  color: #cfd8dc;
+}
+html .menu-navigatepage, body .menu-navigatepage {
+  height: 95vh;
+  width: 10%;
+  background-color: #607d8b;
+  color: #fefefe;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: 5vh;
+  border-right: 2px solid #546e7a;
+}
+html .btn-menu-navigatepage, body .btn-menu-navigatepage {
+  margin: 10px auto;
+  width: 90%;
+  height: 5%;
+  border-bottom: 3px solid #e0e0e0;
+}
+html .btn-menu-navigatepage button, body .btn-menu-navigatepage button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 18px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background-color: #607d8b;
+  color: #fefefe;
+}
+html .btn-menu-navigatepage button:hover, body .btn-menu-navigatepage button:hover {
+  border: 5px solid #546e7a;
+  background-color: #37474f;
+  color: #b0bec5;
+}
+html .show-content-box, body .show-content-box {
+  height: 95vh;
+  width: 90%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+@media only screen and (max-width: 1024px) {
+  html .menu-navigatepage, body .menu-navigatepage {
+    width: 15%;
+  }
+  html .show-content-box, body .show-content-box {
+    width: 85%;
+  }
+  html .header-navigatepage span, body .header-navigatepage span {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 720px) {
+  html .menu-navigatepage, body .menu-navigatepage {
+    display: none;
+  }
+  html .show-content-box, body .show-content-box {
+    width: 100%;
+    height: 94%;
+    border: 1px solid red;
+  }
+  html .header-navigatepage, body .header-navigatepage {
+    height: 5%;
+  }
+  html .header-navigatepage span, body .header-navigatepage span {
+    font-size: 12px;
+  }
+  html .btn-header-menuBar, body .btn-header-menuBar {
+    display: block;
+  }
+}
+html .body-content-ctStudent, body .body-content-ctStudent {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: block;
+  position: relative;
+}
+html .header-show-contentStudent, body .header-show-contentStudent {
+  height: 30px;
+  width: 95%;
+  margin: auto;
+  position: relative;
+  top: 10px;
+  left: 0;
+  align-items: center;
+  background-color: #e0e0e0;
+}
+html .text-header, body .text-header {
+  width: 5%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  background-color: #e0e0e0;
+  padding: 0 10px;
+  font-weight: bold;
+}
+html .menu-search, body .menu-search {
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  display: grid;
+  grid-template-columns: 50% 50%;
+  background-color: #e0e0e0;
+}
+html .box-menu-1, body .box-menu-1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+html .box-menu-1 span, body .box-menu-1 span {
+  align-self: center;
+  padding-right: 10px;
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+html .box-menu-1 input, body .box-menu-1 input {
+  height: 100%;
+  width: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+html .relative-btnBox, body .relative-btnBox {
+  position: relative;
+}
+html .up-btn, body .up-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 50%;
+  width: 25px;
+  font-size: 8px;
+  font-weight: bold;
+}
+html .down-btn, body .down-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 50%;
+  width: 25px;
+  font-size: 8px;
+  font-weight: bold;
+}
+html .box-menu-2, body .box-menu-2 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0e0e0;
+}
+html .box-menu-2 span, body .box-menu-2 span {
+  padding-right: 10px;
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+html .box-menu-2 input, body .box-menu-2 input {
+  height: 100%;
+  width: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 5px;
+}
+html .box-menu-2 button, body .box-menu-2 button {
+  height: 100%;
+  width: 35px;
+}
+html .menu-close, body .menu-close {
+  width: 5%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  background-color: #e0e0e0;
+}
+html .menu-close button, body .menu-close button {
+  width: 70%;
+  height: 100%;
+  font-weight: bold;
+}
+html .info-show-contentStudent, body .info-show-contentStudent {
+  width: 85%;
+  height: 60%;
+  margin: auto;
+  position: absolute;
+  top: 12%;
+  left: 5%;
+  scroll-snap-type: mandatory x;
+  overflow-x: auto;
+  background-color: #cfd8dc;
+}
+html .table-show-infoStudent, body .table-show-infoStudent {
+  border-collapse: collapse;
+  width: 1450px;
+  background-color: #fefefe;
+  text-align: center;
+  font-weight: bold;
+}
+html .table-show-infoStudent thead, body .table-show-infoStudent thead {
+  text-align: center;
+}
+html .table-show-infoStudent th, body .table-show-infoStudent th {
+  border: 2px solid black;
+  background-color: #607d8b;
+  color: #fefefe;
+  text-align: center;
+}
+html .table-show-infoStudent td, body .table-show-infoStudent td {
+  border: 2px solid black;
+}
+html .table-show-infoStudent > tbody > tr:hover td, body .table-show-infoStudent > tbody > tr:hover td {
+  background-color: #ddd;
+}
+html .menu-content-ctStudent, body .menu-content-ctStudent {
+  border: 1px solid red;
+  height: 80%;
+  width: 6%;
+  position: absolute;
+  top: 12%;
+  right: 2%;
+  background-color: #eeeeee;
+}
+html .menu-content-ctStudent .btn-add-contentStudent, html .menu-content-ctStudent .btn-del-contentStudent, body .menu-content-ctStudent .btn-add-contentStudent, body .menu-content-ctStudent .btn-del-contentStudent {
+  display: flex;
+  justify-content: center;
+  margin: 5px auto;
+}
+html .btnAddStudent, html .btnDelStudent, body .btnAddStudent, body .btnDelStudent {
+  width: 80%;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #607d8b;
+  color: #fefefe;
+  border: none;
+}
+html .btnAddStudent:active, html .btnDelStudent:active, body .btnAddStudent:active, body .btnDelStudent:active {
+  border: 5px solid #546e7a;
+  background-color: #37474f;
+}
+html .footer-show-contentStudent, body .footer-show-contentStudent {
+  width: 85%;
+  height: auto;
+  max-height: 25%;
+  margin: auto;
+  position: absolute;
+  top: 75%;
+  left: 5%;
+  background-color: #e0e0e0;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  font-size: 20px;
+}
+html .footer-col, body .footer-col {
+  background: none;
+}
+html .box-incol, html .box-text-incol, body .box-incol, body .box-text-incol {
+  width: 100%;
+  height: 50%;
+  margin: auto;
+  background: none;
+  text-align: center;
+  position: relative;
+  padding-top: 5px;
+}
+html .box-text-incol, body .box-text-incol {
+  width: 100%;
+  height: 100%;
+}
+html .textheader, html .textbottom, body .textheader, body .textbottom {
+  background: none;
+  font-weight: bold;
+}
+html .textbottom, body .textbottom {
+  font-weight: lighter;
+  color: #0d5302;
+}
+html .input-incol, body .input-incol {
+  width: 40px;
+  height: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+}
+html .input-incol::-webkit-outer-spin-button, html .input-incol::-webkit-inner-spin-button, body .input-incol::-webkit-outer-spin-button, body .input-incol::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+html .btn-save-footer, body .btn-save-footer {
+  height: 80%;
+  width: 60%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+}
+@media only screen and (max-width: 1024px) {
+  html .info-show-contentStudent, html .footer-show-contentStudent, body .info-show-contentStudent, body .footer-show-contentStudent {
+    left: 5%;
+    width: 80%;
+  }
+  html .menu-content-ctStudent, body .menu-content-ctStudent {
+    width: 10%;
+  }
+  html .text-header, html .menu-close, body .text-header, body .menu-close {
+    width: 10%;
+    font-size: 12px;
+    padding: 0;
+  }
+  html .menu-close button, body .menu-close button {
+    width: 100%;
+  }
+  html .footer-show-contentStudent, body .footer-show-contentStudent {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 720px) {
+  html .box-menu-1 input, body .box-menu-1 input {
+    font-size: 14px;
+    text-align: start;
+  }
+  html .footer-show-contentStudent, body .footer-show-contentStudent {
+    font-size: 11px;
+  }
+  html .btn-save-footer, body .btn-save-footer {
+    width: 80%;
+    height: 80%;
+    font-size: 13px;
+    text-align: center;
+  }
+  html .btnAddStudent, html .btnDelStudent, body .btnAddStudent, body .btnDelStudent {
+    width: 80%;
+    height: 50px;
+    font-size: 8px;
+    font-weight: bold;
+  }
+}
+html .modal-slideBar-body, body .modal-slideBar-body {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-top: 27px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: none;
+}
+html .modal-slideBar-content, body .modal-slideBar-content {
+  display: block;
+  margin-right: 10px;
+  height: 50%;
+  width: 13.5%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: height 0.75s;
+}
+@media only screen and (max-width: 720px) {
+  @keyframes openSlideBar {
+    from {
+      height: 0;
+    }
+    to {
+      height: 55%;
+    }
+  }
+  @keyframes closeSlideBar {
+    from {
+      height: 55%;
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+@media only screen and (max-width: 360px) {
+  @keyframes openSlideBar {
+    from {
+      height: 0;
+    }
+    to {
+      height: 32%;
+    }
+  }
+  @keyframes closeSlideBar {
+    from {
+      height: 32%;
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+html .modalSlideBar-content-menu, body .modalSlideBar-content-menu {
+  height: 94%;
+  width: 100%;
+  background-color: #607d8b;
+  border: 3px solid #546e7a;
+}
+html .modalSlideBar-content-menu button, body .modalSlideBar-content-menu button {
+  width: 100%;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #424242;
+  margin: 5px 0;
+  font-size: 20px;
+  border-bottom: 3px solid #424242;
+  border-color: #424242;
+  visibility: hidden;
+}
+html .modal-box, body .modal-box {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+html .modal-box-body, body .modal-box-body {
+  width: 50%;
+  height: 50%;
+  margin: auto;
+  background-color: #eeeeee;
+  border-radius: 10px;
+}
+html .header-nav-modalBox, body .header-nav-modalBox {
+  height: auto;
+  width: 100%;
+  background-color: #006064;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+html .header-col, body .header-col {
+  text-align: center;
+}
+html .btn-modalbox-close, body .btn-modalbox-close {
+  width: auto;
+  height: auto;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  background: none;
+}
+html .btn-modalbox-close i, body .btn-modalbox-close i {
+  color: #fefefe;
+}
+@media only screen and (max-width: 720px) {
+  html .modal-box-body, body .modal-box-body {
+    width: 100%;
+    height: auto;
+  }
+}
+html .body-content-modalStudent, body .body-content-modalStudent {
+  border: 2px solid red;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+html .form-modalContent, body .form-modalContent {
+  border: 3px solid green;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  font-weight: bold;
+}
+html .input-modalBox, body .input-modalBox {
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+html .input-modalBox span, body .input-modalBox span {
+  padding-left: 15px;
+}
+html .form-picture, body .form-picture {
+  border: 2px solid yellow;
+}
+html .form-picture .preview-picture, body .form-picture .preview-picture {
+  border: 1px solid rebeccapurple;
+}
+html .canvas-perview, body .canvas-perview {
+  border: 3px solid black;
+  width: 100%;
+  height: 180px;
+}
+html .input-picture, body .input-picture {
+  border: 5px solid orange;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 10px 5px;
+}
+html .input-picture-file, body .input-picture-file {
+  border: 1px solid black;
+  width: 100%;
+}
+html .btn-add-filePicture, body .btn-add-filePicture {
+  display: block;
+  margin: 10px auto;
+}
+
+/*# sourceMappingURL=App.css.map */

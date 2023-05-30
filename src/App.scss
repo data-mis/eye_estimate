@@ -1,0 +1,696 @@
+
+@import url('https://fonts.googleapis.com/css2?family=KoHo:wght@300&display=swap');
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    color: #424242;
+    font-family: 'KoHo', sans-serif;
+}
+
+$colorBTNhover:#546e7a;
+$colorBTNbghover: #37474f;
+$colorBGmenu : #607d8b;
+
+@mixin bodyContentDefault(){
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+}
+@mixin boxAbsoluteMiddle(){
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+@mixin LoginPage(){
+    .content-Login-admin-estimate{
+        @include bodyContentDefault();
+        position: relative;
+    }
+    .box-info-login{
+        @include boxAbsoluteMiddle();
+        width: 50%;
+    }
+    .header-title-login{
+        text-align: center;
+        height: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .box-form-login{
+        height: 80%;
+        justify-content: center;
+        align-items: center;
+    }
+    .form-login-boxContent{
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+        .box-info-formLogin{
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+            .box-info-formLogin span{
+                padding-right: 20px;
+            }
+            .box-info-formLogin input{
+                width: 50%;
+                height: 25px;
+                border: 1px solid #424242;
+                border-radius: 5px;
+                font-size: 20px;
+            }
+            .btn-submit{
+                width: 150px;
+                height: 50px;
+                border-radius: 10px;
+                border: 1px solid #424242;
+            }
+            .btn-submit:hover{
+                background-color: #424242;
+                color: #fefefe;
+            }
+        .inputPassword{
+            width: 50%;
+            height: auto;
+            position: relative;
+        }
+            .inputPassword input{
+                width: 100%;
+                height: 25px;
+                border: 1px solid #424242;
+                border-radius: 5px;
+            }
+            .btn-eye-password,.btn-eye-text{
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translate(0,-50%);
+                width: 7%;
+                height: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 1px;
+                border: none;
+                display: flex;
+            }
+            .btn-eye-text{
+                display: none;
+            }
+            
+}
+
+@mixin MainPage(){
+    .body-content-navigatepage{
+        @include bodyContentDefault();
+    }
+    .box-content-navigatepage{
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+    .header-navigatepage{
+        height: 5vh;
+        width: 100%;
+        background-color: $colorBGmenu;
+        position: absolute;
+        top: 0;
+        border-bottom: 2px solid #546e7a;
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+        .header-navigatepage-col-1{
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            background-color: $colorBGmenu;
+        }
+        .header-navigatepage-col-2{
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding: 0 10px;
+            background-color: $colorBGmenu;
+        }
+            .header-navigatepage span{
+                background-color: $colorBGmenu;
+                color: #fefefe;
+                font-size: 22px;
+            }
+            .btn-header-menuBar{
+                border: none;
+                width: auto;
+                background-color: $colorBGmenu;
+                display: none;
+                width: 30%;
+                border: 2px solid red;
+            }
+                .bi-x{
+                    display: none;
+                }
+                
+                .btn-header-menuBar i{
+                    background: none;
+                    color: #cfd8dc;
+                }
+    .menu-navigatepage{
+        height: 95vh;
+        width: 10%;
+        background-color: $colorBGmenu;
+        color: #fefefe;
+        margin: 0;
+        position: absolute;
+        left: 0;
+        top: 5vh;
+        border-right: 2px solid #546e7a;
+    }
+        .btn-menu-navigatepage{
+            margin: 10px auto;
+            width: 90%;
+            height: 5%;
+            border-bottom: 3px solid #e0e0e0;
+        }
+            .btn-menu-navigatepage button{
+                width: 100%;
+                height: 100%;
+                border: none;
+                font-size: 18px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                background-color: $colorBGmenu;
+                color: #fefefe;
+            }
+            .btn-menu-navigatepage button:hover{
+                border: 5px solid #546e7a;
+                background-color: #37474f;
+                color: #b0bec5;
+            }
+    .show-content-box{
+        height: 95vh;
+        width: 90%;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+@media only screen and (max-width:1024px) {
+    .menu-navigatepage{
+        width: 15%;
+    }
+    .show-content-box{
+        width: 85%;
+    }
+    .header-navigatepage span{
+        font-size: 18px;
+    }
+}
+@media only screen and (max-width:720px) {
+    .menu-navigatepage{
+        display: none;
+    }
+    .show-content-box{
+        width: 100%;
+        height: 94%;
+        border: 1px solid red;
+    }
+    .header-navigatepage{
+        height: 5%;
+    }
+    .header-navigatepage span{
+        font-size: 12px;
+    }
+    .btn-header-menuBar{
+        display: block;
+    }
+}
+}
+
+@mixin ContentStudent(){
+    .body-content-ctStudent{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        display: block;
+        position: relative;
+    }
+    .header-show-contentStudent{
+        height: 30px;
+        width: 95%;
+        margin: auto;
+        position: relative;
+        top: 10px;
+        left: 0;
+        align-items: center;
+        background-color: #e0e0e0;
+
+    }
+        .text-header{
+            width: 5%;
+            height: 100%;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            position: absolute;
+            left: 0;
+            background-color: #e0e0e0;
+            padding: 0 10px;
+            font-weight: bold;
+        }
+        .menu-search{
+            width:80%;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            display: grid;
+            grid-template-columns: 50% 50%;
+            background-color: #e0e0e0;
+
+        }
+        
+            .box-menu-1{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                background-color: #e0e0e0;
+            }
+                .box-menu-1 span{
+                    align-self: center;
+                    padding-right: 10px;
+                    background-color: #e0e0e0;
+                    font-weight: bold;
+                }
+                .box-menu-1 input{
+                    height: 100%;
+                    width: 50%;
+                    font-size: 18px;
+                    font-weight: bold;  
+                    text-align: center;
+                }
+                .relative-btnBox{
+                    position: relative;
+                }
+                    .up-btn{
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        height: 50%;
+                        width: 25px;
+                        font-size: 8px;
+                        font-weight: bold;
+                    }
+                    .down-btn{
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        height: 50%;
+                        width: 25px;
+                        font-size: 8px;
+                        font-weight: bold;
+                    }
+                
+            .box-menu-2{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #e0e0e0;
+            }
+                .box-menu-2 span{
+                    padding-right: 10px;
+                    background-color: #e0e0e0;
+                    font-weight: bold;
+                }
+                .box-menu-2 input{
+                    height: 100%;
+                    width: 50%;
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding-left: 5px;
+                }
+                .box-menu-2 button{
+                    height: 100%;
+                    width: 35px;
+                }
+        .menu-close{
+            width: 5%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            background-color: #e0e0e0;
+        }
+            .menu-close button{
+                width: 70%;
+                height: 100%;
+                font-weight: bold;
+            }
+    .info-show-contentStudent{
+        width: 85%;
+        height: 60%;
+        margin: auto;
+        position: absolute;
+        top: 12%;
+        left: 5%;
+        scroll-snap-type: mandatory x;
+        overflow-x: auto;
+        background-color: #cfd8dc;
+    }
+.table-show-infoStudent{
+    border-collapse: collapse;
+    width: 1450px;
+    background-color: #fefefe;
+    text-align: center;
+    font-weight: bold;
+}
+   .table-show-infoStudent{
+        thead{
+            // border: 5px solid red;
+            text-align: center;
+        }
+            th{
+                border: 2px solid black;
+                background-color: #607d8b;
+                color: #fefefe;
+                text-align: center;
+            }      
+            td{
+                border:  2px solid black;
+            }
+   }
+   .table-show-infoStudent>tbody>tr:hover td{
+        background-color: #ddd;
+   }
+
+    .menu-content-ctStudent{
+        border: 1px solid red;
+        height: 80%;
+        width: 6%;
+        position: absolute;
+        top: 12%;
+        right: 2%;
+        background-color: #eeeeee;
+        .btn-add-contentStudent,.btn-del-contentStudent{
+            display: flex;
+            justify-content: center;
+            margin: 5px auto;
+        }
+    }
+        .btnAddStudent,.btnDelStudent{
+            width: 80%;
+            height: 50px;
+            font-size: 15px;
+            font-weight: bold;
+            background-color: $colorBGmenu;
+            color: #fefefe;
+            border: none;
+        }
+            .btnAddStudent:active,.btnDelStudent:active{
+                border: 5px solid $colorBTNhover;
+                background-color: $colorBTNbghover;
+            }
+    .footer-show-contentStudent{
+        width: 85%;
+        height: auto;
+        max-height: 25%;
+        margin: auto;
+        position: absolute;
+        top: 75%;
+        left: 5%;
+        background-color: #e0e0e0;
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20% 20%;
+        font-size: 20px;
+    }
+        .footer-col{
+            background: none;
+        }
+        .box-incol,.box-text-incol{
+            width: 100%;
+            height: 50%;
+            margin: auto;
+            background: none;
+            text-align: center;
+            position: relative;
+            padding-top: 5px;
+        }   
+            .box-text-incol{
+                width: 100%;
+                height: 100%;
+            }
+        .textheader,.textbottom{
+            background: none;
+            font-weight: bold;
+        }
+        .textbottom{
+            font-weight: lighter;
+            color: #0d5302;
+        }
+        .input-incol{
+            width: 40px;
+            height: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+        }
+        .input-incol::-webkit-outer-spin-button,.input-incol::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+        }
+        .btn-save-footer{
+            height: 80%;
+            width: 60%;
+            position: absolute;
+            top: 50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            font-size: 18px;
+            font-weight: bold;
+        }
+            
+@media only screen and (max-width:1024px) {
+    .info-show-contentStudent,.footer-show-contentStudent{
+        left: 5%;
+        width: 80%;
+    }
+    .menu-content-ctStudent{
+        width: 10%;
+    }
+    .text-header,.menu-close{
+        width: 10%;
+        font-size: 12px;
+        padding: 0;
+    }
+    .menu-close button{
+        width: 100%;
+    }
+    .footer-show-contentStudent{
+        font-size: 13px;
+    }
+}
+@media only screen and (max-width:720px){
+    .box-menu-1 input{
+        font-size: 14px;
+        text-align: start;
+    }
+    .footer-show-contentStudent{
+        font-size: 11px;
+    }
+    .btn-save-footer{
+        width: 80%;
+        height: 80%;
+        font-size: 13px;
+        text-align: center;
+    }
+        .btnAddStudent,.btnDelStudent{
+            width: 80%;
+            height: 50px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+}
+}
+
+@mixin ModalSlideBar(){
+    .modal-slideBar-body{
+        display: none;  
+        position: fixed;  
+        z-index: 1;  
+        left: 0;
+        top: 0;
+        margin-top: 27px;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background: none;
+    }
+    .modal-slideBar-content{
+        display: block;
+        margin-right: 10px;
+        height:50%;
+        width: 13.5%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transition: height 0.75s;
+        // animation: openSlideBar 0.75s normal;
+    }
+@media only screen and (max-width:720px){
+    @keyframes openSlideBar {
+        from{height: 0;}to{height: 55%;}
+    }
+    @keyframes closeSlideBar {
+        from{height:55%}to{height: 0;}
+    }
+}   
+@media only screen and (max-width:360px){
+    @keyframes openSlideBar {
+        from{height: 0;}to{height: 32%;}
+    }
+    @keyframes closeSlideBar {
+        from{height:32%}to{height: 0;}
+    }
+}   
+
+   
+    .modalSlideBar-content-menu{
+        height:  94%;
+        width: 100%;
+        background-color: $colorBGmenu;
+        border: 3px solid #546e7a;
+    }
+        .modalSlideBar-content-menu button{
+            width: 100%;
+            height: 25px;  
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #424242;
+            margin: 5px 0;
+            font-size: 20px;
+            border-bottom: 3px solid #424242;
+            border-color: #424242;
+            visibility: hidden;
+        }
+
+}
+
+@mixin ModalBox(){
+    .modal-box{
+        display: none;  
+        position: fixed;  
+        z-index: 1;  
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0);  
+        background-color: rgba(0,0,0,0.4); 
+    }
+    .modal-box-body{
+        width: 50%;
+        height:50%;
+        margin: auto;
+        background-color: #eeeeee;
+        border-radius: 10px;
+    }
+    .header-nav-modalBox{
+        height: auto;
+        width: 100%;
+        background-color: #006064;
+        display: grid;
+        grid-template-columns: 90% 10%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+        .header-col{
+            text-align: center;
+        }
+        .btn-modalbox-close{
+            width: auto;
+            height: auto;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            background: none;
+        }
+            .btn-modalbox-close i{
+                color: #fefefe;
+            }
+@media only screen and (max-width:720px) {
+    .modal-box-body{
+        width: 100%;
+        height: auto;
+    }
+}
+//ContentModalStudentadd
+.body-content-modalStudent{
+    border: 2px solid red;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+.form-modalContent{
+    border: 3px solid green;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    font-weight: bold;
+}
+    .input-modalBox{
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+    .input-modalBox span{
+        padding-left: 15px;
+    }
+.form-picture{
+    border: 2px solid yellow;
+    .preview-picture{
+        border: 1px solid rebeccapurple;
+    }
+}
+    .canvas-perview{
+        border: 3px solid black;
+        width: 100%;
+        height: 180px;
+    }
+    .input-picture{
+        border: 5px solid orange;
+        align-items: center;
+        width: 100%;
+        height: 80px;
+        padding: 10px 5px;
+    }
+        .input-picture-file{
+            border: 1px solid black;
+            width: 100%;
+        }
+        .btn-add-filePicture{
+            display: block;
+            margin: 10px auto;
+        }
+}
+
+html,body{
+    @include LoginPage();
+    @include MainPage();
+    @include ContentStudent();
+
+    // modal
+    @include ModalSlideBar();
+    @include ModalBox();
+}
