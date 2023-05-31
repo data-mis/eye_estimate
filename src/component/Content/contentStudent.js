@@ -7,6 +7,9 @@ import Cookies from "universal-cookie";
 
 const ContentStudent = (prop) => {
   const [year, setYear] = useState(parseInt(new Date().getFullYear()) + 543);
+  const [yearModal, setYearModal] = useState(
+    parseInt(new Date().getFullYear()) + 543
+  );
   const [searchtext, setSearchtext] = useState();
   const [dataStudent, setDataStudent] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
@@ -17,11 +20,19 @@ const ContentStudent = (prop) => {
 
   const [picURL, setPicURL] = useState();
   const inputPic = useRef(null);
+  const [btnTtl, setBtnTtl] = useState(false);
+  const [mdinputTtl, setMdinputTtl] = useState("");
+  const [mdinputType, setMdinputType] = useState("");
 
   const cookie = new Cookies();
   const usertoken = cookie.get("token");
 
+  const getID = (id) => {
+    return document.getElementById(id);
+  };
+
   const handleYearselect = (status) => {
+    //เช็คค่าเพิ่มค่าปี ค่าปีโชว์ข้อมูล นศพ.
     if (status) {
       let ayear = parseInt(year) + 1;
       setYear(ayear);
@@ -35,59 +46,227 @@ const ContentStudent = (prop) => {
     setDataStudent(await FetchController.fetchStudent(year, usertoken));
   };
 
-  const imgCanvasPreview = (e) => {
+  const imgPreview = (e) => {
+    //แสดงภาพที่เลือกใน input boxModal
     let file = e.target.files[0];
-    let reader = new FileReader();
 
-    let canvas = document.getElementById("canvasPreview");
-    let ctx = canvas.getContext("2d");
-    let url = reader.readAsDataURL(file);
+    let tryURI = URL.createObjectURL(file);
 
-    console.log("img", file);
-    console.log("reader", reader);
-    console.log("url", url);
+    console.log("tryURI", tryURI);
+    setPicURL(tryURI);
   };
 
   const modalContent = () => {
+    //ข้อมูลที่จะแสงใน boxModal
     return (
-      <div className="body-content-modalStudent">
+      <div
+        className="body-content-modalStudent"
+        onClick={() => {
+          if (btnTtl) {
+            getID("dropDowninputBoxTll").style.display = "none";
+            getID("dropDowninputBoxType").style.display = "none";
+            getID("divBoxTtlDrop").style.position = "static";
+            getID("divBoxTypeDrop").style.position = "static";
+            setBtnTtl(false);
+          }
+        }}
+      >
         <form className="form-modalContent">
+          {/* ปี */}
           <div className="input-modalBox">
             <span>{"ปี"}</span>
-            <input className="Modalinput-year" type="number"></input>
+            <div className="inputButtonUpdown">
+              <input
+                className="Modalinput-year"
+                type="number"
+                value={yearModal}
+                onChange={(e) => {
+                  if (e.target.value !== "") {
+                    setYearModal(e.target.value);
+                  }
+                }}
+              ></input>
+              <button
+                className="btn-up-input"
+                type="button"
+                onClick={() => {
+                  let ayear = parseInt(yearModal);
+                  setYearModal(ayear + 1);
+                }}
+              >
+                <i className="bi-caret-up"></i>
+              </button>
+              <button
+                className="btn-down-input"
+                type="button"
+                onClick={() => {
+                  let ayear = parseInt(yearModal);
+                  setYearModal(ayear - 1);
+                }}
+              >
+                <i className="bi-caret-down"></i>
+              </button>
+            </div>
           </div>
+          {/* คำนำหน้า */}
           <div className="input-modalBox">
             <span>{"คำนำหน้า"}</span>
-            <input className="Modalinput-ttl" type="text"></input>
+            <div className="inputButtonDrop" id="divBoxTtlDrop">
+              <input
+                className="Modalinput-ttl"
+                type="text"
+                value={mdinputTtl}
+                onChange={(e) => {
+                  if (e.target.value !== "") {
+                    setMdinputTtl(e.target.value);
+                  }
+                }}
+              ></input>
+              <button
+                className="btn-dropdown-input"
+                type="button"
+                onClick={() => {
+                  if (!btnTtl) {
+                    getID("divBoxTtlDrop").style.position = "relative";
+                    getID("dropDowninputBoxTll").style.display = "block";
+                    setBtnTtl(true);
+                  } else {
+                    getID("divBoxTtlDrop").style.position = "static";
+                    getID("divBoxTypeDrop").style.position = "static";
+                    getID("dropDowninputBoxTll").style.display = "none";
+                    setBtnTtl(false);
+                  }
+                }}
+              >
+                <i className="bi-caret-down"></i>
+              </button>
+              <div className="box-dropDown" id="dropDowninputBoxTll">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMdinputTtl("นาย");
+                  }}
+                >
+                  {"นาย"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMdinputTtl("นางสาว");
+                  }}
+                >
+                  {"นางสาว"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMdinputTtl("นพ.");
+                  }}
+                >
+                  {"นพ."}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMdinputTtl("พญ.");
+                  }}
+                >
+                  {"พญ."}
+                </button>
+              </div>
+            </div>
           </div>
+          {/* ชื่อ */}
           <div className="input-modalBox">
             <span>{"ชื่อ"}</span>
             <input className="Modalinput-name" type="text"></input>
           </div>
+          {/* นามสกุล */}
           <div className="input-modalBox">
             <span>{"นามสกุล"}</span>
             <input className="Modalinput-lname" type="text"></input>
           </div>
+          {/* ประเภท */}
           <div className="input-modalBox">
             <span>{"ประเภท"}</span>
-            <input className="Modalinput-type" type="text"></input>
+            <div className="inputButtonDrop" id="divBoxTypeDrop">
+              <input
+                className="Modalinput-type"
+                type="text"
+                value={mdinputType}
+                onChange={(e) => {
+                  if (e.target.value !== "") {
+                    setMdinputType(e.target.value);
+                  }
+                }}
+              ></input>
+              <button
+                className="btn-dropdown-input"
+                type="button"
+                onClick={() => {
+                  if (!btnTtl) {
+                    getID("divBoxTypeDrop").style.position = "relative";
+                    getID("dropDowninputBoxType").style.display = "block";
+                    setBtnTtl(true);
+                  } else {
+                    getID("divBoxTtlDrop").style.position = "static";
+                    getID("divBoxTypeDrop").style.position = "static";
+                    getID("dropDowninputBoxType").style.display = "none";
+                    setBtnTtl(false);
+                  }
+                }}
+              >
+                <i className="bi-caret-down"></i>
+              </button>
+              <div className="box-dropDown" id="dropDowninputBoxType">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMdinputType("นศพ.");
+                  }}
+                >
+                  {"นศพ."}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMdinputType("Resident");
+                  }}
+                >
+                  {"Resident"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMdinputType("Fellow");
+                  }}
+                >
+                  {"Fellow"}
+                </button>
+              </div>{" "}
+            </div>
           </div>
+          {/* รหัสนักศึกษา */}
           <div className="input-modalBox">
             <span>{"รหัสนักศึกษา"}</span>
             <input className="Modalinput-idStudent" type="text"></input>
           </div>
+          {/* อ.ที่ปรึกษา */}
           <div className="input-modalBox">
             <span>{"อ.ที่ปรึกษา"}</span>
             <input className="Modalinput-perfessor" type="text"></input>
           </div>
+          {/* กลุ่ม */}
           <div className="input-modalBox">
             <span>{"กลุ่ม"}</span>
             <input className="Modalinput-group" type="text"></input>
           </div>
+          {/* ขึ้นสาย */}
           <div className="input-modalBox">
             <span>{"ขึ้นสาย"}</span>
             <input className="Modalinput-start" type="date"></input>
           </div>
+          {/* ลงสาย */}
           <div className="input-modalBox">
             <span>{"ลงสาย"}</span>
             <input className="Modalinput-stop" type="date"></input>
@@ -98,8 +277,7 @@ const ContentStudent = (prop) => {
         </form>
         <div className="form-picture">
           <div className="preview-picture">
-            <canvas className="canvas-perview" id="canvasPreview"></canvas>
-            <img src={picURL}></img>
+            <img className="img-perview" src={picURL}></img>
           </div>
           <div className="input-picture">
             <input
@@ -109,7 +287,7 @@ const ContentStudent = (prop) => {
               multiple={true}
               onChange={(e) => {
                 console.log(e);
-                imgCanvasPreview(e);
+                imgPreview(e);
               }}
             ></input>
             <button type="button" className="btn-add-filePicture">
