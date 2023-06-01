@@ -4,12 +4,10 @@ import { searching } from "../config/searchConfig";
 import ModalBox from "../modal/modalBox";
 import { handleOpenModalbox } from "../config/modalConfig";
 import Cookies from "universal-cookie";
-
-const ContentStudent = (prop) => {
+const ContentStudent = (props) => {
+  const testFileFolder = "../../../public/picture/student";
   const [year, setYear] = useState(parseInt(new Date().getFullYear()) + 543);
-  const [yearModal, setYearModal] = useState(
-    parseInt(new Date().getFullYear()) + 543
-  );
+
   const [searchtext, setSearchtext] = useState();
   const [dataStudent, setDataStudent] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
@@ -21,8 +19,19 @@ const ContentStudent = (prop) => {
   const [picURL, setPicURL] = useState();
   const inputPic = useRef(null);
   const [btnTtl, setBtnTtl] = useState(false);
+
+  const [yearModal, setYearModal] = useState(
+    parseInt(new Date().getFullYear()) + 543
+  );
   const [mdinputTtl, setMdinputTtl] = useState("");
+  const [mdinputName, setMdinputName] = useState("");
+  const [mdinputLname, setMdinputLname] = useState("");
   const [mdinputType, setMdinputType] = useState("");
+  const [mdinputidStudent, setMdinputidStudent] = useState("");
+  const [mdinputDoctor, setMdinputDoctor] = useState("");
+  const [mdinputGroup, setMdinputGroup] = useState("");
+  const [mdinputStartdate, setMdinputStartdate] = useState("0000-00-00");
+  const [mdinputStopdate, setMdinputStopdate] = useState("0000-00-00");
 
   const cookie = new Cookies();
   const usertoken = cookie.get("token");
@@ -51,9 +60,36 @@ const ContentStudent = (prop) => {
     let file = e.target.files[0];
 
     let tryURI = URL.createObjectURL(file);
-
-    console.log("tryURI", tryURI);
     setPicURL(tryURI);
+  };
+
+  const handleFatchTeacher = () => {
+    if (!localStorage.getItem("teacherName")) {
+      FetchController.fetchGetTeacher(usertoken).then((data) => {
+        let nameTeacher = [];
+        data.map((ele) => {
+          nameTeacher.push({
+            id: ele.Id.trim(),
+            name: `${ele.ttl.trim()} ${ele.name.trim()} ${ele.lname.trim()}`,
+          });
+        });
+        localStorage.setItem("teacherName", JSON.stringify(nameTeacher));
+      });
+    }
+  };
+
+  const handleFatchGroup = (year) => {
+    let ayear = { year: parseInt(year) - 543 };
+    console.log("ayear", ayear);
+    if (!localStorage.getItem("groupName")) {
+      FetchController.fetchGetGroup(ayear, usertoken).then((data) => {
+        let nameGroup = [];
+        data.map((ele) => {
+          nameGroup.push({ id: ele.Id.trim(), name: ele.name.trim() });
+        });
+        localStorage.setItem("groupName", JSON.stringify(nameGroup));
+      });
+    }
   };
 
   const modalContent = () => {
@@ -67,6 +103,10 @@ const ContentStudent = (prop) => {
             getID("dropDowninputBoxType").style.display = "none";
             getID("divBoxTtlDrop").style.position = "static";
             getID("divBoxTypeDrop").style.position = "static";
+            getID("divBoxDoctorDrop").style.position = "static";
+            getID("dropDowninputBoxDoctor").style.display = "none";
+            getID("divBoxGrupDrop").style.position = "static";
+            getID("dropDowinputBoxGroup").style.display = "none";
             setBtnTtl(false);
           }
         }}
@@ -84,6 +124,9 @@ const ContentStudent = (prop) => {
                   if (e.target.value !== "") {
                     setYearModal(e.target.value);
                   }
+                }}
+                onFocus={(e) => {
+                  e.target.select();
                 }}
               ></input>
               <button
@@ -132,7 +175,6 @@ const ContentStudent = (prop) => {
                     setBtnTtl(true);
                   } else {
                     getID("divBoxTtlDrop").style.position = "static";
-                    getID("divBoxTypeDrop").style.position = "static";
                     getID("dropDowninputBoxTll").style.display = "none";
                     setBtnTtl(false);
                   }
@@ -179,12 +221,30 @@ const ContentStudent = (prop) => {
           {/* ชื่อ */}
           <div className="input-modalBox">
             <span>{"ชื่อ"}</span>
-            <input className="Modalinput-name" type="text"></input>
+            <input
+              className="Modalinput-name"
+              type="text"
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              onChange={(e) => {
+                setMdinputName(e.target.value);
+              }}
+            ></input>
           </div>
           {/* นามสกุล */}
           <div className="input-modalBox">
             <span>{"นามสกุล"}</span>
-            <input className="Modalinput-lname" type="text"></input>
+            <input
+              className="Modalinput-lname"
+              type="text"
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              onChange={(e) => {
+                setMdinputLname(e.target.value);
+              }}
+            ></input>
           </div>
           {/* ประเภท */}
           <div className="input-modalBox">
@@ -209,7 +269,6 @@ const ContentStudent = (prop) => {
                     getID("dropDowninputBoxType").style.display = "block";
                     setBtnTtl(true);
                   } else {
-                    getID("divBoxTtlDrop").style.position = "static";
                     getID("divBoxTypeDrop").style.position = "static";
                     getID("dropDowninputBoxType").style.display = "none";
                     setBtnTtl(false);
@@ -249,30 +308,157 @@ const ContentStudent = (prop) => {
           {/* รหัสนักศึกษา */}
           <div className="input-modalBox">
             <span>{"รหัสนักศึกษา"}</span>
-            <input className="Modalinput-idStudent" type="text"></input>
+            <input
+              className="Modalinput-idStudent"
+              type="text"
+              onChange={(e) => {
+                setMdinputidStudent(e.target.value);
+              }}
+              onFocus={(e) => {
+                e.target.select();
+              }}
+            ></input>
           </div>
           {/* อ.ที่ปรึกษา */}
-          <div className="input-modalBox">
+          <div className="input-modalBox" id={"divBoxDoctorDrop"}>
             <span>{"อ.ที่ปรึกษา"}</span>
-            <input className="Modalinput-perfessor" type="text"></input>
+            <div className="inputButtonDropFull">
+              <input
+                className="Modalinput-perfessor"
+                type="text"
+                value={mdinputDoctor.name}
+                readOnly
+              ></input>
+              <button
+                type="button"
+                className="btn-dropdown-input"
+                onClick={() => {
+                  if (!btnTtl) {
+                    getID("divBoxDoctorDrop").style.position = "relative";
+                    getID("dropDowninputBoxDoctor").style.display = "block";
+                    setBtnTtl(true);
+                  } else {
+                    getID("divBoxDoctorDrop").style.position = "static";
+                    getID("dropDowninputBoxDoctor").style.display = "none";
+                    setBtnTtl(false);
+                  }
+                }}
+              >
+                <i className="bi-caret-down"></i>
+              </button>
+              <div className="box-dropDown-full" id="dropDowninputBoxDoctor">
+                {localStorage.getItem("teacherName")
+                  ? JSON.parse(localStorage.getItem("teacherName")).map(
+                      (data, index) => (
+                        <button
+                          type="button"
+                          key={index}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setMdinputDoctor(data);
+                          }}
+                        >
+                          {data.name}
+                        </button>
+                      )
+                    )
+                  : ""}
+              </div>
+            </div>
           </div>
           {/* กลุ่ม */}
           <div className="input-modalBox">
             <span>{"กลุ่ม"}</span>
-            <input className="Modalinput-group" type="text"></input>
+            <div className="inputButtonDropFull" id="divBoxGrupDrop">
+              <input
+                className="Modalinput-group"
+                type="text"
+                value={mdinputGroup.name}
+                readOnly
+              ></input>
+              <button
+                type="button"
+                className="btn-dropdown-input"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (!btnTtl) {
+                    getID("divBoxGrupDrop").style.position = "relative";
+                    getID("dropDowinputBoxGroup").style.display = "block";
+                    setBtnTtl(true);
+                  } else {
+                    getID("divBoxGrupDrop").style.position = "static";
+                    getID("dropDowinputBoxGroup").style.display = "none";
+                    setBtnTtl(false);
+                  }
+                }}
+              >
+                <i className="bi-caret-down"></i>
+              </button>
+              <div className="box-dropDown-full" id="dropDowinputBoxGroup">
+                {localStorage.getItem("groupName")
+                  ? JSON.parse(localStorage.getItem("groupName")).map(
+                      (data, index) => (
+                        <button
+                          type="button"
+                          key={index}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setMdinputGroup(data);
+                          }}
+                        >
+                          {data.name}
+                        </button>
+                      )
+                    )
+                  : ""}
+              </div>
+            </div>
           </div>
           {/* ขึ้นสาย */}
           <div className="input-modalBox">
             <span>{"ขึ้นสาย"}</span>
-            <input className="Modalinput-start" type="date"></input>
+            <input
+              className="Modalinput-start"
+              type="date"
+              onChange={(e) => {
+                e.preventDefault();
+                setMdinputStartdate(e.target.value);
+              }}
+            ></input>
           </div>
           {/* ลงสาย */}
           <div className="input-modalBox">
             <span>{"ลงสาย"}</span>
-            <input className="Modalinput-stop" type="date"></input>
+            <input
+              className="Modalinput-stop"
+              type="date"
+              onChange={(e) => {
+                e.preventDefault();
+                setMdinputStartdate(e.target.value);
+              }}
+            ></input>
           </div>
           <div className="btn-modal-submit">
-            <button type="submit">{"บันทึก"}</button>
+            <button
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("บันทึกข้อมูล นศพ. ใหม่", {
+                  year: yearModal-543,
+                  ttl: mdinputTtl,
+                  name: mdinputName,
+                  lname: mdinputLname,
+                  type: mdinputType,
+                  studentid: mdinputidStudent,
+                  doctor: mdinputDoctor.id,
+                  group: mdinputGroup.id,
+                  start: mdinputStartdate,
+                  stop: mdinputStopdate,
+                });
+              }}
+            >
+              {"บันทึก"}
+            </button>
           </div>
         </form>
         <div className="form-picture">
@@ -286,11 +472,17 @@ const ContentStudent = (prop) => {
               ref={inputPic}
               multiple={true}
               onChange={(e) => {
-                console.log(e);
                 imgPreview(e);
               }}
             ></input>
-            <button type="button" className="btn-add-filePicture">
+            <button
+              type="button"
+              className="btn-add-filePicture"
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("==>", inputPic.current.files[0]);
+              }}
+            >
               UPLOAD
             </button>
           </div>
@@ -302,6 +494,8 @@ const ContentStudent = (prop) => {
   useEffect(() => {
     if (!year) return;
     handleFatch();
+    handleFatchTeacher();
+    handleFatchGroup(yearModal);
   }, [year]);
 
   useEffect(() => {
@@ -458,15 +652,15 @@ const ContentStudent = (prop) => {
               ))
             ) : (
               <tr>
-                <td>{"นาย"}</td>
-                <td>{"สิรภพ"}</td>
-                <td>{"หล้านันตา"}</td>
-                <td>{"นศพ."}</td>
-                <td>{"123456789"}</td>
-                <td>{"อ.นพ.รุ่งเกียรติ จางไววิทย์"}</td>
-                <td>{"ก1"}</td>
-                <td>{"01-04-1566"}</td>
-                <td>{"29-04-2566"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
+                <td>{"-"}</td>
                 <td>
                   <button className="btn-edit-tableInfoStudent">
                     <i className="bi-three-dots"></i>
@@ -618,7 +812,10 @@ const ContentStudent = (prop) => {
           </div>
         </div>
       </div>
-      <ModalBox content={modalContent()}></ModalBox>
+      <ModalBox
+        content={modalContent()}
+        thisTitle={"เพิ่มข้อมูล นศพ."}
+      ></ModalBox>
     </div>
   );
 };

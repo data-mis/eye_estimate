@@ -6,6 +6,7 @@ const ModalSlideBar = (prop) => {
       <div className="modal-slideBar-content" id="modalSlideContent">
         <div className="modalSlideBar-content-menu">
           <button
+            type="button"
             id="btnMenu-Modalstudent"
             onClick={() => {
               prop.settingContent("student");
@@ -13,19 +14,25 @@ const ModalSlideBar = (prop) => {
           >
             <Icon icon="mdi:account-school"></Icon>
           </button>
-          <button id="btnMenu-ModalDoctor">
+          <button
+            id="btnMenu-ModalDoctor"
+            type="button"
+            onClick={() => {
+              prop.settingContent("doctor");
+            }}
+          >
             <Icon icon="fontisto:doctor"></Icon>
           </button>
-          <button id="btnMenu-ModalGroup">
+          <button id="btnMenu-ModalGroup" type="button">
             <Icon icon="el:group"></Icon>
           </button>
-          <button id="btnMenu-ModalList">
+          <button id="btnMenu-ModalList" type="button">
             <Icon icon="ep:list"></Icon>
           </button>
-          <button id="btnMenu-ModalSetting">
+          <button id="btnMenu-ModalSetting" type="button">
             <Icon icon="uil:setting"></Icon>
           </button>
-          <button id="btnMenu-ModalReport">
+          <button id="btnMenu-ModalReport" type="button">
             <Icon icon="mdi:file-outline"></Icon>
           </button>
         </div>

@@ -58,6 +58,34 @@ const FetchController = {
       throw error;
     }
   },
+  fetchGetTeacher: async function (token) {
+    let request = requestOption("POST", "", token);
+    let http = `${HttpConfig()}/get_teacher`;
+    try {
+      let result = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchGetGroup: async function (year, token) {
+    let request = requestOption("POST", year, token);
+    let http = `${HttpConfig()}/get_classgroup`;
+
+    try {
+      let result = fetch(http, request).then((res) => {
+        return res.json();
+      });
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchAddStudent: async function (infoStudent, token) {},
 };
 
 export default FetchController;

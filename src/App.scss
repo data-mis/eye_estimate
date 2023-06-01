@@ -150,7 +150,6 @@ $colorBGmenu : #607d8b;
                 background-color: $colorBGmenu;
                 display: none;
                 width: 30%;
-                border: 2px solid red;
             }
                 .bi-x{
                     display: none;
@@ -177,7 +176,7 @@ $colorBGmenu : #607d8b;
             height: 5%;
             border-bottom: 3px solid #e0e0e0;
         }
-            .btn-menu-navigatepage button{
+            .navigatMenuBTN{
                 width: 100%;
                 height: 100%;
                 border: none;
@@ -193,12 +192,32 @@ $colorBGmenu : #607d8b;
                 background-color: #37474f;
                 color: #b0bec5;
             }
+     .holdBTNmenuNavigatepage{
+        border: 5px solid #546e7a;
+        background-color: #37474f;
+        color: #b0bec5;
+    }       
     .show-content-box{
         height: 95vh;
         width: 90%;
         position: absolute;
         right: 0;
         bottom: 0;
+    }
+.body-mainDefault{
+    height: 100%;
+    width: 100%;
+}
+    .header-mainDefault{
+        height: 10%;
+        width: 100%;
+        background-color: #f5f5f5;
+        color: #424242;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        padding: 0 20px;
+        font-size: 10px;
     }
 
 @media only screen and (max-width:1024px) {
@@ -219,7 +238,6 @@ $colorBGmenu : #607d8b;
     .show-content-box{
         width: 100%;
         height: 94%;
-        border: 1px solid red;
     }
     .header-navigatepage{
         height: 5%;
@@ -242,15 +260,14 @@ $colorBGmenu : #607d8b;
         position: relative;
     }
     .header-show-contentStudent{
-        height: 30px;
+        height: 35px;
         width: 95%;
         margin: auto;
         position: relative;
-        top: 10px;
+        top: 1%;
         left: 0;
         align-items: center;
         background-color: #e0e0e0;
-
     }
         .text-header{
             width: 5%;
@@ -263,6 +280,7 @@ $colorBGmenu : #607d8b;
             background-color: #e0e0e0;
             padding: 0 10px;
             font-weight: bold;
+            font-size: 13px;
         }
         .menu-search{
             width:80%;
@@ -392,7 +410,6 @@ $colorBGmenu : #607d8b;
    }
 
     .menu-content-ctStudent{
-        border: 1px solid red;
         height: 80%;
         width: 6%;
         position: absolute;
@@ -521,6 +538,46 @@ $colorBGmenu : #607d8b;
 }
 }
 
+@mixin ContentDoctor(){
+    .body-content-ctDoctor{
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .nav-content-ctDoctor{
+        border: 2px solid orange;
+        height: 5%;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .nav-box-search{
+        width: 25%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid red;
+        margin: 0 10%;
+    }
+        .input-navDoctor-search{
+            width: 80%;
+            height: 60%;
+            
+        }
+@media only screen and (max-width:720px) {
+    .nav-content-ctDoctor{
+        height: 10%;
+    }
+    .nav-box-search{
+        width: 50%;
+    }
+}
+}
+
 @mixin ModalSlideBar(){
     .modal-slideBar-body{
         display: none;  
@@ -616,6 +673,14 @@ $colorBGmenu : #607d8b;
     }
         .header-col{
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .header-col span{
+            color: #fefefe;
+            font-size: 18px;
+            font-weight: bold;
         }
         .btn-modalbox-close{
             width: auto;
@@ -631,14 +696,12 @@ $colorBGmenu : #607d8b;
             }
 //ContentModalStudentadd
 .body-content-modalStudent{
-    border: 2px solid red;
     height: 100%;
     width: 100%;
     display: grid;
     grid-template-columns: 70% 30%; 
 }
 .form-modalContent{
-    border: 3px solid green;
     width: 100%;
     height: 100%;
     font-size: 14px;
@@ -658,13 +721,18 @@ $colorBGmenu : #607d8b;
             width: 90%;
             padding-left: 8px;
         }
-    .inputButtonUpdown,.inputButtonDrop{
+    .inputButtonUpdown,.inputButtonDrop,.inputButtonDropFull{
         position: relative;
         width: 35%;
     }
     .inputButtonDrop{
         position: static;
         display: flex;
+    }
+    .inputButtonDropFull{
+        width: 90%;
+        display: flex;
+        position: static;
     }
     .Modalinput-year{
         width: 100%;
@@ -713,7 +781,17 @@ $colorBGmenu : #607d8b;
         height: 0;
         display: none;
     }
-        .box-dropDown button{
+    .box-dropDown-full{
+        position: absolute;
+        bottom: -200px;
+        right: 10%;
+        width: 60%;
+        height: 200px;
+        display: none;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+    }
+        .box-dropDown button,.box-dropDown-full button{
             width: 100%;
             height: 25px;
             border: none;
@@ -722,39 +800,54 @@ $colorBGmenu : #607d8b;
             background-color: #fefefe;
             text-align: start;
             font-size: 16px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
-        .box-dropDown button:hover{
+        .box-dropDown button:hover,.box-dropDown-full button:hover{
             background-color: #b0bec5;
             font-weight: bold;
         }
-        
-.form-picture{
-    border: 2px solid yellow;
-    .preview-picture{
-        border: 1px solid rebeccapurple;
+        .text-btn-teacherName{
+            border: 1px solid red;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+.btn-modal-submit{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 0;
+} 
+    .btn-modal-submit button{
+        width: 25%;
+        height: 35px;
     }
+.form-picture{
+    padding-right: 10px;
+    padding-top: 5px;
 }
     .img-perview{
-        border: 3px solid black;
+        border: 1px solid black;
         width: 100%;
         height: 180px;
         object-fit: contain;
     }
     .input-picture{
-        border: 5px solid orange;
         align-items: center;
         width: 100%;
         height: 80px;
         padding: 10px 5px;
     }
         .input-picture-file{
-            border: 1px solid black;
             width: 100%;
         }
         .btn-add-filePicture{
             display: block;
             margin: 10px auto;
         }
+   
 @media only screen and (max-width:1024px) {
     .inputButtonUpdown,.inputButtonDrop{
         width: 60%;
@@ -765,8 +858,15 @@ $colorBGmenu : #607d8b;
         width: 100%;
         height: auto;
     }
+    .input-modalBox span,.input-modalBox input{
+        font-size: 11px;
+    }
     .inputButtonUpdown,.inputButtonDrop{
         width: 60%;
+    }
+    .box-dropDown-full{
+        height: 100px;
+        bottom: -100px;
     }
 }
 }
@@ -775,6 +875,7 @@ html,body{
     @include LoginPage();
     @include MainPage();
     @include ContentStudent();
+    @include ContentDoctor();
 
     // modal
     @include ModalSlideBar();

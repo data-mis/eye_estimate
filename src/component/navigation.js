@@ -4,6 +4,7 @@ import ModalSlideBar from "./modal/modalSlideBar";
 import Cookies, { Cookie } from "universal-cookie";
 import { TryCheckCookie, checkCookieOut } from "./config/cookieConfig";
 import { useNavigate } from "react-router-dom";
+import ContentDoctor from "./Content/contentDoctor";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
@@ -17,6 +18,22 @@ const NavigationPage = () => {
     return document.getElementById(id);
   };
 
+  //ลบCssรูปแบบปุ่มออก ตอนเลือกเมนู
+  const removeholdbtnmenu = (e) => {
+    e.preventDefault();
+
+    for (
+      let i = 0;
+      i < document.getElementsByClassName("navigatMenuBTN").length;
+      i++
+    ) {
+      document
+        .getElementsByClassName("navigatMenuBTN")
+        [i].classList.remove("holdBTNmenuNavigatepage");
+    }
+  };
+
+  //โชว์ข้อมูลการทำงานตามเมนูที่เลือก เขียนเป็น case
   const ShowContentINbox = (content) => {
     let colorBorder = "#546e7a";
     let colorBG = "#37474f";
@@ -24,27 +41,32 @@ const NavigationPage = () => {
 
     switch (content) {
       case "student":
-        docGetId(
-          `btnMenu-${content}`
-        ).style.border = `5px solid ${colorBorder}`;
-        docGetId(`btnMenu-${content}`).style.backgroundColor = `${colorBG}`;
-        docGetId(`btnMenu-${content}`).style.color = `${colorText}`;
+        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
 
         return <ContentStudent></ContentStudent>;
 
+      case "doctor":
+        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
+
+        return <ContentDoctor></ContentDoctor>;
       default:
-        return <div>TEST</div>;
+        return (
+          <div className="body-mainDefault">
+            <div className="header-mainDefault">
+              <h1>{"Version 0.1"}</h1>
+            </div>
+          </div>
+        );
     }
   };
 
+  // modalMenu Mobile
   const handleOpenModalMenu = (status) => {
     if (status) {
       docGetId("modalSlideBody").style.display = "block";
       docGetId("modalSlideContent").style.animation =
         "openSlideBar 0.75s normal";
       docGetId("modalSlideContent").style.height = "auto";
-      docGetId("btn-threeDots").style.display = "none";
-      docGetId("btn-x").style.display = "block";
       setOpenModalSlide(false);
       setTimeout(() => {
         docGetId("btnMenu-Modalstudent").style.visibility = "visible";
@@ -63,13 +85,13 @@ const NavigationPage = () => {
       }, 500);
       setTimeout(() => {
         docGetId("btnMenu-ModalReport").style.visibility = "visible";
+        docGetId("btn-threeDots").style.display = "none";
+        docGetId("btn-x").style.display = "block";
       }, 600);
     } else {
       docGetId("modalSlideContent").style.animation =
         "closeSlideBar 0.75s normal";
       docGetId("modalSlideContent").style.height = "0";
-      docGetId("btn-x").style.display = "none";
-      docGetId("btn-threeDots").style.display = "block";
       setTimeout(() => {
         docGetId("btnMenu-ModalReport").style.visibility = "hidden";
       }, 10);
@@ -90,24 +112,12 @@ const NavigationPage = () => {
       }, 500);
       setTimeout(() => {
         docGetId("modalSlideBody").style.display = "none";
+        docGetId("btn-x").style.display = "none";
+        docGetId("btn-threeDots").style.display = "block";
       }, 750);
       setOpenModalSlide(true);
     }
   };
-
-  window.addEventListener("click", (e) => {
-    if (e.target === docGetId("modalSlideBody")) {
-      docGetId("modalSlideContent").style.animation =
-        "closeSlideBar 0.75s normal";
-      docGetId("modalSlideContent").style.height = "0";
-      docGetId("btn-x").style.display = "none";
-      docGetId("btn-threeDots").style.display = "block";
-      setTimeout(() => {
-        docGetId("modalSlideBody").style.display = "none";
-      }, 750);
-      setOpenModalSlide(true);
-    }
-  });
 
   useEffect(() => {
     if (!checkCookieOut()) {
@@ -118,7 +128,14 @@ const NavigationPage = () => {
   useEffect(() => {}, [dataContent]);
 
   return (
-    <div className="body-content-navigatepage">
+    <div
+      className="body-content-navigatepage"
+      onClick={(e) => {
+        if (e.target === docGetId("modalSlideBody")) {
+          handleOpenModalMenu(false);
+        }
+      }}
+    >
       <div className="box-content-navigatepage">
         <div className="header-navigatepage">
           <div className="header-navigatepage-col-1">
@@ -139,8 +156,11 @@ const NavigationPage = () => {
         <div className="menu-navigatepage">
           <div className="btn-menu-navigatepage">
             <button
+              className="navigatMenuBTN"
               id="btnMenu-student"
-              onClick={() => {
+              type="button"
+              onClick={(e) => {
+                removeholdbtnmenu(e);
                 setModeContent("student");
               }}
             >
@@ -148,19 +168,36 @@ const NavigationPage = () => {
             </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-doctor">{"อาจารย์"}</button>
+            <button
+              className="navigatMenuBTN"
+              id="btnMenu-doctor"
+              onClick={(e) => {
+                removeholdbtnmenu(e);
+                setModeContent("doctor");
+              }}
+            >
+              {"อาจารย์"}
+            </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-groupStudent">{"กลุ่ม"}</button>
+            <button id="btnMenu-groupStudent" className="navigatMenuBTN">
+              {"กลุ่ม"}
+            </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-workDoctor">{"งานอาจารย์"}</button>
+            <button id="btnMenu-workDoctor" className="navigatMenuBTN">
+              {"งานอาจารย์"}
+            </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-assessmentForm">{"ตั้งค่าแบบประเมิน"}</button>
+            <button id="btnMenu-assessmentForm" className="navigatMenuBTN">
+              {"ตั้งค่าแบบประเมิน"}
+            </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-report">{"รายงาน"}</button>
+            <button id="btnMenu-report" className="navigatMenuBTN">
+              {"รายงาน"}
+            </button>
           </div>
         </div>
         <div className="show-content-box">{ShowContentINbox(modeContent)}</div>

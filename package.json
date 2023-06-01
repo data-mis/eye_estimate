@@ -10,6 +10,7 @@
     "bootstrap-icons": "^1.10.5",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "multer": "^1.4.5-lts.1",
     "react": "^18.2.0",
     "react-jwt": "^1.1.8",
     "react-router-dom": "^6.11.2",
