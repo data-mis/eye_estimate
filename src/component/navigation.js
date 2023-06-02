@@ -121,7 +121,7 @@ const NavigationPage = () => {
 
   useEffect(() => {
     if (!checkCookieOut()) {
-      return navigat("/");
+      // return navigat("/");
     }
   }, []);
 

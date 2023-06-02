@@ -4,6 +4,8 @@ import { searching } from "../config/searchConfig";
 import ModalBox from "../modal/modalBox";
 import { handleOpenModalbox } from "../config/modalConfig";
 import Cookies from "universal-cookie";
+import { result } from "lodash";
+
 const ContentStudent = (props) => {
   const testFileFolder = "../../../public/picture/student";
   const [year, setYear] = useState(parseInt(new Date().getFullYear()) + 543);
@@ -11,6 +13,7 @@ const ContentStudent = (props) => {
   const [searchtext, setSearchtext] = useState();
   const [dataStudent, setDataStudent] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
+
   const [mcq, setMcq] = useState();
   const [osce, setOsce] = useState();
   const [meq, setMeq] = useState();
@@ -89,6 +92,51 @@ const ContentStudent = (props) => {
         });
         localStorage.setItem("groupName", JSON.stringify(nameGroup));
       });
+    }
+  };
+
+  function datatestbase64convest(dataurl, filename) {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    result = new File([u8arr], filename, { type: mime });
+    console.log("this file=>", result);
+    return result;
+  }
+
+  const todataUrl = (data) =>
+    fetch(data)
+      .then((response) => response.blob())
+      .then(
+        (blob) =>
+          new Promise((resolve, reject) => {
+            const render = new FileReader();
+            render.onloadend = () => resolve(render.result);
+            render.onerror = reject;
+            render.readAsDataURL(blob);
+          })
+      );
+
+  const handleUploadPicture = async () => {
+    let fileSelect = inputPic.current.files[0];
+    try {
+      if (!fileSelect) return;
+      todataUrl(fileSelect).then((dataURL) => {
+        // console.log("url", dataURL);
+        const filedata = datatestbase64convest(dataURL, "file.jpg");
+        // console.log("omg this what =>", filedata);
+        let dataform = new FormData();
+        dataform.append("file", filedata);
+        FetchController.fetchImgae(dataform);
+      });
+    } catch (error) {
+      console.log(error.response?.data);
     }
   };
 
@@ -444,7 +492,7 @@ const ContentStudent = (props) => {
               onClick={(e) => {
                 e.preventDefault();
                 console.log("บันทึกข้อมูล นศพ. ใหม่", {
-                  year: yearModal-543,
+                  year: yearModal - 543,
                   ttl: mdinputTtl,
                   name: mdinputName,
                   lname: mdinputLname,
@@ -470,7 +518,6 @@ const ContentStudent = (props) => {
               className="input-picture-file"
               type="file"
               ref={inputPic}
-              multiple={true}
               onChange={(e) => {
                 imgPreview(e);
               }}
@@ -480,7 +527,9 @@ const ContentStudent = (props) => {
               className="btn-add-filePicture"
               onClick={(e) => {
                 e.preventDefault();
-                console.log("==>", inputPic.current.files[0]);
+                // console.log("==>", inputPic.current.files[0]);
+                handleUploadPicture();
+                // FetchController.fetchImgae();
               }}
             >
               UPLOAD
@@ -493,9 +542,9 @@ const ContentStudent = (props) => {
 
   useEffect(() => {
     if (!year) return;
-    handleFatch();
-    handleFatchTeacher();
-    handleFatchGroup(yearModal);
+    // handleFatch();
+    // handleFatchTeacher();
+    // handleFatchGroup(yearModal);
   }, [year]);
 
   useEffect(() => {
@@ -806,7 +855,20 @@ const ContentStudent = (props) => {
         </div>
         <div className="footer-col">
           <div className="box-text-incol">
-            <button type="button" className="btn-save-footer">
+            <button
+              type="button"
+              className="btn-save-footer"
+              onClick={(e) => {
+                e.preventDefault();
+                console.log({
+                  mcq: mcq,
+                  osce1: osce.OSCE1,
+                  osce2: osce.OSCE2,
+                  meq1: meq.MEQ1,
+                  meq2: meq.MEQ2,
+                });
+              }}
+            >
               {"บันทึก"}
             </button>
           </div>

@@ -86,6 +86,22 @@ const FetchController = {
     }
   },
   fetchAddStudent: async function (infoStudent, token) {},
+  fetchImgae: async function (file) {
+    try {
+      let request = {
+        method: "POST",
+        body: file,
+      };
+      console.log("request this =>", request);
+      fetch(`http://127.0.0.1/phpestimate/uploadfiles`, request).then((res) => {
+        res.json().then((data) => {
+          console.log(data);
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export default FetchController;
