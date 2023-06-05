@@ -514,33 +514,114 @@ html .body-content-ctDoctor, body .body-content-ctDoctor {
   padding: 0;
 }
 html .nav-content-ctDoctor, body .nav-content-ctDoctor {
-  border: 2px solid orange;
   height: 5%;
-  display: flex;
-  align-items: center;
+  width: 95%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 18% 75% 8%;
   padding: 0 10px;
   font-size: 16px;
   font-weight: bold;
+  background-color: #e0e0e0;
+}
+html .box-nav-content, body .box-nav-content {
+  display: flex;
+  align-items: center;
 }
 html .nav-box-search, body .nav-box-search {
-  width: 25%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border: 1px solid red;
-  margin: 0 10%;
 }
 html .input-navDoctor-search, body .input-navDoctor-search {
-  width: 80%;
+  width: 25%;
   height: 60%;
+  margin-left: 10px;
+}
+html .btn-navDoctor-search, body .btn-navDoctor-search {
+  width: 7%;
+  height: 60%;
+}
+html .btn-close-ctDoctor, body .btn-close-ctDoctor {
+  width: 80%;
+  height: 80%;
+  display: block;
+  margin-right: auto;
+  font-weight: bold;
+}
+html .content-ctDoctor, body .content-ctDoctor {
+  border: 2px solid green;
+  height: 95%;
+  display: grid;
+  grid-template-columns: 90% 10%;
+}
+html .content-table, body .content-table {
+  border: 1px solid red;
+}
+html .content-menu, body .content-menu {
+  border: 1px solid rebeccapurple;
+  display: flex;
+  position: relative;
+}
+html .box-menu-contentDoctor, body .box-menu-contentDoctor {
+  display: block;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  background-color: #e0e0e0;
+}
+html .content-menu-btn, body .content-menu-btn {
+  display: block;
+  width: 90%;
+  height: 5%;
+  margin: 5px auto;
+  font-size: 16px;
+  font-weight: bold;
 }
 @media only screen and (max-width: 720px) {
   html .nav-content-ctDoctor, body .nav-content-ctDoctor {
     height: 10%;
+    display: grid;
+    grid-template-columns: 20% 65% 15%;
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: bold;
   }
-  html .nav-box-search, body .nav-box-search {
-    width: 50%;
+  html .input-navDoctor-search, body .input-navDoctor-search {
+    width: 55%;
+    height: 60%;
+    margin-left: 10px;
+  }
+  html .btn-navDoctor-search, body .btn-navDoctor-search {
+    width: 15%;
+    height: 60%;
+    font-size: 11px;
+  }
+  html .content-ctDoctor, body .content-ctDoctor {
+    height: 90%;
+  }
+  html .content-menu-btn, body .content-menu-btn {
+    display: block;
+    width: 90%;
+    height: 5%;
+    margin: 5px auto;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  html .content-menu-btn, body .content-menu-btn {
+    height: 10%;
+  }
+}
+@media only screen and (max-width: 360px) {
+  html .nav-content-ctDoctor, body .nav-content-ctDoctor {
+    height: 5%;
+  }
+  html .content-ctDoctor, body .content-ctDoctor {
+    height: 95%;
+  }
+  html .content-menu-btn, body .content-menu-btn {
+    height: 7%;
   }
 }
 html .modal-slideBar-body, body .modal-slideBar-body {

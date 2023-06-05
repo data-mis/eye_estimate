@@ -12,6 +12,8 @@ $colorBTNhover:#546e7a;
 $colorBTNbghover: #37474f;
 $colorBGmenu : #607d8b;
 
+$colorBGnav:#e0e0e0;
+
 @mixin bodyContentDefault(){
     margin: 0;
     height: 100vh;
@@ -267,7 +269,7 @@ $colorBGmenu : #607d8b;
         top: 1%;
         left: 0;
         align-items: center;
-        background-color: #e0e0e0;
+        background-color: $colorBGnav;
     }
         .text-header{
             width: 5%;
@@ -277,7 +279,7 @@ $colorBGmenu : #607d8b;
             align-items: center;
             position: absolute;
             left: 0;
-            background-color: #e0e0e0;
+            background-color: $colorBGnav;
             padding: 0 10px;
             font-weight: bold;
             font-size: 13px;
@@ -290,7 +292,7 @@ $colorBGmenu : #607d8b;
             transform: translate(-50%);
             display: grid;
             grid-template-columns: 50% 50%;
-            background-color: #e0e0e0;
+            background-color: $colorBGnav;
 
         }
         
@@ -299,12 +301,12 @@ $colorBGmenu : #607d8b;
                 height: 100%;
                 display: flex;
                 justify-content: center;
-                background-color: #e0e0e0;
+                background-color: $colorBGnav;
             }
                 .box-menu-1 span{
                     align-self: center;
                     padding-right: 10px;
-                    background-color: #e0e0e0;
+                    background-color: $colorBGnav;
                     font-weight: bold;
                 }
                 .box-menu-1 input{
@@ -365,7 +367,7 @@ $colorBGmenu : #607d8b;
             height: 100%;
             position: absolute;
             right: 0;
-            background-color: #e0e0e0;
+            background-color: $colorBGnav;
         }
             .menu-close button{
                 width: 70%;
@@ -443,7 +445,7 @@ $colorBGmenu : #607d8b;
         position: absolute;
         top: 75%;
         left: 5%;
-        background-color: #e0e0e0;
+        background-color: $colorBGnav;
         display: grid;
         grid-template-columns: 20% 20% 20% 20% 20%;
         font-size: 20px;
@@ -546,34 +548,115 @@ $colorBGmenu : #607d8b;
         padding: 0;
     }
     .nav-content-ctDoctor{
-        border: 2px solid orange;
+        // border: 2px solid orange;
         height: 5%;
-        display: flex;
-        align-items: center;
+        width: 95%;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 18% 75% 8%;
         padding: 0 10px;
         font-size: 16px;
         font-weight: bold;
+        background-color: $colorBGnav;
+    }
+    .box-nav-content{
+        display: flex;
+        align-items: center;
     }
     .nav-box-search{
-        width: 25%;
+        width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: center;
-        border: 1px solid red;
-        margin: 0 10%;
     }
         .input-navDoctor-search{
-            width: 80%;
+            width: 25%;
             height: 60%;
-            
+            margin-left: 10px;
+        }
+        .btn-navDoctor-search{
+            width: 7%;
+            height: 60%;
+        }
+    .btn-close-ctDoctor{
+        width: 80%;
+        height: 80%;
+        display: block;
+        margin-right: auto;
+        font-weight: bold;
+    }
+.content-ctDoctor{
+    border: 2px solid green;
+    height: 95%;
+    display: grid;
+    grid-template-columns: 90% 10%;
+}
+    .content-table{
+        border: 1px solid red;
+    }
+    .content-menu{
+        border: 1px solid rebeccapurple;
+        display: flex;
+        position: relative;
+    }
+    .box-menu-contentDoctor{
+        display: block;
+        width: 95%;
+        height: 100%;
+        margin: auto;
+        background-color: $colorBGnav;
+    }
+        .content-menu-btn{
+            display: block;
+            width: 90%;
+            height: 5%;
+            margin: 5px auto;
+            font-size: 16px;
+            font-weight: bold;
         }
 @media only screen and (max-width:720px) {
     .nav-content-ctDoctor{
         height: 10%;
+        display: grid;
+        grid-template-columns: 20% 65% 15%;
+        padding: 0 10px;
+        font-size: 11px;
+        font-weight: bold;
     }
-    .nav-box-search{
-        width: 50%;
+    .input-navDoctor-search{
+        width: 55%;
+        height: 60%;
+        margin-left: 10px;
+    }
+    .btn-navDoctor-search{
+        width: 15%;
+        height: 60%;
+        font-size: 11px;
+    }
+    .content-ctDoctor{
+        height: 90%;
+    }
+    .content-menu-btn{
+        display: block;
+        width: 90%;
+        height: 5%;
+        margin: 5px auto;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    .content-menu-btn{
+        height: 10%;
+    }
+}
+@media only screen and (max-width:360px){
+    .nav-content-ctDoctor{
+        height: 5%;
+    }
+    .content-ctDoctor{
+        height: 95%;
+    }
+    .content-menu-btn{
+        height: 7%;
     }
 }
 }

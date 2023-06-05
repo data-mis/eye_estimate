@@ -26,7 +26,9 @@ const FetchController = {
           return data;
         })
       );
-      if (parseInt(result.status) === 0) {
+      console.log(result.status);
+      if (!result.status) {
+        //true
         Swal.fire({
           icon: "error",
           title: "การเข้าสู่ระบบผิดพลาด",
@@ -35,7 +37,8 @@ const FetchController = {
           showConfirmButton: false,
           timer: 1700,
         });
-      } else if (parseInt(result.status) === 1) {
+      } else if (result.status) {
+        //fasle
         setCookieLogin(result.token);
         navigat("/main");
       }
@@ -85,7 +88,58 @@ const FetchController = {
       throw error;
     }
   },
-  fetchAddStudent: async function (infoStudent, token) {},
+  fetchAddStudent: async function (infoStudent, token) {
+    let request = requestOption("POST", infoStudent, token);
+    let http = `${HttpConfig()}/add_student`;
+
+    console.log("request=>", request);
+    console.log("HTTP", http);
+
+    try {
+      fetch(`${HttpConfig()}/add_student`, request).then((res) =>
+        res.json().then((data) => {
+          console.log(data);
+        })
+      );
+    } catch (error) {
+      throw error;
+    }
+
+    console.log("test", request);
+  },
+  fetchScoreStudent: async function (infoScoreStudent, token) {
+    let request = requestOption("POST", infoScoreStudent, token);
+    let http = `${HttpConfig()}/add_student_score`;
+
+    try {
+      fetch(`${http}`, request).then((res) =>
+        res.json().then((data) => {
+          console.log(data);
+        })
+      );
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchEditstudent: async function (infoEditStudent, token) {
+    let request = requestOption("POST", infoEditStudent, token);
+    let http = `${HttpConfig()}/edit_student`;
+  },
+  fetchDelete: async function (infoDelete, token) {
+    let request = requestOption("POST", infoDelete, token);
+    let http = `${HttpConfig()}/delete_student`;
+
+    console.log("มาไหม=>", request);
+    try {
+      fetch(`${http}`, request).then((res) =>
+        res.json().then((data) => {
+          console.log(data);
+        })
+      );
+    } catch (error) {
+      throw error;
+    }
+  },
   fetchImgae: async function (file) {
     try {
       let request = {
@@ -93,7 +147,10 @@ const FetchController = {
         body: file,
       };
       console.log("request this =>", request);
-      fetch(`http://127.0.0.1/phpestimate/uploadfiles`, request).then((res) => {
+      fetch(
+        `http://11.0.0.100/mvc_eye_depart/upload_image_student`,
+        request
+      ).then((res) => {
         res.json().then((data) => {
           console.log(data);
         });
