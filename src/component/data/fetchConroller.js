@@ -1,6 +1,7 @@
 import { HttpConfig } from "./httpConfig";
 import Swal from "sweetalert2";
 import { setCookieLogin } from "../config/cookieConfig";
+import { method } from "lodash";
 
 const requestOption = (method, objectBody, token) => {
   let request = {
@@ -17,7 +18,6 @@ const requestOption = (method, objectBody, token) => {
 
 const FetchController = {
   fetchLogin: async function (user, pwd, navigat) {
-    console.log("ทำงาน login");
     let request = requestOption("POST", { username: user, password: pwd });
     let http = `${HttpConfig()}/get_login`;
     try {
@@ -26,7 +26,6 @@ const FetchController = {
           return data;
         })
       );
-      console.log(result.status);
       if (!result.status) {
         //true
         Swal.fire({
@@ -124,6 +123,19 @@ const FetchController = {
   fetchEditstudent: async function (infoEditStudent, token) {
     let request = requestOption("POST", infoEditStudent, token);
     let http = `${HttpConfig()}/edit_student`;
+
+    console.log(request);
+    console.log(http);
+
+    try {
+      fetch(http, request).then((res) =>
+        res.json().then((data) => {
+          console.log(data);
+        })
+      );
+    } catch (error) {
+      throw error;
+    }
   },
   fetchDelete: async function (infoDelete, token) {
     let request = requestOption("POST", infoDelete, token);
@@ -140,21 +152,23 @@ const FetchController = {
       throw error;
     }
   },
-  fetchImgae: async function (file) {
+  fetchImgae: async function (file, token) {
+    let request = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: file,
+    };
+
+    let http = `${HttpConfig()}/upload_image_student`;
+
     try {
-      let request = {
-        method: "POST",
-        body: file,
-      };
-      console.log("request this =>", request);
-      fetch(
-        `http://11.0.0.100/mvc_eye_depart/upload_image_student`,
-        request
-      ).then((res) => {
+      fetch(http, request).then((res) =>
         res.json().then((data) => {
           console.log(data);
-        });
-      });
+        })
+      );
     } catch (error) {
       console.error(error);
     }

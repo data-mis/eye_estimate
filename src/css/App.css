@@ -379,7 +379,11 @@ html .table-show-infoStudent td, body .table-show-infoStudent td {
   border: 2px solid black;
 }
 html .table-show-infoStudent > tbody > tr:hover td, body .table-show-infoStudent > tbody > tr:hover td {
-  background-color: #ddd;
+  background-color: #01579b;
+  color: #fefefe;
+}
+html .table-show-infoStudent > tbody > tr:nth-child(odd), body .table-show-infoStudent > tbody > tr:nth-child(odd) {
+  background-color: #e0e0e0;
 }
 html .menu-content-ctStudent, body .menu-content-ctStudent {
   height: 80%;

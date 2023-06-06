@@ -1,6 +1,7 @@
 const ModalBox = (props) => {
   const handleCloseModalBox = () => {
     document.getElementById("boxModal").style.display = "none";
+    props.statusClose(true);
   };
 
   return (
@@ -14,6 +15,7 @@ const ModalBox = (props) => {
             <button
               type="button"
               className="btn-modalbox-close"
+              id="thisbtnModalboxClose"
               onClick={() => {
                 handleCloseModalBox();
               }}

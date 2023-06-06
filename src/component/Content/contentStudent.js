@@ -14,9 +14,6 @@ const ContentStudent = (props) => {
   const [dataStudent, setDataStudent] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
 
-  const [titleModalStudent, setTitleModalStudent] =
-    useState("เพิ่มข้อมูล นศพ.");
-
   const [idStudent, setIdStudent] = useState();
   const [mcq, setMcq] = useState();
   const [osce, setOsce] = useState();
@@ -39,6 +36,19 @@ const ContentStudent = (props) => {
   const [mdinputGroup, setMdinputGroup] = useState("");
   const [mdinputStartdate, setMdinputStartdate] = useState("0000-00-00");
   const [mdinputStopdate, setMdinputStopdate] = useState("0000-00-00");
+
+  const [titleModalStudent, setTitleModalStudent] =
+    useState("เพิ่มข้อมูล นศพ.");
+
+  const [statusConStudentbox, setStatusConStudentbox] = useState("add");
+  // const [dataConStudentbox, setDataConStudentbox] = useState([]);
+
+  const [isHoldaLine, setIsHoldaLine] = useState(false);
+  const [statusAdd, setStatusAdd] = useState(false);
+  const [statusEdit, setStatusEdit] = useState(false);
+  const [statusDel, setStatusDel] = useState(false);
+  const [statusReadonly, setStatusReadonly] = useState(false);
+  const [statusCloseModal, setStatusCloseModal] = useState(false);
 
   const cookie = new Cookies();
   const usertoken = cookie.get("token");
@@ -128,38 +138,172 @@ const ContentStudent = (props) => {
           })
       );
 
-  const handleUploadPicture = async () => {
+  const handleUploadPicture = async (data, idStudent) => {
     let fileSelect = inputPic.current.files[0];
-    try {
-      if (!fileSelect) return;
-      // if(!mdinputidStudent)return;
+    let pass = false;
 
-      console.log("file==>", fileSelect);
-      let newfile = new File([fileSelect], "test.jpg", {
-        type: fileSelect.type,
+    if (idStudent) {
+      if (idStudent.length < 9) {
+        document.getElementsByClassName(
+          "Modalinput-idStudent"
+        )[0].style.border = "1px solid red";
+        return;
+      }
+      document.getElementsByClassName("Modalinput-idStudent")[0].style.border =
+        "1px solid #ddd";
+      data.map((ele) => {
+        if (ele.std_id.trim().match(idStudent)) {
+          pass = true;
+        }
       });
+      if (pass) {
+        // console.log("ผ่านครับอัพรูปได้เลย");
+        try {
+          if (!fileSelect) return;
 
-      let datafrom = new FormData();
-      datafrom.append("file", newfile);
-      datafrom.append("year", "2023");
-      FetchController.fetchImgae(datafrom);
+          // console.log("file==>", fileSelect);
+          let newfile = new File([fileSelect], `${idStudent}.jpg`, {
+            type: fileSelect.type,
+          });
 
-      //ทดสอบเปลี่ยนชื่อไฟล์
-      // todataUrl(fileSelect).then((res) => {
-      //   let result = datatestbase64convest(res, "testing2.jpg");
-      //   console.log(result);
-      //   let dataform = new FormData();
-      //   dataform.append("file", result);
-      //   FetchController.fetchImgae(dataform);
-      // });
-    } catch (error) {
-      console.log(error.response?.data);
+          let datafrom = new FormData();
+          datafrom.append("file", newfile);
+          datafrom.append("std_id", `${idStudent}`);
+          FetchController.fetchImgae(datafrom,usertoken);
+        } catch (error) {
+          console.log(error.response?.data);
+        }
+      } else {
+        document.getElementsByClassName(
+          "Modalinput-idStudent"
+        )[0].style.border = "1px solid red";
+        console.log("มันไม่มี รหัสนักศึกษาคนนี้");
+      }
+    } else {
+      if (
+        !yearModal ||
+        !mdinputTtl ||
+        !mdinputName ||
+        !mdinputLname ||
+        !mdinputType ||
+        !mdinputidStudent ||
+        !mdinputDoctor.id ||
+        !mdinputGroup.id ||
+        !mdinputStartdate ||
+        !mdinputStopdate
+      ) {
+        console.log("ว่างหมด");
+      }
     }
   };
 
-  const modalContent = () => {
+  const handleSubmitSaveInfoStudent = async () => {
+    if (
+      !yearModal ||
+      !mdinputTtl ||
+      !mdinputName ||
+      !mdinputLname ||
+      !mdinputType ||
+      !mdinputidStudent ||
+      !mdinputDoctor.id ||
+      !mdinputGroup.id ||
+      !mdinputStartdate ||
+      !mdinputStopdate
+    ) {
+      let getClassBorderRED = (id) => {
+        return (document.getElementsByClassName(id)[0].style.border =
+          "1px solid red");
+      };
+
+      getClassBorderRED("Modalinput-year");
+      getClassBorderRED("Modalinput-ttl");
+      getClassBorderRED("Modalinput-name");
+      getClassBorderRED("Modalinput-lname");
+      getClassBorderRED("Modalinput-type");
+      getClassBorderRED("Modalinput-idStudent");
+      getClassBorderRED("Modalinput-perfessor");
+      getClassBorderRED("Modalinput-group");
+      getClassBorderRED("Modalinput-start");
+      getClassBorderRED("Modalinput-stop");
+
+      return;
+    } else {
+      let getClassBorderRED = (id) => {
+        return (document.getElementsByClassName(id)[0].style.border =
+          "1px solid #ddd");
+      };
+
+      getClassBorderRED("Modalinput-year");
+      getClassBorderRED("Modalinput-ttl");
+      getClassBorderRED("Modalinput-name");
+      getClassBorderRED("Modalinput-lname");
+      getClassBorderRED("Modalinput-type");
+      getClassBorderRED("Modalinput-idStudent");
+      getClassBorderRED("Modalinput-perfessor");
+      getClassBorderRED("Modalinput-group");
+      getClassBorderRED("Modalinput-start");
+      getClassBorderRED("Modalinput-stop");
+
+      const object = {
+        year: yearModal - 543,
+        ttl: mdinputTtl,
+        name: mdinputName,
+        lname: mdinputLname,
+        type: mdinputType,
+        std_id: mdinputidStudent,
+        advisor_id: mdinputDoctor.id,
+        grp_id: mdinputGroup.id,
+        start: mdinputStartdate,
+        stop: mdinputStopdate,
+      };
+
+      // console.log("save ===> ", object);
+      await FetchController.fetchAddStudent(object, usertoken);
+      setStatusAdd(true);
+    }
+  };
+
+  const handleSubmitEditInfoStudent = async () => {
+    if (
+      !yearModal ||
+      !mdinputTtl ||
+      !mdinputName ||
+      !mdinputLname ||
+      !mdinputType ||
+      !mdinputidStudent ||
+      !mdinputDoctor.id ||
+      !mdinputGroup.id ||
+      !mdinputStartdate ||
+      !mdinputStopdate
+    )
+      return;
+    const object = {
+      id: idStudent,
+      year: yearModal - 543,
+      ttl: mdinputTtl,
+      name: mdinputName,
+      lname: mdinputLname,
+      type: mdinputType,
+      std_id: mdinputidStudent,
+      advisor_id: mdinputDoctor.id,
+      grp_id: mdinputGroup.id,
+      start: mdinputStartdate,
+      stop: mdinputStopdate,
+    };
+
+    // console.log("ข้อมูลแก้ไข=>", object);
+    FetchController.fetchEditstudent(object, usertoken);
+    setStatusEdit(true);
+    getID(`boxModal`).style.display = "none";
+  };
+
+  const handleSelectLinetable = (row) => {
+    // getID(`table-tr-${row}`).classList.add("tableHightlight");
+  };
+
+  const modalContent = (status) => {
     //ข้อมูลที่จะแสงใน boxModal
-    if ("add") {
+    if (status === "add") {
       return (
         <div
           className="body-content-modalStudent"
@@ -194,10 +338,13 @@ const ContentStudent = (props) => {
                   onFocus={(e) => {
                     e.target.select();
                   }}
+                  readOnly={statusReadonly}
+                  disabled={statusReadonly}
                 ></input>
                 <button
                   className="btn-up-input"
                   type="button"
+                  style={{ visibility: statusReadonly ? "hidden" : "visible" }}
                   onClick={() => {
                     let ayear = parseInt(yearModal);
                     setYearModal(ayear + 1);
@@ -208,6 +355,7 @@ const ContentStudent = (props) => {
                 <button
                   className="btn-down-input"
                   type="button"
+                  style={{ visibility: statusReadonly ? "hidden" : "visible" }}
                   onClick={() => {
                     let ayear = parseInt(yearModal);
                     setYearModal(ayear - 1);
@@ -230,10 +378,13 @@ const ContentStudent = (props) => {
                       setMdinputTtl(e.target.value);
                     }
                   }}
+                  readOnly={statusReadonly}
+                  disabled={statusReadonly}
                 ></input>
                 <button
                   className="btn-dropdown-input"
                   type="button"
+                  style={{ visibility: statusReadonly ? "hidden" : "visible" }}
                   onClick={() => {
                     if (!btnTtl) {
                       getID("divBoxTtlDrop").style.position = "relative";
@@ -290,6 +441,9 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-name"
                 type="text"
+                value={mdinputName}
+                readOnly={statusReadonly}
+                disabled={statusReadonly}
                 onFocus={(e) => {
                   e.target.select();
                 }}
@@ -304,6 +458,9 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-lname"
                 type="text"
+                value={mdinputLname}
+                readOnly={statusReadonly}
+                disabled={statusReadonly}
                 onFocus={(e) => {
                   e.target.select();
                 }}
@@ -320,6 +477,8 @@ const ContentStudent = (props) => {
                   className="Modalinput-type"
                   type="text"
                   value={mdinputType}
+                  readOnly={statusReadonly}
+                  disabled={statusReadonly}
                   onChange={(e) => {
                     if (e.target.value !== "") {
                       setMdinputType(e.target.value);
@@ -328,6 +487,7 @@ const ContentStudent = (props) => {
                 ></input>
                 <button
                   className="btn-dropdown-input"
+                  style={{ visibility: statusReadonly ? "hidden" : "visible" }}
                   type="button"
                   onClick={() => {
                     if (!btnTtl) {
@@ -377,12 +537,16 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-idStudent"
                 type="text"
+                value={mdinputidStudent}
+                readOnly={statusReadonly}
+                disabled={statusReadonly}
                 onChange={(e) => {
                   setMdinputidStudent(e.target.value);
                 }}
                 onFocus={(e) => {
                   e.target.select();
                 }}
+                maxLength={9}
               ></input>
             </div>
             {/* อ.ที่ปรึกษา */}
@@ -394,10 +558,12 @@ const ContentStudent = (props) => {
                   type="text"
                   value={mdinputDoctor.name}
                   readOnly
+                  disabled={statusReadonly}
                 ></input>
                 <button
                   type="button"
                   className="btn-dropdown-input"
+                  style={{ visibility: statusReadonly ? "hidden" : "visible" }}
                   onClick={() => {
                     if (!btnTtl) {
                       getID("divBoxDoctorDrop").style.position = "relative";
@@ -441,9 +607,11 @@ const ContentStudent = (props) => {
                   type="text"
                   value={mdinputGroup.name}
                   readOnly
+                  disabled={statusReadonly}
                 ></input>
                 <button
                   type="button"
+                  style={{ visibility: statusReadonly ? "hidden" : "visible" }}
                   className="btn-dropdown-input"
                   onClick={(e) => {
                     e.preventDefault();
@@ -486,10 +654,19 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-start"
                 type="date"
+                placeholder="dd-mm-yyyy"
+                pattern="\d{4}-\d{2}-\d{2}"
+                value={
+                  mdinputStartdate !== "0000-00-00"
+                    ? mdinputStartdate
+                    : "dd-mm-yyyy"
+                }
                 onChange={(e) => {
                   e.preventDefault();
                   setMdinputStartdate(e.target.value);
                 }}
+                readOnly={statusReadonly}
+                disabled={statusReadonly}
               ></input>
             </div>
             {/* ลงสาย */}
@@ -498,31 +675,27 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-stop"
                 type="date"
+                pattern="\d{4}-\d{2}-\d{2}"
+                placeholder="dd-mm-yyyy"
+                value={
+                  mdinputStopdate !== "0000-00-00"
+                    ? mdinputStopdate
+                    : "dd-mm-yyyy"
+                }
                 onChange={(e) => {
                   e.preventDefault();
-                  setMdinputStartdate(e.target.value);
+                  setMdinputStopdate(e.target.value);
                 }}
+                readOnly={statusReadonly}
+                disabled={statusReadonly}
               ></input>
             </div>
             <div className="btn-modal-submit">
               <button
                 type="submit"
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.preventDefault();
-                  const object = {
-                    year: yearModal - 543,
-                    ttl: mdinputTtl,
-                    name: mdinputName,
-                    lname: mdinputLname,
-                    type: mdinputType,
-                    std_id: mdinputidStudent,
-                    advisor_id: mdinputDoctor.id,
-                    grp_id: mdinputGroup.id,
-                    start: mdinputStartdate,
-                    stop: mdinputStopdate,
-                  };
-                  console.log(object);
-                  FetchController.fetchAddStudent(object, usertoken);
+                  handleSubmitSaveInfoStudent();
                 }}
               >
                 {"บันทึก"}
@@ -538,6 +711,7 @@ const ContentStudent = (props) => {
                 className="input-picture-file"
                 type="file"
                 ref={inputPic}
+                accept="image/png,image/jpeg,image/jpg"
                 onChange={(e) => {
                   imgPreview(e);
                 }}
@@ -547,9 +721,7 @@ const ContentStudent = (props) => {
                 className="btn-add-filePicture"
                 onClick={(e) => {
                   e.preventDefault();
-                  // console.log("==>", inputPic.current.files[0]);
-                  handleUploadPicture();
-                  // FetchController.fetchImgae();
+                  handleUploadPicture(dataStudent, mdinputidStudent);
                 }}
               >
                 UPLOAD
@@ -558,7 +730,7 @@ const ContentStudent = (props) => {
           </div>
         </div>
       );
-    } else if ("edit") {
+    } else if (status === "edit") {
       return (
         <div
           className="body-content-modalStudent"
@@ -692,6 +864,7 @@ const ContentStudent = (props) => {
                 onFocus={(e) => {
                   e.target.select();
                 }}
+                value={mdinputName}
                 onChange={(e) => {
                   setMdinputName(e.target.value);
                 }}
@@ -703,6 +876,7 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-lname"
                 type="text"
+                value={mdinputLname}
                 onFocus={(e) => {
                   e.target.select();
                 }}
@@ -776,12 +950,14 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-idStudent"
                 type="text"
+                value={mdinputidStudent}
                 onChange={(e) => {
                   setMdinputidStudent(e.target.value);
                 }}
                 onFocus={(e) => {
                   e.target.select();
                 }}
+                maxLength={9}
               ></input>
             </div>
             {/* อ.ที่ปรึกษา */}
@@ -885,6 +1061,13 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-start"
                 type="date"
+                placeholder="dd-mm-yyyy"
+                pattern="\d{4}-\d{2}-\d{2}"
+                value={
+                  mdinputStartdate !== "0000-00-00"
+                    ? mdinputStartdate
+                    : "dd-mm-yyyy"
+                }
                 onChange={(e) => {
                   e.preventDefault();
                   setMdinputStartdate(e.target.value);
@@ -897,9 +1080,16 @@ const ContentStudent = (props) => {
               <input
                 className="Modalinput-stop"
                 type="date"
+                placeholder="dd-mm-yyyy"
+                pattern="\d{4}-\d{2}-\d{2}"
+                value={
+                  mdinputStopdate !== "0000-00-00"
+                    ? mdinputStopdate
+                    : "dd-mm-yyyy"
+                }
                 onChange={(e) => {
                   e.preventDefault();
-                  setMdinputStartdate(e.target.value);
+                  setMdinputStopdate(e.target.value);
                 }}
               ></input>
             </div>
@@ -908,23 +1098,10 @@ const ContentStudent = (props) => {
                 type="submit"
                 onClick={(e) => {
                   e.preventDefault();
-                  const object = {
-                    year: yearModal - 543,
-                    ttl: mdinputTtl,
-                    name: mdinputName,
-                    lname: mdinputLname,
-                    type: mdinputType,
-                    std_id: mdinputidStudent,
-                    advisor_id: mdinputDoctor.id,
-                    grp_id: mdinputGroup.id,
-                    start: mdinputStartdate,
-                    stop: mdinputStopdate,
-                  };
-                  console.log(object);
-                  FetchController.fetchAddStudent(object, usertoken);
+                  handleSubmitEditInfoStudent();
                 }}
               >
-                {"บันทึก"}
+                {"แก้ไข"}
               </button>
             </div>
           </form>
@@ -946,9 +1123,7 @@ const ContentStudent = (props) => {
                 className="btn-add-filePicture"
                 onClick={(e) => {
                   e.preventDefault();
-                  // console.log("==>", inputPic.current.files[0]);
-                  handleUploadPicture();
-                  // FetchController.fetchImgae();
+                  handleUploadPicture(dataStudent, mdinputidStudent);
                 }}
               >
                 UPLOAD
@@ -958,6 +1133,41 @@ const ContentStudent = (props) => {
         </div>
       );
     }
+  };
+
+  const handleEditDataStudent = (data) => {
+    console.log("data=>", data);
+
+    setMdinputTtl(data.ttl.trim());
+    setMdinputName(data.name.trim());
+    setMdinputLname(data.lname.trim());
+    setMdinputType(data.type.trim());
+    setMdinputidStudent(data.std_id.trim());
+    setMdinputDoctor({
+      id: data.advisor_id ? data.advisor_id.trim() : "",
+      name: data.advisor_name ? data.advisor_name.trim() : "",
+    });
+    setMdinputGroup({ id: data.grp_id.trim(), name: data.grp_name.trim() });
+    setMdinputStartdate(data.start.trim());
+    setMdinputStopdate(data.stop.trim());
+  };
+
+  const clearMdinput = () => {
+    setMdinputTtl("");
+    setMdinputName("");
+    setMdinputLname("");
+    setMdinputType("");
+    setMdinputidStudent("");
+    setMdinputDoctor({ id: "", name: "" });
+    setMdinputGroup({ id: "", name: "" });
+    setMdinputStartdate("0000-00-00");
+    setMdinputStopdate("0000-00-00");
+  };
+
+  const handleSaveing = () => {
+    document.getElementsByClassName("btn-modal-submit")[0].style.visibility =
+      "hidden";
+    setStatusReadonly(true);
   };
 
   useEffect(() => {
@@ -970,6 +1180,43 @@ const ContentStudent = (props) => {
   useEffect(() => {
     setDataSearch(searching(searchtext, dataStudent));
   }, [dataStudent]);
+
+  useEffect(() => {
+    if (statusAdd) {
+      setTimeout(() => {
+        handleSaveing();
+        handleFatch();
+        setStatusAdd(false);
+      }, 500);
+    }
+  }, [statusAdd]);
+
+  useEffect(() => {
+    if (statusEdit) {
+      setTimeout(() => {
+        handleFatch();
+        setStatusEdit(false);
+      }, 500);
+    }
+  }, [statusEdit]);
+
+  useEffect(() => {
+    if (statusDel) {
+      setTimeout(() => {
+        handleFatch();
+        setStatusDel(false);
+      }, 500);
+    }
+  }, [statusDel]);
+
+  useEffect(() => {
+    if (statusCloseModal) {
+      setStatusReadonly(false);
+      clearMdinput();
+      document.getElementsByClassName("btn-modal-submit")[0].style.visibility =
+        "visible";
+    }
+  }, [statusCloseModal]);
 
   return (
     <div className="body-content-ctStudent">
@@ -1060,14 +1307,18 @@ const ContentStudent = (props) => {
             {dataSearch[0] ? (
               dataSearch.map((data, index) => (
                 <tr
+                  className="table-tr-studentinfo"
+                  id={`table-tr-${index}`}
                   key={index}
                   onClick={() => {
-                    // console.log("handle list !=>", data);
+                    console.log("handle list !=>", data);
                     setIdStudent(data.Id);
                     setMcq(data.mcq);
                     setOsce({ OSCE1: data.osce1, OSCE2: data.osce2 });
                     setMeq({ MEQ1: data.meq1, MEQ2: data.meq2 });
                     setBook(data.book);
+                    setIsHoldaLine(true);
+                    handleSelectLinetable(index);
                   }}
                 >
                   <td>{data.ttl ? data.ttl.trim() : ""}</td>
@@ -1080,15 +1331,17 @@ const ContentStudent = (props) => {
                   <td>{data.start ? data.start.trim() : ""}</td>
                   <td>{data.stop ? data.stop.trim() : ""}</td>
                   <td>
-                    <button className="btn-edit-tableInfoStudent">
-                      <i
-                        className="bi-three-dots"
-                        onClick={() => {
-                          console.log("Edit button", data);
-                          setTitleModalStudent("แก้ไขข้อมูล นศพ.");
-                          handleOpenModalbox("boxModal");
-                        }}
-                      ></i>
+                    <button
+                      className="btn-edit-tableInfoStudent"
+                      onClick={() => {
+                        setTitleModalStudent("แก้ไขข้อมูล นศพ.");
+                        handleOpenModalbox("boxModal");
+                        setStatusCloseModal(false);
+                        handleEditDataStudent(data);
+                        setStatusConStudentbox("edit");
+                      }}
+                    >
+                      <i className="bi-three-dots"></i>
                     </button>
                   </td>
                 </tr>
@@ -1134,7 +1387,30 @@ const ContentStudent = (props) => {
                 <td>{"-"}</td>
                 <td>{"-"}</td>
                 <td>
-                  <button className="btn-edit-tableInfoStudent">
+                  <button
+                    className="btn-edit-tableInfoStudent"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      let object = [
+                        {
+                          ttl: "นาย",
+                          name: "อ้ายคำ",
+                          lname: "ใจหล้า",
+                          type: "นศพ.",
+                          std_id: "665332211",
+                          advisor_id: "2",
+                          grp_id: "1",
+                          start: "0000-00-00",
+                          stop: "0000-00-00",
+                        },
+                      ];
+                      setTitleModalStudent("แก้ไขข้อมูล นศพ.");
+                      handleOpenModalbox("boxModal");
+                      setStatusCloseModal(false);
+                      handleEditDataStudent(object);
+                      setStatusConStudentbox("edit");
+                    }}
+                  >
                     <i className="bi-three-dots"></i>
                   </button>
                 </td>
@@ -1150,6 +1426,9 @@ const ContentStudent = (props) => {
             type="button"
             onClick={() => {
               handleOpenModalbox("boxModal");
+              setStatusCloseModal(false);
+              setStatusConStudentbox("add");
+              clearMdinput();
             }}
           >
             {"เพิ่ม"}
@@ -1159,11 +1438,12 @@ const ContentStudent = (props) => {
           <button
             className="btnDelStudent"
             type="button"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
-              if (idStudent.toString() !== "22") return;
+              if (idStudent.toString() !== "28") return;
               let object = { id: idStudent };
-              // FetchController.fetchDelete(object, usertoken);
+              await FetchController.fetchDelete(object, usertoken);
+              setStatusDel(true);
             }}
           >
             {"ลบ"}
@@ -1292,17 +1572,21 @@ const ContentStudent = (props) => {
               className="btn-save-footer"
               onClick={(e) => {
                 e.preventDefault();
-                let object = {
-                  id: idStudent,
-                  mcq: mcq,
-                  osce1: osce.OSCE1,
-                  osce2: osce.OSCE2,
-                  meq1: meq.MEQ1,
-                  meq2: meq.MEQ2,
-                  book: book,
-                };
+                if (idStudent) {
+                  let object = {
+                    id: idStudent,
+                    mcq: mcq,
+                    osce1: osce.OSCE1,
+                    osce2: osce.OSCE2,
+                    meq1: meq.MEQ1,
+                    meq2: meq.MEQ2,
+                    book: book,
+                  };
 
-                FetchController.fetchScoreStudent(object, usertoken);
+                  FetchController.fetchScoreStudent(object, usertoken);
+                } else {
+                  console.log("ไม่ได้เลือกเลย");
+                }
               }}
             >
               {"บันทึก"}
@@ -1311,8 +1595,9 @@ const ContentStudent = (props) => {
         </div>
       </div>
       <ModalBox
-        content={modalContent()}
+        content={modalContent(statusConStudentbox)}
         thisTitle={titleModalStudent ? titleModalStudent : ""}
+        statusClose={setStatusCloseModal}
       ></ModalBox>
     </div>
   );

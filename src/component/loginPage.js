@@ -12,7 +12,6 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("omg");
     FetchController.fetchLogin(username, password, navigate);
   };
 
