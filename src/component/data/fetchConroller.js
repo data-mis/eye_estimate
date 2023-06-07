@@ -173,6 +173,19 @@ const FetchController = {
       console.error(error);
     }
   },
+  fetchGetImage: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/get_image_student`;
+
+    try {
+      let result = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return result;
+    } catch (error) {
+      console.log("fail");
+    }
+  },
 };
 
 export default FetchController;

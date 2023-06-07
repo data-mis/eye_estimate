@@ -359,32 +359,6 @@ html .info-show-contentStudent, body .info-show-contentStudent {
   overflow-x: auto;
   background-color: #cfd8dc;
 }
-html .table-show-infoStudent, body .table-show-infoStudent {
-  border-collapse: collapse;
-  width: 1450px;
-  background-color: #fefefe;
-  text-align: center;
-  font-weight: bold;
-}
-html .table-show-infoStudent thead, body .table-show-infoStudent thead {
-  text-align: center;
-}
-html .table-show-infoStudent th, body .table-show-infoStudent th {
-  border: 2px solid black;
-  background-color: #607d8b;
-  color: #fefefe;
-  text-align: center;
-}
-html .table-show-infoStudent td, body .table-show-infoStudent td {
-  border: 2px solid black;
-}
-html .table-show-infoStudent > tbody > tr:hover td, body .table-show-infoStudent > tbody > tr:hover td {
-  background-color: #01579b;
-  color: #fefefe;
-}
-html .table-show-infoStudent > tbody > tr:nth-child(odd), body .table-show-infoStudent > tbody > tr:nth-child(odd) {
-  background-color: #e0e0e0;
-}
 html .menu-content-ctStudent, body .menu-content-ctStudent {
   height: 80%;
   width: 6%;
@@ -562,6 +536,8 @@ html .content-ctDoctor, body .content-ctDoctor {
 }
 html .content-table, body .content-table {
   border: 1px solid red;
+  scroll-snap-type: mandatory;
+  overflow: auto;
 }
 html .content-menu, body .content-menu {
   border: 1px solid rebeccapurple;
@@ -582,6 +558,91 @@ html .content-menu-btn, body .content-menu-btn {
   margin: 5px auto;
   font-size: 16px;
   font-weight: bold;
+}
+html .header-inboxModal, body .header-inboxModal {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #ffb74d;
+}
+html .header-inboxModal span, body .header-inboxModal span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff3e0;
+}
+html .body-content-inboxModal, body .body-content-inboxModal {
+  height: 350px;
+  width: 100%;
+  display: block;
+  padding: 0 20px;
+}
+html .form-contentInboxModal, body .form-contentInboxModal {
+  display: block;
+  position: relative;
+}
+html .box-input-contentInboxModal, body .box-input-contentInboxModal {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px auto;
+  border: 1px solid black;
+  position: relative;
+}
+html .box-input-contentInboxModal span, body .box-input-contentInboxModal span {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0px 15px;
+}
+html .box-input-contentInboxModal input, body .box-input-contentInboxModal input {
+  width: 80%;
+  height: 25px;
+  border: 1px solid #9e9e9e;
+}
+html .contentboxInput-InboxModal, body .contentboxInput-InboxModal {
+  width: 100%;
+  width: 50%;
+  position: relative;
+}
+html .dropDown-ttl-contentInboxModal, body .dropDown-ttl-contentInboxModal {
+  display: none;
+  border: 1px solid #9e9e9e;
+  width: 80%;
+  height: 150px;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  background-color: #ffffff;
+}
+html .infoTtl-dropdown-contentInboxModal, body .infoTtl-dropdown-contentInboxModal {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 2px 0;
+  border-bottom: 5px solid #eeeeee;
+}
+html .infoTtl-dropdown-contentInboxModal:hover, body .infoTtl-dropdown-contentInboxModal:hover {
+  background-color: #e0e0e0;
+}
+html .radio-btn-InboxModal, body .radio-btn-InboxModal {
+  border: 1px solid #9e9e9e;
+  display: grid;
+  grid-template-columns: 10% 90%;
+  width: 80%;
+}
+html .radio-btn-InboxModal input, body .radio-btn-InboxModal input {
+  height: 16px;
+  border: 1px solid red;
+  padding: 0;
+  margin: 0;
+}
+html .radio-btn-InboxModal span, body .radio-btn-InboxModal span {
+  padding: 0;
 }
 @media only screen and (max-width: 720px) {
   html .nav-content-ctDoctor, body .nav-content-ctDoctor {
@@ -615,6 +676,12 @@ html .content-menu-btn, body .content-menu-btn {
   }
   html .content-menu-btn, body .content-menu-btn {
     height: 10%;
+  }
+  html .body-content-inboxModal, body .body-content-inboxModal {
+    height: 250px;
+  }
+  html .dropDown-ttl-contentInboxModal, body .dropDown-ttl-contentInboxModal {
+    height: 100px;
   }
 }
 @media only screen and (max-width: 360px) {
@@ -928,6 +995,36 @@ html .btn-add-filePicture, body .btn-add-filePicture {
     height: 100px;
     bottom: -100px;
   }
+}
+html .table-show-info, body .table-show-info {
+  border-collapse: collapse;
+  width: 1450px;
+  background-color: #fefefe;
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+}
+html .table-show-info thead, body .table-show-info thead {
+  text-align: center;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+html .table-show-info th, body .table-show-info th {
+  border: 2px solid black;
+  background-color: #607d8b;
+  color: #fefefe;
+  text-align: center;
+}
+html .table-show-info td, body .table-show-info td {
+  border: 2px solid black;
+}
+html .table-show-info > tbody > tr:hover td, body .table-show-info > tbody > tr:hover td {
+  background-color: #01579b;
+  color: #fefefe;
+}
+html .table-show-info > tbody > tr:nth-child(odd), body .table-show-info > tbody > tr:nth-child(odd) {
+  background-color: #e0e0e0;
 }
 
 /*# sourceMappingURL=App.css.map */

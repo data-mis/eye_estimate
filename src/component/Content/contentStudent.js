@@ -5,6 +5,7 @@ import ModalBox from "../modal/modalBox";
 import { handleOpenModalbox } from "../config/modalConfig";
 import Cookies from "universal-cookie";
 import { result } from "lodash";
+import { HttpConfig } from "../data/httpConfig";
 
 const ContentStudent = (props) => {
   const testFileFolder = "../../../public/picture/student";
@@ -15,12 +16,14 @@ const ContentStudent = (props) => {
   const [dataSearch, setDataSearch] = useState([]);
 
   const [idStudent, setIdStudent] = useState();
+  const [numberStudent, setNumberStudent] = useState();
+
   const [mcq, setMcq] = useState();
   const [osce, setOsce] = useState();
   const [meq, setMeq] = useState();
   const [book, setBook] = useState();
 
-  const [picURL, setPicURL] = useState();
+  const [picURL, setPicURL] = useState("");
   const inputPic = useRef(null);
   const [btnTtl, setBtnTtl] = useState(false);
 
@@ -169,7 +172,7 @@ const ContentStudent = (props) => {
           let datafrom = new FormData();
           datafrom.append("file", newfile);
           datafrom.append("std_id", `${idStudent}`);
-          FetchController.fetchImgae(datafrom,usertoken);
+          FetchController.fetchImgae(datafrom, usertoken);
         } catch (error) {
           console.log(error.response?.data);
         }
@@ -228,21 +231,21 @@ const ContentStudent = (props) => {
 
       return;
     } else {
-      let getClassBorderRED = (id) => {
+      let getClassBorderNormal = (id) => {
         return (document.getElementsByClassName(id)[0].style.border =
           "1px solid #ddd");
       };
 
-      getClassBorderRED("Modalinput-year");
-      getClassBorderRED("Modalinput-ttl");
-      getClassBorderRED("Modalinput-name");
-      getClassBorderRED("Modalinput-lname");
-      getClassBorderRED("Modalinput-type");
-      getClassBorderRED("Modalinput-idStudent");
-      getClassBorderRED("Modalinput-perfessor");
-      getClassBorderRED("Modalinput-group");
-      getClassBorderRED("Modalinput-start");
-      getClassBorderRED("Modalinput-stop");
+      getClassBorderNormal("Modalinput-year");
+      getClassBorderNormal("Modalinput-ttl");
+      getClassBorderNormal("Modalinput-name");
+      getClassBorderNormal("Modalinput-lname");
+      getClassBorderNormal("Modalinput-type");
+      getClassBorderNormal("Modalinput-idStudent");
+      getClassBorderNormal("Modalinput-perfessor");
+      getClassBorderNormal("Modalinput-group");
+      getClassBorderNormal("Modalinput-start");
+      getClassBorderNormal("Modalinput-stop");
 
       const object = {
         year: yearModal - 543,
@@ -299,6 +302,16 @@ const ContentStudent = (props) => {
 
   const handleSelectLinetable = (row) => {
     // getID(`table-tr-${row}`).classList.add("tableHightlight");
+  };
+
+  const showURLimageStudent = (StudentId, token) => {
+    FetchController.fetchGetImage({ std_id: StudentId.trim() }, token).then(
+      (data) => {
+        if (data) {
+          setPicURL(`http://${data.url}`);
+        }
+      }
+    );
   };
 
   const modalContent = (status) => {
@@ -710,6 +723,7 @@ const ContentStudent = (props) => {
               <input
                 className="input-picture-file"
                 type="file"
+                id="imageBTNadd"
                 ref={inputPic}
                 accept="image/png,image/jpeg,image/jpg"
                 onChange={(e) => {
@@ -1113,6 +1127,8 @@ const ContentStudent = (props) => {
               <input
                 className="input-picture-file"
                 type="file"
+                id="imageBTNedit"
+                accept="image/png,image/jpeg,image/jpg"
                 ref={inputPic}
                 onChange={(e) => {
                   imgPreview(e);
@@ -1215,6 +1231,23 @@ const ContentStudent = (props) => {
       clearMdinput();
       document.getElementsByClassName("btn-modal-submit")[0].style.visibility =
         "visible";
+      setPicURL("");
+      let getClassBorderNormal = (id) => {
+        return (document.getElementsByClassName(id)[0].style.border =
+          "1px solid #ddd");
+      };
+
+      getClassBorderNormal("Modalinput-year");
+      getClassBorderNormal("Modalinput-ttl");
+      getClassBorderNormal("Modalinput-name");
+      getClassBorderNormal("Modalinput-lname");
+      getClassBorderNormal("Modalinput-type");
+      getClassBorderNormal("Modalinput-idStudent");
+      getClassBorderNormal("Modalinput-perfessor");
+      getClassBorderNormal("Modalinput-group");
+      getClassBorderNormal("Modalinput-start");
+      getClassBorderNormal("Modalinput-stop");
+      inputPic.current.value = "";
     }
   }, [statusCloseModal]);
 
@@ -1287,7 +1320,7 @@ const ContentStudent = (props) => {
         </div>
       </div>
       <div className="info-show-contentStudent">
-        <table className="table-show-infoStudent">
+        <table className="table-show-info">
           <thead>
             <tr>
               <th>คำนำหน้า</th>
@@ -1313,6 +1346,8 @@ const ContentStudent = (props) => {
                   onClick={() => {
                     console.log("handle list !=>", data);
                     setIdStudent(data.Id);
+                    setNumberStudent(data.std_id);
+                    showURLimageStudent(data.std_id, usertoken);
                     setMcq(data.mcq);
                     setOsce({ OSCE1: data.osce1, OSCE2: data.osce2 });
                     setMeq({ MEQ1: data.meq1, MEQ2: data.meq2 });
