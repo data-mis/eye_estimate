@@ -104,13 +104,13 @@ const ContentStudent = (props) => {
     let ayear = { year: parseInt(year) - 543 };
     console.log("ayear", ayear);
     if (!localStorage.getItem("groupName")) {
-      FetchController.fetchGetGroup(ayear, usertoken).then((data) => {
-        let nameGroup = [];
-        data.map((ele) => {
-          nameGroup.push({ id: ele.Id.trim(), name: ele.name.trim() });
-        });
-        localStorage.setItem("groupName", JSON.stringify(nameGroup));
-      });
+      // FetchController.fetchGetGroup(ayear, usertoken).then((data) => {
+      //   let nameGroup = [];
+      //   data.map((ele) => {
+      //     nameGroup.push({ id: ele.Id.trim(), name: ele.name.trim() });
+      //   });
+      //   localStorage.setItem("groupName", JSON.stringify(nameGroup));
+      // });
     }
   };
 

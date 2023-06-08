@@ -619,7 +619,6 @@ $colorBGnav:#e0e0e0;
 }
 .form-contentInboxModal{
     display: block;
-    position: relative;
 }
     .box-input-contentInboxModal{
         width: 100%;
@@ -628,13 +627,12 @@ $colorBGnav:#e0e0e0;
         justify-content: center;
         align-items: center;
         margin: 5px auto;
-        border: 1px solid black;
-        position: relative;
     }
         .box-input-contentInboxModal span{
             font-size: 14px;
             font-weight: bold;
             padding: 0px 15px;
+            width: 120px;
         }
         .box-input-contentInboxModal input{
             width: 80%;
@@ -644,7 +642,10 @@ $colorBGnav:#e0e0e0;
     .contentboxInput-InboxModal{
        width: 100%;
        width: 50%;
-       position: relative;
+       position: static;
+    }
+    .relativeBox-drop{
+        position: relative;
     }
         .dropDown-ttl-contentInboxModal{
             display: none;
@@ -670,18 +671,30 @@ $colorBGnav:#e0e0e0;
         }
     .radio-btn-InboxModal{
         border: 1px solid $colorBorderDrop;
-        display: grid;
-        grid-template-columns: 10% 90%;
+        display: flex;
+        align-items: center;
         width: 80%;
     }
     .radio-btn-InboxModal input{
+        width: 30px;
         height: 16px;
-        border: 1px solid red;
-        padding: 0;
-        margin: 0;
+        margin: 5px 0;
     }
     .radio-btn-InboxModal span{
         padding: 0;
+        width: auto;
+    }
+.relativeBox-PIN{
+    display: flex;
+}
+    .btn-eyes-showtext-hide,.btn-eyes-showtext-show{
+        border: 1px solid $colorBorderDrop;
+    }
+    .btn-eyes-showtext-hide:hover,.btn-eyes-showtext-show:hover{
+        background-color: $colorBGnav;
+    }
+    .btn-eyes-showtext-show{
+        display: none;
     }
 @media only screen and (max-width:720px) {
     .nav-content-ctDoctor{

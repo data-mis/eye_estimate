@@ -4,17 +4,78 @@ import ModalBox from "../modal/modalBox";
 
 const ContentDoctor = (props) => {
   const [statusCloseModal, setStatusCloseModal] = useState(false);
+  const [statusDropttl, setStatusDropttl] = useState(false);
+  const [statusShowPIN, setStatusShowPIN] = useState(false);
+
+  const [ttlDoc, setTtlDoc] = useState("");
+  const [PINdoc, setPINdoc] = useState("");
+
+  const arrTtl = [
+    { ttl: "ผศ.นพ." },
+    { ttl: "ผศ.พญ." },
+    { ttl: "รศ.ดร.พญ." },
+    { ttl: "รศ.นพ." },
+    { ttl: "รศ.พญ." },
+    { ttl: "ศ.ดร.พญ." },
+    { ttl: "ศ.นพ." },
+    { ttl: "ศ.นญ." },
+    { ttl: "อ.นพ." },
+    { ttl: "อ.พญ." },
+  ];
 
   const getDocId = (id) => {
     return document.getElementById(id);
+  };
+  const getDocClass = (id) => {
+    return document.getElementsByClassName(id);
+  };
+
+  const generatePINforDoc = () => {
+    let max = 999999;
+    let min = 100000;
+
+    setPINdoc(Math.round(Math.random() * (max - min + 1) + min));
+  };
+
+  const handleShowDropdown = () => {
+    if (!statusDropttl) {
+      getDocId("boxDropdownTTL").style.display = "block";
+      setStatusDropttl(true);
+    } else {
+      getDocId("boxDropdownTTL").style.display = "none";
+      setStatusDropttl(false);
+    }
+  };
+
+  const handleClickonBody = (e) => {
+    if (
+      e.target !== getDocClass("btndropdown-ttl-contentInboxModal")[0] &&
+      e.target !== getDocClass("bi-caret-down")[0]
+    ) {
+      getDocId("boxDropdownTTL").style.display = "none";
+      setStatusDropttl(false);
+    }
+  };
+
+  const handleSwithBtnPIN = (status) => {
+    if (status) {
+      getDocId("btnEyeHide").style.display = "none";
+      getDocId("btnEyeShow").style.display = "block";
+      setStatusShowPIN(true);
+    } else {
+      getDocId("btnEyeShow").style.display = "none";
+      getDocId("btnEyeHide").style.display = "block";
+      setStatusShowPIN(false);
+    }
   };
 
   const contentInmodal = () => {
     return (
       <div
         className="contentInbodyModalBox"
-        onClick={() => {
-          getDocId("boxDropdownTTL").style.display = "none";
+        onClick={(e) => {
+          e.preventDefault();
+          handleClickonBody(e);
         }}
       >
         <div className="header-inboxModal">
@@ -37,50 +98,42 @@ const ContentDoctor = (props) => {
             <div className="box-input-contentInboxModal">
               <span>{"คำนำหน้า :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
-                <button
-                  className="btndropdown-ttl-contentInboxModal"
-                  type="button"
-                  onClick={() => {
-                    console.log("โชว์ดรอปดาว");
-                    getDocId("boxDropdownTTL").style.display = "block";
-                  }}
-                >
-                  <i className="bi-caret-down"></i>
-                </button>
-                <div
-                  className="dropDown-ttl-contentInboxModal"
-                  id="boxDropdownTTL"
-                >
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"ผศ.นพ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"ผศ.พญ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"รศ.ดร.พญ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"รศ.นพ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"รศ.พญ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"ศ.ดร.พญ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"ศ.นพ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"ศ.นญ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"อ.นพ."}</span>
-                  </div>
-                  <div className="infoTtl-dropdown-contentInboxModal">
-                    <span>{"อ.พญ."}</span>
+                <div className="relativeBox-drop">
+                  <input
+                    type="text"
+                    value={ttlDoc}
+                    onChange={(e) => {
+                      setTtlDoc(e.target.value);
+                    }}
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
+                  ></input>
+                  <button
+                    className="btndropdown-ttl-contentInboxModal"
+                    type="button"
+                    onClick={() => {
+                      handleShowDropdown();
+                    }}
+                  >
+                    <i className="bi-caret-down"></i>
+                  </button>
+                  <div
+                    className="dropDown-ttl-contentInboxModal"
+                    id="boxDropdownTTL"
+                  >
+                    {arrTtl.map((ele, index) => (
+                      <div
+                        className="infoTtl-dropdown-contentInboxModal"
+                        key={index}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setTtlDoc(ele.ttl);
+                        }}
+                      >
+                        <span>{ele.ttl}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -101,7 +154,13 @@ const ContentDoctor = (props) => {
               <span>{"เพศ :"}</span>
               <div className="contentboxInput-InboxModal">
                 <div className="radio-btn-InboxModal">
-                  <input type="radio" value={"male"}></input>
+                  <input
+                    type="radio"
+                    value={"male"}
+                    onChange={() => {
+                      console.log("NICE");
+                    }}
+                  ></input>
                   <span>{"ชาย"}</span>
                   <input type="radio" value={"female"}></input>
                   <span>{"หญิง"}</span>
@@ -111,20 +170,62 @@ const ContentDoctor = (props) => {
             <div className="box-input-contentInboxModal">
               <span>{"PIN :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
-                <button><i></i></button>
+                <div className="relativeBox-PIN" id="boxPIN">
+                  <input
+                    type={statusShowPIN ? "text" : "password"}
+                    value={PINdoc}
+                    maxLength={6}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      setPINdoc(e.target.value);
+                    }}
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
+                  ></input>
+                  <button
+                    className="btn-eyes-showtext-hide"
+                    id="btnEyeHide"
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSwithBtnPIN(true);
+                    }}
+                  >
+                    <i className="bi-eye"></i>
+                  </button>
+                  <button
+                    className="btn-eyes-showtext-show"
+                    type="button"
+                    id="btnEyeShow"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSwithBtnPIN(false);
+                    }}
+                  >
+                    <i className="bi-eye-fill"></i>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      generatePINforDoc();
+                    }}
+                  >
+                    <i className="bi-repeat"></i>
+                  </button>
+                </div>
               </div>
             </div>
             <div className="box-input-contentInboxModal">
               <span>{"เริ่ม :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
+                <input type="date"></input>
               </div>
             </div>
             <div className="box-input-contentInboxModal">
               <span>{"หยุด :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
+                <input type="date"></input>
               </div>
             </div>
           </form>

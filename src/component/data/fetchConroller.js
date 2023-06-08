@@ -78,11 +78,11 @@ const FetchController = {
     let http = `${HttpConfig()}/get_classgroup`;
 
     try {
-      let result = fetch(http, request).then((res) => {
-        return res.json();
-      });
+      // let result = fetch(http, request).then((res) => {
+      //   return res.json();
+      // });
 
-      return result;
+      // return result;
     } catch (error) {
       throw error;
     }
