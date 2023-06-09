@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { handleOpenModalbox } from "../config/modalConfig";
 import ModalBox from "../modal/modalBox";
+import { useEffect } from "react";
 
 const ContentDoctor = (props) => {
   const [statusCloseModal, setStatusCloseModal] = useState(false);
   const [statusDropttl, setStatusDropttl] = useState(false);
   const [statusShowPIN, setStatusShowPIN] = useState(false);
 
+  const [usernamedoc, setUsernamedoc] = useState("");
   const [ttlDoc, setTtlDoc] = useState("");
+  const [namedoc, setNamedoc] = useState("");
+  const [lnamedoc, setLnamedoc] = useState("");
+  const [genderDoc, setGenderDoc] = useState("male");
   const [PINdoc, setPINdoc] = useState("");
+  const [startdoc, setStartdoc] = useState("0000-00-00");
+  const [stopdoc, setStopdoc] = useState("0000-00-00");
 
   const arrTtl = [
     { ttl: "ผศ.นพ." },
@@ -74,7 +81,6 @@ const ContentDoctor = (props) => {
       <div
         className="contentInbodyModalBox"
         onClick={(e) => {
-          e.preventDefault();
           handleClickonBody(e);
         }}
       >
@@ -82,19 +88,37 @@ const ContentDoctor = (props) => {
           <span>{"เพิ่มข้อมูล อาจารย์"}</span>
         </div>
         <div className="body-content-inboxModal">
-          <form className="form-contentInboxModal">
+          <form
+            className="form-contentInboxModal"
+            onSubmit={(e) => {
+              e.preventDefault();
+              let object = {
+                username: usernamedoc,
+                ttl: ttlDoc,
+                name: namedoc,
+                lname: lnamedoc,
+                gender: genderDoc,
+                pin: PINdoc,
+                start: startdoc,
+                stop: stopdoc,
+              };
+              console.log(object);
+            }}
+          >
+            {/* username */}
             <div className="box-input-contentInboxModal">
               <span>{"Username :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setUsernamedoc(e.target.value);
+                  }}
+                  onFocus={(e) => e.target.select()}
+                ></input>
               </div>
             </div>
-            <div className="box-input-contentInboxModal">
-              <span>{"คำนำหน้า :"}</span>
-              <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
-              </div>
-            </div>
+            {/* คำนำหน้าชื่อ */}
             <div className="box-input-contentInboxModal">
               <span>{"คำนำหน้า :"}</span>
               <div className="contentboxInput-InboxModal">
@@ -138,18 +162,33 @@ const ContentDoctor = (props) => {
                 </div>
               </div>
             </div>
+            {/* ชื่อ */}
             <div className="box-input-contentInboxModal">
               <span>{"ชื่อ :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setNamedoc(e.target.value);
+                  }}
+                  onFocus={(e) => e.target.select()}
+                ></input>
               </div>
             </div>
+            {/* นามสกุล */}
             <div className="box-input-contentInboxModal">
               <span>{"นามสกุล :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="text"></input>
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setLnamedoc(e.target.value);
+                  }}
+                  onFocus={(e) => e.target.select()}
+                ></input>
               </div>
             </div>
+            {/* เพศ */}
             <div className="box-input-contentInboxModal">
               <span>{"เพศ :"}</span>
               <div className="contentboxInput-InboxModal">
@@ -157,16 +196,27 @@ const ContentDoctor = (props) => {
                   <input
                     type="radio"
                     value={"male"}
-                    onChange={() => {
-                      console.log("NICE");
+                    name={"gender"}
+                    checked={genderDoc === "male"}
+                    onChange={(e) => {
+                      setGenderDoc(e.target.value);
                     }}
                   ></input>
                   <span>{"ชาย"}</span>
-                  <input type="radio" value={"female"}></input>
+                  <input
+                    type="radio"
+                    value={"female"}
+                    name={"gender"}
+                    checked={genderDoc === "female"}
+                    onChange={(e) => {
+                      setGenderDoc(e.target.value);
+                    }}
+                  ></input>
                   <span>{"หญิง"}</span>
                 </div>
               </div>
             </div>
+            {/* PIN */}
             <div className="box-input-contentInboxModal">
               <span>{"PIN :"}</span>
               <div className="contentboxInput-InboxModal">
@@ -216,16 +266,33 @@ const ContentDoctor = (props) => {
                 </div>
               </div>
             </div>
+            {/* เริ่ม */}
             <div className="box-input-contentInboxModal">
               <span>{"เริ่ม :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="date"></input>
+                <input
+                  type="date"
+                  onChange={(e) => {
+                    setStartdoc(e.target.value);
+                  }}
+                ></input>
               </div>
             </div>
+            {/* หยุด */}
             <div className="box-input-contentInboxModal">
               <span>{"หยุด :"}</span>
               <div className="contentboxInput-InboxModal">
-                <input type="date"></input>
+                <input
+                  type="date"
+                  onChange={(e) => {
+                    setStopdoc(e.target.value);
+                  }}
+                ></input>
+              </div>
+            </div>
+            <div className="box-input-contentInboxModal">
+              <div className="btnSubmit-boxContentInboxModal">
+                <button type="submit">{"บันทึก"}</button>
               </div>
             </div>
           </form>

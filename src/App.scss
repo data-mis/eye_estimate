@@ -696,6 +696,14 @@ $colorBGnav:#e0e0e0;
     .btn-eyes-showtext-show{
         display: none;
     }
+.btnSubmit-boxContentInboxModal{
+    margin: 15px auto;
+}
+    .btnSubmit-boxContentInboxModal button{
+        height: 35px;
+        width: 100px;
+        font-size: 18px;
+    }
 @media only screen and (max-width:720px) {
     .nav-content-ctDoctor{
         height: 10%;
@@ -737,6 +745,12 @@ $colorBGnav:#e0e0e0;
     height: 100px;
 }
 }
+@media only screen and (max-width:740px) {
+    .body-content-inboxModal{
+        scroll-snap-type: mandatory;
+        overflow: auto;
+    }
+}
 @media only screen and (max-width:360px){
     .nav-content-ctDoctor{
         height: 5%;
@@ -747,8 +761,98 @@ $colorBGnav:#e0e0e0;
     .content-menu-btn{
         height: 7%;
     }
+    .body-content-inboxModal{
+        height: 320px;
+    }
 }
 }
+
+@mixin ContentGroupStudent(){
+    .body-content-groupStudent{
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        border: 1px solid red;
+    }
+    .hander-content-groupStudent{
+        border: 2px solid green;
+        height: 5%;
+        display: grid;
+        grid-template-columns: 20% 30% 40% 10%;
+        background-color: $colorBGnav;
+    }
+        .col-header{
+            border: 1px solid blue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-year-groupStudent,.input-search-groupStudent{
+            width: 30%;
+        }
+            .relative-btnBox{
+                height: 25px;
+            }
+            .yearControllup{
+                font-size: 8px;
+                height: 50%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                align-items: center;
+            }
+            .yearControlldown{
+                font-size: 8px;
+                height: 50%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                display: flex;
+                align-items: center;
+            }
+    .btn-close-groupStudent{
+        height: 85%;
+        width: 80%;
+    }
+.content-groupStudent{
+    border: 1px solid red;
+    height: 95%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 40% 10%;
+}
+    .table-box-groupStudent{
+        border: 1px solid green;
+        height: 100%;
+        width: 100%;
+    }
+    .box-controll-student{
+        border:1px solid rebeccapurple;
+        height: 100%;
+        width: 100%;
+    }
+    .box-menu-groupStudent{
+        border: 1px solid salmon;
+        height: 100%;
+        width: 100%;
+    }
+@media only screen and (max-width:740px) {
+    .hander-content-groupStudent{
+        height: 10%;
+        font-size: 13px;
+    }
+    .input-year-groupStudent,.input-search-groupStudent{
+        width: 50%;
+    }
+    .box-col-year{
+        justify-content: start;
+        padding-left: 5px;
+    }
+}
+
+}   
 
 @mixin ModalSlideBar(){
     .modal-slideBar-body{
@@ -1083,6 +1187,7 @@ html,body{
     @include MainPage();
     @include ContentStudent();
     @include ContentDoctor();
+    @include ContentGroupStudent();
 
     // modal
     @include ModalSlideBar();

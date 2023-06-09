@@ -305,13 +305,13 @@ const ContentStudent = (props) => {
   };
 
   const showURLimageStudent = (StudentId, token) => {
-    FetchController.fetchGetImage({ std_id: StudentId.trim() }, token).then(
-      (data) => {
-        if (data) {
-          setPicURL(`http://${data.url}`);
-        }
-      }
-    );
+    // FetchController.fetchGetImage({ std_id: StudentId.trim() }, token).then(
+    //   (data) => {
+    //     if (data) {
+    //       setPicURL(`http://${data.url}`);
+    //     }
+    //   }
+    // );
   };
 
   const modalContent = (status) => {
@@ -1188,9 +1188,9 @@ const ContentStudent = (props) => {
 
   useEffect(() => {
     if (!year) return;
-    handleFatch();
-    handleFatchTeacher();
-    handleFatchGroup(yearModal);
+    // handleFatch();
+    // handleFatchTeacher();
+    // handleFatchGroup(yearModal);
   }, [year]);
 
   useEffect(() => {
@@ -1201,7 +1201,7 @@ const ContentStudent = (props) => {
     if (statusAdd) {
       setTimeout(() => {
         handleSaveing();
-        handleFatch();
+        // handleFatch();
         setStatusAdd(false);
       }, 500);
     }
@@ -1210,7 +1210,7 @@ const ContentStudent = (props) => {
   useEffect(() => {
     if (statusEdit) {
       setTimeout(() => {
-        handleFatch();
+        // handleFatch();
         setStatusEdit(false);
       }, 500);
     }
@@ -1219,7 +1219,7 @@ const ContentStudent = (props) => {
   useEffect(() => {
     if (statusDel) {
       setTimeout(() => {
-        handleFatch();
+        // handleFatch();
         setStatusDel(false);
       }, 500);
     }

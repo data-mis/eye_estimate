@@ -5,6 +5,7 @@ import Cookies, { Cookie } from "universal-cookie";
 import { TryCheckCookie, checkCookieOut } from "./config/cookieConfig";
 import { useNavigate } from "react-router-dom";
 import ContentDoctor from "./Content/contentDoctor";
+import ContentGroupStudent from "./Content/contentGroup";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
@@ -49,6 +50,10 @@ const NavigationPage = () => {
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
 
         return <ContentDoctor></ContentDoctor>;
+      case "groupStudent":
+        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
+
+        return <ContentGroupStudent></ContentGroupStudent>;
       default:
         return (
           <div className="body-mainDefault">
@@ -121,7 +126,7 @@ const NavigationPage = () => {
 
   useEffect(() => {
     if (!checkCookieOut()) {
-      return navigat("/");
+      // return navigat("/");
     }
   }, []);
 
@@ -180,7 +185,14 @@ const NavigationPage = () => {
             </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-groupStudent" className="navigatMenuBTN">
+            <button
+              id="btnMenu-groupStudent"
+              className="navigatMenuBTN"
+              onClick={(e) => {
+                removeholdbtnmenu(e);
+                setModeContent("groupStudent");
+              }}
+            >
               {"กลุ่ม"}
             </button>
           </div>
