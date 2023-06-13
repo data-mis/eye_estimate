@@ -32,7 +32,13 @@ const ModalSlideBar = (prop) => {
           >
             <Icon icon="el:group"></Icon>
           </button>
-          <button id="btnMenu-ModalList" type="button">
+          <button
+            id="btnMenu-ModalList"
+            type="button"
+            onClick={() => {
+              prop.settingContent("workDoctor");
+            }}
+          >
             <Icon icon="ep:list"></Icon>
           </button>
           <button id="btnMenu-ModalSetting" type="button">

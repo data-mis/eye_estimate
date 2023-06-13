@@ -730,7 +730,6 @@ html .body-content-groupStudent, body .body-content-groupStudent {
   width: 100%;
   padding: 0;
   margin: 0;
-  border: 2px solid black;
 }
 html .hander-content-groupStudent, body .hander-content-groupStudent {
   height: 5%;
@@ -815,7 +814,6 @@ html .box-doctorInput-ControllStudent, body .box-doctorInput-ControllStudent {
   margin-top: 10px;
   display: grid;
   grid-template-columns: 80% 20%;
-  border: 1px solid red;
 }
 html .box-doctorInput-ControllStudent span, body .box-doctorInput-ControllStudent span {
   margin-right: 3px;
@@ -826,6 +824,10 @@ html .input-doctorText, body .input-doctorText {
 html .row-input-doctorInputControllStudent, body .row-input-doctorInputControllStudent {
   margin-bottom: 10px;
   display: flex;
+}
+html .boxInRowInputControllStudent, body .boxInRowInputControllStudent {
+  display: flex;
+  padding: 0 5px;
 }
 html .input-meq-ControllStudent, body .input-meq-ControllStudent {
   width: 35%;
@@ -862,16 +864,74 @@ html .box-btnmodal-adding, body .box-btnmodal-adding {
   height: 10%;
   margin: 2px;
   display: block;
-  position: relative;
 }
-html .btn-addingModal, body .btn-addingModal {
+html .btn-addingModal-addAdvisor, html .btn-addingModal-savegroup, body .btn-addingModal-addAdvisor, body .btn-addingModal-savegroup {
   width: 90%;
   height: 25px;
+  display: none;
+  margin: auto;
+}
+html .body-content-addDoctorMEQ, body .body-content-addDoctorMEQ {
+  width: 100%;
+  height: 150px;
+  padding: 15px 0;
+}
+html .formInfo-addDoctorMEQ, body .formInfo-addDoctorMEQ {
   display: block;
+  text-align: center;
+}
+html .boxRow-addDoctorMEQ, body .boxRow-addDoctorMEQ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  margin: 15px 0;
+}
+html .boxRow-adddoctorMEQ-drop, body .boxRow-adddoctorMEQ-drop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: static;
+}
+html .dropDown-info-adddoctorMEQ, body .dropDown-info-adddoctorMEQ {
+  display: none;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 25px;
+  left: 0;
+  width: 150px;
+  height: 100px;
+  border: 1px solid rebeccapurple;
+  background-color: #fefefe;
+}
+html .dropDown-info-adddoctorMEQ div, body .dropDown-info-adddoctorMEQ div {
+  text-align: start;
+  padding: 5px;
+}
+html .dropDown-info-adddoctorMEQ div:hover, body .dropDown-info-adddoctorMEQ div:hover {
+  background-color: #ddd;
+}
+html .input-textadvisor-addDoctorMEQ, html .input-textMEQ-addDoctorMEQ, body .input-textadvisor-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
+  width: 150px;
+  height: 25px;
+  border: 1px solid #9e9e9e;
+}
+html .input-textMEQ-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
+  width: 50px;
+}
+html .boxRow-addDoctorMEQ span, body .boxRow-addDoctorMEQ span {
+  margin: 0 5px;
+}
+html .boxRow-addDoctorMEQ button, body .boxRow-addDoctorMEQ button {
+  width: 25px;
+  height: 25px;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #9e9e9e;
+}
+html .btn-save-addDoctorMEQ, body .btn-save-addDoctorMEQ {
+  width: 35%;
 }
 @media only screen and (max-width: 1024px) {
   html .row-input-doctorInputControllStudent, body .row-input-doctorInputControllStudent {
@@ -905,6 +965,148 @@ html .btn-addingModal, body .btn-addingModal {
   }
   html .box-doctorInput-ControllStudent, body .box-doctorInput-ControllStudent {
     display: none;
+  }
+  html .btn-menu-boxGroupStudent, body .btn-menu-boxGroupStudent {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  html .btn-menu-boxGroupStudent button, body .btn-menu-boxGroupStudent button {
+    width: 100%;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  html .btn-addingModal-addAdvisor, body .btn-addingModal-addAdvisor {
+    display: block;
+  }
+}
+html .body-contentwork, body .body-contentwork {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html .header-contentwork, body .header-contentwork {
+  height: 5%;
+  width: 100%;
+  display: flex;
+  background-color: #e0e0e0;
+}
+html .box-textheader-contentwork, body .box-textheader-contentwork {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+html .box-btnclosebody-contentwork, body .box-btnclosebody-contentwork {
+  display: flex;
+  align-items: center;
+  width: 10%;
+  height: 100%;
+  padding: 0 5px;
+}
+html .btn-closebody-contentwork, body .btn-closebody-contentwork {
+  width: 100%;
+  height: 90%;
+}
+html .menu-nav-contentwork, body .menu-nav-contentwork {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border: 2px solid green;
+  padding: 5px;
+  height: 5%;
+}
+html .contentwork-year, body .contentwork-year {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  position: relative;
+  margin: 0 5px;
+}
+html .contentwork-year span, body .contentwork-year span {
+  padding: 0 5px;
+}
+html .input-year-contentwork, body .input-year-contentwork {
+  border: 1px solid #9e9e9e;
+  width: 100%;
+  height: 100%;
+}
+html .this-up-year, body .this-up-year {
+  width: 15px;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 8px;
+}
+html .this-down-year, body .this-down-year {
+  width: 15px;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 8px;
+}
+html .contentwork-month, body .contentwork-month {
+  height: 100%;
+  width: 15%;
+  display: flex;
+  position: relative;
+}
+html .contentwork-month span, body .contentwork-month span {
+  padding-right: 5px;
+  width: 30%;
+}
+html .input-month-contentwork, body .input-month-contentwork {
+  width: 70%;
+  height: 100%;
+  border: 1px solid #9e9e9e;
+}
+html .this-month-drop, body .this-month-drop {
+  width: 5%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .dropinfo-monthContentwork, body .dropinfo-monthContentwork {
+  display: none;
+  width: 73%;
+  height: 150px;
+  border: 1px solid #9e9e9e;
+  background-color: #ffffff;
+  position: absolute;
+  top: 30px;
+  right: 0;
+}
+html .this-radiobtn-contentwork, body .this-radiobtn-contentwork {
+  display: flex;
+  border: 1px solid #9e9e9e;
+  width: 300px;
+  margin: 0 5px;
+}
+html .row-radiobtn, body .row-radiobtn {
+  display: block;
+  width: 100%;
+  padding: 2px;
+}
+@media only screen and (max-width: 720px) {
+  html .header-contentwork, body .header-contentwork {
+    height: 10%;
+  }
+}
+@media only screen and (max-width: 360px) {
+  html .header-contentwork, body .header-contentwork {
+    height: 5%;
   }
 }
 html .modal-slideBar-body, body .modal-slideBar-body {
@@ -1002,6 +1204,10 @@ html .modal-box-body, body .modal-box-body {
   margin: auto;
   background-color: #eeeeee;
   border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 html .header-nav-modalBox, body .header-nav-modalBox {
   height: auto;
@@ -1196,6 +1402,10 @@ html .btn-add-filePicture, body .btn-add-filePicture {
   html .modal-box-body, body .modal-box-body {
     width: 100%;
     height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   html .input-modalBox span, html .input-modalBox input, body .input-modalBox span, body .input-modalBox input {
     font-size: 11px;

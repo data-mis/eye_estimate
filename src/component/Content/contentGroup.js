@@ -1,6 +1,206 @@
+import { useEffect, useState } from "react";
 import ModalBox from "../modal/modalBox";
 
 const ContentGroupStudent = (props) => {
+  const docGetId = (id) => {
+    return document.getElementById(id);
+  };
+
+  const [inputAddvisorId1, setInputAddvisorID1] = useState("");
+  const [inputAddvisorId2, setInputAddvisorID2] = useState("");
+  const [inputMEQ1, setInputMEQ1] = useState();
+  const [inputMEQ2, setInputMEQ2] = useState();
+
+  const [titleText, setTitleText] = useState("");
+  const [closeModalbox, setCloseModalbox] = useState(false);
+  const [statusOpenDrop, setStatusOpenDrop] = useState(false);
+  const [statusFinishDocMEQ, setStatusFinishDocMEQ] = useState(false);
+
+  const handleModleAddDoctor = (mode) => {
+    if (mode) {
+      docGetId(`boxModal`).style.display = "block";
+    } else {
+      docGetId(`boxModal`).style.display = "none";
+    }
+  };
+
+  const handleDropDoctorMEQ = (mode) => {
+    console.log(statusOpenDrop);
+    switch (mode) {
+      case 1:
+        if (statusOpenDrop === false) {
+          setStatusOpenDrop(true);
+          docGetId("advisorDrop1").style.position = "relative";
+          docGetId("advisorDrop2").style.position = "static";
+          docGetId("dropBoxAdvisor1").style.display = "block";
+          docGetId("dropBoxAdvisor2").style.display = "none";
+        } else if (statusOpenDrop === true) {
+          setStatusOpenDrop(false);
+          docGetId("dropBoxAdvisor1").style.display = "none";
+          docGetId("dropBoxAdvisor2").style.display = "none";
+          docGetId("advisorDrop1").style.position = "static";
+          docGetId("advisorDrop2").style.position = "static";
+        }
+        break;
+
+      case 2:
+        if (statusOpenDrop === false) {
+          setStatusOpenDrop(true);
+          docGetId("advisorDrop2").style.position = "relative";
+          docGetId("advisorDrop1").style.position = "static";
+          docGetId("dropBoxAdvisor2").style.display = "block";
+          docGetId("dropBoxAdvisor1").style.display = "none";
+        } else if (statusOpenDrop === true) {
+          setStatusOpenDrop(false);
+          docGetId("dropBoxAdvisor1").style.display = "none";
+          docGetId("dropBoxAdvisor2").style.display = "none";
+          docGetId("advisorDrop1").style.position = "static";
+          docGetId("advisorDrop2").style.position = "static";
+        }
+
+        break;
+    }
+  };
+
+  const handleSubmitModalDoctorMEQ = (e) => {
+    e.preventDefault();
+    let object = {
+      advisor1: inputAddvisorId1,
+      advisor2: inputAddvisorId2,
+      meq1: inputMEQ1,
+      meq2: inputMEQ2,
+    };
+    setStatusFinishDocMEQ(true);
+    console.log("object=>", object);
+    handleModleAddDoctor(false);
+  };
+
+  const ContentAddDoctorModal = () => {
+    return (
+      <div
+        className="body-content-addDoctorMEQ"
+        onClick={(e) => {
+          // console.log("event Click on Body modle:", e.target);
+        }}
+      >
+        <form
+          className="formInfo-addDoctorMEQ"
+          onSubmit={(e) => {
+            handleSubmitModalDoctorMEQ(e);
+          }}
+        >
+          <div className="boxRow-addDoctorMEQ">
+            <span>{"อาจารย์"}</span>
+            <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop1`}>
+              <input
+                type="text"
+                className="input-textadvisor-addDoctorMEQ"
+                onChange={(e) => {
+                  setInputAddvisorID1(e.target.value);
+                }}
+                onFocus={(e) => e.target.select()}
+                value={inputAddvisorId1}
+                required
+              ></input>
+              <button
+                type="button"
+                onClick={() => {
+                  handleDropDoctorMEQ(1);
+                }}
+              >
+                <i className="bi-caret-down"></i>
+              </button>
+              <div
+                className="dropDown-info-adddoctorMEQ"
+                id={`dropBoxAdvisor1`}
+              >
+                <div
+                  onClick={() => {
+                    setInputAddvisorID1("อ.หนึ่ง ทดสอบ");
+                    handleDropDoctorMEQ(1);
+                  }}
+                >
+                  <span>{`อ.หนึ่ง ทดสอบ`}</span>
+                </div>
+              </div>
+            </div>
+            <span>{"MEQ"}</span>
+            <input
+              type="text"
+              className="input-textMEQ-addDoctorMEQ"
+              onChange={(e) => {
+                setInputMEQ1(e.target.value);
+              }}
+              onFocus={(e) => e.target.select()}
+              required
+            ></input>
+          </div>
+          <div className="boxRow-addDoctorMEQ">
+            <span>{"อาจารย์"}</span>
+            <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop2`}>
+              <input
+                type="text"
+                className="input-textadvisor-addDoctorMEQ"
+                value={inputAddvisorId2}
+                onChange={(e) => {
+                  setInputAddvisorID2(e.target.value);
+                }}
+                onFocus={(e) => e.target.select()}
+                required
+              ></input>
+              <button
+                type="button"
+                onClick={() => {
+                  handleDropDoctorMEQ(2);
+                }}
+              >
+                <i className="bi-caret-down"></i>
+              </button>
+              <div
+                className="dropDown-info-adddoctorMEQ"
+                id={`dropBoxAdvisor2`}
+              >
+                <div
+                  onClick={() => {
+                    setInputAddvisorID2("อ.สอง ทดสอบ");
+                    handleDropDoctorMEQ(2);
+                  }}
+                >
+                  <span>{`อ.สอง ทดสอบ`}</span>
+                </div>
+              </div>
+            </div>
+            <span>{"MEQ"}</span>
+            <input
+              type="text"
+              className="input-textMEQ-addDoctorMEQ"
+              onChange={(e) => {
+                setInputMEQ2(e.target.value);
+              }}
+              onFocus={(e) => {
+                e.target.select();
+              }}
+              required
+            ></input>
+          </div>
+          <button
+            className="btn-save-addDoctorMEQ"
+            type="submit"
+          >{`บันทึก`}</button>
+        </form>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (statusFinishDocMEQ) {
+      console.log("save doctor select");
+      docGetId("btnAdddocmeq").style.display = "none";
+      docGetId("btnsavegroup").style.display = "block";
+      setStatusFinishDocMEQ(false);
+    }
+  }, [statusFinishDocMEQ]);
+
   return (
     <div className="body-content-groupStudent">
       <div className="hander-content-groupStudent">
@@ -105,42 +305,102 @@ const ContentGroupStudent = (props) => {
               <div className="row-input-doctorInputControllStudent">
                 <div className="boxInRowInputControllStudent">
                   <span>{"อาจารย์"}</span>
-                  <input type="text" className="input-doctorText"></input>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      console.log("doc");
-                    }}
-                  >
-                    <i className="bi-caret-down"></i>
-                  </button>
+                  <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop1`}>
+                    <input
+                      type="text"
+                      className="input-textadvisor-addDoctorMEQ"
+                      onChange={(e) => {
+                        setInputAddvisorID1(e.target.value);
+                      }}
+                      onFocus={(e) => e.target.select()}
+                      value={inputAddvisorId1}
+                      required
+                    ></input>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleDropDoctorMEQ(1);
+                      }}
+                    >
+                      <i className="bi-caret-down"></i>
+                    </button>
+                    <div
+                      className="dropDown-info-adddoctorMEQ"
+                      id={`dropBoxAdvisor1`}
+                    >
+                      <div
+                        onClick={() => {
+                          setInputAddvisorID1("อ.หนึ่ง ทดสอบ");
+                          handleDropDoctorMEQ(1);
+                        }}
+                      >
+                        <span>{`อ.หนึ่ง ทดสอบ`}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="boxInRowInputControllStudent">
                   <span>{"MEQ"}</span>
                   <input
                     className="input-meq-ControllStudent"
                     type="text"
+                    onChange={(e) => {
+                      setInputMEQ1(e.target.value);
+                    }}
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
                   ></input>
                 </div>
               </div>
               <div className="row-input-doctorInputControllStudent">
                 <div className="boxInRowInputControllStudent">
                   <span>{"อาจารย์"}</span>
-                  <input type="text" className="input-doctorText"></input>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      console.log("doc");
-                    }}
-                  >
-                    <i className="bi-caret-down"></i>
-                  </button>
+                  <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop2`}>
+                    <input
+                      type="text"
+                      className="input-textadvisor-addDoctorMEQ"
+                      value={inputAddvisorId2}
+                      onChange={(e) => {
+                        setInputAddvisorID2(e.target.value);
+                      }}
+                      onFocus={(e) => e.target.select()}
+                      required
+                    ></input>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleDropDoctorMEQ(2);
+                      }}
+                    >
+                      <i className="bi-caret-down"></i>
+                    </button>
+                    <div
+                      className="dropDown-info-adddoctorMEQ"
+                      id={`dropBoxAdvisor2`}
+                    >
+                      <div
+                        onClick={() => {
+                          setInputAddvisorID2("อ.สอง ทดสอบ");
+                          handleDropDoctorMEQ(2);
+                        }}
+                      >
+                        <span>{`อ.สอง ทดสอบ`}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="boxInRowInputControllStudent">
                   <span>{"MEQ"}</span>
                   <input
                     className="input-meq-ControllStudent"
                     type="text"
+                    onChange={(e) => {
+                      setInputMEQ2(e.target.value);
+                    }}
+                    onFocus={(e) => {
+                      e.target.select();
+                    }}
                   ></input>
                 </div>
               </div>
@@ -152,7 +412,24 @@ const ContentGroupStudent = (props) => {
             </div>
           </div>
           <div className="box-btnmodal-adding">
-            <button className="btn-addingModal" type="button">{"บันทึก"}</button>
+            <button
+              className="btn-addingModal-addAdvisor"
+              id="btnAdddocmeq"
+              type="button"
+              onClick={(e) => {
+                setTitleText("เพิ่มอาจารย์ และ MEQ");
+                handleModleAddDoctor(true);
+              }}
+            >
+              {"อาจารย์"}
+            </button>
+            <button
+              className="btn-addingModal-savegroup"
+              type="button"
+              id="btnsavegroup"
+            >
+              {"บันทึก"}
+            </button>
           </div>
         </div>
         <div className="box-menu-groupStudent">
@@ -164,7 +441,11 @@ const ContentGroupStudent = (props) => {
           </div>
         </div>
       </div>
-      <ModalBox></ModalBox>
+      <ModalBox
+        thisTitle={titleText}
+        statusClose={setCloseModalbox}
+        content={ContentAddDoctorModal()}
+      ></ModalBox>
     </div>
   );
 };

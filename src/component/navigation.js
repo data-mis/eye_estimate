@@ -6,6 +6,7 @@ import { TryCheckCookie, checkCookieOut } from "./config/cookieConfig";
 import { useNavigate } from "react-router-dom";
 import ContentDoctor from "./Content/contentDoctor";
 import ContentGroupStudent from "./Content/contentGroup";
+import ContentWork from "./Content/contentWork";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
@@ -54,6 +55,11 @@ const NavigationPage = () => {
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
 
         return <ContentGroupStudent></ContentGroupStudent>;
+
+      case "workDoctor":
+        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
+        return <ContentWork></ContentWork>;
+        
       default:
         return (
           <div className="body-mainDefault">
@@ -197,7 +203,14 @@ const NavigationPage = () => {
             </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-workDoctor" className="navigatMenuBTN">
+            <button
+              id="btnMenu-workDoctor"
+              className="navigatMenuBTN"
+              onClick={(e) => {
+                removeholdbtnmenu(e);
+                setModeContent("workDoctor");
+              }}
+            >
               {"งานอาจารย์"}
             </button>
           </div>

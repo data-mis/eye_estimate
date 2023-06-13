@@ -773,7 +773,6 @@ $colorBGnav:#e0e0e0;
         width: 100%;
         padding: 0;
         margin: 0;
-        border: 2px solid black;
     }
     .hander-content-groupStudent{
         height: 5%;
@@ -858,7 +857,6 @@ $colorBGnav:#e0e0e0;
         margin-top: 10px;
         display: grid;
         grid-template-columns: 80% 20%;
-        border: 1px solid red;
     }
         .box-doctorInput-ControllStudent span{
             // border: 1px solid red;
@@ -870,6 +868,10 @@ $colorBGnav:#e0e0e0;
     .row-input-doctorInputControllStudent{
         margin-bottom: 10px;
         display: flex;
+    }
+    .boxInRowInputControllStudent{
+        display: flex;
+        padding: 0 5px;
     }
     .input-meq-ControllStudent{
         width: 35%;
@@ -906,17 +908,77 @@ $colorBGnav:#e0e0e0;
     height: 10%;
     margin: 2px;
     display: block;
-    position: relative;
 }
-    .btn-addingModal{
+    .btn-addingModal-addAdvisor,.btn-addingModal-savegroup{
         width: 90%; 
         height: 25px;
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
+        display: none;
+        margin: auto;
     }
+    //modal เพิ่มอาจารย์และMEQ ขนาดหน้าจอ moblie
+    .body-content-addDoctorMEQ{
+        width: 100%;
+        height: 150px;
+        padding: 15px 0;
+    }
+    .formInfo-addDoctorMEQ{
+        display: block;
+        text-align: center;
+    }
+    .boxRow-addDoctorMEQ{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        margin: 15px 0;
+    }
+    .boxRow-adddoctorMEQ-drop{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: static;
+    }
+    .dropDown-info-adddoctorMEQ{
+        display: none;
+        position: absolute;
+        top: 25px;
+        left: 0;
+        width: 150px;
+        height: 100px;
+        border: 1px solid rebeccapurple;
+        background-color: #fefefe;
+    }
+        .dropDown-info-adddoctorMEQ div{
+            text-align: start;
+            padding: 5px;
+        }
+        .dropDown-info-adddoctorMEQ div:hover{
+            background-color: #ddd;
+        }
+        .input-textadvisor-addDoctorMEQ,.input-textMEQ-addDoctorMEQ{
+            width: 150px;
+            height: 25px;
+            border: 1px solid $colorBorderDrop;
+        }
+        .input-textMEQ-addDoctorMEQ{
+            width: 50px;
+        }
+        .boxRow-addDoctorMEQ span{
+            margin: 0 5px;
+        }
+        .boxRow-addDoctorMEQ button{
+            width: 25px;
+            height: 25px;
+            font-size: 11px;
+            display: flex;
+            justify-content: center;
+            border: 1px solid $colorBorderDrop;
+        }
+    .btn-save-addDoctorMEQ{
+        width: 35%;
+    }
+
 @media only screen and (max-width:1024px){
     .row-input-doctorInputControllStudent{
         display: block;
@@ -952,9 +1014,156 @@ $colorBGnav:#e0e0e0;
     .box-doctorInput-ControllStudent{
         display: none;   
     }
+    .btn-menu-boxGroupStudent{
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn-menu-boxGroupStudent button{
+        width: 100%;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    .btn-addingModal-addAdvisor{
+        display: block;
+    }
 }
 
 }   
+
+@mixin ContentWork(){
+    .body-contentwork{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .header-contentwork{
+        height: 5%;
+        width: 100%;
+        display: flex;
+        background-color: $colorBGnav;
+    }
+        .box-textheader-contentwork{
+            height: 100%;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+        }
+        .box-btnclosebody-contentwork{
+            display: flex;
+            align-items: center;
+            width: 10%;
+            height: 100%;
+            padding: 0 5px;
+        }
+            .btn-closebody-contentwork{
+                width: 100%;
+                height: 90%;
+            }
+    .menu-nav-contentwork{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        border: 2px solid green;
+        padding: 5px;
+        height: 5%
+    }
+    .contentwork-year{
+        width: 10%;
+        height: 100%;
+        display: flex;
+        position: relative;
+        margin: 0 5px;
+    }
+        .contentwork-year span{
+            padding: 0 5px;
+        }
+        .input-year-contentwork{
+            border: 1px solid $colorBorderDrop;
+            width: 100%;
+            height: 100%;
+        }
+        .this-up-year{
+            width: 15px;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 8px;
+        }
+        .this-down-year{
+            width: 15px;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 8px;
+        }
+    .contentwork-month{
+        height: 100%;
+        width: 15%;
+        display: flex;
+        position: relative;
+    }   
+        .contentwork-month span{
+            padding-right: 5px;
+            width: 30%;
+        }
+        .input-month-contentwork{
+            width: 70%;
+            height: 100%;
+            border: 1px solid $colorBorderDrop;
+        }
+        .this-month-drop{
+            width: 5%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .dropinfo-monthContentwork{
+            display: none;
+            width:  73%;
+            height: 150px;
+            border: 1px solid $colorBorderDrop;
+            background-color: #ffffff;
+            position: absolute;
+            top: 30px;
+            right: 0;
+
+        }
+    .this-radiobtn-contentwork{
+        display: flex;
+        border: 1px solid $colorBorderDrop;
+        width: 300px;
+        margin: 0 5px;
+    }
+    .row-radiobtn{
+        display: block;
+        width: 100%;
+        padding:2px;
+    }
+       
+@media only screen and (max-width:720px) {
+    .header-contentwork{
+        height: 10%;
+    }
+}
+@media only screen and (max-width:360px) {
+    .header-contentwork{
+        height: 5%;
+    }
+ }
+}
 
 @mixin ModalSlideBar(){
     .modal-slideBar-body{
@@ -1039,6 +1248,10 @@ $colorBGnav:#e0e0e0;
         margin: auto;
         background-color: #eeeeee;
         border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        left:50%;
+        transform: translate(-50%,-50%);
     }
     .header-nav-modalBox{
         height: auto;
@@ -1235,6 +1448,10 @@ $colorBGnav:#e0e0e0;
     .modal-box-body{
         width: 100%;
         height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
     }
     .input-modalBox span,.input-modalBox input{
         font-size: 11px;
@@ -1291,6 +1508,7 @@ html,body{
     @include ContentStudent();
     @include ContentDoctor();
     @include ContentGroupStudent();
+    @include ContentWork();
 
     // modal
     @include ModalSlideBar();

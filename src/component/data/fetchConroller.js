@@ -17,6 +17,7 @@ const requestOption = (method, objectBody, token) => {
 };
 
 const FetchController = {
+  // จัดการข้อมูลเกี่ยวกับการเข้าสู่ระบบ
   fetchLogin: async function (user, pwd, navigat) {
     let request = requestOption("POST", { username: user, password: pwd });
     let http = `${HttpConfig()}/get_login`;
@@ -45,6 +46,10 @@ const FetchController = {
       console.error(error);
     }
   },
+  //  จบการจัดการข้อมูลเกี่ยวกับการเข้าสู่ระบบ
+
+
+  // ดึงข้อมูลตารางนักเรียน ใน StudentContent
   fetchStudent: async function (ayear, token) {
     let year = { year: parseInt(ayear) - 543 };
     let request = requestOption("POST", year, token);
@@ -186,6 +191,10 @@ const FetchController = {
       console.log("fail");
     }
   },
+  // จบ การดึงข้อมูลตารางนักเรียน ใน StudentContent
+
+  
+
 };
 
 export default FetchController;
