@@ -23,7 +23,13 @@ const ModalSlideBar = (prop) => {
           >
             <Icon icon="fontisto:doctor"></Icon>
           </button>
-          <button id="btnMenu-ModalGroup" type="button">
+          <button
+            id="btnMenu-ModalGroup"
+            type="button"
+            onClick={() => {
+              prop.settingContent("groupStudent");
+            }}
+          >
             <Icon icon="el:group"></Icon>
           </button>
           <button id="btnMenu-ModalList" type="button">

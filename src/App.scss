@@ -773,17 +773,15 @@ $colorBGnav:#e0e0e0;
         width: 100%;
         padding: 0;
         margin: 0;
-        border: 1px solid red;
+        border: 2px solid black;
     }
     .hander-content-groupStudent{
-        border: 2px solid green;
         height: 5%;
         display: grid;
         grid-template-columns: 20% 30% 40% 10%;
         background-color: $colorBGnav;
     }
         .col-header{
-            border: 1px solid blue;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -817,27 +815,117 @@ $colorBGnav:#e0e0e0;
         width: 80%;
     }
 .content-groupStudent{
-    border: 1px solid red;
     height: 95%;
     width: 100%;
     display: grid;
-    grid-template-columns: 50% 40% 10%;
+    grid-template-columns: 40% 50% 10%;
+    background-color: #fefefe;
 }
     .table-box-groupStudent{
-        border: 1px solid green;
-        height: 100%;
-        width: 100%;
+        height: 95%;
+        width: 95%;
+        display: block;
+        margin: auto;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+        border-right: 3px solid $colorBorderDrop;
     }
     .box-controll-student{
-        border:1px solid rebeccapurple;
-        height: 100%;
-        width: 100%;
+        height: 95%;
+        width: 95%;
+        display: block;
+        margin: auto;
+        border-right: 3px solid $colorBorderDrop;
+    }
+        .row-table-controll-student{
+            scroll-snap-type: mandatory;
+            overflow: auto;
+            height: 30%;
+        }
+        .btnAddDel-controll-student{
+            display: flex;
+            height: 5%;
+            justify-content: end;
+            padding: 0 15px;
+            margin: 2%;
+        }  
+            .btnAdd-inControllStudent,.btnDel-incontrollStudent{
+                width: 40%;
+                height: 100%;
+                margin: 0 1%;
+            }
+    .box-doctorInput-ControllStudent{
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 80% 20%;
+        border: 1px solid red;
+    }
+        .box-doctorInput-ControllStudent span{
+            // border: 1px solid red;
+            margin-right: 3px;
+        }
+        .input-doctorText{
+            width: 50%;
+        }
+    .row-input-doctorInputControllStudent{
+        margin-bottom: 10px;
+        display: flex;
+    }
+    .input-meq-ControllStudent{
+        width: 35%;
+    }
+    .btn-submit-groupStudent{
+        width: 95%;
+        height: 75%;
+        display: block;
+        margin: 5px auto;
     }
     .box-menu-groupStudent{
-        border: 1px solid salmon;
-        height: 100%;
-        width: 100%;
+        border: 2px solid $colorBorderDrop;
+        height: 95%;
+        width: 95%;
+        display: block;
+        margin: auto;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+        background-color: $colorBGnav;
     }
+        .btn-menu-boxGroupStudent{
+            margin: 5px 0;
+            width: 100%;
+            height: 5%;
+        }
+            .btn-menu-boxGroupStudent button{
+                width: 90%;
+                height: 100%;
+                display: block;
+                margin: auto;
+            }
+.box-btnmodal-adding{
+    width: 100%;
+    height: 10%;
+    margin: 2px;
+    display: block;
+    position: relative;
+}
+    .btn-addingModal{
+        width: 90%; 
+        height: 25px;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+@media only screen and (max-width:1024px){
+    .row-input-doctorInputControllStudent{
+        display: block;
+    }
+    .boxInRowInputControllStudent{
+        padding: 5px;
+    }
+   
+}
 @media only screen and (max-width:740px) {
     .hander-content-groupStudent{
         height: 10%;
@@ -849,6 +937,20 @@ $colorBGnav:#e0e0e0;
     .box-col-year{
         justify-content: start;
         padding-left: 5px;
+    }
+
+    .content-groupStudent{
+        height: 90%;
+    }
+    .btnAddDel-controll-student{
+        height: 7%;
+    }
+    .btnAdd-inControllStudent,.btnDel-incontrollStudent{
+        width: 50%;
+        font-size: 11px;
+    }
+    .box-doctorInput-ControllStudent{
+        display: none;   
     }
 }
 
@@ -1154,6 +1256,7 @@ $colorBGnav:#e0e0e0;
         text-align: center;
         font-weight: bold;
         position: relative;
+        margin: auto;
     }
        .table-show-info{
             thead{
