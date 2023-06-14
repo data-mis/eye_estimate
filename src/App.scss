@@ -1052,6 +1052,15 @@ $colorBGnav:#e0e0e0;
             align-items: center;
             padding: 0 15px;
         }
+        .btn-menu-filter,.close-btn-menu-filter{
+            display: none;
+            margin-left: 5px;
+            background-color: #b0bec5;
+            border: 1px solid $colorBorderDrop;
+        }
+            .i-btn-filter{
+                color: #fefefe;
+            }
         .box-btnclosebody-contentwork{
             display: flex;
             align-items: center;
@@ -1062,32 +1071,48 @@ $colorBGnav:#e0e0e0;
             .btn-closebody-contentwork{
                 width: 100%;
                 height: 90%;
+                display: flex;
+                justify-content: center;
+                align-items:center ;
             }
     .menu-nav-contentwork{
         display: flex;
-        justify-content: start;
+        justify-content: center;
         align-items: center;
-        border: 2px solid green;
         padding: 5px;
-        height: 5%
+        height: 5%;
+        margin: 10px 0px;
     }
     .contentwork-year{
-        width: 10%;
+        width: 15%;
         height: 100%;
         display: flex;
         position: relative;
         margin: 0 5px;
     }
+        .box-buttonUPDOWN{
+            display: block;
+            position: relative;
+            width: 19%;
+        }
         .contentwork-year span{
             padding: 0 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            font-weight: bold;
         }
         .input-year-contentwork{
             border: 1px solid $colorBorderDrop;
             width: 100%;
             height: 100%;
         }
+        .input-year-contentwork::-webkit-outer-spin-button,.input-year-contentwork::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+        }
         .this-up-year{
-            width: 15px;
+            width: 100%;
             height: 50%;
             display: flex;
             justify-content: center;
@@ -1098,7 +1123,7 @@ $colorBGnav:#e0e0e0;
             font-size: 8px;
         }
         .this-down-year{
-            width: 15px;
+            width: 100%;
             height: 50%;
             display: flex;
             justify-content: center;
@@ -1110,16 +1135,20 @@ $colorBGnav:#e0e0e0;
         }
     .contentwork-month{
         height: 100%;
-        width: 15%;
+        width: 20%;
         display: flex;
         position: relative;
     }   
         .contentwork-month span{
-            padding-right: 5px;
-            width: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            font-style: 13;
+            font-weight: bold;
         }
         .input-month-contentwork{
-            width: 70%;
+            width: 100%;
             height: 100%;
             border: 1px solid $colorBorderDrop;
         }
@@ -1141,26 +1170,186 @@ $colorBGnav:#e0e0e0;
             right: 0;
 
         }
+    .contentwork-group{
+        height: 100%;
+        width: 20%;
+        display: flex;
+        position: relative;
+        margin: 0 5px;
+    }
+        .contentwork-group span{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            font-size: 13px;
+            font-weight: bold;
+            width: 120px;
+        }
+        .input-group-contentwork{
+            width: 100%;
+            border: 1px solid $colorBorderDrop;
+        }
+        .this-group-drop{
+            display: flex;
+            width: 5%;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid $colorBorderDrop;
+        }
+    .contentwork-buttonAll{
+        height: 100%;
+        width: 10%;
+    }
+    .contentwork-buttonAll button{
+        display: flex;
+        font-size: 13px;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+    }
     .this-radiobtn-contentwork{
         display: flex;
         border: 1px solid $colorBorderDrop;
         width: 300px;
+        height: 100%;
         margin: 0 5px;
+        justify-content: center;
+        align-items: center;
     }
     .row-radiobtn{
-        display: block;
-        width: 100%;
+        display: flex;
+        width: auto;
         padding:2px;
+        justify-content: center;
+    }
+        .row-radiobtn span{
+            font-size: 12px;
+            font-weight: bold;
+        }
+    .boxcontent-contentwork{
+        width: 100%;
+        height: 87%;
+        border: 1px solid red;
+        display: grid;
+        grid-template-columns: 90% 10%;
+    }
+        .box-content{
+            border: 1px solid green;
+        }
+        .row-info-contentwork{
+            border: 1px solid rebeccapurple;
+            width: 100%;
+            height: 40%;
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+        .col-info-contentwork{
+            border: 1px solid black;
+        }
+        .title-info-contentwork{
+            border: 2px solid black;
+            border-bottom: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 25px;
+            width: 100%;
+            background-color: $colorBGmenu;
+        }
+            .title-info-contentwork span{
+                color: #fefefe;
+            }
+        .infoBoxcol-relative-contentwork{
+            width: 100%;
+            height: 92%;
+            scroll-snap-type: mandatory;
+            overflow: auto;
+        }
+    .boxcontent-btnmenu-contentwork{
+        width: 100%;
+        height: 5%;
+        position: relative;
+    }
+        .btn-menu-contentwork{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            height: 80%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    .title-header-contentwork{
+        height: 5%;
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 0 15px;
+        background-color: $colorBGnav;
     }
        
 @media only screen and (max-width:720px) {
     .header-contentwork{
         height: 10%;
     }
+    .menu-nav-contentwork{
+        height: 10%;
+    }
+    .contentwork-year{
+        width: 20%;
+        margin: 0;
+    }
+        .contentwork-year span{
+            font-size: 11px;
+            width: auto;
+        }
+        .input-year-contentwork{
+            width: 100%;
+        }
+    .contentwork-month{
+        width: 30%;
+    }
+        .contentwork-month span{
+            font-size: 11px;
+        }
+    .contentwork-group{
+        width: 30%;
+    }
+        .contentwork-group span{
+            font-size: 11px;
+        }
+    .contentwork-buttonAll{
+        width: 20%;
+    }
+        .contentwork-buttonAll button{
+            font-size: 9px;
+            font-weight: bold;
+        }
+    .menu-nav-contentwork{
+        display: none;
+    }
+    .btn-menu-filter{
+        display: block;
+    }
+    .boxcontent-btnmenu-contentwork{
+        height: 10%;
+    }
 }
 @media only screen and (max-width:360px) {
     .header-contentwork{
         height: 5%;
+    }
+    .menu-nav-contentwork{
+        height: 5%;
+    }
+    .box-buttonUPDOWN{
+        width: 60%;
     }
  }
 }
@@ -1465,6 +1654,94 @@ $colorBGnav:#e0e0e0;
     }
 }
 }
+
+@mixin ModalNavSlide(){
+    .modalNavSlide{
+        display: none;  
+        position: fixed;  
+        z-index: 1;  
+        left: 0;
+        top: 15%;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0);  
+        background-color: rgba(0,0,0,0.4); 
+    }
+    .thisBody-modalNavSlide{
+        background-color: #fefefe;
+        width: 100%;
+        height: 0%;
+        transition: height 0.75s;
+    }
+    .content-body-modalNavslide{
+        display: none;
+    }
+    .menu-navslide-contentwork{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // height: 50%;
+        // border: 1px solid red;
+        height: 25%;
+        margin: 10px;
+    }
+        .menu-navslide-contentwork span{
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+    .contentwork-year-navslide,.contentwork-month-navslide,
+    .contentwork-group-navslide,.contentwork-buttonAll-navslide{
+        display: flex;
+    }
+    .contentwork-gorup-navsilde{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+        .input-group-contentwork-navslide{
+            width: 45%;
+            height: 100%;
+            align-self: center;
+        }
+        .this-month-drop-navslide,.this-group-drop-navslide{
+            width: 10%;
+            height: 21px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+        }
+    .this-radiobtn-contentwork-navslide{
+        display: flex;
+        border: 1px solid $colorBorderDrop;
+        width: auto;
+        height: auto;
+        margin: 0 5px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    @keyframes openSlideNav {
+        from{height: 0%;}to{height: 20%;}
+    }
+    @keyframes closeSlideNav {
+        from{height: 20%;}to{height: 0%;}
+    }
+@media only screen and (max-width:360px) {
+    .modalNavSlide{
+        top: 11%;
+    }
+    .menu-navslide-contentwork{
+        height: 25%;
+        margin: 10px;
+    }
+   
+}
+}
+
 @mixin TableInfo(){
     .table-show-info{
         border-collapse: collapse;
@@ -1513,6 +1790,7 @@ html,body{
     // modal
     @include ModalSlideBar();
     @include ModalBox();
+    @include ModalNavSlide();
 
     // table
     @include TableInfo();
