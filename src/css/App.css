@@ -1084,16 +1084,23 @@ html .this-down-year, body .this-down-year {
 html .contentwork-month, body .contentwork-month {
   height: 100%;
   width: 20%;
-  display: flex;
-  position: relative;
+  display: grid;
+  grid-template-columns: 35% 65%;
 }
 html .contentwork-month span, body .contentwork-month span {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
+  width: 100%;
+  height: 100%;
   font-style: 13;
   font-weight: bold;
+}
+html .dropDownBox-monthContentwork, html .dropDownBox-groupContentwork, body .dropDownBox-monthContentwork, body .dropDownBox-groupContentwork {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 html .input-month-contentwork, body .input-month-contentwork {
   width: 100%;
@@ -1107,22 +1114,44 @@ html .this-month-drop, body .this-month-drop {
   justify-content: center;
   align-items: center;
 }
-html .dropinfo-monthContentwork, body .dropinfo-monthContentwork {
+html .dropinfo-Contentwork, body .dropinfo-Contentwork {
   display: none;
-  width: 73%;
+  width: 100%;
   height: 150px;
   border: 1px solid #9e9e9e;
   background-color: #ffffff;
   position: absolute;
   top: 30px;
   right: 0;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+}
+html .dropinfo-Contentwork-nav, body .dropinfo-Contentwork-nav {
+  display: none;
+  width: 100%;
+  height: 150px;
+  border: 1px solid #9e9e9e;
+  background-color: #ffffff;
+  position: absolute;
+  top: 21px;
+  right: 0;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+}
+html .lineMonthDropinfo-contentwork, body .lineMonthDropinfo-contentwork {
+  padding: 5px;
+  width: 100%;
+  height: auto;
+}
+html .lineMonthDropinfo-contentwork:hover, body .lineMonthDropinfo-contentwork:hover {
+  background-color: #e0e0e0;
 }
 html .contentwork-group, body .contentwork-group {
   height: 100%;
   width: 20%;
-  display: flex;
-  position: relative;
-  margin: 0 5px;
+  display: grid;
+  grid-template-columns: 35% 65%;
+  margin-left: 10px;
 }
 html .contentwork-group span, body .contentwork-group span {
   display: flex;
@@ -1131,10 +1160,12 @@ html .contentwork-group span, body .contentwork-group span {
   width: auto;
   font-size: 13px;
   font-weight: bold;
-  width: 120px;
+  width: 100%;
+  height: 100%;
 }
 html .input-group-contentwork, body .input-group-contentwork {
   width: 100%;
+  height: 100%;
   border: 1px solid #9e9e9e;
 }
 html .this-group-drop, body .this-group-drop {
@@ -1179,12 +1210,8 @@ html .row-radiobtn span, body .row-radiobtn span {
 html .boxcontent-contentwork, body .boxcontent-contentwork {
   width: 100%;
   height: 87%;
-  border: 1px solid red;
   display: grid;
   grid-template-columns: 90% 10%;
-}
-html .box-content, body .box-content {
-  border: 1px solid green;
 }
 html .row-info-contentwork, body .row-info-contentwork {
   border: 1px solid rebeccapurple;
@@ -1240,6 +1267,73 @@ html .title-header-contentwork, body .title-header-contentwork {
   padding: 0 15px;
   background-color: #e0e0e0;
 }
+html .body-modalbox-contentwork, body .body-modalbox-contentwork {
+  width: 100%;
+  height: 360px;
+}
+html .rowinput-modalbox-contentwork, body .rowinput-modalbox-contentwork {
+  width: 80%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 25% 75%;
+  margin: auto;
+}
+html .boxgrid-modal-contentwork, body .boxgrid-modal-contentwork {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+html .timegrid-modal-contentwork, body .timegrid-modal-contentwork {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 12%;
+}
+html .input-rowinput-modalboxContentwork, body .input-rowinput-modalboxContentwork {
+  height: 100%;
+  width: 100%;
+  border: 1px solid #9e9e9e;
+}
+html .btn-rowinput-modalboxContentwork, body .btn-rowinput-modalboxContentwork {
+  height: 60%;
+  width: auto;
+  border: 1px solid #9e9e9e;
+}
+html .boxinputtimeContentwork, body .boxinputtimeContentwork {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+html .box-datetime-contentwork, body .box-datetime-contentwork {
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+html .col-datetimesubmit-contentwork, body .col-datetimesubmit-contentwork {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .input-timeSTS, body .input-timeSTS {
+  width: 50%;
+  height: auto;
+  display: block;
+  font-size: 11px;
+  text-align: center;
+  border: 1px solid #9e9e9e;
+}
+html .input-timeSTS::-webkit-outer-spin-button, html .input-timeSTS::-webkit-inner-spin-button, body .input-timeSTS::-webkit-outer-spin-button, body .input-timeSTS::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+html .btn-confirm-modalContentwork, body .btn-confirm-modalContentwork {
+  border: 1px solid #9e9e9e;
+  height: 50%;
+  width: 80%;
+}
+html .box-special-modalboxcontentwork, body .box-special-modalboxcontentwork {
+  width: 100%;
+  border: 1px solid red;
+}
 @media only screen and (max-width: 720px) {
   html .header-contentwork, body .header-contentwork {
     height: 10%;
@@ -1248,7 +1342,7 @@ html .title-header-contentwork, body .title-header-contentwork {
     height: 10%;
   }
   html .contentwork-year, body .contentwork-year {
-    width: 20%;
+    width: 25%;
     margin: 0;
   }
   html .contentwork-year span, body .contentwork-year span {
@@ -1709,9 +1803,6 @@ html .table-show-info, body .table-show-info {
 }
 html .table-show-info thead, body .table-show-info thead {
   text-align: center;
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
 }
 html .table-show-info th, body .table-show-info th {
   border: 2px solid black;

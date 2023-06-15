@@ -1136,16 +1136,23 @@ $colorBGnav:#e0e0e0;
     .contentwork-month{
         height: 100%;
         width: 20%;
-        display: flex;
-        position: relative;
+        display: grid;
+        grid-template-columns: 35% 65%;
     }   
         .contentwork-month span{
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100px;
+            width: 100%;
+            height: 100%;
             font-style: 13;
             font-weight: bold;
+        }
+        .dropDownBox-monthContentwork,.dropDownBox-groupContentwork{
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
         .input-month-contentwork{
             width: 100%;
@@ -1159,23 +1166,44 @@ $colorBGnav:#e0e0e0;
             justify-content: center;
             align-items: center;
         }
-        .dropinfo-monthContentwork{
+        .dropinfo-Contentwork{
             display: none;
-            width:  73%;
+            width:  100%;
             height: 150px;
             border: 1px solid $colorBorderDrop;
             background-color: #ffffff;
             position: absolute;
             top: 30px;
             right: 0;
-
+            scroll-snap-type: mandatory;
+            overflow: auto;
         }
+        .dropinfo-Contentwork-nav{
+            display: none;
+            width:  100%;
+            height: 150px;
+            border: 1px solid $colorBorderDrop;
+            background-color: #ffffff;
+            position: absolute;
+            top: 21px;
+            right: 0;
+            scroll-snap-type: mandatory;
+            overflow: auto;  
+        }
+        .lineMonthDropinfo-contentwork{
+            padding: 5px;
+            width: 100%;
+            height: auto;
+        }
+            .lineMonthDropinfo-contentwork:hover{
+                background-color: $colorBGnav;
+            }
     .contentwork-group{
         height: 100%;
         width: 20%;
-        display: flex;
-        position: relative;
-        margin: 0 5px;
+        display: grid;
+        grid-template-columns: 35% 65%;
+        margin-left: 10px;
     }
         .contentwork-group span{
             display: flex;
@@ -1184,10 +1212,12 @@ $colorBGnav:#e0e0e0;
             width: auto;
             font-size: 13px;
             font-weight: bold;
-            width: 120px;
+            width: 100%;
+            height: 100%;
         }
         .input-group-contentwork{
             width: 100%;
+            height: 100%;
             border: 1px solid $colorBorderDrop;
         }
         .this-group-drop{
@@ -1232,13 +1262,9 @@ $colorBGnav:#e0e0e0;
     .boxcontent-contentwork{
         width: 100%;
         height: 87%;
-        border: 1px solid red;
         display: grid;
         grid-template-columns: 90% 10%;
     }
-        .box-content{
-            border: 1px solid green;
-        }
         .row-info-contentwork{
             border: 1px solid rebeccapurple;
             width: 100%;
@@ -1293,7 +1319,76 @@ $colorBGnav:#e0e0e0;
         padding: 0 15px;
         background-color: $colorBGnav;
     }
-       
+
+//modalContentWork
+.body-modalbox-contentwork{
+    width: 100%;
+    height: 360px;
+}
+    .rowinput-modalbox-contentwork{
+        width: 80%;
+        height: auto;
+        display: grid;
+        grid-template-columns: 25% 75%;
+        margin: auto;
+    }
+    .boxgrid-modal-contentwork{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+    .timegrid-modal-contentwork{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        padding-left: 12%;
+    }
+   
+        .input-rowinput-modalboxContentwork{
+            height: 100%;
+            width: 100%;
+            border: 1px solid $colorBorderDrop;
+        }
+        .btn-rowinput-modalboxContentwork{
+            height: 60%;
+            width: auto;
+            border: 1px solid $colorBorderDrop;
+        }
+        .boxinputtimeContentwork{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: auto;
+        }
+    .box-datetime-contentwork{
+        display: grid;
+        grid-template-columns: 80% 20%;
+    }
+    .col-datetimesubmit-contentwork{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+        .input-timeSTS{
+            width: 50%;
+            height: auto;
+            display: block;
+            font-size: 11px;
+            text-align: center;
+            border: 1px solid $colorBorderDrop;
+        }
+        .input-timeSTS::-webkit-outer-spin-button,.input-timeSTS::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+        }
+        .btn-confirm-modalContentwork{
+            border: 1px solid $colorBorderDrop;
+            height: 50%;
+            width: 80%;
+        }
+    .box-special-modalboxcontentwork{
+        width: 100%;
+        border: 1px solid red;
+    }
 @media only screen and (max-width:720px) {
     .header-contentwork{
         height: 10%;
@@ -1302,7 +1397,7 @@ $colorBGnav:#e0e0e0;
         height: 10%;
     }
     .contentwork-year{
-        width: 20%;
+        width: 25%;
         margin: 0;
     }
         .contentwork-year span{
@@ -1756,9 +1851,9 @@ $colorBGnav:#e0e0e0;
             thead{
                 // border: 5px solid red;
                 text-align: center;
-                position: sticky;
-                position: -webkit-sticky;
-                top: 0;
+                // position: sticky;
+                // position: -webkit-sticky;
+                // top: 0;
             }
                 th{
                     border: 2px solid black;
