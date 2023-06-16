@@ -1630,6 +1630,7 @@ const ContentStudent = (props) => {
         </div>
       </div>
       <ModalBox
+        idbox={"boxModal"}
         content={modalContent(statusConStudentbox)}
         thisTitle={titleModalStudent ? titleModalStudent : ""}
         statusClose={setStatusCloseModal}

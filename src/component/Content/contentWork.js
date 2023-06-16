@@ -31,17 +31,58 @@ const ContentWork = () => {
     }
   };
 
-  const handleOpenDropdown = (id) => {
+  const nonedropAtall = () => {
+    let objectIDboxgrid = [
+      {
+        idbox: "boxTypeReport",
+      },
+      { idbox: "boxPersonport" },
+      {
+        idbox: "boxAgroup",
+      },
+      { idbox: "boxAstudent" },
+    ];
+    let objectIDdropid = [
+      {
+        iddrop: "dropInfoTypeReport",
+      },
+      { iddrop: "dropInfoPersonport" },
+      { iddrop: "dropInfogroup" },
+      { iddrop: "dropInfoStudent" },
+    ];
+
+    objectIDboxgrid.map((ele) => {
+      docGetId(ele.idbox).classList.remove("positionRelativeBox");
+    });
+    objectIDdropid.map((ele) => {
+      console.log(docGetId(ele.iddrop));
+      if (docGetId(ele.iddrop)) {
+        docGetId(ele.iddrop).style.display = "none";
+      }
+    });
+  };
+
+  const handleOpenDropdown = (id, box) => {
     let lengthtable = document.getElementsByClassName("table-show-info").length;
     let table = document.getElementsByClassName("table-show-info");
+
+    console.log(id);
     if (!openMonthdrop) {
       if (docGetId(id).style.display === "block") {
+        if (box) {
+          docGetId(box).classList.remove("positionRelativeBox");
+        }
+
         setOpenMonthdrop(false);
         for (let i = 0; i < lengthtable; i++) {
           table[i].style.position = "relative";
         }
         docGetId(id).style.display = "none";
       } else {
+        if (box) {
+          docGetId(box).classList.add("positionRelativeBox");
+        }
+
         setOpenMonthdrop(true);
 
         for (let i = 0; i < lengthtable; i++) {
@@ -51,9 +92,18 @@ const ContentWork = () => {
       }
     } else {
       if (docGetId(id).style.display === "block") {
+        if (box) {
+          docGetId(box).classList.remove("positionRelativeBox");
+        }
+
         setOpenMonthdrop(false);
         docGetId(id).style.display = "none";
       } else {
+        if (box) {
+          nonedropAtall();
+          docGetId(box).classList.add("positionRelativeBox");
+        }
+
         for (let i = 0; i < lengthtable; i++) {
           table[i].style.position = "static";
         }
@@ -65,60 +115,100 @@ const ContentWork = () => {
   const handleContentmodal = () => {
     return (
       <div className="body-modalbox-contentwork">
+        {/* แบบประเมิน */}
         <div className="rowinput-modalbox-contentwork">
           <div className="boxgrid-modal-contentwork">
             <span>{`แบบประเมิน`}</span>
           </div>
-          <div className="boxgrid-modal-contentwork">
+          <div className="boxgrid-modal-contentwork" id="boxTypeReport">
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
             ></input>
-            <button className="btn-rowinput-modalboxContentwork">
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              onClick={() => {
+                handleOpenDropdown("dropInfoTypeReport", "boxTypeReport");
+              }}
+            >
               <i className="bi-caret-down"></i>
             </button>
+            <div
+              className="dropInfo-boxgrid-contentwork"
+              id="dropInfoTypeReport"
+            ></div>
           </div>
         </div>
+        {/* ผู้ประเมิน */}
         <div className="rowinput-modalbox-contentwork">
           <div className="boxgrid-modal-contentwork">
             <span>{`ผู้ประเมิน`}</span>
           </div>
-          <div className="boxgrid-modal-contentwork">
+          <div className="boxgrid-modal-contentwork" id="boxPersonport">
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
             ></input>
-            <button className="btn-rowinput-modalboxContentwork">
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              onClick={() => {
+                handleOpenDropdown("dropInfoPersonport", "boxPersonport");
+              }}
+            >
               <i className="bi-caret-down"></i>
             </button>
+            <div
+              className="dropInfo-boxgrid-contentwork"
+              id="dropInfoPersonport"
+            ></div>
           </div>
         </div>
+        {/* กลุ่ม */}
         <div className="rowinput-modalbox-contentwork">
           <div className="boxgrid-modal-contentwork">
             <span>{`กลุ่ม`}</span>
           </div>
-          <div className="boxgrid-modal-contentwork">
+          <div className="boxgrid-modal-contentwork" id="boxAgroup">
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
             ></input>
-            <button className="btn-rowinput-modalboxContentwork">
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              onClick={() => {
+                handleOpenDropdown("dropInfogroup", "boxAgroup");
+              }}
+            >
               <i className="bi-caret-down"></i>
             </button>
+            <div
+              className="dropInfo-boxgrid-contentwork"
+              id="dropInfogroup"
+            ></div>
           </div>
         </div>
+        {/* นักศึกษาแพทย์ */}
         <div className="rowinput-modalbox-contentwork">
           <div className="boxgrid-modal-contentwork">
             <span>{`นศพ`}</span>
           </div>
-          <div className="boxgrid-modal-contentwork">
+          <div className="boxgrid-modal-contentwork" id="boxAstudent">
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
             ></input>
-            <button className="btn-rowinput-modalboxContentwork">
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              onClick={() => {
+                handleOpenDropdown("dropInfoStudent", "boxAstudent");
+              }}
+            >
               <i className="bi-caret-down"></i>
             </button>
+            <div
+              className="dropInfo-boxgrid-contentwork"
+              id="dropInfoStudent"
+            ></div>
           </div>
         </div>
         <div className="box-datetime-contentwork">
@@ -154,16 +244,135 @@ const ContentWork = () => {
             </div>
           </div>
           <div className="col-datetimesubmit-contentwork">
-            <button className="btn-confirm-modalContentwork" type="button">{"บันทึก"}</button>
+            <button className="btn-confirm-modalContentwork" type="button">
+              {"บันทึก"}
+            </button>
           </div>
         </div>
-        <div className="box-special-modalboxcontentwork"></div>
+        <div className="box-special-modalboxcontentwork">
+          {/* <div className="infoHeade-special-boxcontentwork">
+            <div className="special-input-boxcontentwork">
+              <div>
+                <span>{"หัวข้อเรื่อง"}</span>
+              </div>
+              <div>
+                <input type="input"></input>
+                <button>
+                  <i className="bi-caret-down"></i>
+                </button>
+              </div>
+            </div>
+          </div> */}
+
+          <div className="inforeport-special-boxcontentwork">
+            <div className="special-report-boxcontentwork">
+              <div className="box-report-input">
+                <div>
+                  <span>{"หอผู้ป่วย"}</span>
+                </div>
+                <div className="inputradio-special-boxcontentwork">
+                  <div>
+                    <input type="radio"></input>
+                    <span>{"test"}</span>
+                    <input type="radio"></input>
+                    <span>{"test"}</span>
+                    <input type="radio"></input>
+                    <span>{"test"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="special-report-boxcontentwork">
+              <div className="box-report-input">
+                <div>
+                  <span>{"การวินิจฉัย"}</span>
+                </div>
+                <div className="col-boxreport-input">
+                  <div className="sub-col-boxreport">
+                    <div className="input-special-boxcontentwork">
+                      <input type="text"></input>
+                    </div>
+                  </div>
+                  <div className="sub-col-boxreport">
+                    <div className="grid-date-subcol">
+                      <div>
+                        <span>{"วันที่ผู้ป่วย Admit"}</span>
+                      </div>
+                      <div className="date-special-boxcontentwork">
+                        <input type="date"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="box-report-input">
+                <div>
+                  <span>{"ชื่อผู้ป่วย"}</span>
+                </div>
+                <div className="col-boxreport-input">
+                  <div className="sub-col-boxreport">
+                    <div className="input-special-boxcontentwork">
+                      <input type="text"></input>
+                    </div>
+                  </div>
+                  <div className="sub-col-boxreport">
+                    <div className="grid-date-subcol">
+                      <div>
+                        <span>{"วันที่จ่าย/รับผู้ป่วย"}</span>
+                      </div>
+                      <div className="date-special-boxcontentwork">
+                        <input type="date"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="box-report-input">
+                <div>
+                  <span>{"เลขที่โรงพยาบาล"}</span>
+                </div>
+                <div className="col-boxreport-input">
+                  <div className="sub-col-boxreport">
+                    <div className="input-special-boxcontentwork">
+                      <input type="text"></input>
+                    </div>
+                  </div>
+                  <div className="sub-col-boxreport">
+                    <div className="grid-date-subcol">
+                      <div>
+                        <span style={{ fontSize: "11px" }}>
+                          {"วันที่ส่งรายงานผู้ป่วย"}
+                        </span>
+                      </div>
+                      <div className="date-special-boxcontentwork">
+                        <input type="date"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="body-contentwork">
+    <div
+      className="body-contentwork"
+      onClick={(e) => {
+        if (e.target === docGetId("NavSlideMOdal")) {
+          setOpenfilter(false);
+          handleModalNavSlide(
+            false,
+            "NavSlideMOdal",
+            "bodyNavslideModal",
+            "contentNavslideModle"
+          );
+        }
+      }}
+    >
       <div className="header-contentwork">
         <div className="box-textheader-contentwork">
           <h3>{`จัดกลุ่มงานประเมิน`}</h3>
@@ -419,7 +628,7 @@ const ContentWork = () => {
               className="btn-menu-contentwork"
               type="button"
               onClick={() => {
-                handleOpenModalbox("boxModal");
+                handleOpenModalbox("boxAddworkDoctor");
               }}
             >
               {"เพิ่ม"}
@@ -433,12 +642,14 @@ const ContentWork = () => {
         </div>
       </div>
       <ModalNavSlide
+        idbox={"NavSlideMOdal"}
         selectyear={selectYear}
         yearselect={setSelectYear}
         openDrop={openMonthdrop}
         setopenDrop={setOpenMonthdrop}
       ></ModalNavSlide>
       <ModalBox
+        idbox={"boxAddworkDoctor"}
         thisTitle={"เพิ่มข้อมูลงาน"}
         statusClose={setStatusClosemodal}
         content={handleContentmodal()}

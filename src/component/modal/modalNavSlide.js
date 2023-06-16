@@ -33,7 +33,7 @@ const ModalNavSlide = (props) => {
   };
 
   return (
-    <div className="modalNavSlide" id="NavSlideMOdal">
+    <div className="modalNavSlide" id={`${props.idbox}`}>
       <div className="thisBody-modalNavSlide" id="bodyNavslideModal">
         <div className="content-body-modalNavslide" id="contentNavslideModle">
           <div className="menu-navslide-contentwork">

@@ -1269,19 +1269,36 @@ html .title-header-contentwork, body .title-header-contentwork {
 }
 html .body-modalbox-contentwork, body .body-modalbox-contentwork {
   width: 100%;
-  height: 360px;
+  height: 300px;
+}
+html .body-modalbox-contentwork span, body .body-modalbox-contentwork span {
+  font-size: 13px;
+  font-weight: bold;
 }
 html .rowinput-modalbox-contentwork, body .rowinput-modalbox-contentwork {
   width: 80%;
   height: auto;
   display: grid;
   grid-template-columns: 25% 75%;
-  margin: auto;
+  margin: 5px auto;
+}
+html .positionRelativeBox, body .positionRelativeBox {
+  position: relative;
 }
 html .boxgrid-modal-contentwork, body .boxgrid-modal-contentwork {
   display: flex;
   align-items: center;
   justify-content: start;
+}
+html .dropInfo-boxgrid-contentwork, body .dropInfo-boxgrid-contentwork {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  background-color: #fefefe;
+  display: none;
+  border: 1px solid red;
 }
 html .timegrid-modal-contentwork, body .timegrid-modal-contentwork {
   display: flex;
@@ -1295,7 +1312,7 @@ html .input-rowinput-modalboxContentwork, body .input-rowinput-modalboxContentwo
   border: 1px solid #9e9e9e;
 }
 html .btn-rowinput-modalboxContentwork, body .btn-rowinput-modalboxContentwork {
-  height: 60%;
+  height: 100%;
   width: auto;
   border: 1px solid #9e9e9e;
 }
@@ -1332,7 +1349,50 @@ html .btn-confirm-modalContentwork, body .btn-confirm-modalContentwork {
 }
 html .box-special-modalboxcontentwork, body .box-special-modalboxcontentwork {
   width: 100%;
-  border: 1px solid red;
+  height: auto;
+}
+html .special-input-boxcontentwork, body .special-input-boxcontentwork {
+  width: 80%;
+  margin: 5px auto;
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+html .box-report-input, body .box-report-input {
+  width: 80%;
+  margin: 5px auto;
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+html .col-boxreport-input, body .col-boxreport-input {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+html .inputradio-special-boxcontentwork, body .inputradio-special-boxcontentwork {
+  display: flex;
+  justify-content: start;
+}
+html .input-special-boxcontentwork, body .input-special-boxcontentwork {
+  width: 100%;
+  height: 100%;
+}
+html .grid-date-subcol, body .grid-date-subcol {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+html .date-special-boxcontentwork, body .date-special-boxcontentwork {
+  display: flex;
+  align-items: center;
+}
+html .date-special-boxcontentwork input, body .date-special-boxcontentwork input {
+  width: 100%;
+  height: 100%;
+}
+html .input-special-boxcontentwork input, body .input-special-boxcontentwork input {
+  width: 95%;
+  height: 100%;
+}
+html .inputradio-special-boxcontentwork input, body .inputradio-special-boxcontentwork input {
+  margin: 5px;
 }
 @media only screen and (max-width: 720px) {
   html .header-contentwork, body .header-contentwork {
@@ -1392,13 +1452,82 @@ html .box-special-modalboxcontentwork, body .box-special-modalboxcontentwork {
     width: 60%;
   }
 }
+html .body-contentSetting, body .body-contentSetting {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+html .header-nav-contentSetting, body .header-nav-contentSetting {
+  border: 1px solid red;
+  height: 5%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 90% 10%;
+}
+html .boxCol-navheader, body .boxCol-navheader {
+  border: 1px solid green;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .btn-nav-menuclose, body .btn-nav-menuclose {
+  display: none;
+}
+html .btn-boxHeader button, body .btn-boxHeader button {
+  margin: 0 5px;
+}
+html .content-contentSetting, body .content-contentSetting {
+  border: 1px solid blue;
+  height: 95%;
+  width: 100%;
+}
+html .box-table-type, body .box-table-type {
+  height: 150px;
+  width: 100%;
+  border: 1px solid orange;
+}
+html .bodymodal-contentSetting, body .bodymodal-contentSetting {
+  border: 1px solid red;
+  width: 100%;
+  height: auto;
+}
+html .rowbox-contentSetting, body .rowbox-contentSetting {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .btn-addreportDoc, body .btn-addreportDoc {
+  height: 60%;
+  width: 30%;
+  margin: 0 5px;
+}
+@media only screen and (max-width: 720px) {
+  html .header-nav-contentSetting, body .header-nav-contentSetting {
+    height: 10%;
+  }
+  html .content-contentSetting, body .content-contentSetting {
+    height: 90%;
+  }
+}
+@media only screen and (max-width: 360px) {
+  html .header-nav-contentSetting, body .header-nav-contentSetting {
+    height: 5%;
+  }
+  html .content-contentSetting, body .content-contentSetting {
+    height: 95%;
+  }
+}
 html .modal-slideBar-body, body .modal-slideBar-body {
   display: none;
   position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
-  margin-top: 27px;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -1409,6 +1538,7 @@ html .modal-slideBar-content, body .modal-slideBar-content {
   margin-right: 10px;
   height: 50%;
   width: 13.5%;
+  margin-top: 29px;
   position: absolute;
   top: 0;
   right: 0;
@@ -1431,6 +1561,9 @@ html .modal-slideBar-content, body .modal-slideBar-content {
       height: 0;
     }
   }
+  html .modal-slideBar-content, body .modal-slideBar-content {
+    margin-top: 19px;
+  }
 }
 @media only screen and (max-width: 360px) {
   @keyframes openSlideBar {
@@ -1448,6 +1581,9 @@ html .modal-slideBar-content, body .modal-slideBar-content {
     to {
       height: 0;
     }
+  }
+  html .modal-slideBar-content, body .modal-slideBar-content {
+    margin-top: 27px;
   }
 }
 html .modalSlideBar-content-menu, body .modalSlideBar-content-menu {

@@ -41,7 +41,9 @@ const ModalSlideBar = (prop) => {
           >
             <Icon icon="ep:list"></Icon>
           </button>
-          <button id="btnMenu-ModalSetting" type="button">
+          <button id="btnMenu-ModalSetting" type="button" onClick={() => {
+            prop.settingContent("assessmentForm")
+          }}>
             <Icon icon="uil:setting"></Icon>
           </button>
           <button id="btnMenu-ModalReport" type="button">

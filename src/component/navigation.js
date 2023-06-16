@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ContentDoctor from "./Content/contentDoctor";
 import ContentGroupStudent from "./Content/contentGroup";
 import ContentWork from "./Content/contentWork";
+import ContentSetting from "./Content/contentSetting";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
@@ -59,7 +60,11 @@ const NavigationPage = () => {
       case "workDoctor":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
         return <ContentWork></ContentWork>;
-        
+
+      case "assessmentForm":
+        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
+        return <ContentSetting></ContentSetting>;
+
       default:
         return (
           <div className="body-mainDefault">
@@ -215,7 +220,14 @@ const NavigationPage = () => {
             </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-assessmentForm" className="navigatMenuBTN">
+            <button
+              id="btnMenu-assessmentForm"
+              className="navigatMenuBTN"
+              onClick={(e) => {
+                removeholdbtnmenu(e);
+                setModeContent("assessmentForm");
+              }}
+            >
               {"ตั้งค่าแบบประเมิน"}
             </button>
           </div>

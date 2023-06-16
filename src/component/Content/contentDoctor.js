@@ -375,6 +375,7 @@ const ContentDoctor = (props) => {
         </div>
       </div>
       <ModalBox
+        idbox={"boxModal"}
         content={contentInmodal()}
         statusClose={setStatusCloseModal}
       ></ModalBox>

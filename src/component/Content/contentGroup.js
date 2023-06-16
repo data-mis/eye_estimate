@@ -442,6 +442,7 @@ const ContentGroupStudent = (props) => {
         </div>
       </div>
       <ModalBox
+        idbox={"boxModal"}
         thisTitle={titleText}
         statusClose={setCloseModalbox}
         content={ContentAddDoctorModal()}

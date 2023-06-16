@@ -1,11 +1,11 @@
 const ModalBox = (props) => {
   const handleCloseModalBox = () => {
-    document.getElementById("boxModal").style.display = "none";
+    document.getElementById(props.idbox).style.display = "none";
     props.statusClose(true);
   };
 
   return (
-    <div className="modal-box" id="boxModal">
+    <div className="modal-box" id={`${props.idbox}`}>
       <div className="modal-box-body">
         <nav className="header-nav-modalBox">
           <div className="header-col">
