@@ -1537,35 +1537,157 @@ $colorBGnav:#e0e0e0;
     .btn-boxHeader button{
         margin: 0 5px;
     }
-    .content-contentSetting{
-        border: 1px solid blue;
+    .moblie-contentSetting{
+        display: none;
+    }
+    .normal-contentSetting{
         height: 95%;
         width: 100%;
+        display: grid;
+        grid-template-columns: 50% 50%;
     }
-    .box-table-type{
-        height: 150px;
+    .col-normal-contentSetting{
         width: 100%;
-        border: 1px solid orange;
+        height: 100%;
     }
-// modalSetting
-
-    .bodymodal-contentSetting{
-        border: 1px solid red;
-        width: 100%;
-        height: auto;
+    .normal-table-type{
+        width:100%;
+        height: 40%;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .rowbox-contentSetting{
-        height: 80px;
+    .normal-middle-tabletype{
         width: 100%;
+        height: 55%;
+        scroll-snap-type: mandatory;
+        overflow: auto;
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    .btn-addreportDoc{
-        height: 60%;
-        width: 30%;
-        margin: 0 5px;
+    .box-table-type{
+        height: 100px;
+        width: 100%;
+        border: 2px solid $colorBorderDrop;
+        margin: 15px auto;
     }
+    .boxnormal-table-type{
+        height: 14%;
+        width: 100%;
+        margin: 15px auto;
+    }
+    .box-table-detail{
+        height: 150px;
+        width: 100%;
+        border: 2px solid $colorBorderDrop;
+        margin: 15px auto;
+    }
+    .nav-boxtable-type{
+        display: flex;
+        width: 100%;
+        height: auto;
+        padding: 5px 5px;
+        border-bottom: 1px solid $colorBorderDrop;
+    }
+        .nav-boxtable-type span{
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .nav-boxtable-type button{
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    .textarea-contentSetting{
+        width: 100%;
+        height: 65%;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .tablebox-boxtabletype{
+        width: 95%;
+        height: 80%;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+        margin: 10px;
+        position: relative;
+        background-color: #ddd;
+    }
+    .tablebox-normaltabletype{
+        width: 95%;
+        height: 95%;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+        position: relative;
+        background-color: #ddd;
+    }
+// modalSetting
+
+   .body-contentsetting-modal{
+        width: 100%;
+        height: auto;
+        padding: 0;
+        margin: 0;
+   }
+   .title-contentsetting-modal{
+        height: 50px;
+        width: 100%;
+        position: relative;
+        background-color: $colorBGnav;
+   }
+        .title-center{
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            height: auto;
+            text-align: start;
+            padding: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    .info-contentsetting-modal{
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        padding: 15px;
+    }
+        .row-infoContentsetting-modal{
+            display: grid;
+            grid-template-columns: 25% 75%;
+            width: 100%;
+            height: auto;
+            margin: 5px auto;
+        }
+        .middle-infoContentsetting-modal{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            width: 100%;
+            height: auto;
+        }
+        .rowMiddle-infoContentsetting-modal{
+            display: grid;
+            grid-template-columns: 35% 65%;
+            width: 95%;
+            height: auto;
+            margin: 5px auto;
+        }
+        .btnsubmit-infoContentsetting-modal{
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            text-align: center;
+        }
+            .btnsubmit-infoContentsetting-modal button{
+                width: 25%;
+                height: 35px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+        
 
 // modalSetting
 
@@ -1576,15 +1698,26 @@ $colorBGnav:#e0e0e0;
     .content-contentSetting{
         height: 90%;
     }
-   
+    .moblie-contentSetting{
+        display: block;
+        height: 95%;
+        width: 100%;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+    }
+    .normal-table-type{
+        display: none;
+    }
 }
 @media only screen and (max-width:360px) {
     .header-nav-contentSetting{
         height: 5%;
     }
     .content-contentSetting{
-        height: 95%;
+        height: 90%;
+        // border: 1px solid green;
     }
+    
 }
 }
 
@@ -1996,9 +2129,9 @@ $colorBGnav:#e0e0e0;
             thead{
                 // border: 5px solid red;
                 text-align: center;
-                // position: sticky;
-                // position: -webkit-sticky;
-                // top: 0;
+                position: sticky;
+                position: -webkit-sticky;
+                top: 0;
             }
                 th{
                     border: 2px solid black;
@@ -2017,6 +2150,38 @@ $colorBGnav:#e0e0e0;
        .table-show-info>tbody>tr:nth-child(odd){
             background-color: $colorBGnav;
        }
+       .btn-edit-tableShowinfo{
+        width: 80%;
+        height: 100%;
+        }  
+       .btn-edit-Detail{
+        width: 80%;
+        height: 80px;
+        }  
+        .input-edit-tableShowinfo{
+            width: 100%;
+            height: 80px;
+            font-size: 20px;
+            padding: 0 10px;
+            text-align: center;
+            border: none;
+            background-color: $colorBGnav;
+        }
+        .input-editnormal-tableShowinfo{
+            width: 100%;
+            height: 35px;
+            font-size: 20px;
+            padding: 0 10px;
+            border: none;
+            background-color: $colorBGnav;
+        }
+        .textarea-input-contentSetting{
+            width: 100%;
+            height: 80px;
+            font-size: 20px;
+            padding: 5px 10px;
+            background-color: $colorBGnav
+        }
 }
 
 html,body{

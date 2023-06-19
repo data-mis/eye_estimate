@@ -1479,32 +1479,153 @@ html .btn-nav-menuclose, body .btn-nav-menuclose {
 html .btn-boxHeader button, body .btn-boxHeader button {
   margin: 0 5px;
 }
-html .content-contentSetting, body .content-contentSetting {
-  border: 1px solid blue;
+html .moblie-contentSetting, body .moblie-contentSetting {
+  display: none;
+}
+html .normal-contentSetting, body .normal-contentSetting {
   height: 95%;
   width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
-html .box-table-type, body .box-table-type {
-  height: 150px;
+html .col-normal-contentSetting, body .col-normal-contentSetting {
   width: 100%;
-  border: 1px solid orange;
+  height: 100%;
 }
-html .bodymodal-contentSetting, body .bodymodal-contentSetting {
-  border: 1px solid red;
+html .normal-table-type, body .normal-table-type {
   width: 100%;
-  height: auto;
+  height: 40%;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-html .rowbox-contentSetting, body .rowbox-contentSetting {
-  height: 80px;
+html .normal-middle-tabletype, body .normal-middle-tabletype {
   width: 100%;
+  height: 55%;
+  scroll-snap-type: mandatory;
+  overflow: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-html .btn-addreportDoc, body .btn-addreportDoc {
-  height: 60%;
-  width: 30%;
-  margin: 0 5px;
+html .box-table-type, body .box-table-type {
+  height: 100px;
+  width: 100%;
+  border: 2px solid #9e9e9e;
+  margin: 15px auto;
+}
+html .boxnormal-table-type, body .boxnormal-table-type {
+  height: 14%;
+  width: 100%;
+  margin: 15px auto;
+}
+html .box-table-detail, body .box-table-detail {
+  height: 150px;
+  width: 100%;
+  border: 2px solid #9e9e9e;
+  margin: 15px auto;
+}
+html .nav-boxtable-type, body .nav-boxtable-type {
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: 5px 5px;
+  border-bottom: 1px solid #9e9e9e;
+}
+html .nav-boxtable-type span, body .nav-boxtable-type span {
+  font-weight: bold;
+  margin-right: 10px;
+}
+html .nav-boxtable-type button, body .nav-boxtable-type button {
+  margin-right: 10px;
+  font-weight: bold;
+}
+html .textarea-contentSetting, body .textarea-contentSetting {
+  width: 100%;
+  height: 65%;
+  font-size: 16px;
+  font-weight: bold;
+}
+html .tablebox-boxtabletype, body .tablebox-boxtabletype {
+  width: 95%;
+  height: 80%;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+  margin: 10px;
+  position: relative;
+  background-color: #ddd;
+}
+html .tablebox-normaltabletype, body .tablebox-normaltabletype {
+  width: 95%;
+  height: 95%;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+  position: relative;
+  background-color: #ddd;
+}
+html .body-contentsetting-modal, body .body-contentsetting-modal {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  margin: 0;
+}
+html .title-contentsetting-modal, body .title-contentsetting-modal {
+  height: 50px;
+  width: 100%;
+  position: relative;
+  background-color: #e0e0e0;
+}
+html .title-center, body .title-center {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  height: auto;
+  text-align: start;
+  padding: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+html .info-contentsetting-modal, body .info-contentsetting-modal {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+html .row-infoContentsetting-modal, body .row-infoContentsetting-modal {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  width: 100%;
+  height: auto;
+  margin: 5px auto;
+}
+html .middle-infoContentsetting-modal, body .middle-infoContentsetting-modal {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  height: auto;
+}
+html .rowMiddle-infoContentsetting-modal, body .rowMiddle-infoContentsetting-modal {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  width: 95%;
+  height: auto;
+  margin: 5px auto;
+}
+html .btnsubmit-infoContentsetting-modal, body .btnsubmit-infoContentsetting-modal {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  text-align: center;
+}
+html .btnsubmit-infoContentsetting-modal button, body .btnsubmit-infoContentsetting-modal button {
+  width: 25%;
+  height: 35px;
+  font-size: 16px;
+  font-weight: bold;
 }
 @media only screen and (max-width: 720px) {
   html .header-nav-contentSetting, body .header-nav-contentSetting {
@@ -1513,13 +1634,23 @@ html .btn-addreportDoc, body .btn-addreportDoc {
   html .content-contentSetting, body .content-contentSetting {
     height: 90%;
   }
+  html .moblie-contentSetting, body .moblie-contentSetting {
+    display: block;
+    height: 95%;
+    width: 100%;
+    scroll-snap-type: mandatory;
+    overflow: auto;
+  }
+  html .normal-table-type, body .normal-table-type {
+    display: none;
+  }
 }
 @media only screen and (max-width: 360px) {
   html .header-nav-contentSetting, body .header-nav-contentSetting {
     height: 5%;
   }
   html .content-contentSetting, body .content-contentSetting {
-    height: 95%;
+    height: 90%;
   }
 }
 html .modal-slideBar-body, body .modal-slideBar-body {
@@ -1939,6 +2070,9 @@ html .table-show-info, body .table-show-info {
 }
 html .table-show-info thead, body .table-show-info thead {
   text-align: center;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 html .table-show-info th, body .table-show-info th {
   border: 2px solid black;
@@ -1954,6 +2088,38 @@ html .table-show-info > tbody > tr:hover td, body .table-show-info > tbody > tr:
   color: #fefefe;
 }
 html .table-show-info > tbody > tr:nth-child(odd), body .table-show-info > tbody > tr:nth-child(odd) {
+  background-color: #e0e0e0;
+}
+html .btn-edit-tableShowinfo, body .btn-edit-tableShowinfo {
+  width: 80%;
+  height: 100%;
+}
+html .btn-edit-Detail, body .btn-edit-Detail {
+  width: 80%;
+  height: 80px;
+}
+html .input-edit-tableShowinfo, body .input-edit-tableShowinfo {
+  width: 100%;
+  height: 80px;
+  font-size: 20px;
+  padding: 0 10px;
+  text-align: center;
+  border: none;
+  background-color: #e0e0e0;
+}
+html .input-editnormal-tableShowinfo, body .input-editnormal-tableShowinfo {
+  width: 100%;
+  height: 35px;
+  font-size: 20px;
+  padding: 0 10px;
+  border: none;
+  background-color: #e0e0e0;
+}
+html .textarea-input-contentSetting, body .textarea-input-contentSetting {
+  width: 100%;
+  height: 80px;
+  font-size: 20px;
+  padding: 5px 10px;
   background-color: #e0e0e0;
 }
 
