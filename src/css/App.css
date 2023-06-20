@@ -1269,7 +1269,8 @@ html .title-header-contentwork, body .title-header-contentwork {
 }
 html .body-modalbox-contentwork, body .body-modalbox-contentwork {
   width: 100%;
-  height: 300px;
+  height: auto;
+  margin-bottom: 10px;
 }
 html .body-modalbox-contentwork span, body .body-modalbox-contentwork span {
   font-size: 13px;
@@ -1385,11 +1386,11 @@ html .date-special-boxcontentwork, body .date-special-boxcontentwork {
 }
 html .date-special-boxcontentwork input, body .date-special-boxcontentwork input {
   width: 100%;
-  height: 100%;
+  height: 35px;
 }
 html .input-special-boxcontentwork input, body .input-special-boxcontentwork input {
   width: 95%;
-  height: 100%;
+  height: 35px;
 }
 html .inputradio-special-boxcontentwork input, body .inputradio-special-boxcontentwork input {
   margin: 5px;
@@ -1651,6 +1652,228 @@ html .btnsubmit-infoContentsetting-modal button, body .btnsubmit-infoContentsett
   }
   html .content-contentSetting, body .content-contentSetting {
     height: 90%;
+  }
+}
+html .body-content-contentReport, body .body-content-contentReport {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html .headercontent-contentReport, body .headercontent-contentReport {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 15% 25% 35% 25%;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: #ddd;
+}
+html .headercontentreport-title, body .headercontentreport-title {
+  align-self: center;
+  padding: 0 5px;
+}
+html .headercontentreport-inputbox, body .headercontentreport-inputbox {
+  width: 100%;
+  height: 35px;
+  display: flex;
+}
+html .headercontentreport-inputbox span, body .headercontentreport-inputbox span {
+  align-self: center;
+  padding-right: 10px;
+}
+html .inputyear-contentreport, body .inputyear-contentreport {
+  width: 50%;
+  height: 80%;
+  align-self: center;
+}
+html .inputyear-contentreport::-webkit-outer-spin-button, html .inputyear-contentreport::-webkit-inner-spin-button, body .inputyear-contentreport::-webkit-outer-spin-button, body .inputyear-contentreport::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+html .button-updownbox-contentreport, body .button-updownbox-contentreport {
+  width: 25%;
+  height: 80%;
+  align-self: center;
+}
+html .btn-updown-contentreport, body .btn-updown-contentreport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+  font-size: 11px;
+}
+html .group-contentreport, body .group-contentreport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+html .group-contentreport span, body .group-contentreport span {
+  padding-right: 5px;
+  align-self: center;
+}
+html .boxrelative-group, body .boxrelative-group {
+  display: flex;
+  position: relative;
+}
+html .group-contentreport input, body .group-contentreport input {
+  width: 100%;
+  height: auto;
+}
+html .group-contentreport button, body .group-contentreport button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: auto;
+}
+html .dropgroup-contentreport, body .dropgroup-contentreport {
+  display: none;
+  height: 150px;
+  width: 100%;
+  border: 2px solid rebeccapurple;
+  position: absolute;
+  top: 35px;
+  left: 0;
+  background-color: #fefefe;
+}
+html .buttonbox-allofthis, body .buttonbox-allofthis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .buttonbox-allofthis button, body .buttonbox-allofthis button {
+  width: 90%;
+  height: 80%;
+  font-weight: bold;
+}
+html .menu-search-contentreport, body .menu-search-contentreport {
+  display: flex;
+  width: 100%;
+  height: auto;
+  margin: 5px auto;
+  justify-content: center;
+  align-items: center;
+}
+html .box-inputsearch-contentreport, body .box-inputsearch-contentreport {
+  padding: 5px;
+  width: auto;
+  height: auto;
+}
+html .box-inputsearch-contentreport input, body .box-inputsearch-contentreport input {
+  height: 35px;
+}
+html .box-inputsearch-contentreport button, body .box-inputsearch-contentreport button {
+  height: 35px;
+  width: 35px;
+}
+html .content-contentreport, body .content-contentreport {
+  width: 100%;
+  height: 85%;
+  margin: 10px auto;
+  display: grid;
+  grid-template-columns: 85% 15%;
+}
+html .tableboxbody-contentreport, body .tableboxbody-contentreport {
+  border: 2px solid green;
+  width: 100%;
+  height: 100%;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+}
+html .menuright-contentreport, body .menuright-contentreport {
+  border: 2px solid blue;
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+html .box-radioinput-menuright, body .box-radioinput-menuright {
+  height: auto;
+  width: 100%;
+  padding: 5px;
+  margin: 5px auto;
+}
+html .inputradio-menuright, body .inputradio-menuright {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+html .inputradio-menuright input, body .inputradio-menuright input {
+  margin-right: 5px;
+}
+html .btninfo-menuright, body .btninfo-menuright {
+  display: block;
+  height: 5%;
+  width: 100%;
+  margin: 5px auto;
+}
+html .btninfo-menuright button, body .btninfo-menuright button {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  font-size: 18px;
+  font-weight: bold;
+}
+html .bi-filetype-xlsx, body .bi-filetype-xlsx {
+  font-size: 28px;
+  font-weight: bold;
+}
+@media only screen and (max-width: 720px) {
+  html .content-contentreport, body .content-contentreport {
+    border: 5px solid green;
+    width: 100%;
+    height: 85%;
+    display: block;
+  }
+  html .tableboxbody-contentreport, body .tableboxbody-contentreport {
+    border: 2px solid green;
+    width: 100%;
+    height: 80%;
+    scroll-snap-type: mandatory;
+    overflow: auto;
+  }
+  html .menuright-contentreport, body .menuright-contentreport {
+    border: 2px solid blue;
+    height: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  html .box-radioinput-menuright, body .box-radioinput-menuright {
+    height: 80%;
+    width: 25%;
+  }
+  html .inputradio-menuright, body .inputradio-menuright {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+  }
+  html .btninfo-menuright, body .btninfo-menuright {
+    border: 2px solid brown;
+    height: 80%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  html .btninfo-menuright button, body .btninfo-menuright button {
+    width: 90%;
+    height: 90%;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  html .bi-filetype-xlsx, body .bi-filetype-xlsx {
+    font-size: 38px;
+    font-weight: bold;
   }
 }
 html .modal-slideBar-body, body .modal-slideBar-body {

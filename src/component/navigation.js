@@ -8,12 +8,14 @@ import ContentDoctor from "./Content/contentDoctor";
 import ContentGroupStudent from "./Content/contentGroup";
 import ContentWork from "./Content/contentWork";
 import ContentSetting from "./Content/contentSetting";
+import ContentReport from "./Content/contentReport";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
   const navigat = useNavigate();
 
   const [modeContent, setModeContent] = useState("");
+  const [statusClosemenu, setstatusClosemenu] = useState(false);
   const [openModalSlide, setOpenModalSlide] = useState(true);
   const [dataContent, setDataContent] = useState();
 
@@ -64,6 +66,10 @@ const NavigationPage = () => {
       case "assessmentForm":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
         return <ContentSetting></ContentSetting>;
+
+      case "report":
+        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
+        return <ContentReport></ContentReport>;
 
       default:
         return (
@@ -141,7 +147,12 @@ const NavigationPage = () => {
     }
   }, []);
 
-  useEffect(() => {}, [dataContent]);
+  useEffect(() => {
+    if (statusClosemenu) {
+      handleOpenModalMenu(false);
+      setstatusClosemenu(false);
+    }
+  }, [statusClosemenu]);
 
   return (
     <div
@@ -232,14 +243,24 @@ const NavigationPage = () => {
             </button>
           </div>
           <div className="btn-menu-navigatepage">
-            <button id="btnMenu-report" className="navigatMenuBTN">
+            <button
+              id="btnMenu-report"
+              className="navigatMenuBTN"
+              onClick={(e) => {
+                removeholdbtnmenu(e);
+                setModeContent("report");
+              }}
+            >
               {"รายงาน"}
             </button>
           </div>
         </div>
         <div className="show-content-box">{ShowContentINbox(modeContent)}</div>
       </div>
-      <ModalSlideBar settingContent={setModeContent}></ModalSlideBar>
+      <ModalSlideBar
+        settingContent={setModeContent}
+        close={setstatusClosemenu}
+      ></ModalSlideBar>
     </div>
   );
 };

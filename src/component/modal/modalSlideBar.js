@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 
-const ModalSlideBar = (prop) => {
+const ModalSlideBar = (props) => {
   return (
     <div className="modal-slideBar-body" id="modalSlideBody">
       <div className="modal-slideBar-content" id="modalSlideContent">
@@ -9,7 +9,8 @@ const ModalSlideBar = (prop) => {
             type="button"
             id="btnMenu-Modalstudent"
             onClick={() => {
-              prop.settingContent("student");
+              props.settingContent("student");
+              props.close(true);
             }}
           >
             <Icon icon="mdi:account-school"></Icon>
@@ -18,7 +19,8 @@ const ModalSlideBar = (prop) => {
             id="btnMenu-ModalDoctor"
             type="button"
             onClick={() => {
-              prop.settingContent("doctor");
+              props.settingContent("doctor");
+              props.close(true);
             }}
           >
             <Icon icon="fontisto:doctor"></Icon>
@@ -27,7 +29,8 @@ const ModalSlideBar = (prop) => {
             id="btnMenu-ModalGroup"
             type="button"
             onClick={() => {
-              prop.settingContent("groupStudent");
+              props.settingContent("groupStudent");
+              props.close(true);
             }}
           >
             <Icon icon="el:group"></Icon>
@@ -36,17 +39,30 @@ const ModalSlideBar = (prop) => {
             id="btnMenu-ModalList"
             type="button"
             onClick={() => {
-              prop.settingContent("workDoctor");
+              props.settingContent("workDoctor");
+              props.close(true);
             }}
           >
             <Icon icon="ep:list"></Icon>
           </button>
-          <button id="btnMenu-ModalSetting" type="button" onClick={() => {
-            prop.settingContent("assessmentForm")
-          }}>
+          <button
+            id="btnMenu-ModalSetting"
+            type="button"
+            onClick={() => {
+              props.settingContent("assessmentForm");
+              props.close(true);
+            }}
+          >
             <Icon icon="uil:setting"></Icon>
           </button>
-          <button id="btnMenu-ModalReport" type="button">
+          <button
+            id="btnMenu-ModalReport"
+            type="button"
+            onClick={() => {
+              props.settingContent("report");
+              props.close(true);
+            }}
+          >
             <Icon icon="mdi:file-outline"></Icon>
           </button>
         </div>
