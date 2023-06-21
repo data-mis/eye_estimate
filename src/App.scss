@@ -567,15 +567,14 @@ $colorBGnav:#e0e0e0;
         font-weight: bold;
     } 
 .content-ctDoctor{
-    border: 2px solid green;
     height: 95%;
     display: grid;
     grid-template-columns: 90% 10%;
 }
     .content-table{
-        border: 1px solid red;
         scroll-snap-type: mandatory;
         overflow: auto;
+        margin: 5px;
     }
     .content-menu{
         border: 1px solid rebeccapurple;
@@ -2101,7 +2100,7 @@ $colorBGnav:#e0e0e0;
             width: 90%;
             padding-left: 8px;
         }
-    .inputButtonUpdown,.inputButtonDrop,.inputButtonDropFull{
+    .inputButtonUpdown,.inputButtonDrop{
         position: relative;
         width: 35%;
     }
@@ -2110,7 +2109,9 @@ $colorBGnav:#e0e0e0;
         display: flex;
     }
     .inputButtonDropFull{
+        position: relative;
         width: 90%;
+        height: auto;
         display: flex;
         position: static;
     }
@@ -2164,8 +2165,8 @@ $colorBGnav:#e0e0e0;
     .box-dropDown-full{
         position: absolute;
         bottom: -200px;
-        right: 10%;
-        width: 60%;
+        left: 0%;
+        width: 100%;
         height: 200px;
         display: none;
         scroll-snap-type: mandatory;
@@ -2377,6 +2378,10 @@ $colorBGnav:#e0e0e0;
        .table-show-info>tbody>tr:nth-child(odd){
             background-color: $colorBGnav;
        }
+       .borderhighlightBlue{
+        border: 5px solid #01579b;
+       }
+
        .btn-edit-tableShowinfo{
         width: 80%;
         height: 100%;
@@ -2411,6 +2416,33 @@ $colorBGnav:#e0e0e0;
         }
 }
 
+@mixin Spinner(){
+    @keyframes spinner {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 10px solid #f3f3f3; /* Light grey */
+        border-top: 10px solid #383636; /* Blue */
+        border-radius: 50%;
+        animation: spinner 1.5s linear infinite;
+      }
+      
+      .spinner-container {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        height: 350px;
+      }
+}
+
 html,body{
     @include LoginPage();
     @include MainPage();
@@ -2428,4 +2460,7 @@ html,body{
 
     // table
     @include TableInfo();
+
+    // spinpage
+    @include Spinner();
 }

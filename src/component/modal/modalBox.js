@@ -15,7 +15,7 @@ const ModalBox = (props) => {
             <button
               type="button"
               className="btn-modalbox-close"
-              id="thisbtnModalboxClose"
+              id={`thisbtnModalboxClose-${props.idbox}`}
               onClick={() => {
                 handleCloseModalBox();
               }}

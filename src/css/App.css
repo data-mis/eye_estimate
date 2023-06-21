@@ -529,15 +529,14 @@ html .btn-close-ctDoctor, body .btn-close-ctDoctor {
   font-weight: bold;
 }
 html .content-ctDoctor, body .content-ctDoctor {
-  border: 2px solid green;
   height: 95%;
   display: grid;
   grid-template-columns: 90% 10%;
 }
 html .content-table, body .content-table {
-  border: 1px solid red;
   scroll-snap-type: mandatory;
   overflow: auto;
+  margin: 5px;
 }
 html .content-menu, body .content-menu {
   border: 1px solid rebeccapurple;
@@ -2040,7 +2039,7 @@ html .input-modalBox input, body .input-modalBox input {
   width: 90%;
   padding-left: 8px;
 }
-html .inputButtonUpdown, html .inputButtonDrop, html .inputButtonDropFull, body .inputButtonUpdown, body .inputButtonDrop, body .inputButtonDropFull {
+html .inputButtonUpdown, html .inputButtonDrop, body .inputButtonUpdown, body .inputButtonDrop {
   position: relative;
   width: 35%;
 }
@@ -2049,7 +2048,9 @@ html .inputButtonDrop, body .inputButtonDrop {
   display: flex;
 }
 html .inputButtonDropFull, body .inputButtonDropFull {
+  position: relative;
   width: 90%;
+  height: auto;
   display: flex;
   position: static;
 }
@@ -2103,8 +2104,8 @@ html .box-dropDown, body .box-dropDown {
 html .box-dropDown-full, body .box-dropDown-full {
   position: absolute;
   bottom: -200px;
-  right: 10%;
-  width: 60%;
+  left: 0%;
+  width: 100%;
   height: 200px;
   display: none;
   scroll-snap-type: mandatory;
@@ -2313,6 +2314,9 @@ html .table-show-info > tbody > tr:hover td, body .table-show-info > tbody > tr:
 html .table-show-info > tbody > tr:nth-child(odd), body .table-show-info > tbody > tr:nth-child(odd) {
   background-color: #e0e0e0;
 }
+html .borderhighlightBlue, body .borderhighlightBlue {
+  border: 5px solid #01579b;
+}
 html .btn-edit-tableShowinfo, body .btn-edit-tableShowinfo {
   width: 80%;
   height: 100%;
@@ -2344,6 +2348,28 @@ html .textarea-input-contentSetting, body .textarea-input-contentSetting {
   font-size: 20px;
   padding: 5px 10px;
   background-color: #e0e0e0;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+html .loading-spinner, body .loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid #383636; /* Blue */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}
+html .spinner-container, body .spinner-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 350px;
 }
 
 /*# sourceMappingURL=App.css.map */

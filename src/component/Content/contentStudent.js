@@ -89,10 +89,7 @@ const ContentStudent = (props) => {
       FetchController.fetchGetTeacher(usertoken).then((data) => {
         let nameTeacher = [];
         data.map((ele) => {
-          nameTeacher.push({
-            id: ele.Id.trim(),
-            name: `${ele.ttl.trim()} ${ele.name.trim()} ${ele.lname.trim()}`,
-          });
+          nameTeacher.push({ id: ele.id, name: ele.name });
         });
         localStorage.setItem("teacherName", JSON.stringify(nameTeacher));
       });
@@ -104,42 +101,19 @@ const ContentStudent = (props) => {
     let ayear = { year: parseInt(year) - 543 };
     console.log("ayear", ayear);
     if (!localStorage.getItem("groupName")) {
-      // FetchController.fetchGetGroup(ayear, usertoken).then((data) => {
-      //   let nameGroup = [];
-      //   data.map((ele) => {
-      //     nameGroup.push({ id: ele.Id.trim(), name: ele.name.trim() });
-      //   });
-      //   localStorage.setItem("groupName", JSON.stringify(nameGroup));
-      // });
+      FetchController.fetchGetGroup(ayear, usertoken).then((data) => {
+        let nameGroup = [];
+        console.log(">>", data);
+        data.map((ele) => {
+          nameGroup.push({
+            id: ele.id.trim() ? ele.id.trim() : "",
+            name: ele.name ? ele.name.trim() : "",
+          });
+        });
+        localStorage.setItem("groupName", JSON.stringify(nameGroup));
+      });
     }
   };
-
-  function datatestbase64convest(dataurl, filename) {
-    let arr = dataurl.split(","),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]),
-      n = bstr.length,
-      u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    result = new File([u8arr], filename, { type: mime });
-    return result;
-  }
-
-  const todataUrl = (data) =>
-    fetch(data)
-      .then((response) => response.blob())
-      .then(
-        (blob) =>
-          new Promise((resolve, reject) => {
-            const render = new FileReader();
-            render.onloadend = () => resolve(render.result);
-            render.onerror = reject;
-            render.readAsDataURL(blob);
-          })
-      );
 
   const handleUploadPicture = async (data, idStudent) => {
     let fileSelect = inputPic.current.files[0];
@@ -305,13 +279,13 @@ const ContentStudent = (props) => {
   };
 
   const showURLimageStudent = (StudentId, token) => {
-    // FetchController.fetchGetImage({ std_id: StudentId.trim() }, token).then(
-    //   (data) => {
-    //     if (data) {
-    //       setPicURL(`http://${data.url}`);
-    //     }
-    //   }
-    // );
+    FetchController.fetchGetImage({ std_id: StudentId.trim() }, token).then(
+      (data) => {
+        if (data) {
+          setPicURL(`http://${data.url}`);
+        }
+      }
+    );
   };
 
   const modalContent = (status) => {
@@ -1186,11 +1160,24 @@ const ContentStudent = (props) => {
     setStatusReadonly(true);
   };
 
+  const handleHoldlinetable = (id) => {
+    let lengthclass = document.getElementsByClassName(
+      "table-tr-studentinfo"
+    ).length;
+
+    for (let t = 0; t < lengthclass; t++) {
+      document.getElementsByClassName("table-tr-studentinfo")[t].style.border =
+        "2px solid black";
+    }
+
+    getID(`table-tr-${id}`).style.border = "5px solid #01579b";
+  };
+
   useEffect(() => {
     if (!year) return;
-    // handleFatch();
-    // handleFatchTeacher();
-    // handleFatchGroup(yearModal);
+    handleFatch();
+    handleFatchTeacher();
+    handleFatchGroup(yearModal);
   }, [year]);
 
   useEffect(() => {
@@ -1201,7 +1188,7 @@ const ContentStudent = (props) => {
     if (statusAdd) {
       setTimeout(() => {
         handleSaveing();
-        // handleFatch();
+        handleFatch();
         setStatusAdd(false);
       }, 500);
     }
@@ -1210,7 +1197,7 @@ const ContentStudent = (props) => {
   useEffect(() => {
     if (statusEdit) {
       setTimeout(() => {
-        // handleFatch();
+        handleFatch();
         setStatusEdit(false);
       }, 500);
     }
@@ -1219,7 +1206,7 @@ const ContentStudent = (props) => {
   useEffect(() => {
     if (statusDel) {
       setTimeout(() => {
-        // handleFatch();
+        handleFatch();
         setStatusDel(false);
       }, 500);
     }
@@ -1345,6 +1332,7 @@ const ContentStudent = (props) => {
                   key={index}
                   onClick={() => {
                     console.log("handle list !=>", data);
+                    handleHoldlinetable(index);
                     setIdStudent(data.Id);
                     setNumberStudent(data.std_id);
                     showURLimageStudent(data.std_id, usertoken);
