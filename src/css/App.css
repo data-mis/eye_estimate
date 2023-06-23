@@ -898,20 +898,22 @@ html .dropDown-info-adddoctorMEQ, body .dropDown-info-adddoctorMEQ {
   position: absolute;
   top: 25px;
   left: 0;
-  width: 150px;
-  height: 100px;
-  border: 1px solid rebeccapurple;
+  width: 100%;
+  height: 150px;
+  border: 2px solid #9e9e9e;
   background-color: #fefefe;
+  scroll-snap-type: mandatory;
+  overflow: auto;
 }
 html .dropDown-info-adddoctorMEQ div, body .dropDown-info-adddoctorMEQ div {
   text-align: start;
-  padding: 5px;
+  padding: 8px;
 }
 html .dropDown-info-adddoctorMEQ div:hover, body .dropDown-info-adddoctorMEQ div:hover {
   background-color: #ddd;
 }
 html .input-textadvisor-addDoctorMEQ, html .input-textMEQ-addDoctorMEQ, body .input-textadvisor-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
-  width: 150px;
+  width: 100%;
   height: 25px;
   border: 1px solid #9e9e9e;
 }
@@ -931,6 +933,92 @@ html .boxRow-addDoctorMEQ button, body .boxRow-addDoctorMEQ button {
 }
 html .btn-save-addDoctorMEQ, body .btn-save-addDoctorMEQ {
   width: 35%;
+}
+html .body-content-editGroupAllmodal, body .body-content-editGroupAllmodal {
+  height: 250px;
+  width: 100%;
+}
+html .header-editGroupAllmodal, body .header-editGroupAllmodal {
+  height: 50px;
+  width: 100%;
+  background-color: #607d8b;
+  display: flex;
+  align-items: center;
+  padding: 35px;
+}
+html .header-editGroupAllmodal span, body .header-editGroupAllmodal span {
+  color: #fefefe;
+  font-size: 18px;
+  font-weight: bold;
+}
+html .input-editGroupAllmodal, body .input-editGroupAllmodal {
+  height: 50px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25% 75%;
+  margin: 5px auto;
+}
+html .titlename-inputeditGroupAllmodal, html .inputname-inputeditGroupAllmodal, body .titlename-inputeditGroupAllmodal, body .inputname-inputeditGroupAllmodal {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-left: 35px;
+}
+html .titlename-inputeditGroupAllmodal span, body .titlename-inputeditGroupAllmodal span {
+  font-size: 18px;
+  font-weight: bold;
+}
+html .inputname-inputeditGroupAllmodal, body .inputname-inputeditGroupAllmodal {
+  padding: 0;
+  justify-content: center;
+}
+html .inputname-inputeditGroupAllmodal input, body .inputname-inputeditGroupAllmodal input {
+  width: 90%;
+  height: 80%;
+  border: 2px solid #ddd;
+  padding-left: 10px;
+  font-size: 18px;
+}
+html .inputdate-editGroupAllmodal, body .inputdate-editGroupAllmodal {
+  margin: 10px auto;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+html .box-inputDate-editGroupAllmodal, body .box-inputDate-editGroupAllmodal {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+html .boxgrid-inputdate-editGroupAllmodal, body .boxgrid-inputdate-editGroupAllmodal {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  padding: 15px 15px 5px 35px;
+}
+html .input-grid-editGroupAllmodal span, body .input-grid-editGroupAllmodal span {
+  font-size: 18px;
+  font-weight: bold;
+}
+html .input-grid-editGroupAllmodal input, body .input-grid-editGroupAllmodal input {
+  width: auto;
+  height: auto;
+  border: 2px solid #ddd;
+}
+html .boxsubmit-button-editGroupAllmodal, body .boxsubmit-button-editGroupAllmodal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html .boxsubmit-button-editGroupAllmodal button, body .boxsubmit-button-editGroupAllmodal button {
+  width: 40%;
+  height: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fefefe;
+  border: 2px solid #607d8b;
+  background-color: #546e7a;
+}
+html .boxsubmit-button-editGroupAllmodal button:hover, body .boxsubmit-button-editGroupAllmodal button:hover {
+  background-color: #37474f;
 }
 @media only screen and (max-width: 1024px) {
   html .row-input-doctorInputControllStudent, body .row-input-doctorInputControllStudent {
@@ -2348,6 +2436,14 @@ html .textarea-input-contentSetting, body .textarea-input-contentSetting {
   font-size: 20px;
   padding: 5px 10px;
   background-color: #e0e0e0;
+}
+html #tableGroupAll, body #tableGroupAll {
+  width: 100%;
+}
+@media only screen and (max-width: 800px) {
+  html #tableGroupAll, body #tableGroupAll {
+    width: 550px;
+  }
 }
 @keyframes spinner {
   0% {

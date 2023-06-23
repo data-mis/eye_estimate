@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
 import ModalBox from "../modal/modalBox";
+import moment from "moment";
+import FetchController from "../data/fetchConroller";
+import Cookies from "universal-cookie";
+import Spinnerpage from "../config/spinnerpage";
+import { handleOpenModalbox } from "../config/modalConfig";
 
 const ContentGroupStudent = (props) => {
+  const cookie = new Cookies();
+  const usertoken = cookie.get("token");
+
   const docGetId = (id) => {
     return document.getElementById(id);
   };
 
-  const [inputAddvisorId1, setInputAddvisorID1] = useState("");
-  const [inputAddvisorId2, setInputAddvisorID2] = useState("");
+  const [yearSelectGroup, setYearSelectGroup] = useState(
+    moment(new Date()).format("YYYY")
+  );
+
+  const [dataGroupall, setDataGroupall] = useState([]);
+  const [selectDataGroup, setSelectDataGroup] = useState();
+  const [editNameGroup, setEditNameGroup] = useState();
+  const [dataGroupAdvisor, setDataGroupAdvisor] = useState([]);
+  const [dataGroupStudentEmpty, setDataGroupStudentEmpty] = useState([]);
+  const [dataGroupStudentingroup, setDataGroupStudentingroup] = useState([]);
+
+  const [inputAddvisorId1, setInputAddvisorID1] = useState({});
+  const [inputAddvisorId2, setInputAddvisorID2] = useState({});
   const [inputMEQ1, setInputMEQ1] = useState();
   const [inputMEQ2, setInputMEQ2] = useState();
 
@@ -59,6 +78,39 @@ const ContentGroupStudent = (props) => {
         }
 
         break;
+
+      case 3:
+        if (statusOpenDrop === false) {
+          setStatusOpenDrop(true);
+          docGetId("advisorDrop1Modal").style.position = "relative";
+          docGetId("advisorDrop2Modal").style.position = "static";
+          docGetId("dropBoxAdvisor1Modal").style.display = "block";
+          docGetId("dropBoxAdvisor2Modal").style.display = "none";
+        } else if (statusOpenDrop === true) {
+          setStatusOpenDrop(false);
+          docGetId("dropBoxAdvisor1Modal").style.display = "none";
+          docGetId("dropBoxAdvisor2Modal").style.display = "none";
+          docGetId("advisorDrop1Modal").style.position = "static";
+          docGetId("advisorDrop2Modal").style.position = "static";
+        }
+        break;
+
+      case 4:
+        if (statusOpenDrop === false) {
+          setStatusOpenDrop(true);
+          docGetId("advisorDrop2Modal").style.position = "relative";
+          docGetId("advisorDrop1Modal").style.position = "static";
+          docGetId("dropBoxAdvisor2Modal").style.display = "block";
+          docGetId("dropBoxAdvisor1Modal").style.display = "none";
+        } else if (statusOpenDrop === true) {
+          setStatusOpenDrop(false);
+          docGetId("dropBoxAdvisor1Modal").style.display = "none";
+          docGetId("dropBoxAdvisor2Modal").style.display = "none";
+          docGetId("advisorDrop1Modal").style.position = "static";
+          docGetId("advisorDrop2Modal").style.position = "static";
+        }
+
+        break;
     }
   };
 
@@ -73,6 +125,21 @@ const ContentGroupStudent = (props) => {
     setStatusFinishDocMEQ(true);
     console.log("object=>", object);
     handleModleAddDoctor(false);
+  };
+
+  const handlecalUpdownyear = (mode, year) => {
+    let yearnow = parseInt(year);
+    switch (mode) {
+      case "up":
+        let resup = yearnow + 1;
+        setYearSelectGroup(resup);
+        break;
+
+      case "down":
+        let resdown = yearnow - 1;
+        setYearSelectGroup(resdown);
+        break;
+    }
   };
 
   const ContentAddDoctorModal = () => {
@@ -91,37 +158,44 @@ const ContentGroupStudent = (props) => {
         >
           <div className="boxRow-addDoctorMEQ">
             <span>{"อาจารย์"}</span>
-            <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop1`}>
+            <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop1Modal`}>
               <input
                 type="text"
                 className="input-textadvisor-addDoctorMEQ"
-                onChange={(e) => {
-                  setInputAddvisorID1(e.target.value);
-                }}
                 onFocus={(e) => e.target.select()}
-                value={inputAddvisorId1}
+                value={inputAddvisorId1.name}
                 required
+                readOnly
               ></input>
               <button
                 type="button"
                 onClick={() => {
-                  handleDropDoctorMEQ(1);
+                  handleDropDoctorMEQ(3);
                 }}
               >
                 <i className="bi-caret-down"></i>
               </button>
               <div
                 className="dropDown-info-adddoctorMEQ"
-                id={`dropBoxAdvisor1`}
+                id={`dropBoxAdvisor1Modal`}
               >
-                <div
-                  onClick={() => {
-                    setInputAddvisorID1("อ.หนึ่ง ทดสอบ");
-                    handleDropDoctorMEQ(1);
-                  }}
-                >
-                  <span>{`อ.หนึ่ง ทดสอบ`}</span>
-                </div>
+                {dataGroupAdvisor[0] ? (
+                  dataGroupAdvisor.map((data, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setInputAddvisorID1({ name: data.name, id: data.id });
+                          handleDropDoctorMEQ(3);
+                        }}
+                      >
+                        <span>{data.name}</span>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )}
               </div>
             </div>
             <span>{"MEQ"}</span>
@@ -137,37 +211,44 @@ const ContentGroupStudent = (props) => {
           </div>
           <div className="boxRow-addDoctorMEQ">
             <span>{"อาจารย์"}</span>
-            <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop2`}>
+            <div className="boxRow-adddoctorMEQ-drop" id={`advisorDrop2Modal`}>
               <input
                 type="text"
                 className="input-textadvisor-addDoctorMEQ"
-                value={inputAddvisorId2}
-                onChange={(e) => {
-                  setInputAddvisorID2(e.target.value);
-                }}
+                value={inputAddvisorId2.name}
                 onFocus={(e) => e.target.select()}
                 required
+                readOnly
               ></input>
               <button
                 type="button"
                 onClick={() => {
-                  handleDropDoctorMEQ(2);
+                  handleDropDoctorMEQ(4);
                 }}
               >
                 <i className="bi-caret-down"></i>
               </button>
               <div
                 className="dropDown-info-adddoctorMEQ"
-                id={`dropBoxAdvisor2`}
+                id={`dropBoxAdvisor2Modal`}
               >
-                <div
-                  onClick={() => {
-                    setInputAddvisorID2("อ.สอง ทดสอบ");
-                    handleDropDoctorMEQ(2);
-                  }}
-                >
-                  <span>{`อ.สอง ทดสอบ`}</span>
-                </div>
+                {dataGroupAdvisor[0] ? (
+                  dataGroupAdvisor.map((data, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onClick={() => {
+                          setInputAddvisorID2({ name: data.name, id: data.id });
+                          handleDropDoctorMEQ(4);
+                        }}
+                      >
+                        <span>{data.name}</span>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )}
               </div>
             </div>
             <span>{"MEQ"}</span>
@@ -192,6 +273,92 @@ const ContentGroupStudent = (props) => {
     );
   };
 
+  const ContentEditGroupModal = (data) => {
+    return (
+      <div className="body-content-editGroupAllmodal">
+        <div className="header-editGroupAllmodal">
+          <span>{"แก้ไขข้อมูล กลุ่ม"}</span>
+        </div>
+        <div className="input-editGroupAllmodal">
+          <div className="titlename-inputeditGroupAllmodal">
+            <span>{"ชื่อ"}</span>
+          </div>
+          <div className="inputname-inputeditGroupAllmodal">
+            <input
+              type="text"
+              value={data ? data.name : ""}
+              onChange={(e) => {
+                setEditNameGroup(e.target.value);
+              }}
+              onFocus={(e) => e.target.select()}
+            ></input>
+          </div>
+        </div>
+        <div className="inputdate-editGroupAllmodal">
+          <div className="box-inputDate-editGroupAllmodal">
+            <div className="boxgrid-inputdate-editGroupAllmodal">
+              <div className="input-grid-editGroupAllmodal">
+                <span>{"เริ่ม"}</span>
+              </div>
+              <div className="input-grid-editGroupAllmodal">
+                <input type="date"></input>
+              </div>
+            </div>
+            <div className="boxgrid-inputdate-editGroupAllmodal">
+              <div className="input-grid-editGroupAllmodal">
+                <span>{"สิ้นสุด"}</span>
+              </div>
+              <div className="input-grid-editGroupAllmodal">
+                <input type="date"></input>
+              </div>
+            </div>
+          </div>
+          <div className="boxsubmit-button-editGroupAllmodal">
+            <button type="button">{"แก้ไข"}</button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const handleDataGropstudent = async (yearinfo, tokenuser) => {
+    let object = {
+      year: yearinfo,
+    };
+    await FetchController.fetchGetGroupStudentgroup(object, tokenuser).then(
+      (data) => {
+        setDataGroupall(data);
+      }
+    );
+  };
+
+  const handleDataGroupAdvisor = async (tokenuser) => {
+    await FetchController.fetchGetGroupStudentAdvisor(tokenuser).then((res) => {
+      setDataGroupAdvisor(res);
+    });
+  };
+
+  const handleDataGroupStudentemptygroup = async (tokenuser) => {
+    await FetchController.fetchGetGroupStudentemptygroup(tokenuser).then(
+      (data) => {
+        setDataGroupStudentEmpty(data);
+      }
+    );
+  };
+
+  const handleDataGroupstudentingroup = async (idgroup, tokenuser) => {
+    let object = { grp_id: idgroup };
+    await FetchController.fetchGetGroupStudentingroup(object, tokenuser).then(
+      (data) => {
+        setDataGroupStudentingroup(data);
+      }
+    );
+  };
+
+  const handleAddDataGroupstudent = async (idstudent, idgroup, tokenuser) => {
+    let object = { id: idstudent, grp_id: idgroup };
+  };
+
   useEffect(() => {
     if (statusFinishDocMEQ) {
       console.log("save doctor select");
@@ -201,6 +368,12 @@ const ContentGroupStudent = (props) => {
     }
   }, [statusFinishDocMEQ]);
 
+  useEffect(() => {
+    handleDataGropstudent(yearSelectGroup, usertoken);
+    handleDataGroupAdvisor(usertoken);
+    handleDataGroupStudentemptygroup(usertoken);
+  }, []);
+
   return (
     <div className="body-content-groupStudent">
       <div className="hander-content-groupStudent">
@@ -209,12 +382,32 @@ const ContentGroupStudent = (props) => {
         </div>
         <div className="col-header box-col-year">
           <span>{"ปี"}</span>
-          <input type="text" className="input-year-groupStudent"></input>
+          <input
+            type="text"
+            className="input-year-groupStudent"
+            value={yearSelectGroup}
+            onChange={(e) => {
+              setYearSelectGroup(e.target.value);
+            }}
+            onFocus={(e) => e.target.select()}
+          ></input>
           <div className="relative-btnBox">
-            <button className="yearControllup" type="button">
+            <button
+              className="yearControllup"
+              type="button"
+              onClick={() => {
+                handlecalUpdownyear("up", yearSelectGroup);
+              }}
+            >
               <i className="bi-caret-up"></i>
             </button>
-            <button className="yearControlldown" type="button">
+            <button
+              className="yearControlldown"
+              type="button"
+              onClick={() => {
+                handlecalUpdownyear("down", yearSelectGroup);
+              }}
+            >
               <i className="bi-caret-down"></i>
             </button>
           </div>
@@ -233,47 +426,118 @@ const ContentGroupStudent = (props) => {
         </div>
       </div>
       <div className="content-groupStudent">
+        {/* ตารางแสดงกลุ่มทั้งหมด */}
         <div className="table-box-groupStudent">
-          <table className="table-show-info" style={{ width: "550px" }}>
-            <thead>
-              <tr>
-                <th>{"ชื่อ"}</th>
-                <th>{"เริ่ม"}</th>
-                <th>{"ถึง"}</th>
-                <th>{"แก้ไข"}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td width={200}>{"(ชื่อ)"}</td>
-                <td width={150}>{"(เริ่ม)"}</td>
-                <td width={150}>{"(ถึง)"}</td>
-                <td width={50}>
-                  <button>
-                    <i className="bi-three-dots"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="box-controll-student">
-          <h3>{"นักศึกษาว่าง"}</h3>
-          <div className="row-table-controll-student">
-            <table className="table-show-info" style={{ width: "550px" }}>
+          {dataGroupall ? (
+            dataGroupall[0] ? (
+              <table className="table-show-info" id="tableGroupAll">
+                <thead>
+                  <tr>
+                    <th>{"ชื่อ"}</th>
+                    <th>{"เริ่ม"}</th>
+                    <th>{"ถึง"}</th>
+                    <th>{"แก้ไข"}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataGroupall.map((data, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        onClick={() => {
+                          setSelectDataGroup(data);
+                          handleDataGroupstudentingroup(data.Id, usertoken);
+                        }}
+                      >
+                        <td width={200}>{`${data.name}`}</td>
+                        <td width={150}>{`${data.start}`}</td>
+                        <td width={150}>{`${data.stop}`}</td>
+                        <td width={50}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleOpenModalbox("boxEditGroupModal");
+                            }}
+                          >
+                            <i className="bi-three-dots"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <Spinnerpage></Spinnerpage>
+            )
+          ) : (
+            <table className="table-show-info" id="tableGroupAll">
               <thead>
                 <tr>
-                  <th>{"รหัส"}</th>
                   <th>{"ชื่อ"}</th>
+                  <th>{"เริ่ม"}</th>
+                  <th>{"ถึง"}</th>
+                  <th>{"แก้ไข"}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td width={150}>{"(รหัส)"}</td>
-                  <td width={400}>{"(ชื่อ)"}</td>
+                  <td width={200}>{"-"}</td>
+                  <td width={150}>{"-"}</td>
+                  <td width={150}>{"-"}</td>
+                  <td width={50}>
+                    <button type="button">
+                      <i className="bi-three-dots"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
+          )}
+        </div>
+        <div className="box-controll-student">
+          <h3>{"นักศึกษาว่าง"}</h3>
+          {/* ตารางแสดงนักเรียนที่ว่าง */}
+          <div className="row-table-controll-student">
+            {dataGroupStudentEmpty ? (
+              dataGroupStudentEmpty[0] ? (
+                <table className="table-show-info" style={{ width: "550px" }}>
+                  <thead>
+                    <tr>
+                      <th>{"รหัส"}</th>
+                      <th>{"ชื่อ"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataGroupStudentEmpty.map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td width={150}>{data.std_id}</td>
+                          <td width={400}>{data.name}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )
+            ) : (
+              <table className="table-show-info" style={{ width: "550px" }}>
+                <thead>
+                  <tr>
+                    <th>{"รหัส"}</th>
+                    <th>{"ชื่อ"}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td width={150}>{"(รหัส)"}</td>
+                    <td width={400}>{"(ชื่อ)"}</td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
           </div>
           <div className="btnAddDel-controll-student">
             <button type="button" className="btnAdd-inControllStudent">
@@ -284,21 +548,60 @@ const ContentGroupStudent = (props) => {
             </button>
           </div>
           <h3>{"นักศึกษาในกลุ่ม"}</h3>
+          {/* ตารางแสดงนักศึกษาในกลุ่มนั้นๆ */}
           <div className="row-table-controll-student">
-            <table className="table-show-info" style={{ width: "550px" }}>
-              <thead>
-                <tr>
-                  <th>{"รหัส"}</th>
-                  <th>{"ชื่อ"}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td width={150}>{"(รหัส)"}</td>
-                  <td width={400}>{"(ชื่อ)"}</td>
-                </tr>
-              </tbody>
-            </table>
+            {dataGroupStudentingroup ? (
+              dataGroupStudentingroup[0] ? (
+                <table className="table-show-info" style={{ width: "550px" }}>
+                  <thead>
+                    <tr>
+                      <th>{"รหัส"}</th>
+                      <th>{"ชื่อ"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataGroupStudentingroup.map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td width={150}>{data.std_id}</td>
+                          <td width={400}>{data.name}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <table className="table-show-info" style={{ width: "550px" }}>
+                  <thead>
+                    <tr>
+                      <th>{"รหัส"}</th>
+                      <th>{"ชื่อ"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td width={150}>{"(รหัส)"}</td>
+                      <td width={400}>{"(ชื่อ)"}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              )
+            ) : (
+              <table className="table-show-info" style={{ width: "550px" }}>
+                <thead>
+                  <tr>
+                    <th>{"รหัส"}</th>
+                    <th>{"ชื่อ"}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td width={150}>{"(รหัส)"}</td>
+                    <td width={400}>{"(ชื่อ)"}</td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
           </div>
           <div className="box-doctorInput-ControllStudent">
             <div className="row-doctorInputControllStudent">
@@ -309,12 +612,10 @@ const ContentGroupStudent = (props) => {
                     <input
                       type="text"
                       className="input-textadvisor-addDoctorMEQ"
-                      onChange={(e) => {
-                        setInputAddvisorID1(e.target.value);
-                      }}
                       onFocus={(e) => e.target.select()}
-                      value={inputAddvisorId1}
+                      value={inputAddvisorId1.name}
                       required
+                      readOnly
                     ></input>
                     <button
                       type="button"
@@ -328,14 +629,26 @@ const ContentGroupStudent = (props) => {
                       className="dropDown-info-adddoctorMEQ"
                       id={`dropBoxAdvisor1`}
                     >
-                      <div
-                        onClick={() => {
-                          setInputAddvisorID1("อ.หนึ่ง ทดสอบ");
-                          handleDropDoctorMEQ(1);
-                        }}
-                      >
-                        <span>{`อ.หนึ่ง ทดสอบ`}</span>
-                      </div>
+                      {dataGroupAdvisor[0] ? (
+                        dataGroupAdvisor.map((data, index) => {
+                          return (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                setInputAddvisorID1({
+                                  name: data.name,
+                                  id: data.id,
+                                });
+                                handleDropDoctorMEQ(1);
+                              }}
+                            >
+                              <span>{data.name}</span>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <Spinnerpage></Spinnerpage>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -360,12 +673,10 @@ const ContentGroupStudent = (props) => {
                     <input
                       type="text"
                       className="input-textadvisor-addDoctorMEQ"
-                      value={inputAddvisorId2}
-                      onChange={(e) => {
-                        setInputAddvisorID2(e.target.value);
-                      }}
+                      value={inputAddvisorId2.name}
                       onFocus={(e) => e.target.select()}
                       required
+                      readOnly
                     ></input>
                     <button
                       type="button"
@@ -379,14 +690,26 @@ const ContentGroupStudent = (props) => {
                       className="dropDown-info-adddoctorMEQ"
                       id={`dropBoxAdvisor2`}
                     >
-                      <div
-                        onClick={() => {
-                          setInputAddvisorID2("อ.สอง ทดสอบ");
-                          handleDropDoctorMEQ(2);
-                        }}
-                      >
-                        <span>{`อ.สอง ทดสอบ`}</span>
-                      </div>
+                      {dataGroupAdvisor[0] ? (
+                        dataGroupAdvisor.map((data, index) => {
+                          return (
+                            <div
+                              key={index}
+                              onClick={() => {
+                                setInputAddvisorID2({
+                                  name: data.name,
+                                  id: data.id,
+                                });
+                                handleDropDoctorMEQ(2);
+                              }}
+                            >
+                              <span>{data.name}</span>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <Spinnerpage></Spinnerpage>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -446,6 +769,11 @@ const ContentGroupStudent = (props) => {
         thisTitle={titleText}
         statusClose={setCloseModalbox}
         content={ContentAddDoctorModal()}
+      ></ModalBox>
+      <ModalBox
+        idbox={"boxEditGroupModal"}
+        statusClose={setCloseModalbox}
+        content={ContentEditGroupModal(selectDataGroup)}
       ></ModalBox>
     </div>
   );

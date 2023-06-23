@@ -235,7 +235,14 @@ const ContentStudent = (props) => {
       };
 
       // console.log("save ===> ", object);
-      await FetchController.fetchAddStudent(object, usertoken);
+      await FetchController.fetchAddStudent(object, usertoken).then(
+        (message) => {
+          console.log(message);
+          if (message.status) {
+            handleFatch();
+          }
+        }
+      );
       setStatusAdd(true);
     }
   };
@@ -269,7 +276,12 @@ const ContentStudent = (props) => {
     };
 
     // console.log("ข้อมูลแก้ไข=>", object);
-    FetchController.fetchEditstudent(object, usertoken);
+    FetchController.fetchEditstudent(object, usertoken).then((message) => {
+      console.log(message);
+      if (message.status) {
+        handleFatch();
+      }
+    });
     setStatusEdit(true);
     getID(`boxModal`).style.display = "none";
   };
@@ -1465,7 +1477,14 @@ const ContentStudent = (props) => {
               e.preventDefault();
               if (idStudent.toString() !== "28") return;
               let object = { id: idStudent };
-              await FetchController.fetchDelete(object, usertoken);
+              await FetchController.fetchDelete(object, usertoken).then(
+                (message) => {
+                  console.log(message);
+                  if (message.status) {
+                    handleFatch();
+                  }
+                }
+              );
               setStatusDel(true);
             }}
           >
@@ -1606,7 +1625,14 @@ const ContentStudent = (props) => {
                     book: book,
                   };
 
-                  FetchController.fetchScoreStudent(object, usertoken);
+                  FetchController.fetchScoreStudent(object, usertoken).then(
+                    (message) => {
+                      console.log(message);
+                      if (message.status) {
+                        handleFatch();
+                      }
+                    }
+                  );
                 } else {
                   console.log("ไม่ได้เลือกเลย");
                 }

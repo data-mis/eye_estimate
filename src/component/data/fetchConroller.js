@@ -1,7 +1,7 @@
 import { HttpConfig } from "./httpConfig";
 import Swal from "sweetalert2";
 import { setCookieLogin } from "../config/cookieConfig";
-import { method } from "lodash";
+import { method, result } from "lodash";
 
 const requestOption = (method, objectBody, token) => {
   let request = {
@@ -99,11 +99,10 @@ const FetchController = {
     console.log("HTTP", http);
 
     try {
-      fetch(`${http}`, request).then((res) =>
-        res.json().then((data) => {
-          console.log(data);
-        })
-      );
+      let res = await fetch(`${http}`, request).then((res) => {
+        return res.json();
+      });
+      return res;
     } catch (error) {
       throw error;
     }
@@ -115,11 +114,10 @@ const FetchController = {
     let http = `${HttpConfig()}/student/add_student_score`;
 
     try {
-      fetch(`${http}`, request).then((res) =>
-        res.json().then((data) => {
-          console.log(data);
-        })
-      );
+      let res = await fetch(`${http}`, request).then((res) => {
+        return res.json();
+      });
+      return res;
     } catch (error) {
       throw error;
     }
@@ -132,11 +130,10 @@ const FetchController = {
     console.log(http);
 
     try {
-      fetch(http, request).then((res) =>
-        res.json().then((data) => {
-          console.log(data);
-        })
-      );
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
     } catch (error) {
       throw error;
     }
@@ -147,11 +144,10 @@ const FetchController = {
 
     console.log("มาไหม=>", request);
     try {
-      fetch(`${http}`, request).then((res) =>
-        res.json().then((data) => {
-          console.log(data);
-        })
-      );
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
     } catch (error) {
       throw error;
     }
@@ -254,6 +250,76 @@ const FetchController = {
   },
 
   // จบ การดึงข้อมูลตารางอาจารย์แพทย์ใน contentDoctor
+
+  // การดึงข้อมูลตารางกลุ่มนศพใน contentGroup
+
+  fetchGetGroupStudentgroup: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/group/get_group`;
+
+    try {
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchGetGroupStudentAdvisor: async function (token) {
+    let request = requestOption("POST", "", token);
+    let http = `${HttpConfig()}/group/get_group_advisor`;
+
+    try {
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchGetGroupStudentemptygroup: async function (token) {
+    let request = requestOption("POST", "", token);
+    let http = `${HttpConfig()}/group/get_group_student`;
+
+    try {
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchGetGroupStudentingroup: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/group/get_in_group_student`;
+
+    try {
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchAddGroupStudent: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/add_group_student`;
+
+    try {
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  //จบ การดึงข้อมูลตารางกลุ่มนศพใน contentGroup
 };
 
 export default FetchController;
