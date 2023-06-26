@@ -8,6 +8,7 @@ import Spinnerpage from "../config/spinnerpage";
 import { searchDoctorcontent } from "../config/searchConfig";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { HolderlineonTable } from "../config/holdlinetable";
 
 const ContentDoctor = (props) => {
   const cookie = new Cookies();
@@ -157,7 +158,7 @@ const ContentDoctor = (props) => {
                     setUsernamedoc(e.target.value);
                   }}
                   onFocus={(e) => e.target.select()}
-                  value={usernamedoc}
+                  value={usernamedoc ? usernamedoc : ""}
                 ></input>
               </div>
             </div>
@@ -168,7 +169,7 @@ const ContentDoctor = (props) => {
                 <div className="relativeBox-drop">
                   <input
                     type="text"
-                    value={ttlDoc}
+                    value={ttlDoc ? ttlDoc : ""}
                     onChange={(e) => {
                       setTtlDoc(e.target.value);
                     }}
@@ -215,7 +216,7 @@ const ContentDoctor = (props) => {
                     setNamedoc(e.target.value);
                   }}
                   onFocus={(e) => e.target.select()}
-                  value={namedoc}
+                  value={namedoc ? namedoc : ""}
                 ></input>
               </div>
             </div>
@@ -229,7 +230,7 @@ const ContentDoctor = (props) => {
                     setLnamedoc(e.target.value);
                   }}
                   onFocus={(e) => e.target.select()}
-                  value={lnamedoc}
+                  value={lnamedoc ? lnamedoc : ""}
                 ></input>
               </div>
             </div>
@@ -268,7 +269,7 @@ const ContentDoctor = (props) => {
                 <div className="relativeBox-PIN" id="boxPIN">
                   <input
                     type={statusShowPIN ? "text" : "password"}
-                    value={PINdoc}
+                    value={PINdoc ? PINdoc : ""}
                     maxLength={6}
                     onChange={(e) => {
                       e.preventDefault();
@@ -324,7 +325,7 @@ const ContentDoctor = (props) => {
                       setStartdoc(e.target.value);
                     }
                   }}
-                  value={startdoc}
+                  value={startdoc ? startdoc : "0000-00-00"}
                 ></input>
               </div>
             </div>
@@ -341,7 +342,7 @@ const ContentDoctor = (props) => {
                       setStopdoc(e.target.value);
                     }
                   }}
-                  value={stopdoc}
+                  value={stopdoc ? stopdoc : "0000-00-00"}
                 ></input>
               </div>
             </div>
@@ -401,7 +402,7 @@ const ContentDoctor = (props) => {
                     setUsernamedoc(e.target.value);
                   }}
                   onFocus={(e) => e.target.select()}
-                  value={usernamedoc}
+                  value={usernamedoc ? usernamedoc : ""}
                 ></input>
               </div>
             </div>
@@ -412,7 +413,7 @@ const ContentDoctor = (props) => {
                 <div className="relativeBox-drop">
                   <input
                     type="text"
-                    value={ttlDoc}
+                    value={ttlDoc ? ttlDoc : ""}
                     onChange={(e) => {
                       setTtlDoc(e.target.value);
                     }}
@@ -459,8 +460,7 @@ const ContentDoctor = (props) => {
                     setNamedoc(e.target.value);
                   }}
                   onFocus={(e) => e.target.select()}
-                  defaultValue={data.name ? data.name.trim() : ""}
-                  value={namedoc}
+                  value={namedoc ? namedoc : data.name ? data.name.trim() : ""}
                 ></input>
               </div>
             </div>
@@ -474,8 +474,9 @@ const ContentDoctor = (props) => {
                     setLnamedoc(e.target.value);
                   }}
                   onFocus={(e) => e.target.select()}
-                  defaultValue={data.lname ? data.lname.trim() : ""}
-                  value={lnamedoc}
+                  value={
+                    lnamedoc ? lnamedoc : data.lname ? data.lname.trim() : ""
+                  }
                 ></input>
               </div>
             </div>
@@ -514,7 +515,7 @@ const ContentDoctor = (props) => {
                 <div className="relativeBox-PIN" id="boxPIN">
                   <input
                     type={"text"}
-                    value={PINdoc}
+                    value={PINdoc ? PINdoc : ""}
                     maxLength={6}
                     onChange={(e) => {
                       e.preventDefault();
@@ -544,8 +545,13 @@ const ContentDoctor = (props) => {
                   onChange={(e) => {
                     setStartdoc(e.target.value);
                   }}
-                  defaultValue={data.start ? data.start.trim() : "0000-00-00"}
-                  value={startdoc}
+                  value={
+                    startdoc
+                      ? startdoc
+                      : data.start
+                      ? data.start.trim()
+                      : "0000-00-00"
+                  }
                 ></input>
               </div>
             </div>
@@ -558,8 +564,13 @@ const ContentDoctor = (props) => {
                   onChange={(e) => {
                     setStopdoc(e.target.value);
                   }}
-                  defaultValue={data.start ? data.stop.trim() : "0000-00-00"}
-                  value={stopdoc}
+                  value={
+                    stopdoc
+                      ? stopdoc
+                      : data.start
+                      ? data.stop.trim()
+                      : "0000-00-00"
+                  }
                 ></input>
               </div>
             </div>
@@ -580,7 +591,6 @@ const ContentDoctor = (props) => {
     ).then((data) => {
       return data;
     });
-    console.log("datahere->", fetchdata);
     setDataTeacher(fetchdata);
   };
 
@@ -624,25 +634,15 @@ const ContentDoctor = (props) => {
   };
 
   const handleDeleteDoc = (object, usertoken) => {
-    console.log("delinfo>>>", object);
+    // console.log("delinfo>>>", object);
     //ยังไม่ได้ fetch
     dataDoctorTeacherFull();
     clearInputdocmodal();
     setHoldidData("");
   };
 
-  const handleHoldlineTable = (id) => {
-    console.log("INDEX->", id);
-    let leghtTR = document.getElementsByClassName("tableTR").length;
-    for (let t = 0; t < leghtTR; t++) {
-      document.getElementsByClassName("tableTR")[t].style.border =
-        "2px solid black";
-    }
-    getDocId(`tr-${id}`).style.border = "5px solid #01579b";
-  };
-
   const handleEditvalueset = (ele) => {
-    console.log(ele);
+    // console.log(ele);
     setUsernamedoc(ele.adv_id ? ele.adv_id.trim() : "");
     setTtlDoc(ele.ttl ? ele.ttl.trim() : "");
     setNamedoc(ele.name ? ele.name.trim() : "");
@@ -659,12 +659,9 @@ const ContentDoctor = (props) => {
 
   useEffect(() => {
     if (statusCloseModal) {
-      console.log("ปิดโมเดล?");
       setPINdoc("");
       setTtlDoc("");
       setGenderDoc("male");
-    } else {
-      console.log("เปิดมะ");
     }
   }, [statusCloseModal]);
 
@@ -730,7 +727,7 @@ const ContentDoctor = (props) => {
                       onClick={() => {
                         // console.log("holding add id =>", data.Id);
                         setHoldidData(data.Id);
-                        handleHoldlineTable(index);
+                        HolderlineonTable("tableTR", "tr-", index);
                       }}
                     >
                       <td width={100}>{data.adv_id}</td>

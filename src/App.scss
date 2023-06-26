@@ -786,6 +786,7 @@ $colorBGnav:#e0e0e0;
         }
         .input-year-groupStudent,.input-search-groupStudent{
             width: 30%;
+            padding:0px 5px;
         }
             .relative-btnBox{
                 height: 25px;
@@ -872,9 +873,18 @@ $colorBGnav:#e0e0e0;
         display: flex;
         padding: 0 5px;
     }
+        .boxInRowInputControllStudent span{
+            font-weight: bold;
+        }
     .input-meq-ControllStudent{
         width: 35%;
+        text-align: center;
+        font-weight: bold;
     }
+        .input-meq-ControllStudent::-webkit-outer-spin-button,.input-meq-ControllStudent::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+        }
+        
     .btn-submit-groupStudent{
         width: 95%;
         height: 75%;
@@ -958,9 +968,12 @@ $colorBGnav:#e0e0e0;
             background-color: #ddd;
         }
         .input-textadvisor-addDoctorMEQ,.input-textMEQ-addDoctorMEQ{
-            width: 100%;
+            // width: 100%;
+            width: 200px;
             height: 25px;
+            padding: 0 15px;
             border: 1px solid $colorBorderDrop;
+            font-weight: bold;
         }
         .input-textMEQ-addDoctorMEQ{
             width: 50px;
@@ -1077,6 +1090,9 @@ $colorBGnav:#e0e0e0;
     .boxInRowInputControllStudent{
         padding: 5px;
     }
+    .input-textadvisor-addDoctorMEQ,.input-textMEQ-addDoctorMEQ{
+        width: 100%;
+    }
    
 }
 @media only screen and (max-width:740px) {
@@ -1119,6 +1135,18 @@ $colorBGnav:#e0e0e0;
     .btn-addingModal-addAdvisor{
         display: block;
     }
+    .input-textadvisor-addDoctorMEQ,.input-textMEQ-addDoctorMEQ{
+        width: 200px;
+    }
+    .input-textMEQ-addDoctorMEQ{
+        width: 20%;
+        text-align: center;
+    }
+}
+@media only screen and (max-width:360px) {
+  .input-textadvisor-addDoctorMEQ{
+    width: 80%;
+  }
 }
 
 }   

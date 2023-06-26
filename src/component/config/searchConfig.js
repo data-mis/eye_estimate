@@ -44,6 +44,16 @@ export function searchDoctorcontent(text, data) {
       }
     });
   }
-
   return resultSearch;
+}
+
+export function searchGroupcontent(textsearch, datagroup) {
+  let search = escapeRegExp(textsearch);
+  let totalarr = [];
+  datagroup.map((ele) => {
+    if (ele.name.trim().match(search)) {
+      totalarr.push(ele);
+    }
+  });
+  return totalarr;
 }

@@ -6,6 +6,7 @@ import { handleOpenModalbox } from "../config/modalConfig";
 import Cookies from "universal-cookie";
 import { result } from "lodash";
 import { HttpConfig } from "../data/httpConfig";
+import { HolderlineonTable } from "../config/holdlinetable";
 
 const ContentStudent = (props) => {
   const testFileFolder = "../../../public/picture/student";
@@ -1172,19 +1173,6 @@ const ContentStudent = (props) => {
     setStatusReadonly(true);
   };
 
-  const handleHoldlinetable = (id) => {
-    let lengthclass = document.getElementsByClassName(
-      "table-tr-studentinfo"
-    ).length;
-
-    for (let t = 0; t < lengthclass; t++) {
-      document.getElementsByClassName("table-tr-studentinfo")[t].style.border =
-        "2px solid black";
-    }
-
-    getID(`table-tr-${id}`).style.border = "5px solid #01579b";
-  };
-
   useEffect(() => {
     if (!year) return;
     handleFatch();
@@ -1344,7 +1332,11 @@ const ContentStudent = (props) => {
                   key={index}
                   onClick={() => {
                     console.log("handle list !=>", data);
-                    handleHoldlinetable(index);
+                    HolderlineonTable(
+                      "table-tr-studentinfo",
+                      "table-tr-",
+                      index
+                    );
                     setIdStudent(data.Id);
                     setNumberStudent(data.std_id);
                     showURLimageStudent(data.std_id, usertoken);

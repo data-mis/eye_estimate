@@ -743,6 +743,7 @@ html .col-header, body .col-header {
 }
 html .input-year-groupStudent, html .input-search-groupStudent, body .input-year-groupStudent, body .input-search-groupStudent {
   width: 30%;
+  padding: 0px 5px;
 }
 html .relative-btnBox, body .relative-btnBox {
   height: 25px;
@@ -828,8 +829,16 @@ html .boxInRowInputControllStudent, body .boxInRowInputControllStudent {
   display: flex;
   padding: 0 5px;
 }
+html .boxInRowInputControllStudent span, body .boxInRowInputControllStudent span {
+  font-weight: bold;
+}
 html .input-meq-ControllStudent, body .input-meq-ControllStudent {
   width: 35%;
+  text-align: center;
+  font-weight: bold;
+}
+html .input-meq-ControllStudent::-webkit-outer-spin-button, html .input-meq-ControllStudent::-webkit-inner-spin-button, body .input-meq-ControllStudent::-webkit-outer-spin-button, body .input-meq-ControllStudent::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 html .btn-submit-groupStudent, body .btn-submit-groupStudent {
   width: 95%;
@@ -913,9 +922,11 @@ html .dropDown-info-adddoctorMEQ div:hover, body .dropDown-info-adddoctorMEQ div
   background-color: #ddd;
 }
 html .input-textadvisor-addDoctorMEQ, html .input-textMEQ-addDoctorMEQ, body .input-textadvisor-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
-  width: 100%;
+  width: 200px;
   height: 25px;
+  padding: 0 15px;
   border: 1px solid #9e9e9e;
+  font-weight: bold;
 }
 html .input-textMEQ-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
   width: 50px;
@@ -1027,6 +1038,9 @@ html .boxsubmit-button-editGroupAllmodal button:hover, body .boxsubmit-button-ed
   html .boxInRowInputControllStudent, body .boxInRowInputControllStudent {
     padding: 5px;
   }
+  html .input-textadvisor-addDoctorMEQ, html .input-textMEQ-addDoctorMEQ, body .input-textadvisor-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
+    width: 100%;
+  }
 }
 @media only screen and (max-width: 740px) {
   html .hander-content-groupStudent, body .hander-content-groupStudent {
@@ -1066,6 +1080,18 @@ html .boxsubmit-button-editGroupAllmodal button:hover, body .boxsubmit-button-ed
   }
   html .btn-addingModal-addAdvisor, body .btn-addingModal-addAdvisor {
     display: block;
+  }
+  html .input-textadvisor-addDoctorMEQ, html .input-textMEQ-addDoctorMEQ, body .input-textadvisor-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
+    width: 200px;
+  }
+  html .input-textMEQ-addDoctorMEQ, body .input-textMEQ-addDoctorMEQ {
+    width: 20%;
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 360px) {
+  html .input-textadvisor-addDoctorMEQ, body .input-textadvisor-addDoctorMEQ {
+    width: 80%;
   }
 }
 html .body-contentwork, body .body-contentwork {
