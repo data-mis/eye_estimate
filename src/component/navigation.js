@@ -141,6 +141,11 @@ const NavigationPage = () => {
     }
   };
 
+  const handleClearinglogout = () => {
+    localStorage.clear();
+    navigat("/");
+  };
+
   useEffect(() => {
     if (!checkCookieOut()) {
       return navigat("/");
@@ -169,6 +174,16 @@ const NavigationPage = () => {
             <span>ระบบประเมิน นศพ. ภาควิชาจักษุ </span>
           </div>
           <div className="header-navigatepage-col-2">
+            <button
+              className="btn-logout-navigatepage"
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleClearinglogout();
+              }}
+            >
+              <i className="bi-box-arrow-left"></i>
+            </button>
             <button
               className="btn-header-menuBar"
               onClick={() => {

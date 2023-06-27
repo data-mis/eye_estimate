@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import FetchController, { handleFatch } from "../data/fetchConroller";
 import { searching } from "../config/searchConfig";
 import ModalBox from "../modal/modalBox";
 import { handleOpenModalbox } from "../config/modalConfig";
 import Cookies from "universal-cookie";
-import { result } from "lodash";
-import { HttpConfig } from "../data/httpConfig";
 import { HolderlineonTable } from "../config/holdlinetable";
+import FetchControlStudent from "../data/fetchControlStudent";
 
 const ContentStudent = (props) => {
   const testFileFolder = "../../../public/picture/student";
@@ -73,7 +71,7 @@ const ContentStudent = (props) => {
   };
 
   const handleFatch = async () => {
-    setDataStudent(await FetchController.fetchStudent(year, usertoken));
+    setDataStudent(await FetchControlStudent.fetchStudent(year, usertoken));
   };
 
   const imgPreview = (e) => {
@@ -87,7 +85,7 @@ const ContentStudent = (props) => {
   //ดึงข้อมูลอาจารย์หมอ
   const handleFatchTeacher = () => {
     if (!localStorage.getItem("teacherName")) {
-      FetchController.fetchGetTeacher(usertoken).then((data) => {
+      FetchControlStudent.fetchGetTeacher(usertoken).then((data) => {
         let nameTeacher = [];
         data.map((ele) => {
           nameTeacher.push({ id: ele.id, name: ele.name });
@@ -102,7 +100,7 @@ const ContentStudent = (props) => {
     let ayear = { year: parseInt(year) - 543 };
     console.log("ayear", ayear);
     if (!localStorage.getItem("groupName")) {
-      FetchController.fetchGetGroup(ayear, usertoken).then((data) => {
+      FetchControlStudent.fetchGetGroup(ayear, usertoken).then((data) => {
         let nameGroup = [];
         console.log(">>", data);
         data.map((ele) => {
@@ -147,7 +145,7 @@ const ContentStudent = (props) => {
           let datafrom = new FormData();
           datafrom.append("file", newfile);
           datafrom.append("std_id", `${idStudent}`);
-          FetchController.fetchImgae(datafrom, usertoken);
+          FetchControlStudent.fetchImgae(datafrom, usertoken);
         } catch (error) {
           console.log(error.response?.data);
         }
@@ -236,7 +234,7 @@ const ContentStudent = (props) => {
       };
 
       // console.log("save ===> ", object);
-      await FetchController.fetchAddStudent(object, usertoken).then(
+      await FetchControlStudent.fetchAddStudent(object, usertoken).then(
         (message) => {
           console.log(message);
           if (message.status) {
@@ -277,7 +275,8 @@ const ContentStudent = (props) => {
     };
 
     // console.log("ข้อมูลแก้ไข=>", object);
-    FetchController.fetchEditstudent(object, usertoken).then((message) => {
+
+    FetchControlStudent.fetchEditstudent(object, usertoken).then((message) => {
       console.log(message);
       if (message.status) {
         handleFatch();
@@ -292,7 +291,7 @@ const ContentStudent = (props) => {
   };
 
   const showURLimageStudent = (StudentId, token) => {
-    FetchController.fetchGetImage({ std_id: StudentId.trim() }, token).then(
+    FetchControlStudent.fetchGetImage({ std_id: StudentId.trim() }, token).then(
       (data) => {
         if (data) {
           setPicURL(`http://${data.url}`);
@@ -1469,7 +1468,8 @@ const ContentStudent = (props) => {
               e.preventDefault();
               if (idStudent.toString() !== "28") return;
               let object = { id: idStudent };
-              await FetchController.fetchDelete(object, usertoken).then(
+
+              await FetchControlStudent.fetchDelete(object, usertoken).then(
                 (message) => {
                   console.log(message);
                   if (message.status) {
@@ -1617,7 +1617,7 @@ const ContentStudent = (props) => {
                     book: book,
                   };
 
-                  FetchController.fetchScoreStudent(object, usertoken).then(
+                  FetchControlStudent.fetchScoreStudent(object, usertoken).then(
                     (message) => {
                       console.log(message);
                       if (message.status) {

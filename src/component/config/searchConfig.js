@@ -1,5 +1,4 @@
 import _ from "lodash";
-import FetchController from "../data/fetchConroller";
 function escapeRegExp(text) {
   if (!_.isString(text)) {
     return "";

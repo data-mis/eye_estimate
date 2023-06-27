@@ -123,6 +123,17 @@ html .header-navigatepage-col-2, body .header-navigatepage-col-2 {
   padding: 0 10px;
   background-color: #607d8b;
 }
+html .btn-logout-navigatepage, body .btn-logout-navigatepage {
+  border: none;
+  width: 10%;
+  height: 90%;
+  background-color: #607d8b;
+}
+html .btn-logout-navigatepage i, body .btn-logout-navigatepage i {
+  font-size: 23px;
+  font-weight: bold;
+  color: #fefefe;
+}
 html .header-navigatepage span, body .header-navigatepage span {
   background-color: #607d8b;
   color: #fefefe;
@@ -1239,6 +1250,12 @@ html .dropinfo-Contentwork, body .dropinfo-Contentwork {
   scroll-snap-type: mandatory;
   overflow: auto;
 }
+html .infogrp-box-dropinfoContentwork, body .infogrp-box-dropinfoContentwork {
+  padding: 5px;
+}
+html .infogrp-box-dropinfoContentwork span, body .infogrp-box-dropinfoContentwork span {
+  font-weight: bold;
+}
 html .dropinfo-Contentwork-nav, body .dropinfo-Contentwork-nav {
   display: none;
   width: 100%;
@@ -1321,10 +1338,14 @@ html .row-radiobtn span, body .row-radiobtn span {
   font-weight: bold;
 }
 html .boxcontent-contentwork, body .boxcontent-contentwork {
-  width: 100%;
-  height: 87%;
   display: grid;
   grid-template-columns: 90% 10%;
+  width: 100%;
+  height: auto;
+}
+html .colbox-contentwork, body .colbox-contentwork {
+  width: 100%;
+  height: 750px;
 }
 html .row-info-contentwork, body .row-info-contentwork {
   border: 1px solid rebeccapurple;
@@ -1335,6 +1356,8 @@ html .row-info-contentwork, body .row-info-contentwork {
 }
 html .col-info-contentwork, body .col-info-contentwork {
   border: 1px solid black;
+  scroll-snap-type: mandatory;
+  overflow: auto;
 }
 html .title-info-contentwork, body .title-info-contentwork {
   border: 2px solid black;
@@ -2403,12 +2426,10 @@ html .table-show-info, body .table-show-info {
   background-color: #fefefe;
   text-align: center;
   font-weight: bold;
-  position: relative;
   margin: auto;
 }
 html .table-show-info thead, body .table-show-info thead {
   text-align: center;
-  position: sticky;
   position: -webkit-sticky;
   top: 0;
 }

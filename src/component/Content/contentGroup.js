@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ModalBox from "../modal/modalBox";
 import moment, { isDuration } from "moment";
-import FetchController from "../data/fetchConroller";
 import Cookies from "universal-cookie";
 import Spinnerpage from "../config/spinnerpage";
 import { handleOpenModalbox } from "../config/modalConfig";
@@ -11,6 +10,7 @@ import {
   clearHolderlineTable,
 } from "../config/holdlinetable";
 import { searchGroupcontent } from "../config/searchConfig";
+import FetchControlGroup from "../data/fetchControlGroup";
 
 const ContentGroupStudent = (props) => {
   const cookie = new Cookies();
@@ -367,7 +367,7 @@ const ContentGroupStudent = (props) => {
     let object = {
       year: yearinfo,
     };
-    await FetchController.fetchGetGroupStudentgroup(object, tokenuser).then(
+    await FetchControlGroup.fetchGetGroupStudentgroup(object, tokenuser).then(
       (data) => {
         setDataGroupall(data);
       }
@@ -375,13 +375,13 @@ const ContentGroupStudent = (props) => {
   };
 
   const handleDataGroupAdvisor = async (tokenuser) => {
-    await FetchController.fetchGetGroupStudentAdvisor(tokenuser).then((res) => {
+    await FetchControlGroup.fetchGetGroupStudentAdvisor(tokenuser).then((res) => {
       setDataGroupAdvisor(res);
     });
   };
 
   const handleDataGroupStudentemptygroup = async (tokenuser) => {
-    await FetchController.fetchGetGroupStudentemptygroup(tokenuser).then(
+    await FetchControlGroup.fetchGetGroupStudentemptygroup(tokenuser).then(
       (data) => {
         setDataGroupStudentEmpty(data);
       }
@@ -399,7 +399,7 @@ const ContentGroupStudent = (props) => {
 
   const handleDataGroupstudentingroup = async (idgroup, tokenuser) => {
     let object = { grp_id: idgroup };
-    await FetchController.fetchGetGroupStudentingroup(object, tokenuser).then(
+    await FetchControlGroup.fetchGetGroupStudentingroup(object, tokenuser).then(
       (data) => {
         setDataGroupStudentingroup(data);
       }
@@ -437,7 +437,7 @@ const ContentGroupStudent = (props) => {
     // console.log("tokenfetch>>", tokenuser);
     handleClearHoldlineandselectdata();
     handleDataGroupStudentemptygroup(tokenuser);
-    // FetchController.fetchAddGroupStudent(object, tokenuser).then((message) => {
+    // FetchControlGroup.fetchAddGroupStudent(object, tokenuser).then((message) => {
     //   console.log(message);
     // });
   };
@@ -457,7 +457,7 @@ const ContentGroupStudent = (props) => {
     console.log("delete object=>", object);
     handleClearHoldlineandselectdata();
     handleDataGroupstudentingroup(idgroup, tokenuser);
-    // FetchController.fetchDeleteGroupstudentingroup(object, tokenuser).then(
+    // FetchControlGroup.fetchDeleteGroupstudentingroup(object, tokenuser).then(
     //   (message) => {
     //     console.log(message);
     //   }
@@ -495,7 +495,7 @@ const ContentGroupStudent = (props) => {
   const handleAddGroupforgroup = (year, tokenuser) => {
     let object = { year: year };
     if (year) {
-      // FetchController.fetchAddGroupforGroup(object,tokenuser)
+      // FetchControlGroup.fetchAddGroupforGroup(object,tokenuser)
     }
   };
 
@@ -503,7 +503,7 @@ const ContentGroupStudent = (props) => {
     let object = { id: groupid };
     if (groupid) {
       console.log("object deletegroupforgroup =>", object);
-      // FetchController.fetchDeleteGroupforgroup(object,tokenuser)
+      // FetchControlGroup.fetchDeleteGroupforgroup(object,tokenuser)
     }
   };
 

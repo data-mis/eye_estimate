@@ -1,19 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleModalNavSlide, handleOpenModalbox } from "../config/modalConfig";
 import ModalNavSlide from "../modal/modalNavSlide";
 import ModalBox from "../modal/modalBox";
 import moment from "moment/moment";
 import { objectMonth, showMonthwithTH } from "../config/monthth";
+import Cookies from "universal-cookie";
+import Spinnerpage from "../config/spinnerpage";
+import FetchControlWork from "../data/fetchControlWork";
+import { HolderlineonTable } from "../config/holdlinetable";
 
 const ContentWork = () => {
   const docGetId = (id) => {
     return document.getElementById(id);
   };
+  const docGetClass = (id) => {
+    return document.getElementsByClassName(id);
+  };
 
-  const [selectYear, setSelectYear] = useState(new Date().getFullYear());
+  const cookie = new Cookies();
+  const usertoken = cookie.get("token");
+
+  const [selectYear, setSelectYear] = useState(
+    parseInt(new Date().getFullYear())
+  );
   const [selectMonth, setSelectMonth] = useState(
     moment(new Date()).format("MM")
   );
+
+  const [getselectGroup, setGetselectGroup] = useState([]);
+  const [selectgrp, setSelectgrp] = useState([]);
+  const [getsheetwork, setGetsheetwork] = useState([]);
+  const [getworklistwork, setGetworklistwork] = useState([]);
+  const [getworkestimation, setGetworkestimation] = useState([]);
 
   const [openfilter, setOpenfilter] = useState(false);
   const [openMonthdrop, setOpenMonthdrop] = useState(false);
@@ -63,8 +81,9 @@ const ContentWork = () => {
   };
 
   const handleOpenDropdown = (id, box) => {
-    let lengthtable = document.getElementsByClassName("table-show-info").length;
-    let table = document.getElementsByClassName("table-show-info");
+    let lengthtable = docGetClass("table-show-info").length;
+    let table = docGetClass("table-show-info");
+    let theadtable = docGetClass("thaeadShowinfo");
 
     console.log(id);
     if (!openMonthdrop) {
@@ -76,6 +95,7 @@ const ContentWork = () => {
         setOpenMonthdrop(false);
         for (let i = 0; i < lengthtable; i++) {
           table[i].style.position = "relative";
+          theadtable[i].style.position = "sticky";
         }
         docGetId(id).style.display = "none";
       } else {
@@ -87,6 +107,7 @@ const ContentWork = () => {
 
         for (let i = 0; i < lengthtable; i++) {
           table[i].style.position = "static";
+          theadtable[i].style.position = "static";
         }
         docGetId(id).style.display = "block";
       }
@@ -358,6 +379,38 @@ const ContentWork = () => {
     );
   };
 
+  const handleGetdatagroup = (year, token) => {
+    FetchControlWork.fetchworkgroup(year, token).then((data) => {
+      setGetselectGroup(data);
+    });
+  };
+
+  const handlesheetdatawork = (token) => {
+    FetchControlWork.fetchworksheet(token).then((data) => {
+      setGetsheetwork(data);
+    });
+  };
+
+  const handleworklistworkadvisor = (token) => {
+    FetchControlWork.fetchworklistworkadvisor(token).then((data) => {
+      setGetworklistwork(data);
+      handleworkestimationlistwork(data[0].id, token);
+    });
+  };
+
+  const handleworkestimationlistwork = (advisroid, token) => {
+    let object = { advisor_id: advisroid };
+    FetchControlWork.fetchworkestimationlistwork(object, token).then((data) => {
+      setGetworkestimation(data);
+    });
+  };
+
+  useEffect(() => {
+    handleGetdatagroup(selectYear, usertoken);
+    handlesheetdatawork(usertoken);
+    handleworklistworkadvisor(usertoken);
+  }, []);
+
   return (
     <div
       className="body-contentwork"
@@ -503,10 +556,29 @@ const ContentWork = () => {
             >
               <i className="bi-caret-down"></i>
             </button>
-            <div
-              className="dropinfo-Contentwork"
-              id="dropGroupContentwork"
-            ></div>
+            <div className="dropinfo-Contentwork" id="dropGroupContentwork">
+              {getselectGroup ? (
+                getselectGroup[0] ? (
+                  getselectGroup.map((data, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="infogrp-box-dropinfoContentwork"
+                        onClick={() => {
+                          setSelectgrp({ id: data.id, name: data.name });
+                        }}
+                      >
+                        <span>{data.name}</span>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
+            </div>
           </div>
         </div>
         {/* menu buttonAll */}
@@ -530,21 +602,38 @@ const ContentWork = () => {
         </div>
       </div>
       <div className="boxcontent-contentwork">
-        <div className="box-content">
+        <div className="colbox-contentwork">
           <div className="row-info-contentwork">
             <div className="col-info-contentwork">
               <table className="table-show-info" style={{ width: "100%" }}>
-                <thead>
+                <thead className="thaeadShowinfo">
                   <tr>
                     <th>{"งานประเมิน"}</th>
                     <th>{"ประเภท"}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td width={"90%"}>{"(งานประเมิน)"}</td>
-                    <td width={"10%"}>{"(ประเภท)"}</td>
-                  </tr>
+                  {getsheetwork.map((data, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className="tableTR-worksheet"
+                        id={`tr-worksheet-${index}`}
+                        onClick={() => {
+                          HolderlineonTable(
+                            "tableTR-worksheet",
+                            "tr-worksheet-",
+                            index
+                          );
+                        }}
+                      >
+                        <td width={"90%"}>{data.name}</td>
+                        <td width={"10%"}>
+                          {data.type === "1" ? "กลุ่ม" : "เดี่ยว"}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -554,7 +643,7 @@ const ContentWork = () => {
               </div>
               <div className="infoBoxcol-relative-contentwork">
                 <table className="table-show-info">
-                  <thead>
+                  <thead className="thaeadShowinfo">
                     <tr>
                       <th>{"วันที่"}</th>
                       <th>{"เวลา"}</th>
@@ -586,43 +675,85 @@ const ContentWork = () => {
           <div className="row-info-contentwork">
             <div className="col-info-contentwork">
               <div className="infoBoxcol-relative-contentwork">
-                <table className="table-show-info" style={{ width: "100%" }}>
-                  <thead>
-                    <tr>
-                      <th>{`อาจารย์`}</th>
-                      <th>{`จำนวน`}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td width={"90%"}>{`(อาจารย์)`}</td>
-                      <td width={"10%"}>{`(จำนวน)`}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                {getworklistwork[0] ? (
+                  <table className="table-show-info" style={{ width: "100%" }}>
+                    <thead className="thaeadShowinfo">
+                      <tr>
+                        <th>{`อาจารย์`}</th>
+                        <th>{`จำนวน`}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {getworklistwork.map((data, index) => {
+                        return (
+                          <tr
+                            key={index}
+                            className="tableTR-worklistwork"
+                            id={`tr-worklistwork-${index}`}
+                            onClick={() => {
+                              handleworkestimationlistwork(data.id, usertoken);
+                              HolderlineonTable(
+                                "tableTR-worklistwork",
+                                "tr-worklistwork-",
+                                index
+                              );
+                            }}
+                            style={
+                              index === 0 ? { border: "5px solid #01579b" } : {}
+                            }
+                          >
+                            <td width={"90%"}>{data.advisor_name}</td>
+                            <td width={"10%"}>{data.num}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )}
               </div>
             </div>
             <div className="col-info-contentwork">
               <div className="infoBoxcol-relative-contentwork">
-                <table className="table-show-info" style={{ width: "100%" }}>
-                  <thead>
-                    <tr>
-                      <th>{`งานประเมินสะสม`}</th>
-                      <th>{`จำนวน`}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td width={"90%"}>{`งานประเมินสะสม`}</td>
-                      <td width={"10%"}>{`จำนวน`}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                {getworkestimation[0] ? (
+                  <table className="table-show-info" style={{ width: "100%" }}>
+                    <thead className="thaeadShowinfo">
+                      <tr>
+                        <th>{`งานประเมินสะสม`}</th>
+                        <th>{`จำนวน`}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {getworkestimation.map((data, index) => {
+                        return (
+                          <tr
+                            key={index}
+                            className="tableTR-workestimation"
+                            id={`tr-workestimation-${index}`}
+                            onClick={() => {
+                              HolderlineonTable(
+                                "tableTR-workestimation",
+                                "tr-workestimation-",
+                                index
+                              );
+                            }}
+                          >
+                            <td width={"90%"}>{data.sheet_name}</td>
+                            <td width={"10%"}>{data.num}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )}
               </div>
             </div>
           </div>
         </div>
-        <div className="box-content">
+        <div className="colbox-contentwork">
           <div className="boxcontent-btnmenu-contentwork">
             <button
               className="btn-menu-contentwork"

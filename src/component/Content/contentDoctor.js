@@ -2,13 +2,13 @@ import { useState } from "react";
 import { handleOpenModalbox } from "../config/modalConfig";
 import ModalBox from "../modal/modalBox";
 import { useEffect } from "react";
-import FetchController from "../data/fetchConroller";
 import Cookies from "universal-cookie";
 import Spinnerpage from "../config/spinnerpage";
 import { searchDoctorcontent } from "../config/searchConfig";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { HolderlineonTable } from "../config/holdlinetable";
+import FetchControlDoctor from "../data/fetchControlDoctor";
 
 const ContentDoctor = (props) => {
   const cookie = new Cookies();
@@ -586,7 +586,7 @@ const ContentDoctor = (props) => {
   };
 
   const dataDoctorTeacherFull = async () => {
-    let fetchdata = await FetchController.fetchGetDoctorteacherFull(
+    let fetchdata = await FetchControlDoctor.fetchGetDoctorteacherFull(
       usertoken
     ).then((data) => {
       return data;
@@ -604,7 +604,7 @@ const ContentDoctor = (props) => {
   };
 
   const handlesubmitAdddoc = async (object, usertoken) => {
-    let status = await FetchController.fetchAddDoctorteacher(
+    let status = await FetchControlDoctor.fetchAddDoctorteacher(
       object,
       usertoken
     ).then((message) => {
@@ -619,7 +619,7 @@ const ContentDoctor = (props) => {
   };
 
   const handlesubmitEditdoc = async (object, usertoken) => {
-    let status = await FetchController.fetchEditDoctorteacher(
+    let status = await FetchControlDoctor.fetchEditDoctorteacher(
       object,
       usertoken
     ).then((message) => {

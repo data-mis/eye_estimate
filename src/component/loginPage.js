@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import FetchController from "./data/fetchConroller";
+import { FetchLogin } from "./data/fetchControllogin";
 
 const LoginPage = () => {
   const [username, SetUsername] = useState();
@@ -12,7 +11,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    FetchController.fetchLogin(username, password, navigate);
+    FetchLogin(username,password,navigate)
   };
 
   const docGetId = (id) => {
