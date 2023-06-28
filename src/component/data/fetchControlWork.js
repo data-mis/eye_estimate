@@ -56,5 +56,18 @@ const FetchControlWork = {
       throw error;
     }
   },
+  fetchworkgetwork: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/get_work`;
+
+    try {
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default FetchControlWork;

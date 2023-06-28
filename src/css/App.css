@@ -257,7 +257,7 @@ html .header-show-contentStudent, body .header-show-contentStudent {
   top: 1%;
   left: 0;
   align-items: center;
-  background-color: #e0e0e0;
+  background-color: #cfd8dc;
 }
 html .text-header, body .text-header {
   width: 5%;
@@ -267,8 +267,7 @@ html .text-header, body .text-header {
   align-items: center;
   position: absolute;
   left: 0;
-  background-color: #e0e0e0;
-  padding: 0 10px;
+  background-color: #cfd8dc;
   font-weight: bold;
   font-size: 13px;
 }
@@ -280,19 +279,19 @@ html .menu-search, body .menu-search {
   transform: translate(-50%);
   display: grid;
   grid-template-columns: 50% 50%;
-  background-color: #e0e0e0;
+  background-color: #cfd8dc;
 }
 html .box-menu-1, body .box-menu-1 {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
-  background-color: #e0e0e0;
+  background-color: #cfd8dc;
 }
 html .box-menu-1 span, body .box-menu-1 span {
   align-self: center;
   padding-right: 10px;
-  background-color: #e0e0e0;
+  background-color: #cfd8dc;
   font-weight: bold;
 }
 html .box-menu-1 input, body .box-menu-1 input {
@@ -302,26 +301,34 @@ html .box-menu-1 input, body .box-menu-1 input {
   font-weight: bold;
   text-align: center;
 }
-html .relative-btnBox, body .relative-btnBox {
+html .btnupdown-boxmenu1, body .btnupdown-boxmenu1 {
   position: relative;
+  padding: 0;
+  width: 30px;
 }
 html .up-btn, body .up-btn {
   position: absolute;
   top: 0;
   right: 0;
   height: 50%;
-  width: 25px;
+  width: 100%;
   font-size: 8px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 html .down-btn, body .down-btn {
   position: absolute;
   bottom: 0;
   right: 0;
   height: 50%;
-  width: 25px;
+  width: 100%;
   font-size: 8px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 html .box-menu-2, body .box-menu-2 {
   width: 100%;
@@ -476,9 +483,17 @@ html .btn-save-footer, body .btn-save-footer {
   }
 }
 @media only screen and (max-width: 720px) {
+  html .header-show-contentStudent, body .header-show-contentStudent {
+    height: 25px;
+    top: 3%;
+  }
+  html .text-header, html .box-menu-1, html .box-menu-2, html .menu-close, body .text-header, body .box-menu-1, body .box-menu-2, body .menu-close {
+    height: 25px;
+  }
   html .box-menu-1 input, body .box-menu-1 input {
     font-size: 14px;
     text-align: start;
+    height: 25px;
   }
   html .footer-show-contentStudent, body .footer-show-contentStudent {
     font-size: 11px;
@@ -1348,19 +1363,16 @@ html .colbox-contentwork, body .colbox-contentwork {
   height: 750px;
 }
 html .row-info-contentwork, body .row-info-contentwork {
-  border: 1px solid rebeccapurple;
   width: 100%;
   height: 40%;
   display: grid;
   grid-template-columns: 50% 50%;
 }
 html .col-info-contentwork, body .col-info-contentwork {
-  border: 1px solid black;
   scroll-snap-type: mandatory;
   overflow: auto;
 }
 html .title-info-contentwork, body .title-info-contentwork {
-  border: 2px solid black;
   border-bottom: none;
   display: flex;
   justify-content: center;
@@ -1435,7 +1447,15 @@ html .dropInfo-boxgrid-contentwork, body .dropInfo-boxgrid-contentwork {
   left: 0;
   background-color: #fefefe;
   display: none;
-  border: 1px solid red;
+  border: 1px solid #9e9e9e;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+}
+html .info-dropinfotype, body .info-dropinfotype {
+  width: 95%;
+  height: auto;
+  padding: 5px;
+  margin: auto;
 }
 html .timegrid-modal-contentwork, body .timegrid-modal-contentwork {
   display: flex;
@@ -1531,6 +1551,9 @@ html .input-special-boxcontentwork input, body .input-special-boxcontentwork inp
 html .inputradio-special-boxcontentwork input, body .inputradio-special-boxcontentwork input {
   margin: 5px;
 }
+html #boxinfoheadSpecial, html #boxinforeportSpecial, body #boxinfoheadSpecial, body #boxinforeportSpecial {
+  display: none;
+}
 @media only screen and (max-width: 720px) {
   html .header-contentwork, body .header-contentwork {
     height: 10%;
@@ -1596,14 +1619,13 @@ html .body-contentSetting, body .body-contentSetting {
   padding: 0;
 }
 html .header-nav-contentSetting, body .header-nav-contentSetting {
-  border: 1px solid red;
   height: 5%;
   width: 100%;
   display: grid;
   grid-template-columns: 90% 10%;
+  background-color: #cfd8dc;
 }
 html .boxCol-navheader, body .boxCol-navheader {
-  border: 1px solid green;
   width: 100%;
   height: 100%;
   display: flex;
@@ -1613,8 +1635,24 @@ html .boxCol-navheader, body .boxCol-navheader {
 html .btn-nav-menuclose, body .btn-nav-menuclose {
   display: none;
 }
-html .btn-boxHeader button, body .btn-boxHeader button {
-  margin: 0 5px;
+html .btn-boxHeader, body .btn-boxHeader {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+html .col-btnboxheader, body .col-btnboxheader {
+  height: 80%;
+  width: auto;
+  display: flex;
+  justify-content: end;
+  align-self: center;
+}
+html .col-btnboxheader button, body .col-btnboxheader button {
+  width: auto;
+  height: 100%;
+  padding: 0px 10px;
+  font-weight: bold;
 }
 html .moblie-contentSetting, body .moblie-contentSetting {
   display: none;
@@ -1766,7 +1804,8 @@ html .btnsubmit-infoContentsetting-modal button, body .btnsubmit-infoContentsett
 }
 @media only screen and (max-width: 720px) {
   html .header-nav-contentSetting, body .header-nav-contentSetting {
-    height: 10%;
+    height: 15%;
+    margin-top: 10px;
   }
   html .content-contentSetting, body .content-contentSetting {
     height: 90%;
@@ -1788,6 +1827,12 @@ html .btnsubmit-infoContentsetting-modal button, body .btnsubmit-infoContentsett
   }
   html .content-contentSetting, body .content-contentSetting {
     height: 90%;
+  }
+  html .col-btnboxheader button, body .col-btnboxheader button {
+    width: auto;
+    height: 100%;
+    font-size: 11px;
+    font-weight: bold;
   }
 }
 html .body-content-contentReport, body .body-content-contentReport {

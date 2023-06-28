@@ -29,9 +29,11 @@ const ContentWork = () => {
 
   const [getselectGroup, setGetselectGroup] = useState([]);
   const [selectgrp, setSelectgrp] = useState([]);
+  const [selectradioComplete, setSelectradioComplete] = useState(1);
   const [getsheetwork, setGetsheetwork] = useState([]);
   const [getworklistwork, setGetworklistwork] = useState([]);
   const [getworkestimation, setGetworkestimation] = useState([]);
+  const [inputtypeestimation, setInputtypeestimation] = useState("");
 
   const [openfilter, setOpenfilter] = useState(false);
   const [openMonthdrop, setOpenMonthdrop] = useState(false);
@@ -145,6 +147,11 @@ const ContentWork = () => {
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
+              value={inputtypeestimation ? inputtypeestimation : ""}
+              onClick={() => {
+                handleOpenDropdown("dropInfoTypeReport", "boxTypeReport");
+              }}
+              readOnly
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
@@ -157,7 +164,34 @@ const ContentWork = () => {
             <div
               className="dropInfo-boxgrid-contentwork"
               id="dropInfoTypeReport"
-            ></div>
+            >
+              {getsheetwork ? (
+                getsheetwork[0] ? (
+                  getsheetwork.map((data, index) => {
+                    return (
+                      <div
+                        className="info-dropinfotype"
+                        key={index}
+                        onClick={() => {
+                          setInputtypeestimation(data.name);
+                          handleCheckShowSpecialType(data.code);
+                          handleOpenDropdown(
+                            "dropInfoTypeReport",
+                            "boxTypeReport"
+                          );
+                        }}
+                      >
+                        {data.name}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
+            </div>
           </div>
         </div>
         {/* ผู้ประเมิน */}
@@ -271,7 +305,10 @@ const ContentWork = () => {
           </div>
         </div>
         <div className="box-special-modalboxcontentwork">
-          {/* <div className="infoHeade-special-boxcontentwork">
+          <div
+            className="infoHeade-special-boxcontentwork"
+            id="boxinfoheadSpecial"
+          >
             <div className="special-input-boxcontentwork">
               <div>
                 <span>{"หัวข้อเรื่อง"}</span>
@@ -283,9 +320,12 @@ const ContentWork = () => {
                 </button>
               </div>
             </div>
-          </div> */}
+          </div>
 
-          <div className="inforeport-special-boxcontentwork">
+          <div
+            className="inforeport-special-boxcontentwork"
+            id="boxinforeportSpecial"
+          >
             <div className="special-report-boxcontentwork">
               <div className="box-report-input">
                 <div>
@@ -379,6 +419,37 @@ const ContentWork = () => {
     );
   };
 
+  const handleCheckShowSpecialType = (typesheet) => {
+    let headSpecial = (status) => {
+      if (status) {
+        docGetId("boxinfoheadSpecial").style.display = "block";
+      } else if (!status) {
+        docGetId("boxinfoheadSpecial").style.display = "none";
+      }
+    };
+    let reportSpecial = (status) => {
+      if (status) {
+        docGetId("boxinforeportSpecial").style.display = "block";
+      } else if (!status) {
+        docGetId("boxinforeportSpecial").style.display = "none";
+      }
+    };
+
+    if (typesheet === "05" || typesheet === "06") {
+      console.log("โชว์หัวข้อให้เลือก");
+      headSpecial(true);
+      reportSpecial(false);
+    } else if (typesheet === "01") {
+      console.log("โชว์แบบประเมินรายงานให้เลือก");
+      headSpecial(false);
+      reportSpecial(true);
+    } else {
+      console.log("ปกติ");
+      headSpecial(false);
+      reportSpecial(false);
+    }
+  };
+
   const handleGetdatagroup = (year, token) => {
     FetchControlWork.fetchworkgroup(year, token).then((data) => {
       setGetselectGroup(data);
@@ -388,6 +459,9 @@ const ContentWork = () => {
   const handlesheetdatawork = (token) => {
     FetchControlWork.fetchworksheet(token).then((data) => {
       setGetsheetwork(data);
+      console.log("typesheet", data);
+      setInputtypeestimation(data[0].name);
+      handleCheckShowSpecialType(data[0].code);
     });
   };
 
@@ -510,10 +584,10 @@ const ContentWork = () => {
               type="text"
               className="input-month-contentwork"
               value={showMonthwithTH(selectMonth)}
-              onChange={(e) => {
-                setSelectMonth(e.target.value);
+              onClick={() => {
+                handleOpenDropdown("dropMonthContentwork");
               }}
-              onFocus={(e) => e.target.select()}
+              readOnly
             ></input>
             <button
               className="this-month-drop"
@@ -547,7 +621,15 @@ const ContentWork = () => {
             <span>{"กลุ่ม"}</span>
           </div>
           <div className="dropDownBox-groupContentwork">
-            <input type="text" className="input-group-contentwork"></input>
+            <input
+              type="text"
+              className="input-group-contentwork"
+              value={selectgrp ? selectgrp.name : ""}
+              onClick={() => {
+                handleOpenDropdown("dropGroupContentwork");
+              }}
+              readOnly
+            ></input>
             <button
               className="this-group-drop"
               onClick={() => {
@@ -566,6 +648,7 @@ const ContentWork = () => {
                         className="infogrp-box-dropinfoContentwork"
                         onClick={() => {
                           setSelectgrp({ id: data.id, name: data.name });
+                          handleOpenDropdown("dropGroupContentwork");
                         }}
                       >
                         <span>{data.name}</span>
@@ -583,20 +666,49 @@ const ContentWork = () => {
         </div>
         {/* menu buttonAll */}
         <div className="contentwork-buttonAll">
-          <button type="button">{"งานทั้งหมด"}</button>
+          <button
+            type="button"
+            onClick={() => {
+              console.log("แก้กลุ่ม เอางานทั้งหมด");
+              setSelectgrp("");
+            }}
+          >
+            {"งานทั้งหมด"}
+          </button>
         </div>
         {/* menu radiobtn */}
         <div className="this-radiobtn-contentwork">
           <div className="row-radiobtn">
-            <input type="radio"></input>
+            <input
+              type="radio"
+              value={1}
+              onChange={(e) => {
+                setSelectradioComplete(parseInt(e.target.value));
+              }}
+              checked={parseInt(selectradioComplete) === 1}
+            ></input>
             <span>{"ทั้งหมด"}</span>
           </div>
           <div className="row-radiobtn">
-            <input type="radio"></input>
+            <input
+              type="radio"
+              value={2}
+              onChange={(e) => {
+                setSelectradioComplete(parseInt(e.target.value));
+              }}
+              checked={parseInt(selectradioComplete) === 2}
+            ></input>
             <span>{"ค้างประเมิน"}</span>
           </div>
           <div className="row-radiobtn">
-            <input type="radio"></input>
+            <input
+              type="radio"
+              value={3}
+              onChange={(e) => {
+                setSelectradioComplete(parseInt(e.target.value));
+              }}
+              checked={parseInt(selectradioComplete) === 3}
+            ></input>
             <span>{"ประเมินแล้ว"}</span>
           </div>
         </div>

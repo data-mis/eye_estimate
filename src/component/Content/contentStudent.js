@@ -1259,7 +1259,7 @@ const ContentStudent = (props) => {
                 e.target.select();
               }}
             ></input>
-            <div className="relative-btnBox">
+            <div className="btnupdown-boxmenu1">
               <button
                 className="up-btn"
                 type="button"

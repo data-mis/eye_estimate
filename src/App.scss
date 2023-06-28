@@ -11,10 +11,10 @@
 $colorBTNhover:#546e7a;
 $colorBTNbghover: #37474f;
 $colorBGmenu : #607d8b;
-
+$colorBGheader:#cfd8dc;
 $colorBorderDrop:#9e9e9e;
-
 $colorBGnav:#e0e0e0;
+
 
 @mixin bodyContentDefault(){
     margin: 0;
@@ -282,7 +282,7 @@ $colorBGnav:#e0e0e0;
         top: 1%;
         left: 0;
         align-items: center;
-        background-color: $colorBGnav;
+        background-color: $colorBGheader;
     }
         .text-header{
             width: 5%;
@@ -292,8 +292,7 @@ $colorBGnav:#e0e0e0;
             align-items: center;
             position: absolute;
             left: 0;
-            background-color: $colorBGnav;
-            padding: 0 10px;
+            background-color: $colorBGheader;
             font-weight: bold;
             font-size: 13px;
         }
@@ -305,7 +304,7 @@ $colorBGnav:#e0e0e0;
             transform: translate(-50%);
             display: grid;
             grid-template-columns: 50% 50%;
-            background-color: $colorBGnav;
+            background-color: $colorBGheader;
 
         }
         
@@ -314,12 +313,12 @@ $colorBGnav:#e0e0e0;
                 height: 100%;
                 display: flex;
                 justify-content: center;
-                background-color: $colorBGnav;
+                background-color: $colorBGheader;
             }
                 .box-menu-1 span{
                     align-self: center;
                     padding-right: 10px;
-                    background-color: $colorBGnav;
+                    background-color: $colorBGheader;
                     font-weight: bold;
                 }
                 .box-menu-1 input{
@@ -329,26 +328,34 @@ $colorBGnav:#e0e0e0;
                     font-weight: bold;  
                     text-align: center;
                 }
-                .relative-btnBox{
+                .btnupdown-boxmenu1{
                     position: relative;
+                    padding: 0;
+                    width: 30px;
                 }
                     .up-btn{
                         position: absolute;
                         top: 0;
                         right: 0;
                         height: 50%;
-                        width: 25px;
+                        width: 100%;
                         font-size: 8px;
                         font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                     .down-btn{
                         position: absolute;
                         bottom: 0;
                         right: 0;
                         height: 50%;
-                        width: 25px;
+                        width: 100%;
                         font-size: 8px;
                         font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                 
             .box-menu-2{
@@ -510,9 +517,17 @@ $colorBGnav:#e0e0e0;
     }
 }
 @media only screen and (max-width:720px){
+    .header-show-contentStudent{
+        height: 25px;
+        top: 3%;
+    }
+    .text-header,.box-menu-1,.box-menu-2,.menu-close{
+        height: 25px;
+    }
     .box-menu-1 input{
         font-size: 14px;
         text-align: start;
+        height: 25px;   
     }
     .footer-show-contentStudent{
         font-size: 11px;
@@ -1406,19 +1421,16 @@ $colorBGnav:#e0e0e0;
         height: 750px;
     }
         .row-info-contentwork{
-            border: 1px solid rebeccapurple;
             width: 100%;
             height: 40%;
             display: grid;
             grid-template-columns: 50% 50%;
         }
         .col-info-contentwork{
-            border: 1px solid black;
             scroll-snap-type: mandatory;
             overflow: auto;
         }
         .title-info-contentwork{
-            border: 2px solid black;
             border-bottom: none;
             display: flex;
             justify-content: center;
@@ -1495,8 +1507,16 @@ $colorBGnav:#e0e0e0;
         left: 0;
         background-color: #fefefe;
         display: none;
-        border: 1px solid red;
+        border: 1px solid $colorBorderDrop;
+        scroll-snap-type: mandatory;
+        overflow: auto;
     }
+        .info-dropinfotype{
+            width: 95%;
+            height: auto;
+            padding: 5px;
+            margin: auto;
+        }
     .timegrid-modal-contentwork{
         display: flex;
         align-items: center;
@@ -1592,6 +1612,10 @@ $colorBGnav:#e0e0e0;
         .inputradio-special-boxcontentwork input{
             margin: 5px;
         }
+    #boxinfoheadSpecial,#boxinforeportSpecial{
+        display: none;
+    }
+//end modal contentwork
 @media only screen and (max-width:720px) {
     .header-contentwork{
         height: 10%;
@@ -1660,14 +1684,13 @@ $colorBGnav:#e0e0e0;
         padding: 0;
     }
     .header-nav-contentSetting{
-        border: 1px solid red;
         height: 5%;
         width: 100%;
         display: grid;
         grid-template-columns: 90% 10%;
+        background-color: #cfd8dc;
     }
         .boxCol-navheader{
-            border: 1px solid green;
             width: 100%;
             height: 100%;
             display: flex;
@@ -1677,8 +1700,24 @@ $colorBGnav:#e0e0e0;
     .btn-nav-menuclose{
         display: none;
     }
-    .btn-boxHeader button{
-        margin: 0 5px;
+    .btn-boxHeader{
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 25% 75%;
+    }
+    .col-btnboxheader{
+        height: 80%;
+        width: auto;
+        display: flex;
+        justify-content: end;
+        align-self: center;
+    }
+    .col-btnboxheader button{
+        width: auto;
+        height: 100%;
+        padding: 0px 10px;
+        font-weight: bold;
     }
     .moblie-contentSetting{
         display: none;
@@ -1836,7 +1875,9 @@ $colorBGnav:#e0e0e0;
 
 @media only screen and (max-width:720px) {
     .header-nav-contentSetting{
-        height: 10%;
+        height: 15%;
+        margin-top: 10px;
+
     }
     .content-contentSetting{
         height: 90%;
@@ -1860,7 +1901,12 @@ $colorBGnav:#e0e0e0;
         height: 90%;
         // border: 1px solid green;
     }
-    
+    .col-btnboxheader button{
+        width: auto;
+        height: 100%;
+        font-size: 11px;
+        font-weight: bold;
+    }
 }
 }
 

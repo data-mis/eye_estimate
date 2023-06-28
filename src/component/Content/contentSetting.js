@@ -77,16 +77,20 @@ const ContentSetting = () => {
       <div className="header-nav-contentSetting">
         <div className="boxCol-navheader">
           <div className="btn-boxHeader">
-            <button
-              type="button"
-              onClick={() => {
-                handleOpenModalbox("modalAddDocument");
-              }}
-            >
-              {"เพิ่มเอกสาร"}
-            </button>
-            <button type="button">{"เพิ่มรายละเอียด"}</button>
-            <button type="button">{"ลบรายละเอียด"}</button>
+            <div className="col-btnboxheader">
+              <button
+                type="button"
+                onClick={() => {
+                  handleOpenModalbox("modalAddDocument");
+                }}
+              >
+                {"เพิ่มเอกสาร"}
+              </button>
+            </div>
+            <div className="col-btnboxheader">
+              <button type="button">{"เพิ่มรายละเอียด"}</button>
+              <button type="button">{"ลบรายละเอียด"}</button>
+            </div>
           </div>
         </div>
         <div className="boxCol-navheader">
