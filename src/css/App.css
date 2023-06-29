@@ -2532,9 +2532,15 @@ html .textarea-input-contentSetting, body .textarea-input-contentSetting {
 html #tableGroupAll, body #tableGroupAll {
   width: 100%;
 }
+html .tableshowworklisttype-setting, body .tableshowworklisttype-setting {
+  width: 100%;
+}
 @media only screen and (max-width: 800px) {
   html #tableGroupAll, body #tableGroupAll {
     width: 550px;
+  }
+  html .tableshowworklisttype-setting, body .tableshowworklisttype-setting {
+    width: 650px;
   }
 }
 @keyframes spinner {

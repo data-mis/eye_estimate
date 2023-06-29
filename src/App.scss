@@ -1805,6 +1805,7 @@ $colorBGnav:#e0e0e0;
         position: relative;
         background-color: #ddd;
     }
+    
 // modalSetting
 
    .body-contentsetting-modal{
@@ -2606,9 +2607,15 @@ $colorBGnav:#e0e0e0;
     #tableGroupAll{
         width: 100%;
     }
+    .tableshowworklisttype-setting{
+        width: 100%;
+    }
 @media only screen and (max-width:800px) {
     #tableGroupAll{
         width: 550px;
+    }
+    .tableshowworklisttype-setting{
+        width: 650px;
     }
 }
 }

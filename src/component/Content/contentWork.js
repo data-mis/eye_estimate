@@ -3,11 +3,12 @@ import { handleModalNavSlide, handleOpenModalbox } from "../config/modalConfig";
 import ModalNavSlide from "../modal/modalNavSlide";
 import ModalBox from "../modal/modalBox";
 import moment from "moment/moment";
-import { objectMonth, showMonthwithTH } from "../config/monthth";
+import { dayofmonth, objectMonth, showMonthwithTH } from "../config/monthth";
 import Cookies from "universal-cookie";
 import Spinnerpage from "../config/spinnerpage";
 import FetchControlWork from "../data/fetchControlWork";
 import { HolderlineonTable } from "../config/holdlinetable";
+import { searchGroupcontent } from "../config/searchConfig";
 
 const ContentWork = () => {
   const docGetId = (id) => {
@@ -21,7 +22,7 @@ const ContentWork = () => {
   const usertoken = cookie.get("token");
 
   const [selectYear, setSelectYear] = useState(
-    parseInt(new Date().getFullYear())
+    parseInt(new Date().getFullYear()) + 543
   );
   const [selectMonth, setSelectMonth] = useState(
     moment(new Date()).format("MM")
@@ -30,10 +31,14 @@ const ContentWork = () => {
   const [getselectGroup, setGetselectGroup] = useState([]);
   const [selectgrp, setSelectgrp] = useState([]);
   const [selectradioComplete, setSelectradioComplete] = useState(1);
+  const [selectDataworktype, setSelectDataworktype] = useState("");
   const [getsheetwork, setGetsheetwork] = useState([]);
   const [getworklistwork, setGetworklistwork] = useState([]);
   const [getworkestimation, setGetworkestimation] = useState([]);
   const [inputtypeestimation, setInputtypeestimation] = useState("");
+  const [titlegetwork, setTitlegetwork] = useState("Case&Topic ผู้นำเสนอ");
+  const [getworkgetwork, setGetworkgetwork] = useState([]);
+  const [filterworkgetwork, setFilterworkgetwork] = useState([]);
 
   const [openfilter, setOpenfilter] = useState(false);
   const [openMonthdrop, setOpenMonthdrop] = useState(false);
@@ -462,6 +467,7 @@ const ContentWork = () => {
       console.log("typesheet", data);
       setInputtypeestimation(data[0].name);
       handleCheckShowSpecialType(data[0].code);
+      setSelectDataworktype(data[0].Id);
     });
   };
 
@@ -477,6 +483,33 @@ const ContentWork = () => {
     FetchControlWork.fetchworkestimationlistwork(object, token).then((data) => {
       setGetworkestimation(data);
     });
+  };
+
+  const handleworkgetworkdata = (infoOpp, token) => {
+    FetchControlWork.fetchworkgetwork(infoOpp, token).then((data) => {
+      console.log("this work/get_work-->", data);
+      setGetworkgetwork(data);
+    });
+  };
+
+  const handleCheckDayformonth = (
+    year,
+    month,
+    idsheet,
+    radioComplete,
+    token
+  ) => {
+    let start = `${year}-${month}-01`;
+    let end = `${year}-${month}-${dayofmonth(month, year)}`;
+    let object = {
+      beg: start,
+      end: end,
+      sheet_id: idsheet,
+      complete: radioComplete,
+    };
+
+    console.log("this a req", object);
+    handleworkgetworkdata(object, token);
   };
 
   useEffect(() => {
@@ -606,6 +639,13 @@ const ContentWork = () => {
                     onClick={() => {
                       handleOpenDropdown("dropMonthContentwork");
                       setSelectMonth(res.mnum);
+                      handleCheckDayformonth(
+                        selectYear - 543,
+                        res.mnum,
+                        selectDataworktype,
+                        selectradioComplete,
+                        usertoken
+                      );
                     }}
                   >
                     <span>{res.mth}</span>
@@ -649,6 +689,12 @@ const ContentWork = () => {
                         onClick={() => {
                           setSelectgrp({ id: data.id, name: data.name });
                           handleOpenDropdown("dropGroupContentwork");
+                          let resultsearch = searchGroupcontent(
+                            data.name.trim(),
+                            getworkgetwork
+                          );
+                          console.log("res==>", resultsearch);
+                          setGetworkgetwork(resultsearch);
                         }}
                       >
                         <span>{data.name}</span>
@@ -684,6 +730,13 @@ const ContentWork = () => {
               value={1}
               onChange={(e) => {
                 setSelectradioComplete(parseInt(e.target.value));
+                handleCheckDayformonth(
+                  selectYear - 543,
+                  selectMonth,
+                  selectDataworktype,
+                  e.target.value,
+                  usertoken
+                );
               }}
               checked={parseInt(selectradioComplete) === 1}
             ></input>
@@ -695,6 +748,13 @@ const ContentWork = () => {
               value={2}
               onChange={(e) => {
                 setSelectradioComplete(parseInt(e.target.value));
+                handleCheckDayformonth(
+                  selectYear - 543,
+                  selectMonth,
+                  selectDataworktype,
+                  e.target.value,
+                  usertoken
+                );
               }}
               checked={parseInt(selectradioComplete) === 2}
             ></input>
@@ -706,6 +766,13 @@ const ContentWork = () => {
               value={3}
               onChange={(e) => {
                 setSelectradioComplete(parseInt(e.target.value));
+                handleCheckDayformonth(
+                  selectYear - 543,
+                  selectMonth,
+                  selectDataworktype,
+                  e.target.value,
+                  usertoken
+                );
               }}
               checked={parseInt(selectradioComplete) === 3}
             ></input>
@@ -737,7 +804,19 @@ const ContentWork = () => {
                             "tr-worksheet-",
                             index
                           );
+                          setTitlegetwork(data.name);
+                          handleCheckDayformonth(
+                            selectYear - 543,
+                            selectMonth,
+                            data.Id,
+                            selectradioComplete,
+                            usertoken
+                          );
+                          setSelectDataworktype(data.Id);
                         }}
+                        style={
+                          index === 0 ? { border: "5px solid #01579b" } : {}
+                        }
                       >
                         <td width={"90%"}>{data.name}</td>
                         <td width={"10%"}>
@@ -751,10 +830,83 @@ const ContentWork = () => {
             </div>
             <div className="col-info-contentwork">
               <div className="title-info-contentwork">
-                <span>{"Case&Topic ผู้นำเสนอ"}</span>
+                <span>{titlegetwork ? `${titlegetwork}` : "-"}</span>
               </div>
               <div className="infoBoxcol-relative-contentwork">
-                <table className="table-show-info">
+                {getworkgetwork[0] ? (
+                  <table
+                    className="table-show-info"
+                    style={{ width: "1020px" }}
+                  >
+                    <thead className="thaeadShowinfo">
+                      <tr>
+                        <th>{"วันที่"}</th>
+                        <th>{"เวลา"}</th>
+                        <th>{"กลุ่ม"}</th>
+                        <th>{"อาจารย์"}</th>
+                        <th>{"นักศึกษา"}</th>
+                        <th>{"UP"}</th>
+                        <th>{"แก้ไข"}</th>
+                        <th>{"C"}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {getworkgetwork.map((data, index) => {
+                        return (
+                          <tr key={index}>
+                            <td width={120}>{data.date}</td>
+                            <td
+                              width={120}
+                            >{`${data.time_begin}-${data.time_end}`}</td>
+                            <td width={50}>{data.name}</td>
+                            <td width={300}>{data.advisor_name}</td>
+                            <td width={300}>{data.studentname}</td>
+                            <td width={50}>
+                              <button>
+                                <i className="bi-chevron-up"></i>
+                              </button>
+                            </td>
+                            <td width={50}>
+                              <button>
+                                <i className="bi-three-dots"></i>
+                              </button>
+                            </td>
+                            <td width={30}>
+                              <input type="checkbox"></input>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                ) : (
+                  <table className="table-show-info">
+                    <thead className="thaeadShowinfo">
+                      <tr>
+                        <th>{"วันที่"}</th>
+                        <th>{"เวลา"}</th>
+                        <th>{"กลุ่ม"}</th>
+                        <th>{"อาจารย์"}</th>
+                        <th>{"นักศึกษา"}</th>
+                        <th>{"UP"}</th>
+                        <th>{"C"}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{"(วันที่)"}</td>
+                        <td>{"(เวลา)"}</td>
+                        <td>{"(กลุ่ม)"}</td>
+                        <td>{"(อาจารย์)"}</td>
+                        <td>{"(นักศึกษา)"}</td>
+                        <td>{"(UP)"}</td>
+                        <td>{"(C)"}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )}
+
+                {/* <table className="table-show-info">
                   <thead className="thaeadShowinfo">
                     <tr>
                       <th>{"วันที่"}</th>
@@ -777,7 +929,7 @@ const ContentWork = () => {
                       <td>{"(C)"}</td>
                     </tr>
                   </tbody>
-                </table>
+                </table> */}
               </div>
             </div>
           </div>

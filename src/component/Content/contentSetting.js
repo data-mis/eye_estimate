@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalBox from "../modal/modalBox";
 import { handleOpenModalbox } from "../config/modalConfig";
+import FetchControlSetting from "../data/fetchControlSetting";
+import Cookies from "universal-cookie";
+import Spinnerpage from "../config/spinnerpage";
+import { HolderlineonTable } from "../config/holdlinetable";
 
 const ContentSetting = () => {
+  const cookie = new Cookies();
+  const usertoken = cookie.get("token");
+
+  const [dataworklisttype, setDataworklisttype] = useState([]);
+  const [dataHeaderlist, setDataHeaderlist] = useState([]);
+
   const [statusCloseMDLeditHDdoc, setStatusCloseMDLeditHDdoc] = useState(false);
   const [statusCloseModalAdddoc, setStatusCloseModalAdddoc] = useState(false);
 
@@ -71,6 +81,17 @@ const ContentSetting = () => {
       </div>
     );
   };
+
+  const handleGetWorklisttype = (token) => {
+    FetchControlSetting.fetchSettingworklistdata(token).then((data) => {
+      console.log("listworktype::>", data);
+      setDataworklisttype(data);
+    });
+  };
+
+  useEffect(() => {
+    handleGetWorklisttype(usertoken);
+  }, []);
 
   return (
     <div className="body-contentSetting">
@@ -262,34 +283,55 @@ const ContentSetting = () => {
           {/* ส่วนของชนิดการประเมิน */}
           <div className="normal-table-type">
             <div className="tablebox-normaltabletype">
-              <table className="table-show-info" style={{ width: "650px" }}>
-                <thead>
-                  <tr>
-                    <th>{"ชื่อ"}</th>
-                    <th>{"เริ่ม"}</th>
-                    <th>{"ถึง"}</th>
-                    <th>{"แก้ไข"}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td width={250}>{"(ชื่อ)"}</td>
-                    <td width={150}>{"(เริ่ม)"}</td>
-                    <td width={150}>{"(ถึง)"}</td>
-                    <td width={100}>
-                      <button
-                        className="btn-edit-tableShowinfo"
-                        type="button"
-                        onClick={() => {
-                          handleOpenModalbox("modalEditheaderTypeSetting");
-                        }}
-                      >
-                        <i className="bi-three-dots"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              {dataworklisttype[0] ? (
+                <table className="table-show-info tableshowworklisttype-setting">
+                  <thead>
+                    <tr>
+                      <th>{"ชื่อ"}</th>
+                      <th>{"เริ่ม"}</th>
+                      <th>{"ถึง"}</th>
+                      <th>{"แก้ไข"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataworklisttype.map((data, index) => {
+                      return (
+                        <tr
+                          className="tableTR-setting-worklisttype"
+                          id={`tr-settingworklisttype-${index}`}
+                          key={index}
+                          onClick={() => {
+                            HolderlineonTable(
+                              "tableTR-setting-worklisttype",
+                              `tr-settingworklisttype-`,
+                              index
+                            );
+                          }}
+                        >
+                          <td width={"50%"}>{data.name}</td>
+                          <td width={"20%"}>{data.start}</td>
+                          <td width={"20%"}>{data.stop}</td>
+                          <td width={"10%"}>
+                            <button
+                              className="btn-edit-tableShowinfo"
+                              type="button"
+                              onClick={() => {
+                                handleOpenModalbox(
+                                  "modalEditheaderTypeSetting"
+                                );
+                              }}
+                            >
+                              <i className="bi-three-dots"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
             </div>
           </div>
           <div className="nav-boxtable-type">
