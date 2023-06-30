@@ -29,7 +29,7 @@ const ContentWork = () => {
   );
 
   const [getselectGroup, setGetselectGroup] = useState([]);
-  const [selectgrp, setSelectgrp] = useState([]);
+  const [selectgrp, setSelectgrp] = useState({ id: "", name: "" });
   const [selectradioComplete, setSelectradioComplete] = useState(1);
   const [selectDataworktype, setSelectDataworktype] = useState("");
   const [getsheetwork, setGetsheetwork] = useState([]);
@@ -38,7 +38,8 @@ const ContentWork = () => {
   const [inputtypeestimation, setInputtypeestimation] = useState("");
   const [titlegetwork, setTitlegetwork] = useState("Case&Topic ผู้นำเสนอ");
   const [getworkgetwork, setGetworkgetwork] = useState([]);
-  const [filterworkgetwork, setFilterworkgetwork] = useState([]);
+  const [filtergetwork, setFiltergetwork] = useState([]);
+  const [filteron, setFilteron] = useState(false);
 
   const [openfilter, setOpenfilter] = useState(false);
   const [openMonthdrop, setOpenMonthdrop] = useState(false);
@@ -92,7 +93,6 @@ const ContentWork = () => {
     let table = docGetClass("table-show-info");
     let theadtable = docGetClass("thaeadShowinfo");
 
-    console.log(id);
     if (!openMonthdrop) {
       if (docGetId(id).style.display === "block") {
         if (box) {
@@ -468,6 +468,13 @@ const ContentWork = () => {
       setInputtypeestimation(data[0].name);
       handleCheckShowSpecialType(data[0].code);
       setSelectDataworktype(data[0].Id);
+      handleCheckDayformonth(
+        selectYear - 543,
+        selectMonth,
+        data[0].Id,
+        selectradioComplete,
+        usertoken
+      );
     });
   };
 
@@ -487,8 +494,8 @@ const ContentWork = () => {
 
   const handleworkgetworkdata = (infoOpp, token) => {
     FetchControlWork.fetchworkgetwork(infoOpp, token).then((data) => {
-      console.log("this work/get_work-->", data);
       setGetworkgetwork(data);
+      console.log("อะไรเนี้ย>>>", data);
     });
   };
 
@@ -508,8 +515,25 @@ const ContentWork = () => {
       complete: radioComplete,
     };
 
-    console.log("this a req", object);
     handleworkgetworkdata(object, token);
+  };
+
+  const handleSearchGroupinfowork = (data) => {
+    console.log("งงอะ", getworkgetwork);
+    let resultsearch = searchGroupcontent(data.name.trim(), getworkgetwork);
+    setFiltergetwork(resultsearch);
+    setFilteron(true);
+  };
+
+  const handleAllgroupinfowork = () => {
+    setFilteron(false);
+    handleCheckDayformonth(
+      selectYear - 543,
+      selectMonth,
+      selectDataworktype,
+      selectradioComplete,
+      usertoken
+    );
   };
 
   useEffect(() => {
@@ -517,6 +541,12 @@ const ContentWork = () => {
     handlesheetdatawork(usertoken);
     handleworklistworkadvisor(usertoken);
   }, []);
+
+  useEffect(() => {
+    selectgrp.name
+      ? handleSearchGroupinfowork(selectgrp)
+      : console.log("มันไม่มีค่า grp เตื้อเน้อ");
+  }, [getworkgetwork]);
 
   return (
     <div
@@ -646,6 +676,9 @@ const ContentWork = () => {
                         selectradioComplete,
                         usertoken
                       );
+                      // selectgrp.name
+                      //   ? handleSearchGroupinfowork(selectgrp)
+                      //   : console.log("มันไม่มีค่า grp เตื้อเน้อ");
                     }}
                   >
                     <span>{res.mth}</span>
@@ -664,7 +697,7 @@ const ContentWork = () => {
             <input
               type="text"
               className="input-group-contentwork"
-              value={selectgrp ? selectgrp.name : ""}
+              value={selectgrp.name}
               onClick={() => {
                 handleOpenDropdown("dropGroupContentwork");
               }}
@@ -689,12 +722,7 @@ const ContentWork = () => {
                         onClick={() => {
                           setSelectgrp({ id: data.id, name: data.name });
                           handleOpenDropdown("dropGroupContentwork");
-                          let resultsearch = searchGroupcontent(
-                            data.name.trim(),
-                            getworkgetwork
-                          );
-                          console.log("res==>", resultsearch);
-                          setGetworkgetwork(resultsearch);
+                          handleSearchGroupinfowork(data);
                         }}
                       >
                         <span>{data.name}</span>
@@ -715,8 +743,8 @@ const ContentWork = () => {
           <button
             type="button"
             onClick={() => {
-              console.log("แก้กลุ่ม เอางานทั้งหมด");
-              setSelectgrp("");
+              setSelectgrp({ id: "", name: "" });
+              handleAllgroupinfowork();
             }}
           >
             {"งานทั้งหมด"}
@@ -851,32 +879,73 @@ const ContentWork = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {getworkgetwork.map((data, index) => {
-                        return (
-                          <tr key={index}>
-                            <td width={120}>{data.date}</td>
-                            <td
-                              width={120}
-                            >{`${data.time_begin}-${data.time_end}`}</td>
-                            <td width={50}>{data.name}</td>
-                            <td width={300}>{data.advisor_name}</td>
-                            <td width={300}>{data.studentname}</td>
-                            <td width={50}>
-                              <button>
-                                <i className="bi-chevron-up"></i>
-                              </button>
-                            </td>
-                            <td width={50}>
-                              <button>
-                                <i className="bi-three-dots"></i>
-                              </button>
-                            </td>
-                            <td width={30}>
-                              <input type="checkbox"></input>
-                            </td>
+                      {filteron ? (
+                        filtergetwork[0] ? (
+                          filtergetwork.map((data, index) => {
+                            return (
+                              <tr key={index}>
+                                <td width={120}>{data.date}</td>
+                                <td
+                                  width={120}
+                                >{`${data.time_begin}-${data.time_end}`}</td>
+                                <td width={50}>{data.name}</td>
+                                <td width={300}>{data.advisor_name}</td>
+                                <td width={300}>{data.studentname}</td>
+                                <td width={50}>
+                                  <button>
+                                    <i className="bi-chevron-up"></i>
+                                  </button>
+                                </td>
+                                <td width={50}>
+                                  <button>
+                                    <i className="bi-three-dots"></i>
+                                  </button>
+                                </td>
+                                <td width={30}>
+                                  <input type="checkbox"></input>
+                                </td>
+                              </tr>
+                            );
+                          })
+                        ) : (
+                          <tr>
+                            <td>{"(วันที่)"}</td>
+                            <td>{"(เวลา)"}</td>
+                            <td>{"(กลุ่ม)"}</td>
+                            <td>{"(อาจารย์)"}</td>
+                            <td>{"(นักศึกษา)"}</td>
+                            <td>{"(UP)"}</td>
+                            <td>{"(C)"}</td>
                           </tr>
-                        );
-                      })}
+                        )
+                      ) : (
+                        getworkgetwork.map((data, index) => {
+                          return (
+                            <tr key={index}>
+                              <td width={120}>{data.date}</td>
+                              <td
+                                width={120}
+                              >{`${data.time_begin}-${data.time_end}`}</td>
+                              <td width={50}>{data.name}</td>
+                              <td width={300}>{data.advisor_name}</td>
+                              <td width={300}>{data.studentname}</td>
+                              <td width={50}>
+                                <button>
+                                  <i className="bi-chevron-up"></i>
+                                </button>
+                              </td>
+                              <td width={50}>
+                                <button>
+                                  <i className="bi-three-dots"></i>
+                                </button>
+                              </td>
+                              <td width={30}>
+                                <input type="checkbox"></input>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
                     </tbody>
                   </table>
                 ) : (

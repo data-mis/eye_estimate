@@ -55,7 +55,6 @@ function isLeapYear(year) {
 }
 
 export function dayofmonth(month, year) {
-  console.log("!>", parseInt(month), parseInt(year));
   const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   // Check for leap year
