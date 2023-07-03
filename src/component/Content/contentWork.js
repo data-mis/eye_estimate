@@ -35,7 +35,8 @@ const ContentWork = () => {
   const [getsheetwork, setGetsheetwork] = useState([]);
   const [getworklistwork, setGetworklistwork] = useState([]);
   const [getworkestimation, setGetworkestimation] = useState([]);
-  const [inputtypeestimation, setInputtypeestimation] = useState("");
+
+  const [dataeditwork, setDataeditwork] = useState([]);
   const [titlegetwork, setTitlegetwork] = useState("Case&Topic ผู้นำเสนอ");
   const [getworkgetwork, setGetworkgetwork] = useState([]);
   const [filtergetwork, setFiltergetwork] = useState([]);
@@ -44,6 +45,24 @@ const ContentWork = () => {
   const [openfilter, setOpenfilter] = useState(false);
   const [openMonthdrop, setOpenMonthdrop] = useState(false);
   const [statusClosemodal, setStatusClosemodal] = useState(false);
+
+  const [inputtypeestimation, setInputtypeestimation] = useState({
+    id: "",
+    code: "",
+    name: "",
+  });
+  const [EditTypesheetwork, setEditTypesheetwork] = useState({
+    id: "",
+    name: "",
+    code: "",
+  });
+  const [advisorDocest, setAdvisorDocest] = useState({ id: "", name: "" });
+  const [groupStudentest, setGroupStudentest] = useState({ id: "", name: "" });
+  const [studentEst, setStudentEst] = useState("");
+  const [dateEst, setDateEst] = useState("");
+  const [timebeginest, setTimebeginest] = useState("");
+  const [timeendest, setTimeendest] = useState("");
+  const [topicest, setTopicest] = useState("");
 
   const changeyear = (mode) => {
     let thisyear = parseInt(selectYear);
@@ -141,6 +160,7 @@ const ContentWork = () => {
   };
 
   const handleContentmodal = () => {
+    let timebeginM, timebeginS, timeendM, timeendS;
     return (
       <div className="body-modalbox-contentwork">
         {/* แบบประเมิน */}
@@ -152,7 +172,7 @@ const ContentWork = () => {
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
-              value={inputtypeestimation ? inputtypeestimation : ""}
+              value={inputtypeestimation ? inputtypeestimation.name : ""}
               onClick={() => {
                 handleOpenDropdown("dropInfoTypeReport", "boxTypeReport");
               }}
@@ -178,11 +198,428 @@ const ContentWork = () => {
                         className="info-dropinfotype"
                         key={index}
                         onClick={() => {
-                          setInputtypeestimation(data.name);
+                          console.log(data);
+                          setInputtypeestimation({
+                            id: data.Id,
+                            code: data.code,
+                            name: data.name,
+                          });
                           handleCheckShowSpecialType(data.code);
                           handleOpenDropdown(
                             "dropInfoTypeReport",
                             "boxTypeReport"
+                          );
+                        }}
+                      >
+                        {data.name}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* ผู้ประเมิน */}
+        <div className="rowinput-modalbox-contentwork">
+          <div className="boxgrid-modal-contentwork">
+            <span>{`ผู้ประเมิน`}</span>
+          </div>
+          <div className="boxgrid-modal-contentwork" id="boxPersonport">
+            <input
+              className="input-rowinput-modalboxContentwork"
+              type="text"
+              value={advisorDocest.name}
+              onClick={() => {
+                handleOpenDropdown("dropInfoPersonport", "boxPersonport");
+              }}
+              readOnly
+            ></input>
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              onClick={() => {
+                handleOpenDropdown("dropInfoPersonport", "boxPersonport");
+              }}
+            >
+              <i className="bi-caret-down"></i>
+            </button>
+            <div
+              className="dropInfo-boxgrid-contentwork"
+              id="dropInfoPersonport"
+            >
+              {getworklistwork[0] ? (
+                getworklistwork.map((data, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="info-dropinfotype"
+                      onClick={() => {
+                        console.log("select a advisor:>", data);
+                        setAdvisorDocest({
+                          id: data.id,
+                          name: data.advisor_name,
+                        });
+                        handleOpenDropdown(
+                          "dropInfoPersonport",
+                          "boxPersonport"
+                        );
+                      }}
+                    >
+                      <span>{`${data.advisor_name}`}</span>
+                    </div>
+                  );
+                })
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* กลุ่ม */}
+        <div className="rowinput-modalbox-contentwork">
+          <div className="boxgrid-modal-contentwork">
+            <span>{`กลุ่ม`}</span>
+          </div>
+          <div className="boxgrid-modal-contentwork" id="boxAgroup">
+            <input
+              className="input-rowinput-modalboxContentwork"
+              id="boxinfoGroupselect"
+              type="text"
+              value={groupStudentest.name ? groupStudentest.name : ""}
+              onClick={() => {
+                handleOpenDropdown("dropInfogroup", "boxAgroup");
+              }}
+              readOnly
+            ></input>
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              id="boxbtnGroupselect"
+              onClick={() => {
+                handleOpenDropdown("dropInfogroup", "boxAgroup");
+              }}
+            >
+              <i className="bi-caret-down"></i>
+            </button>
+            <div className="dropInfo-boxgrid-contentwork" id="dropInfogroup">
+              {getselectGroup[0] ? (
+                getselectGroup.map((data, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="info-dropinfotype"
+                      onClick={() => {
+                        setGroupStudentest({ id: data.id, name: data.name });
+                        handleOpenDropdown("dropInfogroup", "boxAgroup");
+                      }}
+                    >
+                      <span>{`${data.name}`}</span>
+                    </div>
+                  );
+                })
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* นักศึกษาแพทย์ */}
+        <div className="rowinput-modalbox-contentwork">
+          <div className="boxgrid-modal-contentwork">
+            <span>{`นศพ`}</span>
+          </div>
+          <div className="boxgrid-modal-contentwork" id="boxAstudent">
+            <input
+              className="input-rowinput-modalboxContentwork"
+              type="text"
+              id="boxinfoStudentselect"
+            ></input>
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              id="boxbtnStudentselect"
+              onClick={() => {
+                handleOpenDropdown("dropInfoStudent", "boxAstudent");
+              }}
+            >
+              <i className="bi-caret-down"></i>
+            </button>
+            <div
+              className="dropInfo-boxgrid-contentwork"
+              id="dropInfoStudent"
+            ></div>
+          </div>
+        </div>
+        <div className="box-datetime-contentwork">
+          <div className="col-datetime-contentwork">
+            <div className="rowinput-modalbox-contentwork">
+              <div className="timegrid-modal-contentwork">
+                <span>{`วันที่`}</span>
+              </div>
+              <div className="timegrid-modal-contentwork">
+                <input
+                  className="input-rowinput-modalboxContentwork"
+                  type="date"
+                  onChange={(e) => {
+                    setDateEst(e.target.value);
+                  }}
+                ></input>
+              </div>
+            </div>
+            <div className="rowinput-modalbox-contentwork">
+              <div className="timegrid-modal-contentwork">
+                <span>{`เวลา`}</span>
+              </div>
+              <div className="timegrid-modal-contentwork">
+                <div className="boxinputtimeContentwork">
+                  <input
+                    type="number"
+                    className="input-timeSTS"
+                    id="test-timebeginM"
+                    value={timebeginM}
+                    onChange={(e) => {
+                      if (parseInt(e.target.value) > 12) {
+                        console.log("มากกว่า 12 เห็นๆ");
+                        timebeginM = 12;
+                      } else {
+                        timebeginM = e.target.value;
+                      }
+                    }}
+                  ></input>
+                  <span style={{ fontSize: "15px" }}>{":"}</span>
+                  <input
+                    type="number"
+                    className="input-timeSTS"
+                    onChange={(e) => {
+                      timebeginS = e.target.value;
+                    }}
+                  ></input>
+                </div>
+                <span style={{ margin: "0 5px" }}>{"ถึง"}</span>
+                <div className="boxinputtimeContentwork">
+                  <input
+                    type="number"
+                    className="input-timeSTS"
+                    max={12}
+                    onChange={(e) => {
+                      timeendM = e.target.value;
+                    }}
+                  ></input>
+                  <span style={{ fontSize: "15px" }}>{":"}</span>
+                  <input
+                    type="number"
+                    className="input-timeSTS"
+                    max={59}
+                    onChange={(e) => {
+                      timeendS = e.target.value;
+                    }}
+                  ></input>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-datetimesubmit-contentwork">
+            <button
+              className="btn-confirm-modalContentwork"
+              type="button"
+              onClick={() => {
+                console.log("saveAddwork>>");
+                if (timebeginM && timebeginS && timeendM && timebeginS) {
+                  let object = {
+                    sheet_id: inputtypeestimation.id,
+                    sheet_code: inputtypeestimation.code,
+                    advisor_id: advisorDocest.id,
+                    grp_id: groupStudentest.id,
+                    date: dateEst,
+                    time_begin: `${timebeginM}:${timebeginS}`,
+                    time_end: `${timeendM}:${timeendS}`,
+                  };
+                  console.log(object);
+                }
+                // handlesummitAddnewWork();
+              }}
+            >
+              {"บันทึก"}
+            </button>
+          </div>
+        </div>
+        <div className="box-special-modalboxcontentwork">
+          <div
+            className="infoHeade-special-boxcontentwork"
+            id="boxinfoheadSpecial"
+          >
+            <div className="special-input-boxcontentwork">
+              <div>
+                <span>{"หัวข้อเรื่อง"}</span>
+              </div>
+              <div>
+                <input type="input"></input>
+                <button>
+                  <i className="bi-caret-down"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="inforeport-special-boxcontentwork"
+            id="boxinforeportSpecial"
+          >
+            <div className="special-report-boxcontentwork">
+              <div className="box-report-input">
+                <div>
+                  <span>{"หอผู้ป่วย"}</span>
+                </div>
+                <div className="inputradio-special-boxcontentwork">
+                  <div>
+                    <input type="radio"></input>
+                    <span>{"test"}</span>
+                    <input type="radio"></input>
+                    <span>{"test"}</span>
+                    <input type="radio"></input>
+                    <span>{"test"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="special-report-boxcontentwork">
+              <div className="box-report-input">
+                <div>
+                  <span>{"การวินิจฉัย"}</span>
+                </div>
+                <div className="col-boxreport-input">
+                  <div className="sub-col-boxreport">
+                    <div className="input-special-boxcontentwork">
+                      <input type="text"></input>
+                    </div>
+                  </div>
+                  <div className="sub-col-boxreport">
+                    <div className="grid-date-subcol">
+                      <div>
+                        <span>{"วันที่ผู้ป่วย Admit"}</span>
+                      </div>
+                      <div className="date-special-boxcontentwork">
+                        <input type="date"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="box-report-input">
+                <div>
+                  <span>{"ชื่อผู้ป่วย"}</span>
+                </div>
+                <div className="col-boxreport-input">
+                  <div className="sub-col-boxreport">
+                    <div className="input-special-boxcontentwork">
+                      <input type="text"></input>
+                    </div>
+                  </div>
+                  <div className="sub-col-boxreport">
+                    <div className="grid-date-subcol">
+                      <div>
+                        <span>{"วันที่จ่าย/รับผู้ป่วย"}</span>
+                      </div>
+                      <div className="date-special-boxcontentwork">
+                        <input type="date"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="box-report-input">
+                <div>
+                  <span>{"เลขที่โรงพยาบาล"}</span>
+                </div>
+                <div className="col-boxreport-input">
+                  <div className="sub-col-boxreport">
+                    <div className="input-special-boxcontentwork">
+                      <input type="text"></input>
+                    </div>
+                  </div>
+                  <div className="sub-col-boxreport">
+                    <div className="grid-date-subcol">
+                      <div>
+                        <span style={{ fontSize: "11px" }}>
+                          {"วันที่ส่งรายงานผู้ป่วย"}
+                        </span>
+                      </div>
+                      <div className="date-special-boxcontentwork">
+                        <input type="date"></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const handleEditworkmodal = () => {
+    console.log("this a editdata=>", dataeditwork);
+
+    return (
+      <div className="body-modalbox-contentwork">
+        {/* แบบประเมิน */}
+        <div className="rowinput-modalbox-contentwork">
+          <div className="boxgrid-modal-contentwork">
+            <span>{`แบบประเมิน`}</span>
+          </div>
+          <div className="boxgrid-modal-contentwork" id="boxTypeReportEdit">
+            <input
+              className="input-rowinput-modalboxContentwork"
+              value={
+                EditTypesheetwork.name
+                  ? EditTypesheetwork.name
+                  : dataeditwork.sheet_name
+              }
+              type="text"
+              onClick={() => {
+                handleOpenDropdown(
+                  "dropInfoTypeReportEdit",
+                  "boxTypeReportEdit"
+                );
+              }}
+              readOnly
+            ></input>
+            <button
+              className="btn-rowinput-modalboxContentwork"
+              onClick={() => {
+                handleOpenDropdown(
+                  "dropInfoTypeReportEdit",
+                  "boxTypeReportEdit"
+                );
+              }}
+            >
+              <i className="bi-caret-down"></i>
+            </button>
+            <div
+              className="dropInfo-boxgrid-contentwork"
+              id="dropInfoTypeReportEdit"
+            >
+              {getsheetwork ? (
+                getsheetwork[0] ? (
+                  getsheetwork.map((data, index) => {
+                    return (
+                      <div
+                        className="info-dropinfotype"
+                        key={index}
+                        onClick={() => {
+                          // console.log(">>>>", data);
+                          setEditTypesheetwork({
+                            id: data.Id,
+                            name: data.name,
+                            code: data.code,
+                          });
+                          handleCheckShowSpecialType(data.code);
+                          handleOpenDropdown(
+                            "dropInfoTypeReportEdit",
+                            "boxTypeReportEdit"
                           );
                         }}
                       >
@@ -439,19 +876,39 @@ const ContentWork = () => {
         docGetId("boxinforeportSpecial").style.display = "none";
       }
     };
+    let groupandstudent = (status) => {
+      if (status) {
+        docGetId("boxinfoGroupselect").style.display = "block";
+        docGetId("boxbtnGroupselect").style.display = "block";
+        docGetId("boxinfoStudentselect").style.display = "none";
+        docGetId("boxbtnStudentselect").style.display = "none";
+      } else {
+        docGetId("boxinfoGroupselect").style.display = "none";
+        docGetId("boxbtnGroupselect").style.display = "none";
+        docGetId("boxinfoStudentselect").style.display = "block";
+        docGetId("boxbtnStudentselect").style.display = "block";
+      }
+    };
 
     if (typesheet === "05" || typesheet === "06") {
-      console.log("โชว์หัวข้อให้เลือก");
+      // console.log("โชว์หัวข้อให้เลือก");
       headSpecial(true);
       reportSpecial(false);
+      groupandstudent(true);
     } else if (typesheet === "01") {
-      console.log("โชว์แบบประเมินรายงานให้เลือก");
+      // console.log("โชว์แบบประเมินรายงานให้เลือก");
       headSpecial(false);
       reportSpecial(true);
-    } else {
-      console.log("ปกติ");
+      groupandstudent(false);
+    } else if (typesheet === "02") {
+      groupandstudent(false);
       headSpecial(false);
       reportSpecial(false);
+    } else {
+      // console.log("ปกติ");
+      headSpecial(false);
+      reportSpecial(false);
+      groupandstudent(true);
     }
   };
 
@@ -465,7 +922,11 @@ const ContentWork = () => {
     FetchControlWork.fetchworksheet(token).then((data) => {
       setGetsheetwork(data);
       console.log("typesheet", data);
-      setInputtypeestimation(data[0].name);
+      setInputtypeestimation({
+        id: data[0].Id,
+        code: data[0].code,
+        name: data[0].name,
+      });
       handleCheckShowSpecialType(data[0].code);
       setSelectDataworktype(data[0].Id);
       handleCheckDayformonth(
@@ -543,9 +1004,9 @@ const ContentWork = () => {
   }, []);
 
   useEffect(() => {
-    selectgrp.name
-      ? handleSearchGroupinfowork(selectgrp)
-      : console.log("มันไม่มีค่า grp เตื้อเน้อ");
+    if (selectgrp.name) {
+      handleSearchGroupinfowork(selectgrp);
+    }
   }, [getworkgetwork]);
 
   return (
@@ -882,6 +1343,7 @@ const ContentWork = () => {
                       {filteron ? (
                         filtergetwork[0] ? (
                           filtergetwork.map((data, index) => {
+                            console.log("datafiltercontent", data);
                             return (
                               <tr key={index}>
                                 <td width={120}>{data.date}</td>
@@ -897,7 +1359,11 @@ const ContentWork = () => {
                                   </button>
                                 </td>
                                 <td width={50}>
-                                  <button>
+                                  <button
+                                    onClick={() => {
+                                      console.log("love");
+                                    }}
+                                  >
                                     <i className="bi-three-dots"></i>
                                   </button>
                                 </td>
@@ -920,6 +1386,7 @@ const ContentWork = () => {
                         )
                       ) : (
                         getworkgetwork.map((data, index) => {
+                          console.log("datacontent", data);
                           return (
                             <tr key={index}>
                               <td width={120}>{data.date}</td>
@@ -935,7 +1402,13 @@ const ContentWork = () => {
                                 </button>
                               </td>
                               <td width={50}>
-                                <button>
+                                <button
+                                  onClick={() => {
+                                    // console.log("this a data=>", data);
+                                    setDataeditwork(data);
+                                    handleOpenModalbox("boxEditworkDoctor");
+                                  }}
+                                >
                                   <i className="bi-three-dots"></i>
                                 </button>
                               </td>
@@ -1117,6 +1590,12 @@ const ContentWork = () => {
         thisTitle={"เพิ่มข้อมูลงาน"}
         statusClose={setStatusClosemodal}
         content={handleContentmodal()}
+      ></ModalBox>
+      <ModalBox
+        idbox={"boxEditworkDoctor"}
+        thisTitle={"แก้ไขข้อมูลงาน"}
+        statusClose={setStatusClosemodal}
+        content={handleEditworkmodal()}
       ></ModalBox>
     </div>
   );

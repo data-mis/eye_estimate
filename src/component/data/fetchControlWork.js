@@ -69,5 +69,15 @@ const FetchControlWork = {
       throw error;
     }
   },
+  fetchAdddetailwork: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/add_work`;
+
+    try {
+      console.log(request);
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default FetchControlWork;
