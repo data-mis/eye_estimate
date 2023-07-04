@@ -32,6 +32,7 @@ const ContentWork = () => {
   const [selectgrp, setSelectgrp] = useState({ id: "", name: "" });
   const [selectradioComplete, setSelectradioComplete] = useState(1);
   const [selectDataworktype, setSelectDataworktype] = useState("");
+  const [selectCodework, setSelectCodework] = useState("");
   const [getsheetwork, setGetsheetwork] = useState([]);
   const [getworklistwork, setGetworklistwork] = useState([]);
   const [getworkestimation, setGetworkestimation] = useState([]);
@@ -46,23 +47,46 @@ const ContentWork = () => {
   const [openMonthdrop, setOpenMonthdrop] = useState(false);
   const [statusClosemodal, setStatusClosemodal] = useState(false);
 
+  //เก็บwork
   const [inputtypeestimation, setInputtypeestimation] = useState({
     id: "",
     code: "",
     name: "",
   });
-  const [EditTypesheetwork, setEditTypesheetwork] = useState({
-    id: "",
-    name: "",
-    code: "",
-  });
   const [advisorDocest, setAdvisorDocest] = useState({ id: "", name: "" });
   const [groupStudentest, setGroupStudentest] = useState({ id: "", name: "" });
-  const [studentEst, setStudentEst] = useState("");
+  const [studentEst, setStudentEst] = useState({ id: "", name: "" });
   const [dateEst, setDateEst] = useState("");
   const [timebeginest, setTimebeginest] = useState("");
   const [timeendest, setTimeendest] = useState("");
   const [topicest, setTopicest] = useState("");
+
+  const [reportWard, setReportWard] = useState("");
+  const [reportDiagnosis, setReportDiagnosis] = useState("");
+  const [reportDateadmit, setReportDateadmit] = useState("");
+  const [reportPatient, setReportPatient] = useState("");
+  const [reportDateCommit, setReportDateCommit] = useState("");
+  const [reportHosnumber, setReportHosnumber] = useState("");
+  const [reportDateSendpatient, setReportDateSendpatient] = useState("");
+
+  //ตัวแปรแก้ไขwork
+  const [editTypesheetwork, setEditTypesheetwork] = useState({
+    id: "",
+    name: "",
+    code: "",
+  });
+  const [editadvisorDocest, setEditadvisorDocest] = useState({
+    id: "",
+    name: "",
+  });
+  const [editgroupStudentest, setEditgroupStudentest] = useState({
+    id: "",
+    name: "",
+  });
+  const [editstudentEst, setEditstudentEst] = useState({ id: "", name: "" });
+  const [editdateEst, seteditdateEst] = useState("");
+  const [edittimebeginest, setedittimebeginest] = useState("");
+  const [edittimeendest, setedittimeendest] = useState("");
 
   const changeyear = (mode) => {
     let thisyear = parseInt(selectYear);
@@ -160,7 +184,6 @@ const ContentWork = () => {
   };
 
   const handleContentmodal = () => {
-    let timebeginM, timebeginS, timeendM, timeendS;
     return (
       <div className="body-modalbox-contentwork">
         {/* แบบประเมิน */}
@@ -375,46 +398,23 @@ const ContentWork = () => {
               <div className="timegrid-modal-contentwork">
                 <div className="boxinputtimeContentwork">
                   <input
-                    type="number"
-                    className="input-timeSTS"
-                    id="test-timebeginM"
-                    value={timebeginM}
+                    type="time"
+                    value={timebeginest}
                     onChange={(e) => {
-                      if (parseInt(e.target.value) > 12) {
-                        console.log("มากกว่า 12 เห็นๆ");
-                        timebeginM = 12;
-                      } else {
-                        timebeginM = e.target.value;
-                      }
+                      setTimebeginest(e.target.value);
                     }}
-                  ></input>
-                  <span style={{ fontSize: "15px" }}>{":"}</span>
-                  <input
-                    type="number"
-                    className="input-timeSTS"
-                    onChange={(e) => {
-                      timebeginS = e.target.value;
-                    }}
+                    className="inputtime-timeSTS"
                   ></input>
                 </div>
                 <span style={{ margin: "0 5px" }}>{"ถึง"}</span>
                 <div className="boxinputtimeContentwork">
                   <input
-                    type="number"
-                    className="input-timeSTS"
-                    max={12}
+                    type="time"
+                    value={timeendest}
                     onChange={(e) => {
-                      timeendM = e.target.value;
+                      setTimeendest(e.target.value);
                     }}
-                  ></input>
-                  <span style={{ fontSize: "15px" }}>{":"}</span>
-                  <input
-                    type="number"
-                    className="input-timeSTS"
-                    max={59}
-                    onChange={(e) => {
-                      timeendS = e.target.value;
-                    }}
+                    className="inputtime-timeSTS"
                   ></input>
                 </div>
               </div>
@@ -426,19 +426,7 @@ const ContentWork = () => {
               type="button"
               onClick={() => {
                 console.log("saveAddwork>>");
-                if (timebeginM && timebeginS && timeendM && timebeginS) {
-                  let object = {
-                    sheet_id: inputtypeestimation.id,
-                    sheet_code: inputtypeestimation.code,
-                    advisor_id: advisorDocest.id,
-                    grp_id: groupStudentest.id,
-                    date: dateEst,
-                    time_begin: `${timebeginM}:${timebeginS}`,
-                    time_end: `${timeendM}:${timeendS}`,
-                  };
-                  console.log(object);
-                }
-                // handlesummitAddnewWork();
+                handleSubmitAddnewWork(usertoken);
               }}
             >
               {"บันทึก"}
@@ -454,11 +442,23 @@ const ContentWork = () => {
               <div>
                 <span>{"หัวข้อเรื่อง"}</span>
               </div>
-              <div>
-                <input type="input"></input>
+              <div className="box-topic" id="boxtopicrelativebox">
+                <input type="text" onChange={(e) => {}} readOnly></input>
                 <button>
                   <i className="bi-caret-down"></i>
                 </button>
+                <div
+                  className="dropInfo-boxgrid-contentwork"
+                  id="dropInfotopic"
+                >
+                  <div
+                    onClick={() => {
+                      setTopicest("(thistopic)");
+                    }}
+                  >
+                    <span></span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -474,11 +474,32 @@ const ContentWork = () => {
                 </div>
                 <div className="inputradio-special-boxcontentwork">
                   <div>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      value={"จักษุ1(ช)"}
+                      onChange={(e) => {
+                        setReportWard(e.target.value);
+                      }}
+                      checked={reportWard === "จักษุ1(ช)"}
+                    ></input>
                     <span>{"test"}</span>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      value={"จักษุ2(ญ)"}
+                      onChange={(e) => {
+                        setReportWard(e.target.value);
+                      }}
+                      checked={reportWard === "จักษุ2(ญ)"}
+                    ></input>
                     <span>{"test"}</span>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      value={"พิเศษ"}
+                      onChange={(e) => {
+                        setReportWard(e.target.value);
+                      }}
+                      checked={reportWard === "พิเศษ"}
+                    ></input>
                     <span>{"test"}</span>
                   </div>
                 </div>
@@ -492,7 +513,12 @@ const ContentWork = () => {
                 <div className="col-boxreport-input">
                   <div className="sub-col-boxreport">
                     <div className="input-special-boxcontentwork">
-                      <input type="text"></input>
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setReportDiagnosis(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
                   <div className="sub-col-boxreport">
@@ -501,7 +527,12 @@ const ContentWork = () => {
                         <span>{"วันที่ผู้ป่วย Admit"}</span>
                       </div>
                       <div className="date-special-boxcontentwork">
-                        <input type="date"></input>
+                        <input
+                          type="date"
+                          onChange={(e) => {
+                            setReportDateadmit(e.target.value);
+                          }}
+                        ></input>
                       </div>
                     </div>
                   </div>
@@ -514,7 +545,12 @@ const ContentWork = () => {
                 <div className="col-boxreport-input">
                   <div className="sub-col-boxreport">
                     <div className="input-special-boxcontentwork">
-                      <input type="text"></input>
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setReportPatient(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
                   <div className="sub-col-boxreport">
@@ -523,7 +559,12 @@ const ContentWork = () => {
                         <span>{"วันที่จ่าย/รับผู้ป่วย"}</span>
                       </div>
                       <div className="date-special-boxcontentwork">
-                        <input type="date"></input>
+                        <input
+                          type="date"
+                          onChange={(e) => {
+                            setReportDateCommit(e.target.value);
+                          }}
+                        ></input>
                       </div>
                     </div>
                   </div>
@@ -536,7 +577,12 @@ const ContentWork = () => {
                 <div className="col-boxreport-input">
                   <div className="sub-col-boxreport">
                     <div className="input-special-boxcontentwork">
-                      <input type="text"></input>
+                      <input
+                        type="text"
+                        onChange={(e) => {
+                          setReportHosnumber(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
                   <div className="sub-col-boxreport">
@@ -547,7 +593,12 @@ const ContentWork = () => {
                         </span>
                       </div>
                       <div className="date-special-boxcontentwork">
-                        <input type="date"></input>
+                        <input
+                          type="date"
+                          onChange={(e) => {
+                            setReportDateSendpatient(e.target.value);
+                          }}
+                        ></input>
                       </div>
                     </div>
                   </div>
@@ -561,8 +612,6 @@ const ContentWork = () => {
   };
 
   const handleEditworkmodal = () => {
-    console.log("this a editdata=>", dataeditwork);
-
     return (
       <div className="body-modalbox-contentwork">
         {/* แบบประเมิน */}
@@ -573,12 +622,8 @@ const ContentWork = () => {
           <div className="boxgrid-modal-contentwork" id="boxTypeReportEdit">
             <input
               className="input-rowinput-modalboxContentwork"
-              value={
-                EditTypesheetwork.name
-                  ? EditTypesheetwork.name
-                  : dataeditwork.sheet_name
-              }
               type="text"
+              value={editTypesheetwork.name}
               onClick={() => {
                 handleOpenDropdown(
                   "dropInfoTypeReportEdit",
@@ -611,11 +656,6 @@ const ContentWork = () => {
                         key={index}
                         onClick={() => {
                           // console.log(">>>>", data);
-                          setEditTypesheetwork({
-                            id: data.Id,
-                            name: data.name,
-                            code: data.code,
-                          });
                           handleCheckShowSpecialType(data.code);
                           handleOpenDropdown(
                             "dropInfoTypeReportEdit",
@@ -645,6 +685,8 @@ const ContentWork = () => {
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
+              value={editadvisorDocest.name}
+              readOnly
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
@@ -669,9 +711,12 @@ const ContentWork = () => {
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
+              id="boxeditinfoGroupselect"
+              defaultValue={groupStudentest.name}
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
+              id="boxeditbtnGroupselect"
               onClick={() => {
                 handleOpenDropdown("dropInfogroup", "boxAgroup");
               }}
@@ -693,9 +738,13 @@ const ContentWork = () => {
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
+              id="boxeditinfoStudentselect"
+              value={editstudentEst.name}
+              readOnly
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
+              id="boxeditbtnStudentselect"
               onClick={() => {
                 handleOpenDropdown("dropInfoStudent", "boxAstudent");
               }}
@@ -718,6 +767,7 @@ const ContentWork = () => {
                 <input
                   className="input-rowinput-modalboxContentwork"
                   type="date"
+                  defaultValue={editdateEst !== undefined ? editdateEst : ""}
                 ></input>
               </div>
             </div>
@@ -727,15 +777,19 @@ const ContentWork = () => {
               </div>
               <div className="timegrid-modal-contentwork">
                 <div className="boxinputtimeContentwork">
-                  <input type="number" className="input-timeSTS"></input>
-                  <span style={{ fontSize: "15px" }}>{":"}</span>
-                  <input type="number" className="input-timeSTS"></input>
+                  <input
+                    type="time"
+                    className="inputtime-timeSTS"
+                    defaultValue={edittimebeginest}
+                  ></input>
                 </div>
                 <span style={{ margin: "0 5px" }}>{"ถึง"}</span>
                 <div className="boxinputtimeContentwork">
-                  <input type="number" className="input-timeSTS"></input>
-                  <span style={{ fontSize: "15px" }}>{":"}</span>
-                  <input type="number" className="input-timeSTS"></input>
+                  <input
+                    type="time"
+                    className="inputtime-timeSTS"
+                    defaultValue={edittimeendest}
+                  ></input>
                 </div>
               </div>
             </div>
@@ -749,7 +803,7 @@ const ContentWork = () => {
         <div className="box-special-modalboxcontentwork">
           <div
             className="infoHeade-special-boxcontentwork"
-            id="boxinfoheadSpecial"
+            id="boxeditinfoheadSpecial"
           >
             <div className="special-input-boxcontentwork">
               <div>
@@ -766,7 +820,7 @@ const ContentWork = () => {
 
           <div
             className="inforeport-special-boxcontentwork"
-            id="boxinforeportSpecial"
+            id="boxeditinforeportSpecial"
           >
             <div className="special-report-boxcontentwork">
               <div className="box-report-input">
@@ -865,15 +919,19 @@ const ContentWork = () => {
     let headSpecial = (status) => {
       if (status) {
         docGetId("boxinfoheadSpecial").style.display = "block";
+        docGetId("boxeditinfoheadSpecial").style.display = "block";
       } else if (!status) {
         docGetId("boxinfoheadSpecial").style.display = "none";
+        docGetId("boxeditinfoheadSpecial").style.display = "none";
       }
     };
     let reportSpecial = (status) => {
       if (status) {
         docGetId("boxinforeportSpecial").style.display = "block";
+        docGetId("boxeditinforeportSpecial").style.display = "block";
       } else if (!status) {
         docGetId("boxinforeportSpecial").style.display = "none";
+        docGetId("boxeditinforeportSpecial").style.display = "none";
       }
     };
     let groupandstudent = (status) => {
@@ -882,11 +940,19 @@ const ContentWork = () => {
         docGetId("boxbtnGroupselect").style.display = "block";
         docGetId("boxinfoStudentselect").style.display = "none";
         docGetId("boxbtnStudentselect").style.display = "none";
+        docGetId("boxeditinfoGroupselect").style.display = "block";
+        docGetId("boxeditbtnGroupselect").style.display = "block";
+        docGetId("boxeditinfoStudentselect").style.display = "none";
+        docGetId("boxeditbtnStudentselect").style.display = "none";
       } else {
         docGetId("boxinfoGroupselect").style.display = "none";
         docGetId("boxbtnGroupselect").style.display = "none";
         docGetId("boxinfoStudentselect").style.display = "block";
         docGetId("boxbtnStudentselect").style.display = "block";
+        docGetId("boxeditinfoGroupselect").style.display = "none";
+        docGetId("boxeditbtnGroupselect").style.display = "none";
+        docGetId("boxeditinfoStudentselect").style.display = "block";
+        docGetId("boxeditbtnStudentselect").style.display = "block";
       }
     };
 
@@ -896,7 +962,7 @@ const ContentWork = () => {
       reportSpecial(false);
       groupandstudent(true);
     } else if (typesheet === "01") {
-      // console.log("โชว์แบบประเมินรายงานให้เลือก");
+      console.log("โชว์แบบประเมินรายงานให้เลือก");
       headSpecial(false);
       reportSpecial(true);
       groupandstudent(false);
@@ -920,6 +986,7 @@ const ContentWork = () => {
 
   const handlesheetdatawork = (token) => {
     FetchControlWork.fetchworksheet(token).then((data) => {
+      // console.log("this data have ???", data);
       setGetsheetwork(data);
       console.log("typesheet", data);
       setInputtypeestimation({
@@ -995,6 +1062,145 @@ const ContentWork = () => {
       selectradioComplete,
       usertoken
     );
+  };
+
+  const handleSubmitAddnewWork = (token) => {
+    let typecase = inputtypeestimation.code;
+
+    switch (typecase) {
+      case "01": //**report*/
+        let objectreport = {
+          sheet_code: inputtypeestimation.code,
+          sheet_id: inputtypeestimation.id,
+          advisor_id: advisorDocest.id,
+          student_id: studentEst.id,
+          date: dateEst,
+          time_begin: timebeginest,
+          time_end: timeendest,
+        };
+        console.log("object for add report>>>", objectreport);
+        break;
+      case "02": //**progressnote */
+        let objectprogressnote = {
+          sheet_code: inputtypeestimation.code,
+          sheet_id: inputtypeestimation.id,
+          advisor_id: advisorDocest.id,
+          student_id: studentEst.id,
+          date: dateEst,
+          time_begin: timeendest,
+          time_end: timeendest,
+        };
+        console.log("object for add progressnote >>>", objectprogressnote);
+        break;
+      case "03": //**opd teaching */
+        let objectteaching = {
+          sheet_code: inputtypeestimation.code,
+          sheet_id: inputtypeestimation.id,
+          advisor_id: advisorDocest.id,
+          grp_id: groupStudentest.id,
+          date: dateEst,
+          time_begin: timeendest,
+          time_end: timeendest,
+        };
+        console.log("object for add teaching >>>", objectteaching);
+
+        break;
+      case "04": //**wardround*/
+        let objectwardround = {
+          sheet_code: inputtypeestimation.code,
+          sheet_id: inputtypeestimation.id,
+          advisor_id: advisorDocest.id,
+          grp_id: groupStudentest.id,
+          date: dateEst,
+          time_begin: timeendest,
+          time_end: timeendest,
+        };
+        console.log("object for add wardrond >>>", objectwardround);
+
+        break;
+      case "05": //**case & topic นำเสนอ */
+        let ojbectcasetopicShow = {
+          sheet_code: inputtypeestimation.code,
+          sheet_id: inputtypeestimation.id,
+          advisor_id: advisorDocest.id,
+          grp_id: groupStudentest.id,
+          date: dateEst,
+          time_begin: timebeginest,
+          time_end: timeendest,
+          txt_val: topicest,
+        };
+        console.log("object for add objectcaseshow >>>", ojbectcasetopicShow);
+        break;
+      case "06": //**case & topic ผู้ร่วม */
+        let objectcasecoop = {
+          sheet_code: inputtypeestimation.code,
+          sheet_id: inputtypeestimation.id,
+          advisor_id: advisorDocest.id,
+          grp_id: groupStudentest.id,
+          date: dateEst,
+          time_begin: timebeginest,
+          time_end: timeendest,
+          txt_val: topicest,
+        };
+        console.log("object for add objectcaseshow >>>", objectcasecoop);
+        break;
+      case "07": //**flipped classroom */
+        let objectflipped = {
+          sheet_code: inputtypeestimation.code,
+          sheet_id: inputtypeestimation.id,
+          advisor_id: advisorDocest.id,
+          grp_id: groupStudentest.id,
+          date: dateEst,
+          time_begin: timeendest,
+          time_end: timeendest,
+        };
+        console.log("object for add flipped >>>", objectflipped);
+        break;
+    }
+  };
+
+  const handlecaseEditwork = (code, aData) => {
+    setEditTypesheetwork({
+      id: aData.sheet_id,
+      name: aData.sheet_name,
+      code: code,
+    });
+    setEditadvisorDocest({
+      id: aData.advisor_id !== "" ? aData.advisor_id : "",
+      name: aData.advisor_name !== "" ? aData.advisor_name : "",
+    });
+    console.log(aData.student_name !== "" ? aData.student_name : "");
+    setGroupStudentest({
+      id: aData.grp_id !== "" ? aData.grp_id : "",
+      name: aData.name !== "" ? aData.name : "",
+    });
+    setEditstudentEst({
+      id: aData.student_id !== "" ? aData.student_id : "",
+      name: aData.student_name !== "" ? aData.student_name : "",
+    });
+    seteditdateEst(aData.date !== "" ? aData.date : "0000-00-00");
+    setedittimebeginest(aData.time_begin !== "" ? aData.time_begin : "");
+    setedittimeendest(aData.time_end !== "" ? aData.time_end : "");
+    handleCheckShowSpecialType(code);
+    console.log("code is =>", code);
+    console.log("data is =>", aData);
+    switch (code) {
+      case "01":
+        setReportWard();
+        setReportDiagnosis();
+        setReportPatient();
+        setReportHosnumber();
+        setReportDateadmit();
+        setReportDateSendpatient();
+        setReportDateSendpatient();
+        break;
+      case "05":
+        setTopicest();
+        break;
+      case "06":
+        setTopicest();
+        break;
+    }
   };
 
   useEffect(() => {
@@ -1273,49 +1479,54 @@ const ContentWork = () => {
         <div className="colbox-contentwork">
           <div className="row-info-contentwork">
             <div className="col-info-contentwork">
-              <table className="table-show-info" style={{ width: "100%" }}>
-                <thead className="thaeadShowinfo">
-                  <tr>
-                    <th>{"งานประเมิน"}</th>
-                    <th>{"ประเภท"}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {getsheetwork.map((data, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className="tableTR-worksheet"
-                        id={`tr-worksheet-${index}`}
-                        onClick={() => {
-                          HolderlineonTable(
-                            "tableTR-worksheet",
-                            "tr-worksheet-",
-                            index
-                          );
-                          setTitlegetwork(data.name);
-                          handleCheckDayformonth(
-                            selectYear - 543,
-                            selectMonth,
-                            data.Id,
-                            selectradioComplete,
-                            usertoken
-                          );
-                          setSelectDataworktype(data.Id);
-                        }}
-                        style={
-                          index === 0 ? { border: "5px solid #01579b" } : {}
-                        }
-                      >
-                        <td width={"90%"}>{data.name}</td>
-                        <td width={"10%"}>
-                          {data.type === "1" ? "กลุ่ม" : "เดี่ยว"}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              {getsheetwork[0] ? (
+                <table className="table-show-info" style={{ width: "100%" }}>
+                  <thead className="thaeadShowinfo">
+                    <tr>
+                      <th>{"งานประเมิน"}</th>
+                      <th>{"ประเภท"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {getsheetwork.map((data, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className="tableTR-worksheet"
+                          id={`tr-worksheet-${index}`}
+                          onClick={() => {
+                            HolderlineonTable(
+                              "tableTR-worksheet",
+                              "tr-worksheet-",
+                              index
+                            );
+                            setTitlegetwork(data.name);
+                            handleCheckDayformonth(
+                              selectYear - 543,
+                              selectMonth,
+                              data.Id,
+                              selectradioComplete,
+                              usertoken
+                            );
+                            setSelectDataworktype(data.Id);
+                            setSelectCodework(data.code);
+                          }}
+                          style={
+                            index === 0 ? { border: "5px solid #01579b" } : {}
+                          }
+                        >
+                          <td width={"90%"}>{data.name}</td>
+                          <td width={"10%"}>
+                            {data.type === "1" ? "กลุ่ม" : "เดี่ยว"}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
             </div>
             <div className="col-info-contentwork">
               <div className="title-info-contentwork">
@@ -1386,7 +1597,6 @@ const ContentWork = () => {
                         )
                       ) : (
                         getworkgetwork.map((data, index) => {
-                          console.log("datacontent", data);
                           return (
                             <tr key={index}>
                               <td width={120}>{data.date}</td>
@@ -1404,8 +1614,9 @@ const ContentWork = () => {
                               <td width={50}>
                                 <button
                                   onClick={() => {
-                                    // console.log("this a data=>", data);
+                                    console.log("this a data=>", data);
                                     setDataeditwork(data);
+                                    handlecaseEditwork(selectCodework, data);
                                     handleOpenModalbox("boxEditworkDoctor");
                                   }}
                                 >
