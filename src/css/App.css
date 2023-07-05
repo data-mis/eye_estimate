@@ -1457,6 +1457,9 @@ html .info-dropinfotype, body .info-dropinfotype {
   padding: 5px;
   margin: auto;
 }
+html .info-dropinfotype:hover, body .info-dropinfotype:hover {
+  background-color: #9e9e9e;
+}
 html .timegrid-modal-contentwork, body .timegrid-modal-contentwork {
   display: flex;
   align-items: center;

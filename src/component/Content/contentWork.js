@@ -61,7 +61,7 @@ const ContentWork = () => {
   const [timeendest, setTimeendest] = useState("");
   const [topicest, setTopicest] = useState("");
 
-  const [reportWard, setReportWard] = useState("");
+  const [reportWard, setReportWard] = useState("จักษุ1(ช)");
   const [reportDiagnosis, setReportDiagnosis] = useState("");
   const [reportDateadmit, setReportDateadmit] = useState("");
   const [reportPatient, setReportPatient] = useState("");
@@ -87,6 +87,15 @@ const ContentWork = () => {
   const [editdateEst, seteditdateEst] = useState("");
   const [edittimebeginest, setedittimebeginest] = useState("");
   const [edittimeendest, setedittimeendest] = useState("");
+
+  const [editreportWard, setEditreportWard] = useState("จักษุ1(ช)");
+  const [editreportDiagnosis, setEditreportDiagnosis] = useState("");
+  const [editreportDateadmit, setEditreportDateadmit] = useState("");
+  const [editreportPatient, setEditreportPatient] = useState("");
+  const [editreportDateCommit, setEditreportDateCommit] = useState("");
+  const [editreportHosnumber, setEditreportHosnumber] = useState("");
+  const [editreportDateSendpatient, setEditreportDateSendpatient] =
+    useState("");
 
   const changeyear = (mode) => {
     let thisyear = parseInt(selectYear);
@@ -399,8 +408,13 @@ const ContentWork = () => {
                 <div className="boxinputtimeContentwork">
                   <input
                     type="time"
+                    id="testTimeClick"
                     value={timebeginest}
                     onChange={(e) => {
+                      console.log("พิมพ์เวลาเริ่ม", e.target.value);
+                      setTimebeginest(e.target.value);
+                    }}
+                    onSelect={(e) => {
                       setTimebeginest(e.target.value);
                     }}
                     className="inputtime-timeSTS"
@@ -412,6 +426,10 @@ const ContentWork = () => {
                     type="time"
                     value={timeendest}
                     onChange={(e) => {
+                      console.log("พิมพ์เวลาจบ", e.target.value);
+                      setTimeendest(e.target.value);
+                    }}
+                    onSelect={(e) => {
                       setTimeendest(e.target.value);
                     }}
                     className="inputtime-timeSTS"
@@ -482,7 +500,7 @@ const ContentWork = () => {
                       }}
                       checked={reportWard === "จักษุ1(ช)"}
                     ></input>
-                    <span>{"test"}</span>
+                    <span>{"จักษุ1(ช)"}</span>
                     <input
                       type="radio"
                       value={"จักษุ2(ญ)"}
@@ -491,7 +509,7 @@ const ContentWork = () => {
                       }}
                       checked={reportWard === "จักษุ2(ญ)"}
                     ></input>
-                    <span>{"test"}</span>
+                    <span>{"จักษุ2(ญ)"}</span>
                     <input
                       type="radio"
                       value={"พิเศษ"}
@@ -500,7 +518,7 @@ const ContentWork = () => {
                       }}
                       checked={reportWard === "พิเศษ"}
                     ></input>
-                    <span>{"test"}</span>
+                    <span>{"พิเศษ"}</span>
                   </div>
                 </div>
               </div>
@@ -528,6 +546,7 @@ const ContentWork = () => {
                       </div>
                       <div className="date-special-boxcontentwork">
                         <input
+                          className="inputDate-add-modalContentwork"
                           type="date"
                           onChange={(e) => {
                             setReportDateadmit(e.target.value);
@@ -611,6 +630,7 @@ const ContentWork = () => {
     );
   };
 
+  //**modal แก้ไข */
   const handleEditworkmodal = () => {
     return (
       <div className="body-modalbox-contentwork">
@@ -796,7 +816,7 @@ const ContentWork = () => {
           </div>
           <div className="col-datetimesubmit-contentwork">
             <button className="btn-confirm-modalContentwork" type="button">
-              {"บันทึก"}
+              {"บันทึกแก้ไข"}
             </button>
           </div>
         </div>
@@ -829,12 +849,33 @@ const ContentWork = () => {
                 </div>
                 <div className="inputradio-special-boxcontentwork">
                   <div>
-                    <input type="radio"></input>
-                    <span>{"test"}</span>
-                    <input type="radio"></input>
-                    <span>{"test"}</span>
-                    <input type="radio"></input>
-                    <span>{"test"}</span>
+                    <input
+                      type="radio"
+                      value={"จักษุ(ช)"}
+                      onChange={(e) => {
+                        setEditreportWard(e.target.value);
+                      }}
+                      checked={editreportWard === "จักษุ(ช)"}
+                    ></input>
+                    <span>{"จักษุ(ช)"}</span>
+                    <input
+                      type="radio"
+                      value={"จักษุ(ญ)"}
+                      onChange={(e) => {
+                        setEditreportWard(e.target.value);
+                      }}
+                      checked={editreportWard === "จักษุ(ญ)"}
+                    ></input>
+                    <span>{"จักษุ(ญ)"}</span>
+                    <input
+                      type="radio"
+                      value={"พิเศษ"}
+                      onChange={(e) => {
+                        setEditreportWard(e.target.value);
+                      }}
+                      checked={editreportWard === "พิเศษ"}
+                    ></input>
+                    <span>{"พิเศษ"}</span>
                   </div>
                 </div>
               </div>
@@ -847,7 +888,13 @@ const ContentWork = () => {
                 <div className="col-boxreport-input">
                   <div className="sub-col-boxreport">
                     <div className="input-special-boxcontentwork">
-                      <input type="text"></input>
+                      <input
+                        type="text"
+                        defaultValue={editreportDiagnosis}
+                        onChange={(e) => {
+                          setEditreportDiagnosis(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
                   <div className="sub-col-boxreport">
@@ -856,7 +903,15 @@ const ContentWork = () => {
                         <span>{"วันที่ผู้ป่วย Admit"}</span>
                       </div>
                       <div className="date-special-boxcontentwork">
-                        <input type="date"></input>
+                        <input
+                          type="date"
+                          defaultValue={editreportDateadmit}
+                          pattern="\d{2}-\d{2}-\d{4}"
+                          placeholder="dd-mm-yyyy"
+                          onChange={(e) => {
+                            setEditreportDateadmit(e.target.value);
+                          }}
+                        ></input>
                       </div>
                     </div>
                   </div>
@@ -869,7 +924,13 @@ const ContentWork = () => {
                 <div className="col-boxreport-input">
                   <div className="sub-col-boxreport">
                     <div className="input-special-boxcontentwork">
-                      <input type="text"></input>
+                      <input
+                        type="text"
+                        defaultValue={editreportPatient}
+                        onChange={(e) => {
+                          setEditreportPatient(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
                   <div className="sub-col-boxreport">
@@ -878,7 +939,13 @@ const ContentWork = () => {
                         <span>{"วันที่จ่าย/รับผู้ป่วย"}</span>
                       </div>
                       <div className="date-special-boxcontentwork">
-                        <input type="date"></input>
+                        <input
+                          type="date"
+                          defaultValue={editreportDateSendpatient}
+                          onChange={(e) => {
+                            setEditreportDateSendpatient(e.target.value);
+                          }}
+                        ></input>
                       </div>
                     </div>
                   </div>
@@ -891,7 +958,13 @@ const ContentWork = () => {
                 <div className="col-boxreport-input">
                   <div className="sub-col-boxreport">
                     <div className="input-special-boxcontentwork">
-                      <input type="text"></input>
+                      <input
+                        type="text"
+                        defaultValue={editreportHosnumber}
+                        onChange={(e) => {
+                          setEditreportHosnumber(e.target.value);
+                        }}
+                      ></input>
                     </div>
                   </div>
                   <div className="sub-col-boxreport">
@@ -902,7 +975,13 @@ const ContentWork = () => {
                         </span>
                       </div>
                       <div className="date-special-boxcontentwork">
-                        <input type="date"></input>
+                        <input
+                          type="date"
+                          defaultValue={editreportDateCommit}
+                          onChange={(e) => {
+                            setEditreportDateCommit(e.target.value);
+                          }}
+                        ></input>
                       </div>
                     </div>
                   </div>
@@ -1064,6 +1143,57 @@ const ContentWork = () => {
     );
   };
 
+  const handlegetworkhead = (workid, token) => {
+    let object = {
+      work_id: workid,
+    };
+    FetchControlWork.fetchgetDataworkhead(object, token).then((data) => {
+      console.log("data workhead report =>", data);
+      if (data[0]) {
+        data.map((ele) => {
+          switch (ele.txt.trim()) {
+            case "หอผู้ป่วย":
+              setEditreportWard(ele.txt_val);
+              break;
+            case "การวินิจฉัย":
+              setEditreportDiagnosis(ele.txt_val);
+              break;
+            case "ชื่อผู้ป่วย":
+              setEditreportPatient(ele.txt_val);
+              break;
+            case "เลขที่โรงพยาบาล":
+              setEditreportHosnumber(ele.txt_val);
+              break;
+            case "วันที่ผู้ป่วย Admit":
+              //**พี่ปูจะส่งมาเป็น คศ */
+              setEditreportDateadmit(ele.txt_val);
+              // let dateAdmit = moment(ele.txt_val)
+              //   .add(-543, "year")
+              //   .format("YYYY-MM-DD");
+              // setEditreportDateadmit(dateAdmit);
+              break;
+            case "วันที่จ่าย/รับผู้ป่วย":
+              //**พี่ปูจะส่งมาเป็น คศ */
+              setEditreportDateCommit(ele.txt_val);
+              // let dateCommit = moment(ele.txt_val)
+              //   .add(-543, "year")
+              //   .format("YYYY-MM-DD");
+              // setEditreportDateCommit(dateCommit);
+              break;
+            case "วันที่ส่งรายงานผู้ป่วย":
+              //**พี่ปูจะส่งมาเป็น คศ */
+              setEditreportDateSendpatient(ele.txt_val);
+              // let datesent = moment(ele.txt_val)
+              //   .add(-543, "year")
+              //   .format("YYYY-MM-DD");
+              // setEditreportDateSendpatient(datesent);
+              break;
+          }
+        });
+      }
+    });
+  };
+
   const handleSubmitAddnewWork = (token) => {
     let typecase = inputtypeestimation.code;
 
@@ -1087,7 +1217,7 @@ const ContentWork = () => {
           advisor_id: advisorDocest.id,
           student_id: studentEst.id,
           date: dateEst,
-          time_begin: timeendest,
+          time_begin: timebeginest,
           time_end: timeendest,
         };
         console.log("object for add progressnote >>>", objectprogressnote);
@@ -1099,7 +1229,7 @@ const ContentWork = () => {
           advisor_id: advisorDocest.id,
           grp_id: groupStudentest.id,
           date: dateEst,
-          time_begin: timeendest,
+          time_begin: timebeginest,
           time_end: timeendest,
         };
         console.log("object for add teaching >>>", objectteaching);
@@ -1112,11 +1242,11 @@ const ContentWork = () => {
           advisor_id: advisorDocest.id,
           grp_id: groupStudentest.id,
           date: dateEst,
-          time_begin: timeendest,
+          time_begin: timebeginest,
           time_end: timeendest,
         };
         console.log("object for add wardrond >>>", objectwardround);
-
+        FetchControlWork.fetchAdddetailwork(objectwardround, token);
         break;
       case "05": //**case & topic นำเสนอ */
         let ojbectcasetopicShow = {
@@ -1151,12 +1281,21 @@ const ContentWork = () => {
           advisor_id: advisorDocest.id,
           grp_id: groupStudentest.id,
           date: dateEst,
-          time_begin: timeendest,
+          time_begin: timebeginest,
           time_end: timeendest,
         };
         console.log("object for add flipped >>>", objectflipped);
         break;
     }
+  };
+
+  const clearCloseAddeditmodal = () => {
+    // console.log("this close getsheetwork", getsheetwork);
+    setInputtypeestimation({
+      id: getsheetwork[0].Id,
+      code: getsheetwork[0].code,
+      name: getsheetwork[0].name,
+    });
   };
 
   const handlecaseEditwork = (code, aData) => {
@@ -1186,13 +1325,7 @@ const ContentWork = () => {
     console.log("data is =>", aData);
     switch (code) {
       case "01":
-        setReportWard();
-        setReportDiagnosis();
-        setReportPatient();
-        setReportHosnumber();
-        setReportDateadmit();
-        setReportDateSendpatient();
-        setReportDateSendpatient();
+        handlegetworkhead(aData.Id, usertoken);
         break;
       case "05":
         setTopicest();
@@ -1214,6 +1347,12 @@ const ContentWork = () => {
       handleSearchGroupinfowork(selectgrp);
     }
   }, [getworkgetwork]);
+
+  useEffect(() => {
+    if (!statusClosemodal) return;
+    // console.log("ทำงานปิดmodal");
+    clearCloseAddeditmodal();
+  }, [statusClosemodal]);
 
   return (
     <div
@@ -1777,6 +1916,7 @@ const ContentWork = () => {
               type="button"
               onClick={() => {
                 handleOpenModalbox("boxAddworkDoctor");
+                handleCheckShowSpecialType(inputtypeestimation.code);
               }}
             >
               {"เพิ่ม"}

@@ -79,5 +79,31 @@ const FetchControlWork = {
       throw error;
     }
   },
+  fetchgetDataworkhead: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/get_work_head`;
+
+    try {
+      let result = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchgetworkstudent: async function (token) {
+    let request = requestOption("POST", "", token);
+    let http = `${HttpConfig()}/work/get_work_student`;
+
+    try {
+      let result = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default FetchControlWork;

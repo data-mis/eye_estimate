@@ -1517,6 +1517,9 @@ $colorBGnav:#e0e0e0;
             padding: 5px;
             margin: auto;
         }
+            .info-dropinfotype:hover{
+                background-color: $colorBorderDrop;
+            }
     .timegrid-modal-contentwork{
         display: flex;
         align-items: center;
@@ -1607,6 +1610,7 @@ $colorBGnav:#e0e0e0;
         display: flex;
         align-items: center;
     }
+    
         .date-special-boxcontentwork input{
             width: 100%;
             height: 35px;
