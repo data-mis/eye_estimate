@@ -8,9 +8,9 @@ import Cookies from "universal-cookie";
 import Spinnerpage from "../config/spinnerpage";
 import FetchControlWork from "../data/fetchControlWork";
 import { HolderlineonTable } from "../config/holdlinetable";
-import { searchGroupcontent } from "../config/searchConfig";
+import { searchGroupcontent, searchStudent } from "../config/searchConfig";
 
-const ContentWork = () => {
+const ContentWork = (props) => {
   const docGetId = (id) => {
     return document.getElementById(id);
   };
@@ -38,6 +38,7 @@ const ContentWork = () => {
   const [getworkestimation, setGetworkestimation] = useState([]);
 
   const [dataeditwork, setDataeditwork] = useState([]);
+  const [statusEditwork, setStatusEditwork] = useState(false);
   const [titlegetwork, setTitlegetwork] = useState("Case&Topic ผู้นำเสนอ");
   const [getworkgetwork, setGetworkgetwork] = useState([]);
   const [filtergetwork, setFiltergetwork] = useState([]);
@@ -46,6 +47,9 @@ const ContentWork = () => {
   const [openfilter, setOpenfilter] = useState(false);
   const [openMonthdrop, setOpenMonthdrop] = useState(false);
   const [statusClosemodal, setStatusClosemodal] = useState(false);
+  const [getstudentwork, setGetstudentwork] = useState([]);
+  const [gettopicwork, setGettopicwork] = useState([]);
+  const [datasearchstudent, setDatasearchstudent] = useState([]);
 
   //เก็บwork
   const [inputtypeestimation, setInputtypeestimation] = useState({
@@ -59,7 +63,7 @@ const ContentWork = () => {
   const [dateEst, setDateEst] = useState("");
   const [timebeginest, setTimebeginest] = useState("");
   const [timeendest, setTimeendest] = useState("");
-  const [topicest, setTopicest] = useState("");
+  const [topicest, setTopicest] = useState({ id: "", code: "", name: "" });
 
   const [reportWard, setReportWard] = useState("จักษุ1(ช)");
   const [reportDiagnosis, setReportDiagnosis] = useState("");
@@ -119,6 +123,7 @@ const ContentWork = () => {
         idbox: "boxAgroup",
       },
       { idbox: "boxAstudent" },
+      { idbox: "boxtopicrelativebox" },
     ];
     let objectIDdropid = [
       {
@@ -127,6 +132,7 @@ const ContentWork = () => {
       { iddrop: "dropInfoPersonport" },
       { iddrop: "dropInfogroup" },
       { iddrop: "dropInfoStudent" },
+      { iddrop: "dropInfotopic" },
     ];
 
     objectIDboxgrid.map((ele) => {
@@ -192,6 +198,7 @@ const ContentWork = () => {
     }
   };
 
+  //**modal addwork */
   const handleContentmodal = () => {
     return (
       <div className="body-modalbox-contentwork">
@@ -367,21 +374,22 @@ const ContentWork = () => {
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
-              id="boxinfoStudentselect"
+              id="boxinfoselectstudent"
+              value={studentEst.name}
+              readOnly
+              onClick={(e) => {
+                handleOpenModalbox("boxSearchStudent");
+              }}
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
               id="boxbtnStudentselect"
               onClick={() => {
-                handleOpenDropdown("dropInfoStudent", "boxAstudent");
+                handleOpenModalbox("boxSearchStudent");
               }}
             >
-              <i className="bi-caret-down"></i>
+              <i className="bi-search"></i>
             </button>
-            <div
-              className="dropInfo-boxgrid-contentwork"
-              id="dropInfoStudent"
-            ></div>
           </div>
         </div>
         <div className="box-datetime-contentwork">
@@ -394,6 +402,8 @@ const ContentWork = () => {
                 <input
                   className="input-rowinput-modalboxContentwork"
                   type="date"
+                  required
+                  placeholder="dd-mm-yyyy"
                   onChange={(e) => {
                     setDateEst(e.target.value);
                   }}
@@ -461,21 +471,51 @@ const ContentWork = () => {
                 <span>{"หัวข้อเรื่อง"}</span>
               </div>
               <div className="box-topic" id="boxtopicrelativebox">
-                <input type="text" onChange={(e) => {}} readOnly></input>
-                <button>
+                <input
+                  className="input-rowinput-modalboxContentwork"
+                  type="text"
+                  onClick={() => {
+                    handleOpenDropdown("dropInfotopic", "boxtopicrelativebox");
+                  }}
+                  value={topicest.name}
+                  readOnly
+                ></input>
+                <button
+                  onClick={() => {
+                    handleOpenDropdown("dropInfotopic", "boxtopicrelativebox");
+                  }}
+                >
                   <i className="bi-caret-down"></i>
                 </button>
                 <div
                   className="dropInfo-boxgrid-contentwork"
                   id="dropInfotopic"
                 >
-                  <div
-                    onClick={() => {
-                      setTopicest("(thistopic)");
-                    }}
-                  >
-                    <span></span>
-                  </div>
+                  {gettopicwork[0] ? (
+                    gettopicwork.map((data, index) => {
+                      return (
+                        <div
+                          className="info-dropinfotype"
+                          key={index}
+                          onClick={() => {
+                            setTopicest({
+                              id: data.Id,
+                              code: data.code,
+                              name: data.name,
+                            });
+                            handleOpenDropdown(
+                              "dropInfotopic",
+                              "boxtopicrelativebox"
+                            );
+                          }}
+                        >
+                          <span>{data.name}</span>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <Spinnerpage></Spinnerpage>
+                  )}
                 </div>
               </div>
             </div>
@@ -630,7 +670,7 @@ const ContentWork = () => {
     );
   };
 
-  //**modal แก้ไข */
+  //**modal editwork */
   const handleEditworkmodal = () => {
     return (
       <div className="body-modalbox-contentwork">
@@ -701,25 +741,60 @@ const ContentWork = () => {
           <div className="boxgrid-modal-contentwork">
             <span>{`ผู้ประเมิน`}</span>
           </div>
-          <div className="boxgrid-modal-contentwork" id="boxPersonport">
+          <div className="boxgrid-modal-contentwork" id="boxPersonportEdit">
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
               value={editadvisorDocest.name}
+              onClick={() => {
+                handleOpenDropdown(
+                  "dropInfoPersonportEdit",
+                  "boxPersonportEdit"
+                );
+              }}
               readOnly
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
               onClick={() => {
-                handleOpenDropdown("dropInfoPersonport", "boxPersonport");
+                handleOpenDropdown(
+                  "dropInfoPersonportEdit",
+                  "boxPersonportEdit"
+                );
               }}
             >
               <i className="bi-caret-down"></i>
             </button>
             <div
               className="dropInfo-boxgrid-contentwork"
-              id="dropInfoPersonport"
-            ></div>
+              id="dropInfoPersonportEdit"
+            >
+              {getworklistwork[0] ? (
+                getworklistwork.map((data, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="info-dropinfotype"
+                      onClick={() => {
+                        console.log("select a advisor:>", data);
+                        setEditadvisorDocest({
+                          id: data.id,
+                          name: data.advisor_name,
+                        });
+                        handleOpenDropdown(
+                          "dropInfoPersonportEdit",
+                          "boxPersonportEdit"
+                        );
+                      }}
+                    >
+                      <span>{`${data.advisor_name}`}</span>
+                    </div>
+                  );
+                })
+              ) : (
+                <Spinnerpage></Spinnerpage>
+              )}
+            </div>
           </div>
         </div>
         {/* กลุ่ม */}
@@ -727,26 +802,45 @@ const ContentWork = () => {
           <div className="boxgrid-modal-contentwork">
             <span>{`กลุ่ม`}</span>
           </div>
-          <div className="boxgrid-modal-contentwork" id="boxAgroup">
+          <div className="boxgrid-modal-contentwork" id="boxAgroupEdit">
             <input
               className="input-rowinput-modalboxContentwork"
               type="text"
               id="boxeditinfoGroupselect"
-              defaultValue={groupStudentest.name}
+              defaultValue={editgroupStudentest.name}
+              onClick={() => {
+                handleOpenDropdown("dropInfogroupEdit", "boxAgroupEdit");
+              }}
+              readOnly
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
               id="boxeditbtnGroupselect"
               onClick={() => {
-                handleOpenDropdown("dropInfogroup", "boxAgroup");
+                handleOpenDropdown("dropInfogroupEdit", "boxAgroupEdit");
               }}
             >
               <i className="bi-caret-down"></i>
             </button>
             <div
               className="dropInfo-boxgrid-contentwork"
-              id="dropInfogroup"
-            ></div>
+              id="dropInfogroupEdit"
+            >
+              {getselectGroup.map((data, index) => {
+                return (
+                  <div
+                    className="info-dropinfotype"
+                    key={index}
+                    onClick={() => {
+                      setEditgroupStudentest({ id: data.id, name: data.name });
+                      handleOpenDropdown("dropInfogroupEdit", "boxAgroupEdit");
+                    }}
+                  >
+                    <span>{data.name}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
         {/* นักศึกษาแพทย์ */}
@@ -760,21 +854,20 @@ const ContentWork = () => {
               type="text"
               id="boxeditinfoStudentselect"
               value={editstudentEst.name}
+              onClick={() => {
+                handleOpenModalbox("boxSearchStudent");
+              }}
               readOnly
             ></input>
             <button
               className="btn-rowinput-modalboxContentwork"
               id="boxeditbtnStudentselect"
               onClick={() => {
-                handleOpenDropdown("dropInfoStudent", "boxAstudent");
+                handleOpenModalbox("boxSearchStudent");
               }}
             >
               <i className="bi-caret-down"></i>
             </button>
-            <div
-              className="dropInfo-boxgrid-contentwork"
-              id="dropInfoStudent"
-            ></div>
           </div>
         </div>
         <div className="box-datetime-contentwork">
@@ -994,6 +1087,99 @@ const ContentWork = () => {
     );
   };
 
+  //**modal searchstudent */
+  const handleSearchstudentmodal = (mode) => {
+    return (
+      <div className="content-modalsrcstudent">
+        <div className="title-bar-modalsrcstudent">
+          <input
+            className="inputsearchstudent-modalsrcstudent"
+            type="text"
+            onChange={(e) => {
+              setDatasearchstudent(
+                searchStudent(e.target.value, getstudentwork)
+              );
+            }}
+          ></input>
+          <button
+            className="btntitle-searchstudent-modalsrcstudent"
+            type="button"
+            onClick={() => {
+              docGetId("boxSearchStudent").style.display = "none";
+            }}
+          >{`ยกเลิก`}</button>
+        </div>
+        <div className="showinfo-search-modalsrcstudent">
+          {datasearchstudent[0]
+            ? datasearchstudent.map((data, index) => {
+                return (
+                  <div
+                    className="box-infosearch-modalsrcstudent"
+                    key={index}
+                    onClick={() => {
+                      if (mode) {
+                        setEditstudentEst({
+                          id: data.id.trim(),
+                          name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
+                        });
+                      } else {
+                        setStudentEst({
+                          id: data.id.trim(),
+                          name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
+                        });
+                      }
+
+                      docGetId("boxSearchStudent").style.display = "none";
+                    }}
+                  >
+                    <span className="idstudent-span-modalsrcstudent">
+                      {data.std_id}
+                    </span>
+                    <span className="idstudent-span-modalsrcstudent">
+                      {data.ttl + " " + data.name + data.lname}
+                    </span>
+                  </div>
+                );
+              })
+            : getstudentwork.map((data, index) => {
+                return (
+                  <div
+                    className="box-infosearch-modalsrcstudent"
+                    key={index}
+                    onClick={() => {
+                      if (mode) {
+                        setEditstudentEst({
+                          id: data.id.trim(),
+                          name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
+                        });
+                      } else {
+                        setStudentEst({
+                          id: data.id.trim(),
+                          name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
+                        });
+                      }
+
+                      docGetId("boxSearchStudent").style.display = "none";
+                    }}
+                  >
+                    <span className="idstudent-span-modalsrcstudent">
+                      {data.std_id}
+                    </span>
+                    <span className="idstudent-span-modalsrcstudent">
+                      {data.ttl + " " + data.name + data.lname}
+                    </span>
+                  </div>
+                );
+              })}
+          {/* <div className="box-infosearch-modalsrcstudent">
+            <span className="idstudent-span-modalsrcstudent">{`(รหัส)`}</span>
+            <span className="idstudent-span-modalsrcstudent">{`(ชื่อนศพ)`}</span>
+          </div> */}
+        </div>
+      </div>
+    );
+  };
+
   const handleCheckShowSpecialType = (typesheet) => {
     let headSpecial = (status) => {
       if (status) {
@@ -1017,7 +1203,7 @@ const ContentWork = () => {
       if (status) {
         docGetId("boxinfoGroupselect").style.display = "block";
         docGetId("boxbtnGroupselect").style.display = "block";
-        docGetId("boxinfoStudentselect").style.display = "none";
+        docGetId("boxinfoselectstudent").style.display = "none";
         docGetId("boxbtnStudentselect").style.display = "none";
         docGetId("boxeditinfoGroupselect").style.display = "block";
         docGetId("boxeditbtnGroupselect").style.display = "block";
@@ -1026,7 +1212,7 @@ const ContentWork = () => {
       } else {
         docGetId("boxinfoGroupselect").style.display = "none";
         docGetId("boxbtnGroupselect").style.display = "none";
-        docGetId("boxinfoStudentselect").style.display = "block";
+        docGetId("boxinfoselectstudent").style.display = "block";
         docGetId("boxbtnStudentselect").style.display = "block";
         docGetId("boxeditinfoGroupselect").style.display = "none";
         docGetId("boxeditbtnGroupselect").style.display = "none";
@@ -1194,6 +1380,21 @@ const ContentWork = () => {
     });
   };
 
+  const handlegetworkstudent = (token) => {
+    FetchControlWork.fetchgetworkstudent(token).then((data) => {
+      console.log("this a data student", data);
+      setGetstudentwork(data);
+    });
+  };
+
+  const handlegetworktopic = (thistitle, token) => {
+    let object = { title: thistitle };
+    FetchControlWork.fetchgetTblluwork(object, token).then((data) => {
+      console.log("this a data topicwork", data);
+      setGettopicwork(data);
+    });
+  };
+
   const handleSubmitAddnewWork = (token) => {
     let typecase = inputtypeestimation.code;
 
@@ -1207,6 +1408,26 @@ const ContentWork = () => {
           date: dateEst,
           time_begin: timebeginest,
           time_end: timeendest,
+          caption: "หอผู้ป่วย",
+          txt: reportWard,
+          txt1: "การวินิจฉัย",
+          txt_val1: reportDiagnosis,
+          txt2: "ชื่อผู้ป่วย",
+          txt_val2: reportPatient,
+          txt3: "เลขที่โรงพยาบาล",
+          txt_val3: reportHosnumber,
+          txt5: "วันที่ผู้ป่วย Admit",
+          txt_val5: reportDateadmit,
+          txt6: "วันที่จ่าย/รับผู้ป่วย",
+          txt_val6: moment(reportDateSendpatient)
+            .add(543, "year")
+            .format("DD-MM-YYYY"),
+          txt7: "วันที่ส่งรายงานผู้ป่วย",
+          txt_val7: moment(reportDateCommit)
+            .add(543, "year")
+            .format("DD-MM-YYYY"),
+          txt_val6_1: reportDateSendpatient,
+          txt_val7_1: reportDateCommit,
         };
         console.log("object for add report>>>", objectreport);
         break;
@@ -1246,7 +1467,11 @@ const ContentWork = () => {
           time_end: timeendest,
         };
         console.log("object for add wardrond >>>", objectwardround);
-        FetchControlWork.fetchAdddetailwork(objectwardround, token);
+        FetchControlWork.fetchAdddetailwork(objectwardround, token).then(
+          (message) => {
+            console.log("ไม่มีอะไรเหรอ งง?", message);
+          }
+        );
         break;
       case "05": //**case & topic นำเสนอ */
         let ojbectcasetopicShow = {
@@ -1257,9 +1482,14 @@ const ContentWork = () => {
           date: dateEst,
           time_begin: timebeginest,
           time_end: timeendest,
-          txt_val: topicest,
+          txt_val: topicest.name,
         };
         console.log("object for add objectcaseshow >>>", ojbectcasetopicShow);
+        FetchControlWork.fetchAdddetailwork(ojbectcasetopicShow, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
         break;
       case "06": //**case & topic ผู้ร่วม */
         let objectcasecoop = {
@@ -1309,7 +1539,7 @@ const ContentWork = () => {
       name: aData.advisor_name !== "" ? aData.advisor_name : "",
     });
     console.log(aData.student_name !== "" ? aData.student_name : "");
-    setGroupStudentest({
+    setEditgroupStudentest({
       id: aData.grp_id !== "" ? aData.grp_id : "",
       name: aData.name !== "" ? aData.name : "",
     });
@@ -1321,17 +1551,18 @@ const ContentWork = () => {
     setedittimebeginest(aData.time_begin !== "" ? aData.time_begin : "");
     setedittimeendest(aData.time_end !== "" ? aData.time_end : "");
     handleCheckShowSpecialType(code);
-    console.log("code is =>", code);
-    console.log("data is =>", aData);
+    // console.log("code is =>", code);
+    // console.log("data is =>", aData);
     switch (code) {
       case "01":
         handlegetworkhead(aData.Id, usertoken);
         break;
       case "05":
-        setTopicest();
+        console.log("data>>", aData);
+        setTopicest({ id: "", name: "" });
         break;
       case "06":
-        setTopicest();
+        setTopicest({ id: "", name: "" });
         break;
     }
   };
@@ -1340,6 +1571,8 @@ const ContentWork = () => {
     handleGetdatagroup(selectYear, usertoken);
     handlesheetdatawork(usertoken);
     handleworklistworkadvisor(usertoken);
+    handlegetworkstudent(usertoken);
+    handlegetworktopic("case_topic", usertoken);
   }, []);
 
   useEffect(() => {
@@ -1746,7 +1979,12 @@ const ContentWork = () => {
                               <td width={300}>{data.advisor_name}</td>
                               <td width={300}>{data.studentname}</td>
                               <td width={50}>
-                                <button>
+                                <button
+                                  onClick={() => {
+                                    console.log("UPPPP");
+                                    props.upfile("file");
+                                  }}
+                                >
                                   <i className="bi-chevron-up"></i>
                                 </button>
                               </td>
@@ -1755,6 +1993,7 @@ const ContentWork = () => {
                                   onClick={() => {
                                     console.log("this a data=>", data);
                                     setDataeditwork(data);
+                                    setStatusEditwork(true);
                                     handlecaseEditwork(selectCodework, data);
                                     handleOpenModalbox("boxEditworkDoctor");
                                   }}
@@ -1947,6 +2186,14 @@ const ContentWork = () => {
         thisTitle={"แก้ไขข้อมูลงาน"}
         statusClose={setStatusClosemodal}
         content={handleEditworkmodal()}
+      ></ModalBox>
+      <ModalBox
+        idbox={"boxSearchStudent"}
+        thisTitle={"ค้นหานศพ"}
+        statusClose={setStatusClosemodal}
+        content={handleSearchstudentmodal(statusEditwork)}
+        styleconfignav={{ display: "none" }}
+        styleconfigbody={{ width: "400px" }}
       ></ModalBox>
     </div>
   );

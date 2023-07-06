@@ -6,8 +6,8 @@ const ModalBox = (props) => {
 
   return (
     <div className="modal-box" id={`${props.idbox}`}>
-      <div className="modal-box-body">
-        <nav className="header-nav-modalBox">
+      <div className="modal-box-body" style={props.styleconfigbody}>
+        <nav className="header-nav-modalBox" style={props.styleconfignav}>
           <div className="header-col">
             <span>{props.thisTitle}</span>
           </div>

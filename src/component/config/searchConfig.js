@@ -56,3 +56,20 @@ export function searchGroupcontent(textsearch, datagroup) {
   });
   return totalarr;
 }
+
+export function searchStudent(textsearch, datastudent) {
+  let search = escapeRegExp(textsearch);
+  let resultarr = [];
+
+  console.log("datasearchstudent>>", datastudent);
+  console.log("this textsearch >>", search);
+  datastudent.map((data) => {
+    if (data.std_id.trim().match(search)) {
+      resultarr.push(data);
+    } else if (data.name.trim().match(search)) {
+      resultarr.push(data);
+    }
+  });
+  // console.log("ผลการค้นหารายชื่อ นศพ >>", resultarr);
+  return resultarr;
+}

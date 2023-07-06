@@ -9,6 +9,7 @@ import ContentGroupStudent from "./Content/contentGroup";
 import ContentWork from "./Content/contentWork";
 import ContentSetting from "./Content/contentSetting";
 import ContentReport from "./Content/contentReport";
+import ContentFile from "./Content/contentfile";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
@@ -61,7 +62,7 @@ const NavigationPage = () => {
 
       case "workDoctor":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
-        return <ContentWork></ContentWork>;
+        return <ContentWork upfile={setModeContent}></ContentWork>;
 
       case "assessmentForm":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
@@ -71,6 +72,8 @@ const NavigationPage = () => {
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
         return <ContentReport></ContentReport>;
 
+      case "file":
+        return <ContentFile></ContentFile>;
       default:
         return (
           <div className="body-mainDefault">

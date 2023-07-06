@@ -1522,6 +1522,11 @@ html .special-input-boxcontentwork, body .special-input-boxcontentwork {
   display: grid;
   grid-template-columns: 25% 75%;
 }
+html .box-topic, body .box-topic {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
 html .box-report-input, body .box-report-input {
   width: 80%;
   margin: 5px auto;
@@ -1561,6 +1566,52 @@ html .inputradio-special-boxcontentwork input, body .inputradio-special-boxconte
 }
 html #boxinfoheadSpecial, html #boxinforeportSpecial, body #boxinfoheadSpecial, body #boxinforeportSpecial {
   display: none;
+}
+html .content-modalsrcstudent, body .content-modalsrcstudent {
+  border: 2px solid #9e9e9e;
+  padding: 15px;
+}
+html .title-bar-modalsrcstudent, body .title-bar-modalsrcstudent {
+  display: flex;
+  justify-content: center;
+}
+html .inputsearchstudent-modalsrcstudent, body .inputsearchstudent-modalsrcstudent {
+  width: 75%;
+  height: 25px;
+  padding: 5px;
+  margin-right: 10px;
+  border: 2px solid #9e9e9e;
+}
+html .btntitle-searchstudent-modalsrcstudent, body .btntitle-searchstudent-modalsrcstudent {
+  width: 20%;
+  height: auto;
+  margin: 0 5px;
+  font-weight: bold;
+}
+html .showinfo-search-modalsrcstudent, body .showinfo-search-modalsrcstudent {
+  border: 2px solid #9e9e9e;
+  margin-top: 10px;
+  height: 180px;
+  width: 100%;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+}
+html .box-infosearch-modalsrcstudent, body .box-infosearch-modalsrcstudent {
+  width: 100%;
+  height: auto;
+  margin: 5px auto;
+  padding: 5px;
+  border-right: 2px solid #9e9e9e;
+  border-bottom: 2px solid #9e9e9e;
+  display: grid;
+  grid-template-columns: auto 70%;
+}
+html .box-infosearch-modalsrcstudent:hover, body .box-infosearch-modalsrcstudent:hover {
+  background-color: #cfd8dc;
+}
+html .idstudent-span-modalsrcstudent, body .idstudent-span-modalsrcstudent {
+  padding: 0px 5px;
+  font-weight: bold;
 }
 @media only screen and (max-width: 720px) {
   html .header-contentwork, body .header-contentwork {
@@ -2064,6 +2115,9 @@ html .bi-filetype-xlsx, body .bi-filetype-xlsx {
     font-size: 38px;
     font-weight: bold;
   }
+}
+html .content-filecontent, body .content-filecontent {
+  border: 2px solid red;
 }
 html .modal-slideBar-body, body .modal-slideBar-body {
   display: none;

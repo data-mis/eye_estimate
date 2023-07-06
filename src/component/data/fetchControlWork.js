@@ -75,6 +75,11 @@ const FetchControlWork = {
 
     try {
       console.log(request);
+      // let result = await fetch(http, request).then((res) => {
+      //   return res.json();
+      // });
+      // return result;
+      await fetch(http, request);
     } catch (error) {
       throw error;
     }
@@ -96,6 +101,18 @@ const FetchControlWork = {
     let request = requestOption("POST", "", token);
     let http = `${HttpConfig()}/work/get_work_student`;
 
+    try {
+      let result = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchgetTblluwork: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/get_work_tbllu`;
     try {
       let result = await fetch(http, request).then((res) => {
         return res.json();

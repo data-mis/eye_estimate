@@ -1497,7 +1497,7 @@ $colorBGnav:#e0e0e0;
     .boxgrid-modal-contentwork{
         display: flex;
         align-items: center;
-        justify-content: start;;
+        justify-content: start;
     }
     .dropInfo-boxgrid-contentwork{
         width: 100%;
@@ -1584,6 +1584,11 @@ $colorBGnav:#e0e0e0;
         display: grid;
         grid-template-columns: 25% 75%;
     }
+        .box-topic{
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
         .box-report-input{
             width: 80%;
             margin:  5px auto;
@@ -1625,6 +1630,54 @@ $colorBGnav:#e0e0e0;
     #boxinfoheadSpecial,#boxinforeportSpecial{
         display: none;
     }
+    //modalsrcstudent
+    .content-modalsrcstudent{
+        border: 2px solid $colorBorderDrop;
+        padding: 15px;
+    }
+    .title-bar-modalsrcstudent{
+        display: flex;
+        justify-content: center;
+    }
+    .inputsearchstudent-modalsrcstudent{
+        width: 75%;
+        height: 25px;
+        padding: 5px;
+        margin-right: 10px;
+        border: 2px solid $colorBorderDrop;
+    }
+    .btntitle-searchstudent-modalsrcstudent{
+        width: 20%;
+        height: auto;
+        margin: 0 5px;
+        font-weight: bold;
+    }
+    .showinfo-search-modalsrcstudent{
+        border: 2px solid $colorBorderDrop;
+        margin-top: 10px;
+        height: 180px;
+        width: 100%;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+    }
+    .box-infosearch-modalsrcstudent{
+        width: 100%;
+        height: auto;
+        margin: 5px auto;
+        padding: 5px;
+        border-right: 2px solid $colorBorderDrop;
+        border-bottom: 2px solid $colorBorderDrop;
+        display: grid;
+        grid-template-columns: auto 70%;
+    }
+        .box-infosearch-modalsrcstudent:hover{
+            background-color: $colorBGheader;
+        }
+        .idstudent-span-modalsrcstudent{
+            padding: 0px 5px;
+            font-weight: bold;
+        }
+
 //end modal contentwork
 @media only screen and (max-width:720px) {
     .header-contentwork{
@@ -2147,6 +2200,12 @@ $colorBGnav:#e0e0e0;
     }
 }
 
+@mixin ContentFile(){
+    .content-filecontent{
+        border: 2px solid red;
+    }
+}
+
 @mixin ModalSlideBar(){
     .modal-slideBar-body{
         display: none;  
@@ -2666,6 +2725,7 @@ html,body{
     @include ContentWork();
     @include ContentSetting();
     @include ContentReport();
+    @include ContentFile();
 
     // modal
     @include ModalSlideBar();
