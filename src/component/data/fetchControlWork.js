@@ -74,12 +74,19 @@ const FetchControlWork = {
     let http = `${HttpConfig()}/work/add_work`;
 
     try {
-      console.log(request);
-      // let result = await fetch(http, request).then((res) => {
-      //   return res.json();
-      // });
-      // return result;
       await fetch(http, request);
+      return "add success";
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchEditdetailwork: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/edit_work`;
+
+    try {
+      await fetch(http, request);
+      return "edit success";
     } catch (error) {
       throw error;
     }

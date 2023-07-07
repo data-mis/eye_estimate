@@ -73,7 +73,32 @@ const ContentWork = (props) => {
   const [reportHosnumber, setReportHosnumber] = useState("");
   const [reportDateSendpatient, setReportDateSendpatient] = useState("");
 
+  const addDetailinputclear = () => {
+    getsheetwork[0]
+      ? setInputtypeestimation({
+          id: getsheetwork[0].Id,
+          code: getsheetwork[0].code,
+          name: getsheetwork[0].name,
+        })
+      : setInputtypeestimation({ id: "", code: "", name: "" });
+    setAdvisorDocest({ id: "", name: "" });
+    setGroupStudentest({ id: "", name: "" });
+    setStudentEst({ id: "", name: "" });
+    setDateEst("");
+    setTimebeginest("");
+    setTimeendest("");
+    setTopicest({ id: "", code: "", name: "" });
+    setReportWard("จักษุ1(ช)");
+    setReportDiagnosis("");
+    setReportDateadmit("");
+    setReportPatient("");
+    setReportDateCommit("");
+    setReportHosnumber("");
+    setReportDateSendpatient("");
+  };
+
   //ตัวแปรแก้ไขwork
+  const [workIdeditwork, setWorkIdeditwork] = useState("");
   const [editTypesheetwork, setEditTypesheetwork] = useState({
     id: "",
     name: "",
@@ -88,10 +113,14 @@ const ContentWork = (props) => {
     name: "",
   });
   const [editstudentEst, setEditstudentEst] = useState({ id: "", name: "" });
-  const [editdateEst, seteditdateEst] = useState("");
-  const [edittimebeginest, setedittimebeginest] = useState("");
-  const [edittimeendest, setedittimeendest] = useState("");
+  const [editdateEst, setEditdateEst] = useState("");
+  const [edittimebeginest, setEdittimebeginest] = useState("");
+  const [edittimeendest, setEdittimeendest] = useState("");
 
+  const [edittopicest, setEdittopicest] = useState({
+    title: "",
+    name: "",
+  });
   const [editreportWard, setEditreportWard] = useState("จักษุ1(ช)");
   const [editreportDiagnosis, setEditreportDiagnosis] = useState("");
   const [editreportDateadmit, setEditreportDateadmit] = useState("");
@@ -100,6 +129,23 @@ const ContentWork = (props) => {
   const [editreportHosnumber, setEditreportHosnumber] = useState("");
   const [editreportDateSendpatient, setEditreportDateSendpatient] =
     useState("");
+
+  const editDetailinputclear = () => {
+    setEditadvisorDocest({ id: "", name: "" });
+    setEditgroupStudentest({ id: "", name: "" });
+    setEditstudentEst({ id: "", name: "" });
+    setEditdateEst("");
+    setEdittimebeginest("");
+    setEdittimeendest("");
+    setEdittopicest({ title: "", name: "" });
+    setEditreportWard("จักษุ1(ช)");
+    setEditreportDiagnosis("");
+    setEditreportDateadmit("");
+    setEditreportPatient("");
+    setEditreportDateCommit("");
+    setEditreportHosnumber("");
+    setEditreportDateSendpatient("");
+  };
 
   const changeyear = (mode) => {
     let thisyear = parseInt(selectYear);
@@ -403,7 +449,7 @@ const ContentWork = (props) => {
                   className="input-rowinput-modalboxContentwork"
                   type="date"
                   required
-                  placeholder="dd-mm-yyyy"
+                  value={dateEst}
                   onChange={(e) => {
                     setDateEst(e.target.value);
                   }}
@@ -908,7 +954,13 @@ const ContentWork = (props) => {
             </div>
           </div>
           <div className="col-datetimesubmit-contentwork">
-            <button className="btn-confirm-modalContentwork" type="button">
+            <button
+              className="btn-confirm-modalContentwork"
+              type="button"
+              onClick={() => {
+                handleSubmitEditwork(usertoken);
+              }}
+            >
               {"บันทึกแก้ไข"}
             </button>
           </div>
@@ -922,11 +974,58 @@ const ContentWork = (props) => {
               <div>
                 <span>{"หัวข้อเรื่อง"}</span>
               </div>
-              <div>
-                <input type="input"></input>
-                <button>
+              <div className="box-topic" id="boxtopicrelativeboxEdit">
+                <input
+                  className="input-rowinput-modalboxContentwork"
+                  type="text"
+                  onClick={() => {
+                    handleOpenDropdown(
+                      "dropInfotopicEdit",
+                      "boxtopicrelativeboxEdit"
+                    );
+                  }}
+                  value={edittopicest.name}
+                  readOnly
+                ></input>
+                <button
+                  onClick={() => {
+                    handleOpenDropdown(
+                      "dropInfotopicEdit",
+                      "boxtopicrelativeboxEdit"
+                    );
+                  }}
+                >
                   <i className="bi-caret-down"></i>
                 </button>
+                <div
+                  className="dropInfo-boxgrid-contentwork"
+                  id="dropInfotopicEdit"
+                >
+                  {gettopicwork[0] ? (
+                    gettopicwork.map((data, index) => {
+                      return (
+                        <div
+                          className="info-dropinfotype"
+                          key={index}
+                          onClick={() => {
+                            setEdittopicest({
+                              title: data.title,
+                              name: data.name,
+                            });
+                            handleOpenDropdown(
+                              "dropInfotopicEdit",
+                              "boxtopicrelativeboxEdit"
+                            );
+                          }}
+                        >
+                          <span>{data.name}</span>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <Spinnerpage></Spinnerpage>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -1288,7 +1387,7 @@ const ContentWork = (props) => {
   const handleworkgetworkdata = (infoOpp, token) => {
     FetchControlWork.fetchworkgetwork(infoOpp, token).then((data) => {
       setGetworkgetwork(data);
-      console.log("อะไรเนี้ย>>>", data);
+      // console.log("รายละเอียดข้อมูลงาน>>>", data);
     });
   };
 
@@ -1312,7 +1411,7 @@ const ContentWork = (props) => {
   };
 
   const handleSearchGroupinfowork = (data) => {
-    console.log("งงอะ", getworkgetwork);
+    // console.log("งงอะ", getworkgetwork);
     let resultsearch = searchGroupcontent(data.name.trim(), getworkgetwork);
     setFiltergetwork(resultsearch);
     setFilteron(true);
@@ -1430,6 +1529,11 @@ const ContentWork = (props) => {
           txt_val7_1: reportDateCommit,
         };
         console.log("object for add report>>>", objectreport);
+        addDetailinputclear();
+        docGetId("boxAddworkDoctor").style.display = "none";
+        FetchControlWork.fetchAdddetailwork().then((message) => {
+          console.log(message);
+        });
         break;
       case "02": //**progressnote */
         let objectprogressnote = {
@@ -1442,6 +1546,13 @@ const ContentWork = (props) => {
           time_end: timeendest,
         };
         console.log("object for add progressnote >>>", objectprogressnote);
+        addDetailinputclear();
+        docGetId("boxAddworkDoctor").style.display = "none";
+        FetchControlWork.fetchAdddetailwork(objectprogressnote, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
         break;
       case "03": //**opd teaching */
         let objectteaching = {
@@ -1454,7 +1565,13 @@ const ContentWork = (props) => {
           time_end: timeendest,
         };
         console.log("object for add teaching >>>", objectteaching);
-
+        addDetailinputclear();
+        docGetId("boxAddworkDoctor").style.display = "none";
+        FetchControlWork.fetchAdddetailwork(objectteaching, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
         break;
       case "04": //**wardround*/
         let objectwardround = {
@@ -1467,14 +1584,16 @@ const ContentWork = (props) => {
           time_end: timeendest,
         };
         console.log("object for add wardrond >>>", objectwardround);
+        addDetailinputclear();
+        docGetId("boxAddworkDoctor").style.display = "none";
         FetchControlWork.fetchAdddetailwork(objectwardround, token).then(
           (message) => {
-            console.log("ไม่มีอะไรเหรอ งง?", message);
+            console.log(message);
           }
         );
         break;
       case "05": //**case & topic นำเสนอ */
-        let ojbectcasetopicShow = {
+        let objectcasetopicShow = {
           sheet_code: inputtypeestimation.code,
           sheet_id: inputtypeestimation.id,
           advisor_id: advisorDocest.id,
@@ -1484,8 +1603,10 @@ const ContentWork = (props) => {
           time_end: timeendest,
           txt_val: topicest.name,
         };
-        console.log("object for add objectcaseshow >>>", ojbectcasetopicShow);
-        FetchControlWork.fetchAdddetailwork(ojbectcasetopicShow, token).then(
+        console.log("object for add objectcaseshow >>>", objectcasetopicShow);
+        addDetailinputclear();
+        docGetId("boxAddworkDoctor").style.display = "none";
+        FetchControlWork.fetchAdddetailwork(objectcasetopicShow, token).then(
           (message) => {
             console.log(message);
           }
@@ -1502,7 +1623,14 @@ const ContentWork = (props) => {
           time_end: timeendest,
           txt_val: topicest,
         };
-        console.log("object for add objectcaseshow >>>", objectcasecoop);
+        console.log("object for add objectcasecoop >>>", objectcasecoop);
+        addDetailinputclear();
+        docGetId("boxAddworkDoctor").style.display = "none";
+        FetchControlWork.fetchAdddetailwork(objectcasecoop, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
         break;
       case "07": //**flipped classroom */
         let objectflipped = {
@@ -1515,6 +1643,13 @@ const ContentWork = (props) => {
           time_end: timeendest,
         };
         console.log("object for add flipped >>>", objectflipped);
+        addDetailinputclear();
+        docGetId("boxAddworkDoctor").style.display = "none";
+        FetchControlWork.fetchAdddetailwork(objectflipped, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
         break;
     }
   };
@@ -1528,28 +1663,160 @@ const ContentWork = (props) => {
     });
   };
 
+  const handleSubmitEditwork = (token) => {
+    let casecode = editTypesheetwork.code;
+    console.log("look this null>>", editstudentEst);
+    switch (casecode) {
+      case "01":
+        break;
+      case "02":
+        let editobjectprogressnote = {
+          work_id: workIdeditwork,
+          sheet_id: editTypesheetwork.id,
+          sheet_code: editTypesheetwork.code,
+          advisor_id: editadvisorDocest.id,
+          grp_id: editgroupStudentest.id,
+          date: editdateEst,
+          time_begin: edittimebeginest,
+          time_end: edittimeendest,
+        };
+        console.log("edit progressnote >>", editobjectprogressnote);
+        docGetId("boxEditworkDoctor").style.display = "none";
+        editDetailinputclear();
+        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+        break;
+      case "03":
+        let editobjectOPDteaching = {
+          work_id: workIdeditwork,
+          sheet_id: editTypesheetwork.id,
+          sheet_code: editTypesheetwork.code,
+          advisor_id: editadvisorDocest.id,
+          grp_id: editgroupStudentest.id,
+          date: editdateEst,
+          time_begin: edittimebeginest,
+          time_end: edittimeendest,
+        };
+        console.log("edit opd teaching>>", editobjectOPDteaching);
+        docGetId("boxEditworkDoctor").style.display = "none";
+        editDetailinputclear();
+        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+        break;
+      case "04":
+        let editobjectwardround = {
+          work_id: workIdeditwork,
+          sheet_id: editTypesheetwork.id,
+          sheet_code: editTypesheetwork.code,
+          advisor_id: editadvisorDocest.id,
+          grp_id: editgroupStudentest.id,
+          date: editdateEst,
+          time_begin: edittimebeginest,
+          time_end: edittimeendest,
+        };
+        console.log("edit wardround >>", editobjectwardround);
+        docGetId("boxEditworkDoctor").style.display = "none";
+        editDetailinputclear();
+        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+        break;
+      case "05":
+        let editobjectcasttopicshow = {
+          work_id: workIdeditwork,
+          sheet_id: editTypesheetwork.id,
+          sheet_code: editTypesheetwork.code,
+          advisor_id: editadvisorDocest.id,
+          grp_id: editgroupStudentest.id,
+          date: editdateEst,
+          time_begin: edittimebeginest,
+          time_end: edittimeendest,
+          txt_val: edittopicest,
+        };
+        console.log("edit caseshow >>", editobjectcasttopicshow);
+        docGetId("boxEditworkDoctor").style.display = "none";
+        editDetailinputclear();
+        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+        break;
+      case "06":
+        let editobjectcasecoop = {
+          work_id: workIdeditwork,
+          sheet_id: editTypesheetwork.id,
+          sheet_code: editTypesheetwork.code,
+          advisor_id: editadvisorDocest.id,
+          grp_id: editgroupStudentest.id,
+          date: editdateEst,
+          time_begin: edittimebeginest,
+          time_end: edittimeendest,
+          txt_val: edittopicest,
+        };
+        console.log("edit edit casecoop", editobjectcasecoop);
+        docGetId("boxEditworkDoctor").style.display = "none";
+        editDetailinputclear();
+        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+        break;
+      case "07":
+        let objectflipped = {
+          work_id: workIdeditwork,
+          sheet_id: editTypesheetwork.id,
+          sheet_code: editTypesheetwork.code,
+          advisor_id: editadvisorDocest.id,
+          grp_id: editgroupStudentest.id,
+          date: editdateEst,
+          time_begin: edittimebeginest,
+          time_end: edittimeendest,
+          txt_val: edittopicest,
+        };
+        console.log("edit flipped classroom >>", objectflipped);
+        docGetId("boxEditworkDoctor").style.display = "none";
+        editDetailinputclear();
+        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+        break;
+    }
+  };
+
   const handlecaseEditwork = (code, aData) => {
+    setWorkIdeditwork(aData.Id);
     setEditTypesheetwork({
       id: aData.sheet_id,
       name: aData.sheet_name,
       code: code,
     });
     setEditadvisorDocest({
-      id: aData.advisor_id !== "" ? aData.advisor_id : "",
-      name: aData.advisor_name !== "" ? aData.advisor_name : "",
+      id: aData.advisor_id !== null ? aData.advisor_id : "",
+      name: aData.advisor_name !== null ? aData.advisor_name : "",
     });
-    console.log(aData.student_name !== "" ? aData.student_name : "");
     setEditgroupStudentest({
-      id: aData.grp_id !== "" ? aData.grp_id : "",
-      name: aData.name !== "" ? aData.name : "",
+      id: aData.grp_id !== null ? aData.grp_id : "",
+      name: aData.name !== null ? aData.name : "",
     });
     setEditstudentEst({
-      id: aData.student_id !== "" ? aData.student_id : "",
-      name: aData.student_name !== "" ? aData.student_name : "",
+      id: aData.student_id !== null ? aData.student_id : "",
+      name: aData.student_name !== null ? aData.student_name : "",
     });
-    seteditdateEst(aData.date !== "" ? aData.date : "0000-00-00");
-    setedittimebeginest(aData.time_begin !== "" ? aData.time_begin : "");
-    setedittimeendest(aData.time_end !== "" ? aData.time_end : "");
+    setEditdateEst(aData.date !== null ? aData.date : "0000-00-00");
+    setEdittimebeginest(aData.time_begin !== null ? aData.time_begin : "");
+    setEdittimeendest(aData.time_end !== null ? aData.time_end : "");
     handleCheckShowSpecialType(code);
     // console.log("code is =>", code);
     // console.log("data is =>", aData);
@@ -1559,10 +1826,16 @@ const ContentWork = (props) => {
         break;
       case "05":
         console.log("data>>", aData);
-        setTopicest({ id: "", name: "" });
+        setEdittopicest({
+          title: aData.txt !== null ? aData.txt : "",
+          name: aData.txt_val !== null ? aData.txt_val : "",
+        });
         break;
       case "06":
-        setTopicest({ id: "", name: "" });
+        setEdittopicest({
+          title: aData.txt !== null ? aData.txt : "",
+          name: aData.txt_val !== null ? aData.txt_val : "",
+        });
         break;
     }
   };

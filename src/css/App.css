@@ -2117,7 +2117,71 @@ html .bi-filetype-xlsx, body .bi-filetype-xlsx {
   }
 }
 html .content-filecontent, body .content-filecontent {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+html .title-nav-filecontent, body .title-nav-filecontent {
+  border: 2px solid green;
+  height: 5%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 15px;
+  background-color: #fefefe;
+}
+html .namefile-filecontent, body .namefile-filecontent {
+  margin: 0px 15px;
+  width: 50%;
+}
+html .body-filecontent, body .body-filecontent {
   border: 2px solid red;
+  height: 95%;
+  display: grid;
+  grid-template-columns: 30% 60% 10%;
+}
+html .menu-select-filecontent, body .menu-select-filecontent {
+  border: 2px solid blue;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+html .show-file-filecontent, body .show-file-filecontent {
+  border: 5px solid rebeccapurple;
+  height: 100%;
+}
+html .box-info-filecontent, body .box-info-filecontent {
+  border: 2px solid orangered;
+  height: 90%;
+  width: 90%;
+  margin: auto;
+  display: block;
+}
+html .menu-btn-filecontent, body .menu-btn-filecontent {
+  border: 2px solid pink;
+  height: 100%;
+  width: 100%;
+}
+html .btn-menubtn-filecontent, body .btn-menubtn-filecontent {
+  width: 90%;
+  height: 5%;
+  display: block;
+  margin: 5px auto;
+}
+@media only screen and (max-height: 360px) {
+  html .content-filecontent, body .content-filecontent {
+    margin-top: 2%;
+    height: 95%;
+  }
+  html .title-nav-filecontent, body .title-nav-filecontent {
+    height: 10%;
+  }
+  html .body-filecontent, body .body-filecontent {
+    height: 90%;
+  }
 }
 html .modal-slideBar-body, body .modal-slideBar-body {
   display: none;
@@ -2391,12 +2455,20 @@ html .btn-modal-submit button, body .btn-modal-submit button {
 html .form-picture, body .form-picture {
   padding-right: 10px;
   padding-top: 5px;
+  position: relative;
+}
+html .box-center-formpicture, body .box-center-formpicture {
+  position: absolute;
+  top: 20%;
+  transform: translate(0, -20%);
 }
 html .img-perview, body .img-perview {
   border: 1px solid black;
-  width: 100%;
-  height: 180px;
-  object-fit: contain;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: block;
+  margin: auto;
 }
 html .input-picture, body .input-picture {
   align-items: center;

@@ -702,30 +702,32 @@ const ContentStudent = (props) => {
             </div>
           </form>
           <div className="form-picture">
-            <div className="preview-picture">
-              <img className="img-perview" src={picURL}></img>
-            </div>
-            <div className="input-picture">
-              <input
-                className="input-picture-file"
-                type="file"
-                id="imageBTNadd"
-                ref={inputPic}
-                accept="image/png,image/jpeg,image/jpg"
-                onChange={(e) => {
-                  imgPreview(e);
-                }}
-              ></input>
-              <button
-                type="button"
-                className="btn-add-filePicture"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleUploadPicture(dataStudent, mdinputidStudent);
-                }}
-              >
-                UPLOAD
-              </button>
+            <div className="box-center-formpicture">
+              <div className="preview-picture">
+                <img className="img-perview" src={picURL}></img>
+              </div>
+              <div className="input-picture">
+                <input
+                  className="input-picture-file"
+                  type="file"
+                  id="imageBTNadd"
+                  ref={inputPic}
+                  accept="image/png,image/jpeg,image/jpg"
+                  onChange={(e) => {
+                    imgPreview(e);
+                  }}
+                ></input>
+                <button
+                  type="button"
+                  className="btn-add-filePicture"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleUploadPicture(dataStudent, mdinputidStudent);
+                  }}
+                >
+                  UPLOAD
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1106,30 +1108,32 @@ const ContentStudent = (props) => {
             </div>
           </form>
           <div className="form-picture">
-            <div className="preview-picture">
-              <img className="img-perview" src={picURL}></img>
-            </div>
-            <div className="input-picture">
-              <input
-                className="input-picture-file"
-                type="file"
-                id="imageBTNedit"
-                accept="image/png,image/jpeg,image/jpg"
-                ref={inputPic}
-                onChange={(e) => {
-                  imgPreview(e);
-                }}
-              ></input>
-              <button
-                type="button"
-                className="btn-add-filePicture"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleUploadPicture(dataStudent, mdinputidStudent);
-                }}
-              >
-                UPLOAD
-              </button>
+            <div className="box-center-formpicture">
+              <div className="preview-picture">
+                <img className="img-perview" src={picURL}></img>
+              </div>
+              <div className="input-picture">
+                <input
+                  className="input-picture-file"
+                  type="file"
+                  id="imageBTNedit"
+                  accept="image/png,image/jpeg,image/jpg"
+                  ref={inputPic}
+                  onChange={(e) => {
+                    imgPreview(e);
+                  }}
+                ></input>
+                <button
+                  type="button"
+                  className="btn-add-filePicture"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleUploadPicture(dataStudent, mdinputidStudent);
+                  }}
+                >
+                  UPLOAD
+                </button>
+              </div>
             </div>
           </div>
         </div>

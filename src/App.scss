@@ -2202,8 +2202,72 @@ $colorBGnav:#e0e0e0;
 
 @mixin ContentFile(){
     .content-filecontent{
-        border: 2px solid red;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
     }
+    .title-nav-filecontent{
+        border: 2px solid green;
+        height: 5%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 15px;
+        background-color: #fefefe;
+    }
+        .namefile-filecontent{
+            margin: 0px 15px;
+            width: 50%;
+        }
+    .body-filecontent{
+        border: 2px solid red;
+        height: 95%;
+        display: grid;
+        grid-template-columns: 30% 60% 10% ;
+    }
+    .menu-select-filecontent{
+        border: 2px solid blue;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .show-file-filecontent{
+        border: 5px solid rebeccapurple;
+        height: 100%;
+    }
+        .box-info-filecontent{
+            border: 2px solid orangered;
+            height: 90%;
+            width: 90%;
+            margin: auto;
+            display: block;
+        }
+    .menu-btn-filecontent{
+        border: 2px solid pink;
+        height: 100%;
+        width: 100%;
+    }
+    .btn-menubtn-filecontent{
+        width: 90%;
+        height: 5%;
+        display: block;
+        margin: 5px auto;
+    }
+@media only screen and (max-height:"360px") {
+    .content-filecontent{
+        margin-top: 2%;
+        height: 95%;
+    }
+    .title-nav-filecontent{
+        height: 10%;
+    }
+    .body-filecontent{
+        height: 90%;
+    }
+}
 }
 
 @mixin ModalSlideBar(){
@@ -2467,12 +2531,23 @@ $colorBGnav:#e0e0e0;
 .form-picture{
     padding-right: 10px;
     padding-top: 5px;
+    position: relative;
 }
+    .box-center-formpicture{
+        position: absolute;
+        top: 20%;
+        transform: translate(0,-20%);
+    }
     .img-perview{
         border: 1px solid black;
-        width: 100%;
-        height: 180px;
-        object-fit: contain;
+        // width: 100%;
+        // height: 180px;
+        // object-fit: contain;
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        display: block;
+        margin: auto;
     }
     .input-picture{
         align-items: center;
