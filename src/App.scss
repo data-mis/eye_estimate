@@ -2226,46 +2226,184 @@ $colorBGnav:#e0e0e0;
         border: 2px solid red;
         height: 95%;
         display: grid;
-        grid-template-columns: 30% 60% 10% ;
+        grid-template-columns: 20% 80%;
+        padding: 5px;
     }
     .menu-select-filecontent{
         border: 2px solid blue;
         height: 100%;
-        display: flex;
-        align-items: center;
+        width: 100%;
+        display: block;
+    }
+    .box-menufile{
+        border: 5px solid green;
+        width: 100%;
+        height: auto;
+        padding: 15px; 
+    }
+    .box-showfile{
+        width: 100%;
+        height: 440px;
     }
     .show-file-filecontent{
-        border: 5px solid rebeccapurple;
         height: 100%;
+        background-color: #ddd;
+    }
+    iframe{
+        border: 2px solid $colorBorderDrop;
     }
         .box-info-filecontent{
-            border: 2px solid orangered;
             height: 90%;
             width: 90%;
             margin: auto;
             display: block;
+            scroll-snap-type: mandatory;
+            overflow: auto;
+            border: 2px solid blueviolet;
         }
     .menu-btn-filecontent{
         border: 2px solid pink;
         height: 100%;
         width: 100%;
     }
+    .box-fix-menufile{
+        display: flex;
+        border: 3px solid $colorBorderDrop;
+        padding: 15px;
+    }
     .btn-menubtn-filecontent{
-        width: 90%;
-        height: 5%;
+        width: 45%;
+        height: 45px;
         display: block;
         margin: 5px auto;
+        font-weight: bold;
+        font-size: 22px;
+        border: 2px solid $colorBorderDrop;
     }
+    .btn-add-filecontent{
+        background-color: #4CAF50;
+        color: #e7e6e6;
+    }
+    .btn-add-filecontent:hover{
+        background-color: #238a26;
+        color: #fefefe;
+    }
+    .btn-del-filecontent{
+        background-color: #f44336;
+        color: #e7e6e6;
+    }
+    .btn-del-filecontent:hover{
+        background-color: #d31a0d;
+        color: #fefefe;
+    }
+        // .btn-menubtn-filecontent:hover{
+        //     background-color: $colorBTNhover;
+        //     color: #fefefe;
+        // }
+    .card-info-filecontent{
+        border: 2px solid black;
+        display: block;
+        align-items: center;
+        padding: 10px;
+        width: 100%;
+        height: 50px;
+        margin: 5px auto;
+        font-weight: bold;
+    }
+    .card-info-filecontent:hover{
+        background-color: $colorBTNhover;
+        span{
+            color: #fefefe;
+        }
+    }
+    .menu-mobile-filecontent{
+        display: none;
+    }
+@media only screen and (max-width:"740px") {
+    .title-nav-filecontent{
+        display: none;
+    }
+    .body-filecontent{
+        display: block;
+        height: 100%;
+    }
+    .menu-select-filecontent{
+        display: none;
+    }
+    .menu-mobile-filecontent{
+        height: 10%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+    .btnmenu-mobile-filecontent{
+        display: flex;
+        height: 100%;
+        align-items: center;
+    }
+        .btn-menubtn-filecontent{
+            height: 35px;
+            font-size: 14px;
+        }
+    .infocard-mobile-filecontent{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+        .menu-dropdown-filecontent{
+            display: block;
+            position: relative;
+            height: 35px;
+            width: 90%;
+        }
+        .dropinput-filepdf-filecontent{
+            width: 85%;
+            border: 2px solid $colorBorderDrop;
+            border-right: none;
+        }
+        .dropbtn-filepdf-filecontent{
+            width: 15%;
+            font-weight: bold;
+            border: 2px solid $colorBorderDrop;
+        }
+        .dropinfo-filepdf-filecontent{
+            display: none;
+            border: 2px solid $colorBorderDrop;
+            position: absolute;
+            top: 21px;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background-color: #fefefe;
+            scroll-snap-type: mandatory;
+            overflow: auto;
+        }
+        .card-info-filecontent{
+            border: none;
+        }
+    .show-file-filecontent{
+        width: 100%;
+        height: 90%;
+    }
+}
 @media only screen and (max-height:"360px") {
     .content-filecontent{
         margin-top: 2%;
         height: 95%;
+        border: 2px solid rebeccapurple;
     }
-    .title-nav-filecontent{
-        height: 10%;
-    }
+    // .title-nav-filecontent{
+    //     height: 10%;
+
+    // }
     .body-filecontent{
-        height: 90%;
+        height: 100%;
+    }
+    .menu-mobile-filecontent{
+        height: 15%;
+    }
+    .show-file-filecontent{
+        height: 85%;
     }
 }
 }

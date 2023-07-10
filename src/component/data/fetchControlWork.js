@@ -129,5 +129,18 @@ const FetchControlWork = {
       throw error;
     }
   },
+  fetchgetStudentfile: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/get_student_file`;
+
+    try {
+      let resJson = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return resJson;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default FetchControlWork;

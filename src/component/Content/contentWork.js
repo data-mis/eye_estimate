@@ -2256,6 +2256,7 @@ const ContentWork = (props) => {
                                   onClick={() => {
                                     console.log("UPPPP");
                                     props.upfile("file");
+                                    props.idwork(data.Id);
                                   }}
                                 >
                                   <i className="bi-chevron-up"></i>

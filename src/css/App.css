@@ -2141,46 +2141,176 @@ html .body-filecontent, body .body-filecontent {
   border: 2px solid red;
   height: 95%;
   display: grid;
-  grid-template-columns: 30% 60% 10%;
+  grid-template-columns: 20% 80%;
+  padding: 5px;
 }
 html .menu-select-filecontent, body .menu-select-filecontent {
   border: 2px solid blue;
   height: 100%;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  display: block;
+}
+html .box-menufile, body .box-menufile {
+  border: 5px solid green;
+  width: 100%;
+  height: auto;
+  padding: 15px;
+}
+html .box-showfile, body .box-showfile {
+  width: 100%;
+  height: 440px;
 }
 html .show-file-filecontent, body .show-file-filecontent {
-  border: 5px solid rebeccapurple;
   height: 100%;
+  background-color: #ddd;
+}
+html iframe, body iframe {
+  border: 2px solid #9e9e9e;
 }
 html .box-info-filecontent, body .box-info-filecontent {
-  border: 2px solid orangered;
   height: 90%;
   width: 90%;
   margin: auto;
   display: block;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+  border: 2px solid blueviolet;
 }
 html .menu-btn-filecontent, body .menu-btn-filecontent {
   border: 2px solid pink;
   height: 100%;
   width: 100%;
 }
+html .box-fix-menufile, body .box-fix-menufile {
+  display: flex;
+  border: 3px solid #9e9e9e;
+  padding: 15px;
+}
 html .btn-menubtn-filecontent, body .btn-menubtn-filecontent {
-  width: 90%;
-  height: 5%;
+  width: 45%;
+  height: 45px;
   display: block;
   margin: 5px auto;
+  font-weight: bold;
+  font-size: 22px;
+  border: 2px solid #9e9e9e;
+}
+html .btn-add-filecontent, body .btn-add-filecontent {
+  background-color: #4CAF50;
+  color: #e7e6e6;
+}
+html .btn-add-filecontent:hover, body .btn-add-filecontent:hover {
+  background-color: #238a26;
+  color: #fefefe;
+}
+html .btn-del-filecontent, body .btn-del-filecontent {
+  background-color: #f44336;
+  color: #e7e6e6;
+}
+html .btn-del-filecontent:hover, body .btn-del-filecontent:hover {
+  background-color: #d31a0d;
+  color: #fefefe;
+}
+html .card-info-filecontent, body .card-info-filecontent {
+  border: 2px solid black;
+  display: block;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  height: 50px;
+  margin: 5px auto;
+  font-weight: bold;
+}
+html .card-info-filecontent:hover, body .card-info-filecontent:hover {
+  background-color: #546e7a;
+}
+html .card-info-filecontent:hover span, body .card-info-filecontent:hover span {
+  color: #fefefe;
+}
+html .menu-mobile-filecontent, body .menu-mobile-filecontent {
+  display: none;
+}
+@media only screen and (max-width: 740px) {
+  html .title-nav-filecontent, body .title-nav-filecontent {
+    display: none;
+  }
+  html .body-filecontent, body .body-filecontent {
+    display: block;
+    height: 100%;
+  }
+  html .menu-select-filecontent, body .menu-select-filecontent {
+    display: none;
+  }
+  html .menu-mobile-filecontent, body .menu-mobile-filecontent {
+    height: 10%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+  }
+  html .btnmenu-mobile-filecontent, body .btnmenu-mobile-filecontent {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+  html .btn-menubtn-filecontent, body .btn-menubtn-filecontent {
+    height: 35px;
+    font-size: 14px;
+  }
+  html .infocard-mobile-filecontent, body .infocard-mobile-filecontent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  html .menu-dropdown-filecontent, body .menu-dropdown-filecontent {
+    display: block;
+    position: relative;
+    height: 35px;
+    width: 90%;
+  }
+  html .dropinput-filepdf-filecontent, body .dropinput-filepdf-filecontent {
+    width: 85%;
+    border: 2px solid #9e9e9e;
+    border-right: none;
+  }
+  html .dropbtn-filepdf-filecontent, body .dropbtn-filepdf-filecontent {
+    width: 15%;
+    font-weight: bold;
+    border: 2px solid #9e9e9e;
+  }
+  html .dropinfo-filepdf-filecontent, body .dropinfo-filepdf-filecontent {
+    display: none;
+    border: 2px solid #9e9e9e;
+    position: absolute;
+    top: 21px;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background-color: #fefefe;
+    scroll-snap-type: mandatory;
+    overflow: auto;
+  }
+  html .card-info-filecontent, body .card-info-filecontent {
+    border: none;
+  }
+  html .show-file-filecontent, body .show-file-filecontent {
+    width: 100%;
+    height: 90%;
+  }
 }
 @media only screen and (max-height: 360px) {
   html .content-filecontent, body .content-filecontent {
     margin-top: 2%;
     height: 95%;
-  }
-  html .title-nav-filecontent, body .title-nav-filecontent {
-    height: 10%;
+    border: 2px solid rebeccapurple;
   }
   html .body-filecontent, body .body-filecontent {
-    height: 90%;
+    height: 100%;
+  }
+  html .menu-mobile-filecontent, body .menu-mobile-filecontent {
+    height: 15%;
+  }
+  html .show-file-filecontent, body .show-file-filecontent {
+    height: 85%;
   }
 }
 html .modal-slideBar-body, body .modal-slideBar-body {
