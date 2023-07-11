@@ -9,7 +9,7 @@ const ContentFile = (props) => {
   const [boxdroplistinfo, setBoxdroplistinfo] = useState(false);
   const [infostudentfile, setInfostudentfile] = useState([]);
   const [urlpdf, setUrlpdf] = useState("");
-  const [infofilename, setInfofilename] = useState("");
+  const [infofilename, setInfofilename] = useState({ filename: "", date: "" });
 
   const PDFviewer = () => {
     // const url = `https://www.orimi.com/pdf-test.pdf`;
@@ -59,13 +59,24 @@ const ContentFile = (props) => {
     <div className="content-filecontent">
       <div className="title-nav-filecontent">
         <span>{"ข้อมูล File"}</span>
-        <input className="namefile-filecontent"></input>
-        <button type="button">{"close"}</button>
+        <input
+          className="namefile-filecontent"
+          value={`ชื่อไฟล์: ${infofilename.filename}    วันที่ : ${infofilename.date}`}
+          readOnly
+        ></input>
+        <button
+          type="button"
+          onClick={() => {
+            props.backtowork("workDoctor");
+          }}
+        >
+          {"close"}
+        </button>
       </div>
       <div className="body-filecontent">
         <div className="menu-select-filecontent">
           <div className="box-menufile">
-            <h2>ตัวเลือก</h2>
+            <h2 style={{ marginLeft: "10px" }}>ตัวเลือก</h2>
             <input
               className="inputfile-pdf-filecontent"
               style={{ display: "none" }}
@@ -93,12 +104,27 @@ const ContentFile = (props) => {
             </div>
           </div>
           <div className="box-showfile">
-            <h3>box2</h3>
+            <h2 style={{ marginLeft: "10px" }}>รายการ</h2>
             <div className="box-info-filecontent">
-              {/* {infostudentfile[0] ? (
+              {infostudentfile[0] ? (
                 infostudentfile.map((data) => {
                   return (
-                    <div className="card-info-filecontent">
+                    <div
+                      className="card-info-filecontent"
+                      style={
+                        infofilename.filename === data.file_real
+                          ? { backgroundColor: "#546e7a", color: "#fefefe" }
+                          : {}
+                      }
+                      onClick={() => {
+                        setUrlpdf("https://www.orimi.com/pdf-test.pdf");
+                        handleopendropdownlistpdf(boxdroplistinfo);
+                        setInfofilename({
+                          filename: data.file_real,
+                          date: data.date,
+                        });
+                      }}
+                    >
                       <span>{data.file_real}</span>
                     </div>
                   );
@@ -107,79 +133,7 @@ const ContentFile = (props) => {
                 <div className="card-info-filecontent">
                   <span>{"-"}</span>
                 </div>
-              )} */}
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
-              <div className="card-info-filecontent">
-                <span>{"-"}</span>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -217,7 +171,7 @@ const ContentFile = (props) => {
                 onClick={() => {
                   handleopendropdownlistpdf(boxdroplistinfo);
                 }}
-                value={infofilename}
+                value={infofilename.filename}
                 readOnly
               ></input>
               <button
@@ -228,6 +182,14 @@ const ContentFile = (props) => {
                 }}
               >
                 <i className="bi-filetype-pdf"></i>
+              </button>
+              <button
+                className="btn-backtowork-filecontent"
+                onClick={() => {
+                  props.backtowork("workDoctor");
+                }}
+              >
+                <i className="bi-arrow-left-square"></i>
               </button>
               <div
                 className="dropinfo-filepdf-filecontent"
@@ -242,7 +204,10 @@ const ContentFile = (props) => {
                           onClick={() => {
                             setUrlpdf("https://www.orimi.com/pdf-test.pdf");
                             handleopendropdownlistpdf(boxdroplistinfo);
-                            setInfofilename(data.file_real);
+                            setInfofilename({
+                              filename: data.file_real,
+                              date: data.date,
+                            });
                           }}
                         >
                           <span>{data.file_real}</span>
@@ -251,6 +216,14 @@ const ContentFile = (props) => {
                     })
                   : ""}
               </div>
+            </div>
+            <div>
+              <input
+                className="inputshowinfomobile-filecontent"
+                type="text"
+                value={`ชื่อไฟล์: ${infofilename.filename} วันที่: ${infofilename.date}`}
+                readOnly
+              ></input>
             </div>
           </div>
         </div>

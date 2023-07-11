@@ -1414,7 +1414,8 @@ $colorBGnav:#e0e0e0;
         display: grid;
         grid-template-columns: 90% 10%;
         width: 100%;
-        height: auto;
+        height: 85%;
+        border: 5px solid red;
     }
     .colbox-contentwork{
         width: 100%;
@@ -1425,6 +1426,12 @@ $colorBGnav:#e0e0e0;
             height: 40%;
             display: grid;
             grid-template-columns: 50% 50%;
+        }
+        .workest-info-contentwork{
+            width: 100%;
+            height: 40%;
+            display: grid;
+            grid-template-columns: 25% 75%;
         }
         .col-info-contentwork{
             scroll-snap-type: mandatory;
@@ -1444,9 +1451,10 @@ $colorBGnav:#e0e0e0;
             }
         .infoBoxcol-relative-contentwork{
             width: 100%;
-            height: 92%;
+            height: 100%;
             scroll-snap-type: mandatory;
             overflow: auto;
+            border-bottom:2px solid $colorBorderDrop;
         }
     .boxcontent-btnmenu-contentwork{
         width: 100%;
@@ -1677,9 +1685,64 @@ $colorBGnav:#e0e0e0;
             padding: 0px 5px;
             font-weight: bold;
         }
+    #tableshowinfoestimation{
+        width: 100%;
+    }
 
 //end modal contentwork
-@media only screen and (max-width:720px) {
+@media only screen and (max-width:768px) {
+    .workest-info-contentwork{
+        grid-template-columns: 40% 60%;
+    }
+    #tableshowinfoestimation{
+       width: 1024px;
+    }
+}
+//แนวนอนมือถือ
+@media only screen and (max-height:360px){
+    .workest-info-contentwork{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        border: 5px solid black;
+
+    }
+    #tableEstimationlist,#tableinfodoctor{
+        font-size: 11px;
+    }
+    .row-info-contentwork{
+        border: 5px solid burlywood;
+        height: 20%;
+    }
+    .boxcontent-contentwork{
+        // border: 2px solid red;
+        height: auto;
+    }
+    .colbox-contentwork{
+        display: block;
+        height: 570px;
+    }
+    .boxworkestimation-contentwork{
+        display: block;
+        width: 90%;
+        margin: auto;
+        height: 165px;
+        border: 2px solid pink;
+    }
+    .boxworkinfoest-contentwork{
+        border: 2px solid green;
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+    }
+    .boxworkdoctorlist{
+        border: 2px solid blue;
+        height: 80px;
+    }
+    .boxworkesttotle{
+        border: 2px solid orangered;
+        height: 80px;
+    }
     .header-contentwork{
         height: 10%;
     }
@@ -1725,8 +1788,115 @@ $colorBGnav:#e0e0e0;
     .boxcontent-btnmenu-contentwork{
         height: 10%;
     }
+    .header-contentwork{
+        height: 5%;
+    }
+    .menu-nav-contentwork{
+        height: 5%;
+    }
+    .box-buttonUPDOWN{
+        width: 60%;
+    }
 }
-@media only screen and (max-width:360px) {
+//แนวตั้งมือถือ
+@media only screen and (max-width:360px){
+    .workest-info-contentwork{
+        grid-template-columns: 50% 50%;
+    }
+    #tableEstimationlist,#tableinfodoctor,#tabletotleest{
+        font-size: 11px;
+    }
+    .row-info-contentwork{
+        height: 50%;
+    }
+    .boxcontent-contentwork{
+        height: auto;
+        border: none;
+    }
+    .colbox-contentwork{
+        display: block;
+        height: 570px;
+        // border: 5px solid darkcyan;
+    }
+    .workest-info-contentwork{
+        // border: 5px solid black;
+        display: block;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+        height: 45%;
+    }
+    .boxworkestimation-contentwork{
+        display: block;
+        width: 90%;
+        margin: auto;
+        // height: 155px;
+        height: 135px;
+        // border: 2px solid pink;
+    }
+    .title-info-contentwork{
+        display: none;
+    }
+    .boxworkinfoest-contentwork{
+        border: 2px solid green;
+        display: block;
+        width: 90%;
+        height: 120px;
+        margin: auto;
+        position: relative;
+    }
+    .boxworkdoctorlist{
+        height: 100%;
+        padding: 5px;
+    }
+    .boxworkesttotle{
+        height: 100%;
+        padding: 5px;
+    }
+    .header-contentwork{
+        height: 10%;
+    }
+    .menu-nav-contentwork{
+        height: 10%;
+    }
+    .contentwork-year{
+        width: 25%;
+        margin: 0;
+    }
+        .contentwork-year span{
+            font-size: 11px;
+            width: auto;
+        }
+        .input-year-contentwork{
+            width: 100%;
+        }
+    .contentwork-month{
+        width: 30%;
+    }
+        .contentwork-month span{
+            font-size: 11px;
+        }
+    .contentwork-group{
+        width: 30%;
+    }
+        .contentwork-group span{
+            font-size: 11px;
+        }
+    .contentwork-buttonAll{
+        width: 20%;
+    }
+        .contentwork-buttonAll button{
+            font-size: 9px;
+            font-weight: bold;
+        }
+    .menu-nav-contentwork{
+        display: none;
+    }
+    .btn-menu-filter{
+        display: block;
+    }
+    .boxcontent-btnmenu-contentwork{
+        height: 10%;
+    }
     .header-contentwork{
         height: 5%;
     }
@@ -2217,10 +2387,16 @@ $colorBGnav:#e0e0e0;
         justify-content: center;
         padding: 0px 15px;
         background-color: #fefefe;
+        font-weight: bold;
     }
         .namefile-filecontent{
-            margin: 0px 15px;
-            width: 50%;
+            margin:0 15px;
+            width: 70%;
+            border: none;
+            border-bottom: 2px solid $colorBorderDrop;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
         }
     .body-filecontent{
         border: 2px solid red;
@@ -2236,14 +2412,14 @@ $colorBGnav:#e0e0e0;
         display: block;
     }
     .box-menufile{
-        border: 5px solid green;
         width: 100%;
         height: auto;
-        padding: 15px; 
+        margin-top: 10px;
     }
     .box-showfile{
         width: 100%;
         height: 440px;
+        margin-top: 15px;
     }
     .show-file-filecontent{
         height: 100%;
@@ -2259,7 +2435,6 @@ $colorBGnav:#e0e0e0;
             display: block;
             scroll-snap-type: mandatory;
             overflow: auto;
-            border: 2px solid blueviolet;
         }
     .menu-btn-filecontent{
         border: 2px solid pink;
@@ -2268,8 +2443,7 @@ $colorBGnav:#e0e0e0;
     }
     .box-fix-menufile{
         display: flex;
-        border: 3px solid $colorBorderDrop;
-        padding: 15px;
+        width: 100%;
     }
     .btn-menubtn-filecontent{
         width: 45%;
@@ -2300,6 +2474,7 @@ $colorBGnav:#e0e0e0;
         //     background-color: $colorBTNhover;
         //     color: #fefefe;
         // }
+        
     .card-info-filecontent{
         border: 2px solid black;
         display: block;
@@ -2346,18 +2521,22 @@ $colorBGnav:#e0e0e0;
             font-size: 14px;
         }
     .infocard-mobile-filecontent{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: block;
     }
         .menu-dropdown-filecontent{
             display: block;
             position: relative;
-            height: 35px;
-            width: 90%;
+            height: 50%;
+            width: 100%;
+        }
+        .inputshowinfomobile-filecontent{
+            width: 100%;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid $colorBorderDrop;
         }
         .dropinput-filepdf-filecontent{
-            width: 85%;
+            width: 70%;
             border: 2px solid $colorBorderDrop;
             border-right: none;
         }
@@ -2372,7 +2551,7 @@ $colorBGnav:#e0e0e0;
             position: absolute;
             top: 21px;
             left: 0;
-            width: 100%;
+            width: 85%;
             height: 150px;
             background-color: #fefefe;
             scroll-snap-type: mandatory;
@@ -2822,25 +3001,26 @@ $colorBGnav:#e0e0e0;
         background-color: #fefefe;
         text-align: center;
         font-weight: bold;
-        // position: relative;
+        position: relative;
         margin: auto;
     }
        .table-show-info{
             thead{
-                // border: 5px solid red;
                 text-align: center;
-                // position: sticky;
+                position: sticky;
                 position: -webkit-sticky;
                 top: 0;
             }
                 th{
-                    border: 2px solid black;
+                    // border: 2px solid black;
+                    border-right: 2px solid black;
                     background-color: #607d8b;
                     color: #fefefe;
                     text-align: center;
                 }      
                 td{
-                    border:  2px solid black;
+                    // border: 2px solid black;
+                    border-right: 2px solid black;
                 }
        }
        .table-show-info>tbody>tr:hover td{

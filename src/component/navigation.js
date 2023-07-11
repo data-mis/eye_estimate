@@ -76,7 +76,12 @@ const NavigationPage = () => {
         return <ContentReport></ContentReport>;
 
       case "file":
-        return <ContentFile workid={workId}></ContentFile>;
+        return (
+          <ContentFile
+            workid={workId}
+            backtowork={setModeContent}
+          ></ContentFile>
+        );
       default:
         return (
           <div className="body-mainDefault">
@@ -149,6 +154,7 @@ const NavigationPage = () => {
 
   const handleClearinglogout = () => {
     localStorage.clear();
+    cookie.remove("token");
     navigat("/");
   };
 

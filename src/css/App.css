@@ -1356,7 +1356,8 @@ html .boxcontent-contentwork, body .boxcontent-contentwork {
   display: grid;
   grid-template-columns: 90% 10%;
   width: 100%;
-  height: auto;
+  height: 85%;
+  border: 5px solid red;
 }
 html .colbox-contentwork, body .colbox-contentwork {
   width: 100%;
@@ -1367,6 +1368,12 @@ html .row-info-contentwork, body .row-info-contentwork {
   height: 40%;
   display: grid;
   grid-template-columns: 50% 50%;
+}
+html .workest-info-contentwork, body .workest-info-contentwork {
+  width: 100%;
+  height: 40%;
+  display: grid;
+  grid-template-columns: 25% 75%;
 }
 html .col-info-contentwork, body .col-info-contentwork {
   scroll-snap-type: mandatory;
@@ -1386,9 +1393,10 @@ html .title-info-contentwork span, body .title-info-contentwork span {
 }
 html .infoBoxcol-relative-contentwork, body .infoBoxcol-relative-contentwork {
   width: 100%;
-  height: 92%;
+  height: 100%;
   scroll-snap-type: mandatory;
   overflow: auto;
+  border-bottom: 2px solid #9e9e9e;
 }
 html .boxcontent-btnmenu-contentwork, body .boxcontent-btnmenu-contentwork {
   width: 100%;
@@ -1613,7 +1621,59 @@ html .idstudent-span-modalsrcstudent, body .idstudent-span-modalsrcstudent {
   padding: 0px 5px;
   font-weight: bold;
 }
-@media only screen and (max-width: 720px) {
+html #tableshowinfoestimation, body #tableshowinfoestimation {
+  width: 100%;
+}
+@media only screen and (max-width: 768px) {
+  html .workest-info-contentwork, body .workest-info-contentwork {
+    grid-template-columns: 40% 60%;
+  }
+  html #tableshowinfoestimation, body #tableshowinfoestimation {
+    width: 1024px;
+  }
+}
+@media only screen and (max-height: 360px) {
+  html .workest-info-contentwork, body .workest-info-contentwork {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border: 5px solid black;
+  }
+  html #tableEstimationlist, html #tableinfodoctor, body #tableEstimationlist, body #tableinfodoctor {
+    font-size: 11px;
+  }
+  html .row-info-contentwork, body .row-info-contentwork {
+    border: 5px solid burlywood;
+    height: 20%;
+  }
+  html .boxcontent-contentwork, body .boxcontent-contentwork {
+    height: auto;
+  }
+  html .colbox-contentwork, body .colbox-contentwork {
+    display: block;
+    height: 570px;
+  }
+  html .boxworkestimation-contentwork, body .boxworkestimation-contentwork {
+    display: block;
+    width: 90%;
+    margin: auto;
+    height: 165px;
+    border: 2px solid pink;
+  }
+  html .boxworkinfoest-contentwork, body .boxworkinfoest-contentwork {
+    border: 2px solid green;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+  }
+  html .boxworkdoctorlist, body .boxworkdoctorlist {
+    border: 2px solid blue;
+    height: 80px;
+  }
+  html .boxworkesttotle, body .boxworkesttotle {
+    border: 2px solid orangered;
+    height: 80px;
+  }
   html .header-contentwork, body .header-contentwork {
     height: 10%;
   }
@@ -1659,8 +1719,110 @@ html .idstudent-span-modalsrcstudent, body .idstudent-span-modalsrcstudent {
   html .boxcontent-btnmenu-contentwork, body .boxcontent-btnmenu-contentwork {
     height: 10%;
   }
+  html .header-contentwork, body .header-contentwork {
+    height: 5%;
+  }
+  html .menu-nav-contentwork, body .menu-nav-contentwork {
+    height: 5%;
+  }
+  html .box-buttonUPDOWN, body .box-buttonUPDOWN {
+    width: 60%;
+  }
 }
 @media only screen and (max-width: 360px) {
+  html .workest-info-contentwork, body .workest-info-contentwork {
+    grid-template-columns: 50% 50%;
+  }
+  html #tableEstimationlist, html #tableinfodoctor, html #tabletotleest, body #tableEstimationlist, body #tableinfodoctor, body #tabletotleest {
+    font-size: 11px;
+  }
+  html .row-info-contentwork, body .row-info-contentwork {
+    height: 50%;
+  }
+  html .boxcontent-contentwork, body .boxcontent-contentwork {
+    height: auto;
+    border: none;
+  }
+  html .colbox-contentwork, body .colbox-contentwork {
+    display: block;
+    height: 570px;
+  }
+  html .workest-info-contentwork, body .workest-info-contentwork {
+    display: block;
+    scroll-snap-type: mandatory;
+    overflow: auto;
+    height: 45%;
+  }
+  html .boxworkestimation-contentwork, body .boxworkestimation-contentwork {
+    display: block;
+    width: 90%;
+    margin: auto;
+    height: 135px;
+  }
+  html .title-info-contentwork, body .title-info-contentwork {
+    display: none;
+  }
+  html .boxworkinfoest-contentwork, body .boxworkinfoest-contentwork {
+    border: 2px solid green;
+    display: block;
+    width: 90%;
+    height: 120px;
+    margin: auto;
+    position: relative;
+  }
+  html .boxworkdoctorlist, body .boxworkdoctorlist {
+    height: 100%;
+    padding: 5px;
+  }
+  html .boxworkesttotle, body .boxworkesttotle {
+    height: 100%;
+    padding: 5px;
+  }
+  html .header-contentwork, body .header-contentwork {
+    height: 10%;
+  }
+  html .menu-nav-contentwork, body .menu-nav-contentwork {
+    height: 10%;
+  }
+  html .contentwork-year, body .contentwork-year {
+    width: 25%;
+    margin: 0;
+  }
+  html .contentwork-year span, body .contentwork-year span {
+    font-size: 11px;
+    width: auto;
+  }
+  html .input-year-contentwork, body .input-year-contentwork {
+    width: 100%;
+  }
+  html .contentwork-month, body .contentwork-month {
+    width: 30%;
+  }
+  html .contentwork-month span, body .contentwork-month span {
+    font-size: 11px;
+  }
+  html .contentwork-group, body .contentwork-group {
+    width: 30%;
+  }
+  html .contentwork-group span, body .contentwork-group span {
+    font-size: 11px;
+  }
+  html .contentwork-buttonAll, body .contentwork-buttonAll {
+    width: 20%;
+  }
+  html .contentwork-buttonAll button, body .contentwork-buttonAll button {
+    font-size: 9px;
+    font-weight: bold;
+  }
+  html .menu-nav-contentwork, body .menu-nav-contentwork {
+    display: none;
+  }
+  html .btn-menu-filter, body .btn-menu-filter {
+    display: block;
+  }
+  html .boxcontent-btnmenu-contentwork, body .boxcontent-btnmenu-contentwork {
+    height: 10%;
+  }
   html .header-contentwork, body .header-contentwork {
     height: 5%;
   }
@@ -2132,10 +2294,16 @@ html .title-nav-filecontent, body .title-nav-filecontent {
   justify-content: center;
   padding: 0px 15px;
   background-color: #fefefe;
+  font-weight: bold;
 }
 html .namefile-filecontent, body .namefile-filecontent {
-  margin: 0px 15px;
-  width: 50%;
+  margin: 0 15px;
+  width: 70%;
+  border: none;
+  border-bottom: 2px solid #9e9e9e;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
 }
 html .body-filecontent, body .body-filecontent {
   border: 2px solid red;
@@ -2151,14 +2319,14 @@ html .menu-select-filecontent, body .menu-select-filecontent {
   display: block;
 }
 html .box-menufile, body .box-menufile {
-  border: 5px solid green;
   width: 100%;
   height: auto;
-  padding: 15px;
+  margin-top: 10px;
 }
 html .box-showfile, body .box-showfile {
   width: 100%;
   height: 440px;
+  margin-top: 15px;
 }
 html .show-file-filecontent, body .show-file-filecontent {
   height: 100%;
@@ -2174,7 +2342,6 @@ html .box-info-filecontent, body .box-info-filecontent {
   display: block;
   scroll-snap-type: mandatory;
   overflow: auto;
-  border: 2px solid blueviolet;
 }
 html .menu-btn-filecontent, body .menu-btn-filecontent {
   border: 2px solid pink;
@@ -2183,8 +2350,7 @@ html .menu-btn-filecontent, body .menu-btn-filecontent {
 }
 html .box-fix-menufile, body .box-fix-menufile {
   display: flex;
-  border: 3px solid #9e9e9e;
-  padding: 15px;
+  width: 100%;
 }
 html .btn-menubtn-filecontent, body .btn-menubtn-filecontent {
   width: 45%;
@@ -2257,18 +2423,22 @@ html .menu-mobile-filecontent, body .menu-mobile-filecontent {
     font-size: 14px;
   }
   html .infocard-mobile-filecontent, body .infocard-mobile-filecontent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
   }
   html .menu-dropdown-filecontent, body .menu-dropdown-filecontent {
     display: block;
     position: relative;
-    height: 35px;
-    width: 90%;
+    height: 50%;
+    width: 100%;
+  }
+  html .inputshowinfomobile-filecontent, body .inputshowinfomobile-filecontent {
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #9e9e9e;
   }
   html .dropinput-filepdf-filecontent, body .dropinput-filepdf-filecontent {
-    width: 85%;
+    width: 70%;
     border: 2px solid #9e9e9e;
     border-right: none;
   }
@@ -2283,7 +2453,7 @@ html .menu-mobile-filecontent, body .menu-mobile-filecontent {
     position: absolute;
     top: 21px;
     left: 0;
-    width: 100%;
+    width: 85%;
     height: 150px;
     background-color: #fefefe;
     scroll-snap-type: mandatory;
@@ -2735,21 +2905,23 @@ html .table-show-info, body .table-show-info {
   background-color: #fefefe;
   text-align: center;
   font-weight: bold;
+  position: relative;
   margin: auto;
 }
 html .table-show-info thead, body .table-show-info thead {
   text-align: center;
+  position: sticky;
   position: -webkit-sticky;
   top: 0;
 }
 html .table-show-info th, body .table-show-info th {
-  border: 2px solid black;
+  border-right: 2px solid black;
   background-color: #607d8b;
   color: #fefefe;
   text-align: center;
 }
 html .table-show-info td, body .table-show-info td {
-  border: 2px solid black;
+  border-right: 2px solid black;
 }
 html .table-show-info > tbody > tr:hover td, body .table-show-info > tbody > tr:hover td {
   background-color: #01579b;

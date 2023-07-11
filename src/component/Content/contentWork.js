@@ -202,7 +202,7 @@ const ContentWork = (props) => {
         if (box) {
           docGetId(box).classList.remove("positionRelativeBox");
         }
-
+        console.log("อันนี้คือปิดหมด !!");
         setOpenMonthdrop(false);
         for (let i = 0; i < lengthtable; i++) {
           table[i].style.position = "relative";
@@ -215,7 +215,7 @@ const ContentWork = (props) => {
         }
 
         setOpenMonthdrop(true);
-
+        console.log("อันนี้คือจะได");
         for (let i = 0; i < lengthtable; i++) {
           table[i].style.position = "static";
           theadtable[i].style.position = "static";
@@ -227,10 +227,15 @@ const ContentWork = (props) => {
         if (box) {
           docGetId(box).classList.remove("positionRelativeBox");
         }
-
+        console.log("อันนี้ปิดละกะ");
+        for (let i = 0; i < lengthtable; i++) {
+          table[i].style.position = "relative";
+          theadtable[i].style.position = "sticky";
+        }
         setOpenMonthdrop(false);
         docGetId(id).style.display = "none";
       } else {
+        console.log("อันนี้เปิดก่อหา");
         if (box) {
           nonedropAtall();
           docGetId(box).classList.add("positionRelativeBox");
@@ -2122,10 +2127,14 @@ const ContentWork = (props) => {
       </div>
       <div className="boxcontent-contentwork">
         <div className="colbox-contentwork">
-          <div className="row-info-contentwork">
-            <div className="col-info-contentwork">
+          <div className="workest-info-contentwork">
+            <div className="col-info-contentwork boxworkestimation-contentwork">
               {getsheetwork[0] ? (
-                <table className="table-show-info" style={{ width: "100%" }}>
+                <table
+                  className="table-show-info"
+                  id="tableEstimationlist"
+                  style={{ width: "100%" }}
+                >
                   <thead className="thaeadShowinfo">
                     <tr>
                       <th>{"งานประเมิน"}</th>
@@ -2173,26 +2182,44 @@ const ContentWork = (props) => {
                 <Spinnerpage></Spinnerpage>
               )}
             </div>
-            <div className="col-info-contentwork">
-              <div className="title-info-contentwork">
+            <div className="col-info-contentwork boxworkinfoest-contentwork">
+              <div
+                className="title-info-contentwork"
+                style={{ backgroundColor: "#00796b" }}
+              >
                 <span>{titlegetwork ? `${titlegetwork}` : "-"}</span>
               </div>
               <div className="infoBoxcol-relative-contentwork">
                 {getworkgetwork[0] ? (
                   <table
                     className="table-show-info"
-                    style={{ width: "1020px" }}
+                    id="tableshowinfoestimation"
                   >
                     <thead className="thaeadShowinfo">
+                      {/* <tr>
+                        <th colSpan={8}>
+                          {titlegetwork ? `${titlegetwork}` : "หัวข้อ"}
+                        </th>
+                      </tr> */}
                       <tr>
-                        <th>{"วันที่"}</th>
-                        <th>{"เวลา"}</th>
-                        <th>{"กลุ่ม"}</th>
-                        <th>{"อาจารย์"}</th>
-                        <th>{"นักศึกษา"}</th>
-                        <th>{"UP"}</th>
-                        <th>{"แก้ไข"}</th>
-                        <th>{"C"}</th>
+                        <th style={{ backgroundColor: "#00897b" }}>
+                          {"วันที่"}
+                        </th>
+                        <th style={{ backgroundColor: "#00897b" }}>{"เวลา"}</th>
+                        <th style={{ backgroundColor: "#00897b" }}>
+                          {"กลุ่ม"}
+                        </th>
+                        <th style={{ backgroundColor: "#00897b" }}>
+                          {"อาจารย์"}
+                        </th>
+                        <th style={{ backgroundColor: "#00897b" }}>
+                          {"นักศึกษา"}
+                        </th>
+                        <th style={{ backgroundColor: "#00897b" }}>{"UP"}</th>
+                        <th style={{ backgroundColor: "#00897b" }}>
+                          {"แก้ไข"}
+                        </th>
+                        <th style={{ backgroundColor: "#00897b" }}>{"C"}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -2342,10 +2369,17 @@ const ContentWork = (props) => {
             <h4>{"รายละเอียดงานของอาจารย์"}</h4>
           </div>
           <div className="row-info-contentwork">
-            <div className="col-info-contentwork">
-              <div className="infoBoxcol-relative-contentwork">
+            <div className="col-info-contentwork boxworkdoctorlist">
+              <div
+                className="infoBoxcol-relative-contentwork"
+                id="tableinfodoctor"
+              >
                 {getworklistwork[0] ? (
-                  <table className="table-show-info" style={{ width: "100%" }}>
+                  <table
+                    className="table-show-info"
+                    id="tabledoctorlist"
+                    style={{ width: "100%" }}
+                  >
                     <thead className="thaeadShowinfo">
                       <tr>
                         <th>{`อาจารย์`}</th>
@@ -2383,10 +2417,14 @@ const ContentWork = (props) => {
                 )}
               </div>
             </div>
-            <div className="col-info-contentwork">
+            <div className="col-info-contentwork boxworkesttotle">
               <div className="infoBoxcol-relative-contentwork">
                 {getworkestimation[0] ? (
-                  <table className="table-show-info" style={{ width: "100%" }}>
+                  <table
+                    className="table-show-info"
+                    id="tabletotleest"
+                    style={{ width: "100%" }}
+                  >
                     <thead className="thaeadShowinfo">
                       <tr>
                         <th>{`งานประเมินสะสม`}</th>
