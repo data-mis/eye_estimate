@@ -6,10 +6,12 @@ const ContentFile = (props) => {
   const cookies = new Cookies();
   const usertoken = cookies.get("token");
   const fileSelectPDF = useRef(null);
+  const mobilefileSelectPDF = useRef(null);
   const [boxdroplistinfo, setBoxdroplistinfo] = useState(false);
   const [infostudentfile, setInfostudentfile] = useState([]);
   const [urlpdf, setUrlpdf] = useState("");
   const [infofilename, setInfofilename] = useState({ filename: "", date: "" });
+  const [filenameselect, setFilenameselect] = useState("");
 
   const PDFviewer = () => {
     // const url = `https://www.orimi.com/pdf-test.pdf`;
@@ -19,16 +21,27 @@ const ContentFile = (props) => {
     );
   };
 
-  const handleselectfile = () => {
+  const handleselectfile = (infowork) => {
     let thisFile = fileSelectPDF.current.files[0];
     console.log("filepdf >>>", thisFile);
 
-    let filepdf = new File([thisFile], `test.pdf`, { type: thisFile.type });
-    console.log("newFile>>>", filepdf);
+    // จะตั้งชื่อไฟล์ เอาไป โชว์แสดงผล
+    // setFilenameselect
+
+    let filepdf = new File([thisFile], `${thisFile.name}`, {
+      type: thisFile.type,
+    });
+
+    let filesend = new FormData();
+    filesend.append("file", filepdf);
+    filesend.append("work_id", infowork.Id);
+    filesend.append("work_date", new Date());
+    filesend.append("student_id", infowork.student_id);
+    filesend.append("grp_id", infowork.grp_id);
   };
 
   const handlegetstudentfile = (workid) => {
-    console.log("workid >>>", workid);
+    // console.log("workid >>>", workid);
     let object = {
       work_id: workid,
     };
@@ -52,7 +65,8 @@ const ContentFile = (props) => {
   };
 
   useEffect(() => {
-    handlegetstudentfile(props.workid);
+    // console.log("selectedinfo >>>", props.selectinfo);
+    handlegetstudentfile(props.selectinfo.Id);
   }, []);
 
   return (
@@ -79,7 +93,6 @@ const ContentFile = (props) => {
             <h2 style={{ marginLeft: "10px" }}>ตัวเลือก</h2>
             <input
               className="inputfile-pdf-filecontent"
-              style={{ display: "none" }}
               type="file"
               accept=".pdf"
               ref={fileSelectPDF}
@@ -90,27 +103,43 @@ const ContentFile = (props) => {
                     "inputfile-pdf-filecontent"
                   )[0].value = "";
                 } else {
-                  handleselectfile();
+                  handleselectfile(props.selectinfo);
                 }
               }}
             ></input>
             <div className="box-fix-menufile">
-              <button className="btn-menubtn-filecontent btn-add-filecontent">
+              <button
+                className="btn-menubtn-filecontent btn-add-filecontent"
+                onClick={() => {
+                  document
+                    .getElementsByClassName("inputfile-pdf-filecontent")[0]
+                    .click();
+                }}
+              >
                 {"เพิ่ม"}
               </button>
               <button className="btn-menubtn-filecontent btn-del-filecontent">
                 {"ลบ"}
               </button>
             </div>
+            <div>
+              <input
+                className="input-shownamefile-filecontent"
+                type="text"
+                value={filenameselect}
+                readOnly
+              ></input>
+            </div>
           </div>
           <div className="box-showfile">
             <h2 style={{ marginLeft: "10px" }}>รายการ</h2>
             <div className="box-info-filecontent">
               {infostudentfile[0] ? (
-                infostudentfile.map((data) => {
+                infostudentfile.map((data, index) => {
                   return (
                     <div
                       className="card-info-filecontent"
+                      key={index}
                       style={
                         infofilename.filename === data.file_real
                           ? { backgroundColor: "#546e7a", color: "#fefefe" }
@@ -140,16 +169,16 @@ const ContentFile = (props) => {
         <div className="menu-mobile-filecontent">
           <div className="btnmenu-mobile-filecontent">
             <input
-              className="inputfile-pdf-filecontent"
+              className="inputfilemobile-pdf-filecontent"
               style={{ display: "none" }}
               type="file"
               accept=".pdf"
-              ref={fileSelectPDF}
+              ref={mobilefileSelectPDF}
               onChange={(e) => {
                 let val = e.target.value.split(".").pop();
                 if (val !== "pdf") {
                   document.getElementsByClassName(
-                    "inputfile-pdf-filecontent"
+                    "inputfilemobile-pdf-filecontent"
                   )[0].value = "";
                 } else {
                   handleselectfile();

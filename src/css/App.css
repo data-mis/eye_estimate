@@ -230,7 +230,6 @@ html .header-mainDefault, body .header-mainDefault {
   }
   html .show-content-box, body .show-content-box {
     width: 100%;
-    height: 94%;
   }
   html .header-navigatepage, body .header-navigatepage {
     height: 5%;
@@ -240,6 +239,11 @@ html .header-mainDefault, body .header-mainDefault {
   }
   html .btn-header-menuBar, body .btn-header-menuBar {
     display: block;
+  }
+}
+@media only screen and (max-height: 360px) {
+  html .show-content-box, body .show-content-box {
+    height: 90vh;
   }
 }
 html .body-content-ctStudent, body .body-content-ctStudent {
@@ -483,6 +487,10 @@ html .btn-save-footer, body .btn-save-footer {
   }
 }
 @media only screen and (max-width: 720px) {
+  html .body-content-ctStudent, body .body-content-ctStudent {
+    margin-top: 10px;
+    height: 95%;
+  }
   html .header-show-contentStudent, body .header-show-contentStudent {
     height: 25px;
     top: 3%;
@@ -691,6 +699,9 @@ html .btnSubmit-boxContentInboxModal button, body .btnSubmit-boxContentInboxModa
   font-size: 18px;
 }
 @media only screen and (max-width: 720px) {
+  html .body-content-ctDoctor, body .body-content-ctDoctor {
+    margin-top: 10px;
+  }
   html .nav-content-ctDoctor, body .nav-content-ctDoctor {
     height: 10%;
     display: grid;
@@ -735,8 +746,14 @@ html .btnSubmit-boxContentInboxModal button, body .btnSubmit-boxContentInboxModa
     scroll-snap-type: mandatory;
     overflow: auto;
   }
+  html .body-content-ctDoctor, body .body-content-ctDoctor {
+    height: 95%;
+  }
 }
 @media only screen and (max-width: 360px) {
+  html .body-content-ctDoctor, body .body-content-ctDoctor {
+    height: 95%;
+  }
   html .nav-content-ctDoctor, body .nav-content-ctDoctor {
     height: 5%;
   }
@@ -773,6 +790,7 @@ html .input-year-groupStudent, html .input-search-groupStudent, body .input-year
 }
 html .relative-btnBox, body .relative-btnBox {
   height: 25px;
+  position: relative;
 }
 html .yearControllup, body .yearControllup {
   font-size: 8px;
@@ -1057,6 +1075,9 @@ html .boxsubmit-button-editGroupAllmodal button, body .boxsubmit-button-editGrou
 html .boxsubmit-button-editGroupAllmodal button:hover, body .boxsubmit-button-editGroupAllmodal button:hover {
   background-color: #37474f;
 }
+html #tableGroupAll, body #tableGroupAll {
+  width: 100%;
+}
 @media only screen and (max-width: 1024px) {
   html .row-input-doctorInputControllStudent, body .row-input-doctorInputControllStudent {
     display: block;
@@ -1069,9 +1090,14 @@ html .boxsubmit-button-editGroupAllmodal button:hover, body .boxsubmit-button-ed
   }
 }
 @media only screen and (max-width: 740px) {
+  html .body-content-groupStudent, body .body-content-groupStudent {
+    margin-top: 10px;
+    height: 95%;
+  }
   html .hander-content-groupStudent, body .hander-content-groupStudent {
     height: 10%;
     font-size: 13px;
+    margin: 10px;
   }
   html .input-year-groupStudent, html .input-search-groupStudent, body .input-year-groupStudent, body .input-search-groupStudent {
     width: 50%;
@@ -1081,7 +1107,8 @@ html .boxsubmit-button-editGroupAllmodal button:hover, body .boxsubmit-button-ed
     padding-left: 5px;
   }
   html .content-groupStudent, body .content-groupStudent {
-    height: 90%;
+    margin-top: 5px;
+    height: 80%;
   }
   html .btnAddDel-controll-student, body .btnAddDel-controll-student {
     height: 7%;
@@ -1114,10 +1141,17 @@ html .boxsubmit-button-editGroupAllmodal button:hover, body .boxsubmit-button-ed
     width: 20%;
     text-align: center;
   }
+  html #tableGroupAll, body #tableGroupAll {
+    font-size: 11px;
+  }
 }
 @media only screen and (max-width: 360px) {
   html .input-textadvisor-addDoctorMEQ, body .input-textadvisor-addDoctorMEQ {
     width: 80%;
+  }
+  html #tableGroupAll, body #tableGroupAll {
+    width: 350px;
+    font-size: 11px;
   }
 }
 html .body-contentwork, body .body-contentwork {
@@ -1357,7 +1391,6 @@ html .boxcontent-contentwork, body .boxcontent-contentwork {
   grid-template-columns: 90% 10%;
   width: 100%;
   height: 85%;
-  border: 5px solid red;
 }
 html .colbox-contentwork, body .colbox-contentwork {
   width: 100%;
@@ -1381,10 +1414,10 @@ html .col-info-contentwork, body .col-info-contentwork {
 }
 html .title-info-contentwork, body .title-info-contentwork {
   border-bottom: none;
-  display: flex;
+  display: block;
+  text-align: center;
   justify-content: center;
   align-items: center;
-  height: 25px;
   width: 100%;
   background-color: #607d8b;
 }
@@ -1393,7 +1426,7 @@ html .title-info-contentwork span, body .title-info-contentwork span {
 }
 html .infoBoxcol-relative-contentwork, body .infoBoxcol-relative-contentwork {
   width: 100%;
-  height: 100%;
+  height: 260px;
   scroll-snap-type: mandatory;
   overflow: auto;
   border-bottom: 2px solid #9e9e9e;
@@ -1633,45 +1666,47 @@ html #tableshowinfoestimation, body #tableshowinfoestimation {
   }
 }
 @media only screen and (max-height: 360px) {
+  html .body-contentwork, body .body-contentwork {
+    height: 95%;
+  }
   html .workest-info-contentwork, body .workest-info-contentwork {
     display: grid;
     grid-template-columns: 50% 50%;
-    border: 5px solid black;
+    height: 50%;
+  }
+  html .infoBoxcol-relative-contentwork, body .infoBoxcol-relative-contentwork {
+    height: 180px;
   }
   html #tableEstimationlist, html #tableinfodoctor, body #tableEstimationlist, body #tableinfodoctor {
     font-size: 11px;
   }
   html .row-info-contentwork, body .row-info-contentwork {
-    border: 5px solid burlywood;
-    height: 20%;
+    height: 50%;
   }
   html .boxcontent-contentwork, body .boxcontent-contentwork {
-    height: auto;
+    height: 90%;
+    scroll-snap-type: mandatory;
   }
   html .colbox-contentwork, body .colbox-contentwork {
     display: block;
-    height: 570px;
+    height: 265px;
   }
   html .boxworkestimation-contentwork, body .boxworkestimation-contentwork {
     display: block;
-    width: 90%;
+    width: 100%;
     margin: auto;
-    height: 165px;
-    border: 2px solid pink;
+    height: 100%;
   }
   html .boxworkinfoest-contentwork, body .boxworkinfoest-contentwork {
-    border: 2px solid green;
     display: block;
     width: 100%;
     height: 100%;
     margin: auto;
   }
   html .boxworkdoctorlist, body .boxworkdoctorlist {
-    border: 2px solid blue;
-    height: 80px;
+    height: 100%;
   }
   html .boxworkesttotle, body .boxworkesttotle {
-    border: 2px solid orangered;
     height: 80px;
   }
   html .header-contentwork, body .header-contentwork {
@@ -1679,6 +1714,7 @@ html #tableshowinfoestimation, body #tableshowinfoestimation {
   }
   html .menu-nav-contentwork, body .menu-nav-contentwork {
     height: 10%;
+    border: 5px solid orangered;
   }
   html .contentwork-year, body .contentwork-year {
     width: 25%;
@@ -1719,9 +1755,6 @@ html #tableshowinfoestimation, body #tableshowinfoestimation {
   html .boxcontent-btnmenu-contentwork, body .boxcontent-btnmenu-contentwork {
     height: 10%;
   }
-  html .header-contentwork, body .header-contentwork {
-    height: 5%;
-  }
   html .menu-nav-contentwork, body .menu-nav-contentwork {
     height: 5%;
   }
@@ -1730,9 +1763,6 @@ html #tableshowinfoestimation, body #tableshowinfoestimation {
   }
 }
 @media only screen and (max-width: 360px) {
-  html .workest-info-contentwork, body .workest-info-contentwork {
-    grid-template-columns: 50% 50%;
-  }
   html #tableEstimationlist, html #tableinfodoctor, html #tabletotleest, body #tableEstimationlist, body #tableinfodoctor, body #tabletotleest {
     font-size: 11px;
   }
@@ -2322,6 +2352,17 @@ html .box-menufile, body .box-menufile {
   width: 100%;
   height: auto;
   margin-top: 10px;
+}
+html .inputfile-pdf-filecontent, body .inputfile-pdf-filecontent {
+  display: none;
+}
+html .input-shownamefile-filecontent, body .input-shownamefile-filecontent {
+  display: block;
+  margin: 10px auto;
+  width: 80%;
+  height: 35px;
+  font-size: 16px;
+  border: 5px solid #9e9e9e;
 }
 html .box-showfile, body .box-showfile {
   width: 100%;
@@ -2915,13 +2956,13 @@ html .table-show-info thead, body .table-show-info thead {
   top: 0;
 }
 html .table-show-info th, body .table-show-info th {
-  border-right: 2px solid black;
+  border: 2px solid black;
   background-color: #607d8b;
   color: #fefefe;
   text-align: center;
 }
 html .table-show-info td, body .table-show-info td {
-  border-right: 2px solid black;
+  border: 2px solid black;
 }
 html .table-show-info > tbody > tr:hover td, body .table-show-info > tbody > tr:hover td {
   background-color: #01579b;
@@ -2965,16 +3006,10 @@ html .textarea-input-contentSetting, body .textarea-input-contentSetting {
   padding: 5px 10px;
   background-color: #e0e0e0;
 }
-html #tableGroupAll, body #tableGroupAll {
-  width: 100%;
-}
 html .tableshowworklisttype-setting, body .tableshowworklisttype-setting {
   width: 100%;
 }
 @media only screen and (max-width: 800px) {
-  html #tableGroupAll, body #tableGroupAll {
-    width: 550px;
-  }
   html .tableshowworklisttype-setting, body .tableshowworklisttype-setting {
     width: 650px;
   }

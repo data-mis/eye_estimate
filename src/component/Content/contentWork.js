@@ -7,7 +7,10 @@ import { dayofmonth, objectMonth, showMonthwithTH } from "../config/monthth";
 import Cookies from "universal-cookie";
 import Spinnerpage from "../config/spinnerpage";
 import FetchControlWork from "../data/fetchControlWork";
-import { HolderlineonTable } from "../config/holdlinetable";
+import {
+  HolderlineonTable,
+  clearHolderlineTable,
+} from "../config/holdlinetable";
 import { searchGroupcontent, searchStudent } from "../config/searchConfig";
 
 const ContentWork = (props) => {
@@ -50,6 +53,7 @@ const ContentWork = (props) => {
   const [getstudentwork, setGetstudentwork] = useState([]);
   const [gettopicwork, setGettopicwork] = useState([]);
   const [datasearchstudent, setDatasearchstudent] = useState([]);
+  const [dataselectworkinfo, setDataselectworkinfo] = useState("");
 
   //เก็บwork
   const [inputtypeestimation, setInputtypeestimation] = useState({
@@ -2149,6 +2153,8 @@ const ContentWork = (props) => {
                           className="tableTR-worksheet"
                           id={`tr-worksheet-${index}`}
                           onClick={() => {
+                            clearHolderlineTable("tableTR-workinfosheet");
+                            setDataselectworkinfo("");
                             HolderlineonTable(
                               "tableTR-worksheet",
                               "tr-worksheet-",
@@ -2228,7 +2234,17 @@ const ContentWork = (props) => {
                           filtergetwork.map((data, index) => {
                             console.log("datafiltercontent", data);
                             return (
-                              <tr key={index}>
+                              <tr
+                                key={index}
+                                onClick={() => {
+                                  console.log("this line info >>>", data);
+                                  // HolderlineonTable(
+                                  //   "tableTR-worksheet",
+                                  //   "tr-worksheet-",
+                                  //   index
+                                  // );
+                                }}
+                              >
                                 <td width={120}>{data.date}</td>
                                 <td
                                   width={120}
@@ -2270,7 +2286,20 @@ const ContentWork = (props) => {
                       ) : (
                         getworkgetwork.map((data, index) => {
                           return (
-                            <tr key={index}>
+                            <tr
+                              key={index}
+                              className="tableTR-workinfosheet"
+                              id={`tr-workinfosheet-${index}`}
+                              onClick={() => {
+                                console.log("this line info >>>", data);
+                                HolderlineonTable(
+                                  "tableTR-workinfosheet",
+                                  "tr-workinfosheet-",
+                                  index
+                                );
+                                setDataselectworkinfo(data);
+                              }}
+                            >
                               <td width={120}>{data.date}</td>
                               <td
                                 width={120}
@@ -2283,7 +2312,7 @@ const ContentWork = (props) => {
                                   onClick={() => {
                                     console.log("UPPPP");
                                     props.upfile("file");
-                                    props.idwork(data.Id);
+                                    props.workinfoselected(data);
                                   }}
                                 >
                                   <i className="bi-chevron-up"></i>
@@ -2474,7 +2503,15 @@ const ContentWork = (props) => {
             </button>
           </div>
           <div className="boxcontent-btnmenu-contentwork">
-            <button className="btn-menu-contentwork" type="button">
+            <button
+              className="btn-menu-contentwork"
+              type="button"
+              onClick={() => {
+                if (dataselectworkinfo) {
+                  console.log("เอาละนะ จะลบแล้วนะ", dataselectworkinfo);
+                }
+              }}
+            >
               {"ลบ"}
             </button>
           </div>

@@ -627,10 +627,10 @@ const ContentGroupStudent = (props) => {
                           );
                         }}
                       >
-                        <td width={200}>{`${data.name}`}</td>
-                        <td width={150}>{`${data.start}`}</td>
-                        <td width={150}>{`${data.stop}`}</td>
-                        <td width={50}>
+                        <td >{`${data.name}`}</td>
+                        <td >{`${data.start}`}</td>
+                        <td >{`${data.stop}`}</td>
+                        <td>
                           <button
                             type="button"
                             onClick={() => {

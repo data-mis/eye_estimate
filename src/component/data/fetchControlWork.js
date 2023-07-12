@@ -142,5 +142,31 @@ const FetchControlWork = {
       throw error;
     }
   },
+  fetchUpstudentfilework: async function (info, token) {
+    let request = requestOption("post", info, token);
+    let http = `${HttpConfig()}/work/upload_image_student_file`;
+
+    try {
+      let upmessage = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return upmessage;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchDelStudentfilework: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/delete_student_file`;
+
+    try {
+      let delmessage = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return delmessage;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default FetchControlWork;

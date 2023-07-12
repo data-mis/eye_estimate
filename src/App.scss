@@ -252,7 +252,6 @@ $colorBGnav:#e0e0e0;
     }
     .show-content-box{
         width: 100%;
-        height: 94%;
     }
     .header-navigatepage{
         height: 5%;
@@ -262,6 +261,11 @@ $colorBGnav:#e0e0e0;
     }
     .btn-header-menuBar{
         display: block;
+    }
+}
+@media only screen and (max-height:360px) {
+    .show-content-box{
+        height: 90vh;
     }
 }
 }
@@ -517,6 +521,10 @@ $colorBGnav:#e0e0e0;
     }
 }
 @media only screen and (max-width:720px){
+    .body-content-ctStudent{
+        margin-top: 10px;
+        height: 95%;
+    }
     .header-show-contentStudent{
         height: 25px;
         top: 3%;
@@ -730,6 +738,9 @@ $colorBGnav:#e0e0e0;
         font-size: 18px;
     }
 @media only screen and (max-width:720px) {
+    .body-content-ctDoctor{
+        margin-top: 10px;
+    }
     .nav-content-ctDoctor{
         height: 10%;
         display: grid;
@@ -775,8 +786,14 @@ $colorBGnav:#e0e0e0;
         scroll-snap-type: mandatory;
         overflow: auto;
     }
+    .body-content-ctDoctor{
+        height: 95%;
+    }
 }
 @media only screen and (max-width:360px){
+    .body-content-ctDoctor{
+        height: 95%;
+    }
     .nav-content-ctDoctor{
         height: 5%;
     }
@@ -816,6 +833,7 @@ $colorBGnav:#e0e0e0;
         }
             .relative-btnBox{
                 height: 25px;
+                position: relative;
             }
             .yearControllup{
                 font-size: 8px;
@@ -1106,7 +1124,9 @@ $colorBGnav:#e0e0e0;
         .boxsubmit-button-editGroupAllmodal button:hover{
             background-color: $colorBTNbghover;
         }
-
+    #tableGroupAll{
+        width: 100%;
+    }
 
 
 @media only screen and (max-width:1024px){
@@ -1122,9 +1142,14 @@ $colorBGnav:#e0e0e0;
    
 }
 @media only screen and (max-width:740px) {
+    .body-content-groupStudent{
+        margin-top: 10px;
+        height: 95%;
+    }
     .hander-content-groupStudent{
         height: 10%;
         font-size: 13px;
+        margin: 10px;
     }
     .input-year-groupStudent,.input-search-groupStudent{
         width: 50%;
@@ -1135,7 +1160,8 @@ $colorBGnav:#e0e0e0;
     }
 
     .content-groupStudent{
-        height: 90%;
+        margin-top: 5px;
+        height: 80%;
     }
     .btnAddDel-controll-student{
         height: 7%;
@@ -1168,10 +1194,17 @@ $colorBGnav:#e0e0e0;
         width: 20%;
         text-align: center;
     }
+    #tableGroupAll{
+        font-size: 11px;
+    }
 }
 @media only screen and (max-width:360px) {
   .input-textadvisor-addDoctorMEQ{
     width: 80%;
+  }
+  #tableGroupAll{
+    width: 350px;
+    font-size: 11px;
   }
 }
 
@@ -1415,7 +1448,6 @@ $colorBGnav:#e0e0e0;
         grid-template-columns: 90% 10%;
         width: 100%;
         height: 85%;
-        border: 5px solid red;
     }
     .colbox-contentwork{
         width: 100%;
@@ -1439,10 +1471,10 @@ $colorBGnav:#e0e0e0;
         }
         .title-info-contentwork{
             border-bottom: none;
-            display: flex;
+            display: block;
+            text-align: center;
             justify-content: center;
             align-items: center;
-            height: 25px;
             width: 100%;
             background-color: $colorBGmenu;
         }
@@ -1451,7 +1483,7 @@ $colorBGnav:#e0e0e0;
             }
         .infoBoxcol-relative-contentwork{
             width: 100%;
-            height: 100%;
+            height: 260px;
             scroll-snap-type: mandatory;
             overflow: auto;
             border-bottom:2px solid $colorBorderDrop;
@@ -1700,47 +1732,51 @@ $colorBGnav:#e0e0e0;
 }
 //แนวนอนมือถือ
 @media only screen and (max-height:360px){
+    .body-contentwork{
+        height: 95%;
+    }
     .workest-info-contentwork{
         display: grid;
         grid-template-columns: 50% 50%;
-        border: 5px solid black;
+        height: 50%;
 
+    }
+    .infoBoxcol-relative-contentwork{
+        height: 180px;
     }
     #tableEstimationlist,#tableinfodoctor{
         font-size: 11px;
     }
     .row-info-contentwork{
-        border: 5px solid burlywood;
-        height: 20%;
+        height: 50%;
     }
     .boxcontent-contentwork{
-        // border: 2px solid red;
-        height: auto;
+        height: 90%;
+        scroll-snap-type: mandatory;
+        // display: none;
     }
     .colbox-contentwork{
         display: block;
-        height: 570px;
+        height: 265px;
     }
     .boxworkestimation-contentwork{
         display: block;
-        width: 90%;
+        width: 100%;
         margin: auto;
-        height: 165px;
-        border: 2px solid pink;
+        height: 100%;
+        // border: 2px solid pink;
     }
     .boxworkinfoest-contentwork{
-        border: 2px solid green;
         display: block;
         width: 100%;
         height: 100%;
         margin: auto;
     }
     .boxworkdoctorlist{
-        border: 2px solid blue;
-        height: 80px;
+        height: 100%;
     }
     .boxworkesttotle{
-        border: 2px solid orangered;
+        // border: 2px solid orangered;
         height: 80px;
     }
     .header-contentwork{
@@ -1748,6 +1784,7 @@ $colorBGnav:#e0e0e0;
     }
     .menu-nav-contentwork{
         height: 10%;
+        border: 5px solid orangered;
     }
     .contentwork-year{
         width: 25%;
@@ -1788,9 +1825,6 @@ $colorBGnav:#e0e0e0;
     .boxcontent-btnmenu-contentwork{
         height: 10%;
     }
-    .header-contentwork{
-        height: 5%;
-    }
     .menu-nav-contentwork{
         height: 5%;
     }
@@ -1800,9 +1834,6 @@ $colorBGnav:#e0e0e0;
 }
 //แนวตั้งมือถือ
 @media only screen and (max-width:360px){
-    .workest-info-contentwork{
-        grid-template-columns: 50% 50%;
-    }
     #tableEstimationlist,#tableinfodoctor,#tabletotleest{
         font-size: 11px;
     }
@@ -2416,6 +2447,17 @@ $colorBGnav:#e0e0e0;
         height: auto;
         margin-top: 10px;
     }
+        .inputfile-pdf-filecontent{
+            display: none;
+        }
+        .input-shownamefile-filecontent{
+            display: block;
+            margin: 10px auto;
+            width: 80%;
+            height: 35px;
+            font-size: 16px;
+            border: 5px solid $colorBorderDrop;
+        }
     .box-showfile{
         width: 100%;
         height: 440px;
@@ -3012,15 +3054,15 @@ $colorBGnav:#e0e0e0;
                 top: 0;
             }
                 th{
-                    // border: 2px solid black;
-                    border-right: 2px solid black;
+                    border: 2px solid black;
+                    // border-right: 2px solid black;
                     background-color: #607d8b;
                     color: #fefefe;
                     text-align: center;
                 }      
                 td{
-                    // border: 2px solid black;
-                    border-right: 2px solid black;
+                    border: 2px solid black;
+                    // border-right: 2px solid black;
                 }
        }
        .table-show-info>tbody>tr:hover td{
@@ -3066,16 +3108,10 @@ $colorBGnav:#e0e0e0;
             padding: 5px 10px;
             background-color: $colorBGnav
         }
-    #tableGroupAll{
-        width: 100%;
-    }
     .tableshowworklisttype-setting{
         width: 100%;
     }
 @media only screen and (max-width:800px) {
-    #tableGroupAll{
-        width: 550px;
-    }
     .tableshowworklisttype-setting{
         width: 650px;
     }

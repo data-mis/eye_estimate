@@ -16,7 +16,7 @@ const NavigationPage = () => {
   const navigat = useNavigate();
 
   const [modeContent, setModeContent] = useState("");
-  const [workId, setWorkId] = useState("");
+  const [selectworkinfo, setSelectworkinfo] = useState("");
   const [statusClosemenu, setstatusClosemenu] = useState(false);
   const [openModalSlide, setOpenModalSlide] = useState(true);
   const [dataContent, setDataContent] = useState();
@@ -64,7 +64,10 @@ const NavigationPage = () => {
       case "workDoctor":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
         return (
-          <ContentWork upfile={setModeContent} idwork={setWorkId}></ContentWork>
+          <ContentWork
+            upfile={setModeContent}
+            workinfoselected={setSelectworkinfo}
+          ></ContentWork>
         );
 
       case "assessmentForm":
@@ -78,7 +81,7 @@ const NavigationPage = () => {
       case "file":
         return (
           <ContentFile
-            workid={workId}
+            selectinfo={selectworkinfo}
             backtowork={setModeContent}
           ></ContentFile>
         );
