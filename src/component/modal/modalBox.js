@@ -1,21 +1,22 @@
 const ModalBox = (props) => {
+  const { idbox, content, thisTitle, styleconfigbody, styleconfignav } = props;
   const handleCloseModalBox = () => {
-    document.getElementById(props.idbox).style.display = "none";
+    document.getElementById(idbox).style.display = "none";
     props.statusClose(true);
   };
 
   return (
-    <div className="modal-box" id={`${props.idbox}`}>
-      <div className="modal-box-body" style={props.styleconfigbody}>
-        <nav className="header-nav-modalBox" style={props.styleconfignav}>
+    <div className="modal-box" id={idbox}>
+      <div className="modal-box-body" style={styleconfigbody}>
+        <nav className="header-nav-modalBox" style={styleconfignav}>
           <div className="header-col">
-            <span>{props.thisTitle}</span>
+            <span>{thisTitle}</span>
           </div>
           <div className="header-col">
             <button
               type="button"
               className="btn-modalbox-close"
-              id={`thisbtnModalboxClose-${props.idbox}`}
+              id={`thisbtnModalboxClose-${idbox}`}
               onClick={() => {
                 handleCloseModalBox();
               }}
@@ -24,7 +25,7 @@ const ModalBox = (props) => {
             </button>
           </div>
         </nav>
-        <div className="content-modal-box">{props.content}</div>
+        <div className="content-modal-box">{content}</div>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import {
   clearHolderlineTable,
 } from "../config/holdlinetable";
 import { searchGroupcontent, searchStudent } from "../config/searchConfig";
+import Swal from "sweetalert2";
 
 const ContentWork = (props) => {
   const docGetId = (id) => {
@@ -1369,6 +1370,7 @@ const ContentWork = (props) => {
       });
       handleCheckShowSpecialType(data[0].code);
       setSelectDataworktype(data[0].Id);
+      setSelectCodework(data[0].code)
       handleCheckDayformonth(
         selectYear - 543,
         selectMonth,
@@ -1674,6 +1676,7 @@ const ContentWork = (props) => {
 
   const handleSubmitEditwork = (token) => {
     let casecode = editTypesheetwork.code;
+    console.log("case >>>", casecode);
     console.log("look this null>>", editstudentEst);
     switch (casecode) {
       case "01":
@@ -1692,11 +1695,12 @@ const ContentWork = (props) => {
         console.log("edit progressnote >>", editobjectprogressnote);
         docGetId("boxEditworkDoctor").style.display = "none";
         editDetailinputclear();
-        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        FetchControlWork.fetchEditdetailwork(
+          editobjectprogressnote,
+          token
+        ).then((message) => {
+          console.log(message);
+        });
         break;
       case "03":
         let editobjectOPDteaching = {
@@ -1712,7 +1716,7 @@ const ContentWork = (props) => {
         console.log("edit opd teaching>>", editobjectOPDteaching);
         docGetId("boxEditworkDoctor").style.display = "none";
         editDetailinputclear();
-        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+        FetchControlWork.fetchEditdetailwork(editobjectOPDteaching, token).then(
           (message) => {
             console.log(message);
           }
@@ -1753,11 +1757,12 @@ const ContentWork = (props) => {
         console.log("edit caseshow >>", editobjectcasttopicshow);
         docGetId("boxEditworkDoctor").style.display = "none";
         editDetailinputclear();
-        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        FetchControlWork.fetchEditdetailwork(
+          editobjectcasttopicshow,
+          token
+        ).then((message) => {
+          console.log(message);
+        });
         break;
       case "06":
         let editobjectcasecoop = {
@@ -1774,7 +1779,7 @@ const ContentWork = (props) => {
         console.log("edit edit casecoop", editobjectcasecoop);
         docGetId("boxEditworkDoctor").style.display = "none";
         editDetailinputclear();
-        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+        FetchControlWork.fetchEditdetailwork(editobjectcasecoop, token).then(
           (message) => {
             console.log(message);
           }
@@ -1795,7 +1800,7 @@ const ContentWork = (props) => {
         console.log("edit flipped classroom >>", objectflipped);
         docGetId("boxEditworkDoctor").style.display = "none";
         editDetailinputclear();
-        FetchControlWork.fetchEditdetailwork(editobjectwardround, token).then(
+        FetchControlWork.fetchEditdetailwork(objectflipped, token).then(
           (message) => {
             console.log(message);
           }
@@ -1805,6 +1810,7 @@ const ContentWork = (props) => {
   };
 
   const handlecaseEditwork = (code, aData) => {
+    console.log(">>>>", aData);
     setWorkIdeditwork(aData.Id);
     setEditTypesheetwork({
       id: aData.sheet_id,
@@ -2322,6 +2328,7 @@ const ContentWork = (props) => {
                                 <button
                                   onClick={() => {
                                     console.log("this a data=>", data);
+                                    console.log("this >>>", selectCodework);
                                     setDataeditwork(data);
                                     setStatusEditwork(true);
                                     handlecaseEditwork(selectCodework, data);
@@ -2508,7 +2515,29 @@ const ContentWork = (props) => {
               type="button"
               onClick={() => {
                 if (dataselectworkinfo) {
-                  console.log("เอาละนะ จะลบแล้วนะ", dataselectworkinfo);
+                  Swal.fire({
+                    title: "ลบข้อมูลการประเมิน",
+                    text: "ต้องการลบข้อมูลที่เลือกไว้หรือไม่ ???",
+                    icon: "question",
+                    showConfirmButton: true,
+                    confirmButtonText: "ตกลง",
+                    confirmButtonColor: "#558b2f",
+                    showCancelButton: true,
+                    cancelButtonText: "ยกเลิก",
+                    cancelButtonColor: "#e51c23",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      console.log("เอาละนะ จะลบแล้วนะ", dataselectworkinfo);
+                    }
+                  });
+                } else {
+                  Swal.fire({
+                    title: "ลบข้อมูลการประเมิน",
+                    text: "ยังไม่มีการเลือกข้อมูลการประเมินที่จะทำการลบ !!!",
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer: 1700,
+                  });
                 }
               }}
             >

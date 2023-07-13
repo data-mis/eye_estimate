@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import FetchControlWork from "../data/fetchControlWork";
 import Cookies from "universal-cookie";
+import Swal from "sweetalert2";
+import moment from "moment";
+import { HolderlineonTable } from "../config/holdlinetable";
 
 const ContentFile = (props) => {
   const cookies = new Cookies();
@@ -11,7 +14,7 @@ const ContentFile = (props) => {
   const [infostudentfile, setInfostudentfile] = useState([]);
   const [urlpdf, setUrlpdf] = useState("");
   const [infofilename, setInfofilename] = useState({ filename: "", date: "" });
-  const [filenameselect, setFilenameselect] = useState("");
+  const [idfile, setIdfile] = useState("");
 
   const PDFviewer = () => {
     // const url = `https://www.orimi.com/pdf-test.pdf`;
@@ -25,19 +28,78 @@ const ContentFile = (props) => {
     let thisFile = fileSelectPDF.current.files[0];
     console.log("filepdf >>>", thisFile);
 
-    // จะตั้งชื่อไฟล์ เอาไป โชว์แสดงผล
-    // setFilenameselect
+    Swal.fire({
+      titleText: `อัพโหลดไฟล์ \n${thisFile.name}`,
+      icon: "question",
+      showDenyButton: true,
+      confirmButtonColor: "#558b2f",
+      denyButtonColor: "#d01716",
+      confirmButtonText: "อัพโหลด",
+      denyButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let filepdf = new File([thisFile], `${thisFile.name}`, {
+          type: thisFile.type,
+        });
 
-    let filepdf = new File([thisFile], `${thisFile.name}`, {
-      type: thisFile.type,
+        let filesend = new FormData();
+        filesend.append("file", filepdf);
+        filesend.append("work_id", infowork.Id);
+        filesend.append("work_date", moment(new Date()).format("YYYY-MM-DD"));
+        filesend.append("student_id", infowork.student_id);
+        filesend.append("grp_id", infowork.grp_id);
+
+        FetchControlWork.fetchUpstudentfilework(filesend, usertoken);
+
+        // document.getElementById("modalProgressbar").style.display = "block";
+
+        Swal.fire({
+          // title: "อัพโหลดไฟล์",
+          // text: "อัพโหลดไฟล์แล้วเรียบร้อย",
+          showConfirmButton: false,
+          icon: "success",
+          timer: 1700,
+          background: "none",
+        });
+      } else {
+        console.log("ยกเลิกอัพ");
+      }
     });
+  };
 
-    let filesend = new FormData();
-    filesend.append("file", filepdf);
-    filesend.append("work_id", infowork.Id);
-    filesend.append("work_date", new Date());
-    filesend.append("student_id", infowork.student_id);
-    filesend.append("grp_id", infowork.grp_id);
+  const handleDeleteFile = (workid) => {
+    if (workid) {
+      let object = { id: workid };
+      console.log(object);
+      Swal.fire({
+        title: "เลือกลบไฟล์",
+        text: "ต้องการลบข้อมูลหรือไม่ ???",
+        icon: "question",
+        showConfirmButton: true,
+        showDenyButton: true,
+        confirmButtonText: "ตกลง",
+        denyButtonText: "ยกเลิก",
+        confirmButtonColor: "#558b2f",
+        denyButtonColor: "#d01716",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log("ลบไฟล์");
+          // FetchControlWork.fetchDelStudentfilework(object, usertoken).then(
+          //   (data) => {
+          //     console.log(data);
+          //   }
+          // );
+        }
+      });
+    } else {
+      Swal.fire({
+        title: "เลือกลบไฟล์",
+        text: "ยังไม่ได้เลือกไฟล์ที่จะทำการลบ!!!",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 1700,
+      });
+    }
   };
 
   const handlegetstudentfile = (workid) => {
@@ -49,6 +111,21 @@ const ContentFile = (props) => {
       setInfostudentfile(data);
       console.log(data);
     });
+  };
+
+  const handleshowstudentimage = (idwork, workDate, namefile) => {
+    let object = {
+      work_id: idwork,
+      work_date: workDate,
+      file_name: namefile,
+    };
+    // console.log("!->", object);
+    FetchControlWork.fetchgetimagestudentfile(object, usertoken).then(
+      (data) => {
+        console.log(">>>>>", data);
+        setUrlpdf(`http://${data.url}`);
+      }
+    );
   };
 
   const handleopendropdownlistpdf = (mode) => {
@@ -118,17 +195,15 @@ const ContentFile = (props) => {
               >
                 {"เพิ่ม"}
               </button>
-              <button className="btn-menubtn-filecontent btn-del-filecontent">
+              <button
+                className="btn-menubtn-filecontent btn-del-filecontent"
+                onClick={() => {
+                  console.log("ลบ");
+                  handleDeleteFile(idfile);
+                }}
+              >
                 {"ลบ"}
               </button>
-            </div>
-            <div>
-              <input
-                className="input-shownamefile-filecontent"
-                type="text"
-                value={filenameselect}
-                readOnly
-              ></input>
             </div>
           </div>
           <div className="box-showfile">
@@ -139,6 +214,7 @@ const ContentFile = (props) => {
                   return (
                     <div
                       className="card-info-filecontent"
+                      id={`cardfileinfo-${index}`}
                       key={index}
                       style={
                         infofilename.filename === data.file_real
@@ -146,12 +222,24 @@ const ContentFile = (props) => {
                           : {}
                       }
                       onClick={() => {
-                        setUrlpdf("https://www.orimi.com/pdf-test.pdf");
-                        handleopendropdownlistpdf(boxdroplistinfo);
-                        setInfofilename({
-                          filename: data.file_real,
-                          date: data.date,
-                        });
+                        console.log(data);
+                        HolderlineonTable(
+                          "card-info-filecontent",
+                          "cardfileinfo-",
+                          index
+                        );
+                        setIdfile(data.Id);
+                        handleshowstudentimage(
+                          props.selectinfo.Id,
+                          data.work_date,
+                          data.file_name
+                        );
+                        // setUrlpdf("https://www.orimi.com/pdf-test.pdf");
+                        // handleopendropdownlistpdf(boxdroplistinfo);
+                        // setInfofilename({
+                        //   filename: data.file_real,
+                        //   date: data.date,
+                        // });
                       }}
                     >
                       <span>{data.file_real}</span>
@@ -258,6 +346,10 @@ const ContentFile = (props) => {
         </div>
         <div className="show-file-filecontent">{PDFviewer()}</div>
       </div>
+      {/* <ModalBox
+        idbox={"modalProgressbar"}
+        content={Contentprogressbar()}
+      ></ModalBox> */}
     </div>
   );
 };

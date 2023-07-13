@@ -2453,9 +2453,10 @@ $colorBGnav:#e0e0e0;
         .input-shownamefile-filecontent{
             display: block;
             margin: 10px auto;
-            width: 80%;
-            height: 35px;
+            width: 90%;
+            height: auto;
             font-size: 16px;
+            font-weight: bold;
             border: 5px solid $colorBorderDrop;
         }
     .box-showfile{

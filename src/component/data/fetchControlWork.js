@@ -142,15 +142,25 @@ const FetchControlWork = {
       throw error;
     }
   },
-  fetchUpstudentfilework: async function (info, token) {
-    let request = requestOption("post", info, token);
+  fetchUpstudentfilework: async function (form, token) {
+    let request = {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: form,
+    };
     let http = `${HttpConfig()}/work/upload_image_student_file`;
 
     try {
-      let upmessage = await fetch(http, request).then((res) => {
-        return res.json();
-      });
-      return upmessage;
+      // let messageup = await fetch(request, http).then((res) => {
+      //   return res.json();
+      // });
+      // return messageup;
+
+      await fetch(http, request).then((res) =>
+        res.json().then((data) => {
+          console.log(data);
+        })
+      );
     } catch (error) {
       throw error;
     }
@@ -164,6 +174,19 @@ const FetchControlWork = {
         return res.json();
       });
       return delmessage;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchgetimagestudentfile: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/get_image_student_file`;
+
+    try {
+      let resImage = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return resImage;
     } catch (error) {
       throw error;
     }
