@@ -5,19 +5,90 @@ import FetchControlSetting from "../data/fetchControlSetting";
 import Cookies from "universal-cookie";
 import Spinnerpage from "../config/spinnerpage";
 import { HolderlineonTable } from "../config/holdlinetable";
+import Swal from "sweetalert2";
 
 const ContentSetting = () => {
   const cookie = new Cookies();
   const usertoken = cookie.get("token");
 
+  const [idsheetworktype, setIdsheetworktype] = useState("");
+  const [idsheetdetail, setIdsheetdetail] = useState("");
+
   const [dataworklisttype, setDataworklisttype] = useState([]);
   const [dataHeaderlist, setDataHeaderlist] = useState([]);
+  const [dataDetaillist, setDataDetaillist] = useState([]);
+  const [dataChoicedetail, setDataChoicedetail] = useState([]);
 
   const [statusCloseMDLeditHDdoc, setStatusCloseMDLeditHDdoc] = useState(false);
   const [statusCloseModalAdddoc, setStatusCloseModalAdddoc] = useState(false);
 
+  //detailobj
+  const [objdetailId, setObjdetailId] = useState({ id: "", result: "" });
+  const [objdetailrealscore, setObjdetailrealscore] = useState({
+    id: "",
+    result: "",
+  });
+  const [objdetailscore, setObjdetailscore] = useState({ id: "", result: "" });
+  const [objdetailscoretype, setObjdetailscoretype] = useState({
+    id: "",
+    result: "",
+  });
+  const [objdetailsheetid, setObjdetailsheetid] = useState({
+    id: "",
+    result: "",
+  });
+  const [objdetailtxt, setObjdetailtxt] = useState({ id: "", result: "" });
+
   const docGetId = (id) => {
     return document.getElementById(id);
+  };
+  const addDetailsheet = (sheetid, token) => {
+    let objectSheetid = {
+      sheet_id: sheetid,
+    };
+    Swal.fire({
+      title: "เพิ่มรายละเอียด sheet !!",
+      text: "ต้องการเพิ่มรายละเอียด sheet ใช่หรือไม่ ??",
+      icon: "question",
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "ตกลง",
+      cancelButtonText: "ยกเลิก",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        console.log("ob sheetid", objectSheetid);
+        // FetchControlSetting.fetchaddsheetdetail(objectSheetid, token).then(
+        //   (message) => {
+        //     console.log(message);
+        //   }
+        // );
+      }
+    });
+  };
+
+  const delDetailsheet = (detailid, token) => {
+    if (!detailid) return;
+    let objectdetailid = {
+      id: detailid,
+    };
+    Swal.fire({
+      title: "ลบรายละเอียด sheet !!",
+      text: "ต้องการลบรายละเอียดที่เลือกหรือไม่ ?",
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "ตกลง",
+      cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("ต้องการลบ ทำงานต่อ");
+        console.log(objectdetailid);
+        FetchControlSetting.fetchdelsheetdetail(objectdetailid, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+      }
+    });
   };
 
   const handleAddDocument = () => {
@@ -84,14 +155,72 @@ const ContentSetting = () => {
 
   const handleGetWorklisttype = (token) => {
     FetchControlSetting.fetchSettingworklistdata(token).then((data) => {
-      console.log("listworktype::>", data);
+      // console.log("listworktype::>", data);
       setDataworklisttype(data);
+      setIdsheetworktype(data[0].Id);
+      setTimeout(() => {
+        HolderlineonTable(
+          "tableTR-setting-worklisttype",
+          `tr-settingworklisttype-`,
+          0
+        );
+      }, 500);
     });
+  };
+
+  const handleGetHeadsheet = (sheetid, token) => {
+    let objectheadid = {
+      sheet_id: sheetid,
+    };
+    // console.log("thisobjectheadid>>>", objectheadid);
+    FetchControlSetting.fetchSettingHeadsheet(objectheadid, token).then(
+      (data) => {
+        // console.log("headdata>>>", data);
+        setDataHeaderlist(data);
+      }
+    );
+  };
+
+  const handleGetsheetdetail = (sheetid, token) => {
+    let objectdetailsheet = {
+      sheet_id: sheetid,
+    };
+    FetchControlSetting.fetchgetsheetdetail(objectdetailsheet, token).then(
+      (data) => {
+        console.log("data detail this >>", data);
+        setDataDetaillist(data);
+      }
+    );
+  };
+
+  const handleGetChoicedetail = (detailId, token) => {
+    let objectdetailId = {
+      sheet_detail_id: detailId,
+    };
+    // console.log("this ob detailId->>", objectdetailId);
+    FetchControlSetting.fetchgetsheetchoice(objectdetailId, token).then(
+      (data) => {
+        console.log("data choice >>>", data);
+        setDataChoicedetail(data);
+      }
+    );
+  };
+
+  const handleEditSheetdetail = (id) => {
+    if (objdetailId.id === id) {
+      console.log("ข้อมูลเก็บมา", objdetailId);
+    }
   };
 
   useEffect(() => {
     handleGetWorklisttype(usertoken);
   }, []);
+
+  useEffect(() => {
+    if (!idsheetworktype) return;
+    handleGetHeadsheet(idsheetworktype, usertoken);
+    handleGetsheetdetail(idsheetworktype, usertoken);
+  }, [idsheetworktype]);
 
   return (
     <div className="body-contentSetting">
@@ -109,8 +238,22 @@ const ContentSetting = () => {
               </button>
             </div>
             <div className="col-btnboxheader">
-              <button type="button">{"เพิ่มรายละเอียด"}</button>
-              <button type="button">{"ลบรายละเอียด"}</button>
+              <button
+                type="button"
+                onClick={() => {
+                  addDetailsheet(idsheetworktype, usertoken);
+                }}
+              >
+                {"เพิ่มรายละเอียด"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  delDetailsheet(idsheetdetail, usertoken);
+                }}
+              >
+                {"ลบรายละเอียด"}
+              </button>
             </div>
           </div>
         </div>
@@ -124,6 +267,7 @@ const ContentSetting = () => {
           </button>
         </div>
       </div>
+      {/* ขนาดมือถือ */}
       <div className="moblie-contentSetting">
         {/* ส่วนของชนิดการประเมิน */}
         <div className="box-table-type">
@@ -306,6 +450,7 @@ const ContentSetting = () => {
                               `tr-settingworklisttype-`,
                               index
                             );
+                            setIdsheetworktype(data.Id);
                           }}
                         >
                           <td width={"50%"}>{data.name}</td>
@@ -352,32 +497,52 @@ const ContentSetting = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td width={250}>
-                      <input
-                        className="input-editnormal-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td width={150}>
-                      <input
-                        className="input-editnormal-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td width={150}>
-                      <input
-                        className="input-editnormal-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td width={100}>
-                      <button
-                        className="input-editnormal-tableShowinfo"
-                        type="button"
-                      ></button>
-                    </td>
-                  </tr>
+                  {dataHeaderlist.map((data, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className="tableshow-headinfo"
+                        id={`trshow-headinfo-${index}`}
+                        onClick={() => {
+                          HolderlineonTable(
+                            "tableshow-headinfo",
+                            "trshow-headinfo-",
+                            index
+                          );
+                        }}
+                      >
+                        <td width={250}>
+                          <input
+                            className="input-editnormal-tableShowinfo"
+                            type="text"
+                            defaultValue={data.txt.trim()}
+                          ></input>
+                        </td>
+                        <td width={150}>
+                          <input
+                            className="input-editnormal-tableShowinfo"
+                            type="text"
+                            defaultValue={data.type.trim()}
+                          ></input>
+                        </td>
+                        <td width={150}>
+                          <input
+                            className="input-editnormal-tableShowinfo"
+                            type="text"
+                            defaultValue={data.no.trim()}
+                          ></input>
+                        </td>
+                        <td width={100}>
+                          <button
+                            className="button-editnormal-tableShowinfo"
+                            type="button"
+                          >
+                            save
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -390,51 +555,102 @@ const ContentSetting = () => {
             <textarea className="textarea-contentSetting"></textarea>
           </div>
         </div>
+        {/* ขนาดทั่วไป */}
         <div className="col-normal-contentSetting">
           {/* รายละเอียด */}
           <div className="normal-middle-tabletype">
-            <div className="tablebox-normaltabletype">
-              <table className="table-show-info">
-                <thead>
-                  <tr>
-                    <th>{"รายละเอียด"}</th>
-                    <th>{"Score"}</th>
-                    <th>{"R.score"}</th>
-                    <th>{"Type"}</th>
-                    <th>{"แก้ไข"}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <textarea className="textarea-input-contentSetting"></textarea>
-                    </td>
-                    <td>
-                      <input
-                        className="input-edit-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td>
-                      <input
-                        className="input-edit-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td>
-                      <input
-                        className="input-edit-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td>
-                      <button className="btn-edit-Detail" type="button">
-                        <i className="bi-three-dots"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="tablebox-normaltabletype boxDetail-tablebox-normaltabletype">
+              {dataDetaillist[0] ? (
+                <table className="table-show-info">
+                  <thead>
+                    <tr>
+                      <th>{"รายละเอียด"}</th>
+                      <th>{"Score"}</th>
+                      <th>{"R.score"}</th>
+                      <th>{"Type"}</th>
+                      <th>{"แก้ไข"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataDetaillist.map((data, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className="tableshow-detail-setting"
+                          id={`tr-detailsheet-${index}`}
+                          onClick={() => {
+                            HolderlineonTable(
+                              "tableshow-detail-setting",
+                              "tr-detailsheet-",
+                              index
+                            );
+                            setIdsheetdetail(data.Id);
+                            handleGetChoicedetail(data.Id, usertoken);
+                          }}
+                        >
+                          <td>
+                            <textarea
+                              className="textarea-input-contentSetting"
+                              defaultValue={data.txt ? data.txt.trim() : ""}
+                              rows={5}
+                              cols={40}
+                              onChange={(e) => {
+                                setObjdetailId({
+                                  id: data.Id,
+                                  reuslt: e.target.value,
+                                });
+                              }}
+                            ></textarea>
+                          </td>
+                          <td>
+                            <input
+                              className="input-edit-tableShowinfo"
+                              type="text"
+                              defaultValue={data.score ? data.score.trim() : ""}
+                              onChange={(e) => {
+                                console.log(e.target.value);
+                              }}
+                            ></input>
+                          </td>
+                          <td>
+                            <input
+                              className="input-edit-tableShowinfo"
+                              type="text"
+                              defaultValue={
+                                data.real_score ? data.real_score.trim() : ""
+                              }
+                            ></input>
+                          </td>
+                          <td>
+                            <input
+                              className="input-edit-tableShowinfo"
+                              type="text"
+                              defaultValue={
+                                data.score_type ? data.score_type.trim() : ""
+                              }
+                            ></input>
+                          </td>
+                          <td>
+                            <button
+                              className="btn-edit-Detail"
+                              type="button"
+                              onClick={() => {
+                                console.log("ไอดีเช็ค", data.Id);
+                                console.log("เทสเก็บข้อมูล");
+                                handleEditSheetdetail(data.Id);
+                              }}
+                            >
+                              <i className="bi-three-dots"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <Spinnerpage />
+              )}
             </div>
           </div>
           <div className="nav-boxtable-type">
@@ -456,37 +672,59 @@ const ContentSetting = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td width={250}>
-                      <input
-                        className="input-editnormal-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td width={100}>
-                      <input
-                        className="input-editnormal-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td width={100}>
-                      <input
-                        className="input-editnormal-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td width={100}>
-                      <input
-                        className="input-editnormal-tableShowinfo"
-                        type="text"
-                      ></input>
-                    </td>
-                    <td width={100}>
-                      <button type="button" className="btn-edit-tableShowinfo">
-                        <i className="bi-three-dots"></i>
-                      </button>
-                    </td>
-                  </tr>
+                  {dataChoicedetail.map((data, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className="tableshow-score-setting"
+                        id={`trshow-score-${index}`}
+                        onClick={() => {
+                          HolderlineonTable(
+                            "tableshow-score-setting",
+                            "trshow-score-",
+                            index
+                          );
+                        }}
+                      >
+                        <td width={250}>
+                          <input
+                            className="input-editnormal-tableShowinfo"
+                            type="text"
+                            defaultValue={data.txt.trim()}
+                          ></input>
+                        </td>
+                        <td width={100}>
+                          <input
+                            className="input-editnormal-tableShowinfo"
+                            type="text"
+                            defaultValue={data.score.trim()}
+                          ></input>
+                        </td>
+                        <td width={100}>
+                          <input
+                            className="input-editnormal-tableShowinfo"
+                            type="text"
+                            defaultValue={data.no.trim()}
+                          ></input>
+                        </td>
+                        <td width={100}>
+                          <input
+                            className="input-editnormal-tableShowinfo"
+                            type="text"
+                            defaultValue={data.type.trim()}
+                          ></input>
+                        </td>
+                        <td width={100}>
+                          <button
+                            type="button"
+                            className="btn-edit-tableShowinfo"
+                          >
+                            <i className="bi-three-dots"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
