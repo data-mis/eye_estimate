@@ -1943,7 +1943,7 @@ html .box-table-type, body .box-table-type {
   margin: 15px auto;
 }
 html .boxnormal-table-type, body .boxnormal-table-type {
-  height: 14%;
+  height: 12%;
   width: 100%;
   margin: 15px auto;
 }
@@ -1965,7 +1965,9 @@ html .nav-boxtable-type span, body .nav-boxtable-type span {
   margin-right: 10px;
 }
 html .nav-boxtable-type button, body .nav-boxtable-type button {
+  height: 35px;
   margin-right: 10px;
+  font-size: 16px;
   font-weight: bold;
 }
 html .textarea-contentSetting, body .textarea-contentSetting {
@@ -2025,12 +2027,24 @@ html .info-contentsetting-modal, body .info-contentsetting-modal {
   margin-bottom: 10px;
   padding: 15px;
 }
+html .inputinfo-editsheet-setting, body .inputinfo-editsheet-setting {
+  width: auto;
+  height: 35px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid #9e9e9e;
+}
 html .row-infoContentsetting-modal, body .row-infoContentsetting-modal {
   display: grid;
-  grid-template-columns: 25% 75%;
+  grid-template-columns: 18% 82%;
   width: 100%;
   height: auto;
   margin: 5px auto;
+}
+html .boxspantitle-setting, body .boxspantitle-setting {
+  padding-right: 20px;
+  text-align: end;
 }
 html .middle-infoContentsetting-modal, body .middle-infoContentsetting-modal {
   display: grid;

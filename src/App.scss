@@ -2021,7 +2021,7 @@ $colorBGnav:#e0e0e0;
         margin: 15px auto;
     }
     .boxnormal-table-type{
-        height: 14%;
+        height: 12%;
         width: 100%;
         margin: 15px auto;
     }
@@ -2043,7 +2043,9 @@ $colorBGnav:#e0e0e0;
             margin-right: 10px;
         }
         .nav-boxtable-type button{
+            height: 35px;
             margin-right: 10px;
+            font-size: 16px;
             font-weight: bold;
         }
     .textarea-contentSetting{
@@ -2107,12 +2109,24 @@ $colorBGnav:#e0e0e0;
         margin-bottom: 10px;
         padding: 15px;
     }
+        .inputinfo-editsheet-setting{
+            width: auto;
+            height: 35px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 2px solid $colorBorderDrop;
+        }
         .row-infoContentsetting-modal{
             display: grid;
-            grid-template-columns: 25% 75%;
+            grid-template-columns: 18% 82%;
             width: 100%;
             height: auto;
             margin: 5px auto;
+        }
+        .boxspantitle-setting{
+            padding-right: 20px;
+            text-align: end;
         }
         .middle-infoContentsetting-modal{
             display: grid;

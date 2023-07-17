@@ -6,6 +6,7 @@ import Cookies from "universal-cookie";
 import Spinnerpage from "../config/spinnerpage";
 import { HolderlineonTable } from "../config/holdlinetable";
 import Swal from "sweetalert2";
+import moment from "moment/moment";
 
 const ContentSetting = () => {
   const cookie = new Cookies();
@@ -13,6 +14,7 @@ const ContentSetting = () => {
 
   const [idsheetworktype, setIdsheetworktype] = useState("");
   const [idsheetdetail, setIdsheetdetail] = useState("");
+  const [idsheetHead, setIdsheetHead] = useState("");
 
   const [dataworklisttype, setDataworklisttype] = useState([]);
   const [dataHeaderlist, setDataHeaderlist] = useState([]);
@@ -22,22 +24,46 @@ const ContentSetting = () => {
   const [statusCloseMDLeditHDdoc, setStatusCloseMDLeditHDdoc] = useState(false);
   const [statusCloseModalAdddoc, setStatusCloseModalAdddoc] = useState(false);
 
+  //Addsheetdoc
+  const [sheetdocName, setSheetdocName] = useState("");
+  const [sheetstart, setSheetstart] = useState("");
+  const [sheetend, setSheetend] = useState("");
+
+  //Editsheetdoc
+  const [sheeteditId, setSheeteditId] = useState("");
+  const [sheeteditdocName, setSheeteditdocName] = useState("");
+  const [sheeteditstart, setSheeteditstart] = useState("");
+  const [sheeteditend, setSheeteditend] = useState("");
+
+  //Editheadersheet
+  const [headsheetName, setHeadsheetName] = useState("");
+  const [headsheetType, setHeadsheetType] = useState("");
+  const [headsheetNo, setHeadsheetNo] = useState("");
+
   //detailobj
-  const [objdetailId, setObjdetailId] = useState({ id: "", result: "" });
-  const [objdetailrealscore, setObjdetailrealscore] = useState({
-    id: "",
-    result: "",
-  });
-  const [objdetailscore, setObjdetailscore] = useState({ id: "", result: "" });
-  const [objdetailscoretype, setObjdetailscoretype] = useState({
-    id: "",
-    result: "",
-  });
-  const [objdetailsheetid, setObjdetailsheetid] = useState({
-    id: "",
-    result: "",
-  });
-  const [objdetailtxt, setObjdetailtxt] = useState({ id: "", result: "" });
+  const [objdetailTxt, setObjdetailTxt] = useState([{ id: "", result: "" }]);
+  const [objdetailrealscore, setObjdetailrealscore] = useState([
+    {
+      id: "",
+      result: "",
+    },
+  ]);
+  const [objdetailscore, setObjdetailscore] = useState([
+    { id: "", result: "" },
+  ]);
+  const [objdetailscoretype, setObjdetailscoretype] = useState([
+    {
+      id: "",
+      result: "",
+    },
+  ]);
+  const [objdetailsheetid, setObjdetailsheetid] = useState([
+    {
+      id: "",
+      result: "",
+    },
+  ]);
+  const [objdetailtxt, setObjdetailtxt] = useState([{ id: "", result: "" }]);
 
   const docGetId = (id) => {
     return document.getElementById(id);
@@ -102,24 +128,74 @@ const ContentSetting = () => {
         <div className="info-contentsetting-modal">
           <div className="row-infoContentsetting-modal">
             <span>{"ชื่อ"}</span>
-            <input type="text"></input>
+            <input
+              className="inputinfo-editsheet-setting"
+              type="text"
+              onChange={(e) => {
+                setSheetdocName(e.target.value);
+              }}
+              onFocus={(e) => {
+                e.target.select();
+              }}
+            ></input>
           </div>
           <div className="middle-infoContentsetting-modal">
             <div className="rowMiddle-infoContentsetting-modal">
               <span>{"เริ่ม"}</span>
-              <input type="date"></input>
+              <input
+                className="inputinfo-editsheet-setting"
+                type="date"
+                onChange={(e) => {
+                  setSheetstart(moment(e.target.value).format("YYYY-MM-DD"));
+                }}
+              ></input>
             </div>
             <div className="rowMiddle-infoContentsetting-modal">
               <span>{"สิ้นสุด"}</span>
-              <input type="date"></input>
+              <input
+                className="inputinfo-editsheet-setting"
+                type="date"
+                onChange={(e) => {
+                  setSheetend(moment(e.target.value).format("YYYY-MM-DD"));
+                }}
+              ></input>
             </div>
           </div>
           <div className="btnsubmit-infoContentsetting-modal">
-            <button type="button">{"บันทึก"}</button>
+            <button
+              type="button"
+              onClick={() => {
+                handleAddsheetEstimation();
+              }}
+            >
+              {"บันทึก"}
+            </button>
           </div>
         </div>
       </div>
     );
+  };
+
+  const handleAddsheetEstimation = () => {
+    if (!sheetdocName || !sheetstart) return;
+    let objFetch = {
+      name: sheetdocName,
+      start: sheetstart,
+      stop: sheetend === "" ? "0000-00-00" : sheetend,
+    };
+    console.log(">>>", objFetch);
+    // FetchControlSetting.fetchAddnewSheet(objFetch, usertoken);
+  };
+
+  const handleEditsheetEstimation = () => {
+    let objFetchedit = {
+      id: sheeteditId,
+      name: sheeteditdocName,
+      start: sheeteditstart,
+      stop: sheeteditend,
+    };
+    console.log(">>>", objFetchedit);
+    // FetchControlSetting.fetchEditSheet(objFetchedit, usertoken);
   };
 
   const handleContentEditHeadertype = () => {
@@ -132,21 +208,50 @@ const ContentSetting = () => {
         </div>
         <div className="info-contentsetting-modal">
           <div className="row-infoContentsetting-modal">
-            <span>{"ชื่อ"}</span>
-            <input type="text"></input>
+            <span className="boxspantitle-setting">{"ชื่อ : "}</span>
+            <input
+              className="inputinfo-editsheet-setting"
+              type="text"
+              value={sheeteditdocName}
+              onChange={(e) => {
+                setSheeteditdocName(e.target.value);
+              }}
+            ></input>
           </div>
           <div className="middle-infoContentsetting-modal">
             <div className="rowMiddle-infoContentsetting-modal">
-              <span>{"เริ่ม"}</span>
-              <input type="date"></input>
+              <span className="boxspantitle-setting">{"เริ่ม"}</span>
+              <input
+                className="inputinfo-editsheet-setting"
+                type="date"
+                value={sheeteditstart}
+                onChange={(e) => {
+                  setSheeteditstart(
+                    moment(e.target.value).format("YYYY-MM-DD")
+                  );
+                }}
+              ></input>
             </div>
             <div className="rowMiddle-infoContentsetting-modal">
-              <span>{"สิ้นสุด"}</span>
-              <input type="date"></input>
+              <span className="boxspantitle-setting">{"สิ้นสุด"}</span>
+              <input
+                type="date"
+                value={sheeteditend}
+                onChange={(e) => {
+                  setSheeteditend(moment(e.target.value).format("YYYY-MM-DD"));
+                }}
+              ></input>
             </div>
           </div>
           <div className="btnsubmit-infoContentsetting-modal">
-            <button type="button">{"บันทึก"}</button>
+            <button
+              type="button"
+              onClick={() => {
+                handleEditsheetEstimation();
+              }}
+            >
+              {"บันทึก"}
+            </button>
           </div>
         </div>
       </div>
@@ -187,8 +292,22 @@ const ContentSetting = () => {
     };
     FetchControlSetting.fetchgetsheetdetail(objectdetailsheet, token).then(
       (data) => {
-        console.log("data detail this >>", data);
         setDataDetaillist(data);
+        let arrTxt = [],
+          arrScore = [],
+          arrRealscore = [],
+          arrScoretype = [];
+        data.map((res) => {
+          arrTxt.push({ id: res.Id, result: res.txt });
+          arrScore.push({ id: res.Id, result: res.score });
+          arrRealscore.push({ id: res.Id, result: res.real_score });
+          arrScoretype.push({ id: res.Id, result: res.score_type });
+        });
+        // console.log("!>", arrTxt, arrScore, arrRealscore, arrScoretype);
+        setObjdetailTxt(arrTxt);
+        setObjdetailscore(arrScore);
+        setObjdetailrealscore(arrRealscore);
+        setObjdetailscoretype(arrScoretype);
       }
     );
   };
@@ -200,16 +319,100 @@ const ContentSetting = () => {
     // console.log("this ob detailId->>", objectdetailId);
     FetchControlSetting.fetchgetsheetchoice(objectdetailId, token).then(
       (data) => {
-        console.log("data choice >>>", data);
+        // console.log("data choice >>>", data);
         setDataChoicedetail(data);
       }
     );
   };
 
   const handleEditSheetdetail = (id) => {
-    if (objdetailId.id === id) {
-      console.log("ข้อมูลเก็บมา", objdetailId);
+    let objEditdetail = {
+      id: "",
+      txt: "",
+      score: "",
+      real_score: "",
+      score_type: "",
+    };
+    objEditdetail.id = id;
+    objdetailTxt.map((data) => {
+      if (data.id === id) {
+        objEditdetail.txt = data.result;
+      }
+    });
+    objdetailscore.map((data) => {
+      if (data.id === id) {
+        objEditdetail.score = data.result;
+      }
+    });
+    objdetailrealscore.map((data) => {
+      if (data.id === id) {
+        objEditdetail.real_score = data.result;
+      }
+    });
+    objdetailscoretype.map((data) => {
+      if (data.id === id) {
+        objEditdetail.score_type = data.result;
+      }
+    });
+    console.log("final", objEditdetail);
+    FetchControlSetting.fetchEditsheetdetail(objEditdetail, usertoken).then(
+      (message) => {
+        console.log(message);
+      }
+    );
+  };
+
+  const casetypeSetdetail = (forset, type) => {
+    switch (type) {
+      case "txt":
+        setObjdetailTxt(forset);
+        break;
+      case "score":
+        setObjdetailscore(forset);
+        break;
+      case "realScore":
+        setObjdetailrealscore(forset);
+        break;
+      case "scoreType":
+        setObjdetailscoretype(forset);
+        break;
     }
+  };
+
+  const handleobjDetailedit = (idobj, id, result, type) => {
+    let pass = true;
+    if (idobj[0].id !== "") {
+      let arrRes = [];
+      idobj.map((ele) => {
+        if (ele.id !== id) {
+          // console.log("!==", ele);
+          arrRes.push(ele);
+        }
+      });
+      arrRes.push({ id: id, result: result });
+      // console.log("arrRes", arrRes);
+      casetypeSetdetail(arrRes, type);
+    } else {
+      // setObjdetailTxt([{ id: id, result: result }]);
+      let arrResempty = [{ id: id, result: result }];
+      // console.log(">>>", arrResempty);
+      casetypeSetdetail(arrResempty, type);
+    }
+  };
+
+  const handleAddsheetHead = (idsheettype) => {
+    let objAddsheethead = {
+      sheet_id: idsheettype,
+    };
+
+    FetchControlSetting.fetchAddsheethead(objAddsheethead, usertoken);
+  };
+
+  const handleDelsheetHead = (idhead) => {
+    let objDelsheethead = {
+      id: idhead,
+    };
+    FetchControlSetting.fetchDelsheethead(objDelsheethead, usertoken);
   };
 
   useEffect(() => {
@@ -461,6 +664,11 @@ const ContentSetting = () => {
                               className="btn-edit-tableShowinfo"
                               type="button"
                               onClick={() => {
+                                // console.log("data eidt sheet >>>", data);
+                                setSheeteditId(data.Id);
+                                setSheeteditdocName(data.name);
+                                setSheeteditstart(data.start);
+                                setSheeteditend(data.stop);
                                 handleOpenModalbox(
                                   "modalEditheaderTypeSetting"
                                 );
@@ -481,8 +689,60 @@ const ContentSetting = () => {
           </div>
           <div className="nav-boxtable-type">
             <span>{"Header"}</span>
-            <button type="button">{"เพิ่ม Header"}</button>
-            <button type="button">{"ลบ Header"}</button>
+            <button
+              type="button"
+              onClick={() => {
+                // console.log("sheetId", idsheetworktype)
+
+                Swal.fire({
+                  title: "หัวข้อเรื่องแบบประเมิน",
+                  text: "ต้องการเพิ่ม หัวข้อเรื่อง ใช่หรือไม่ ?",
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: "ตกลง",
+                  cancelButtonText: "ยกเลิก",
+                }).then((res) => {
+                  if (res.isConfirmed) {
+                    // console.log("เพิ่มหัวข้อเรื่อง");
+                    handleAddsheetHead(idsheetworktype);
+                  }
+                });
+              }}
+            >
+              {"เพิ่ม Header"}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                // console.log("Id del", idsheetHead);
+                if (idsheetHead) {
+                  Swal.fire({
+                    title: "หัวข้อเรื่องแบบประเมิน",
+                    text: "ต้องการลบ หัวข้อเรื่อง ใช่หรือไม่ ?",
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "ตกลง",
+                    cancelButtonText: "ยกเลิก",
+                  }).then((res) => {
+                    if (res.isConfirmed) {
+                      // console.log("ลบหัวข้อที่เลือก");
+                      handleDelsheetHead(idsheetHead);
+                    }
+                  });
+                } else {
+                  Swal.fire({
+                    title: "หัวข้อเรื่องแบบประเมิน",
+                    text: "กรุณาเลือกหัวข้อที่จะลบก่อน",
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    icon: "warning",
+                    timer: 1200,
+                  });
+                }
+              }}
+            >
+              {"ลบ Header"}
+            </button>
           </div>
           {/* ส่วนหัวข้อเรื่อง */}
           <div className="normal-table-type">
@@ -498,6 +758,7 @@ const ContentSetting = () => {
                 </thead>
                 <tbody>
                   {dataHeaderlist.map((data, index) => {
+                    console.log(data);
                     return (
                       <tr
                         key={index}
@@ -509,33 +770,49 @@ const ContentSetting = () => {
                             "trshow-headinfo-",
                             index
                           );
+                          // console.log("headID>>>",data.Id)
+                          setIdsheetHead(data.Id);
                         }}
                       >
                         <td width={250}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            defaultValue={data.txt.trim()}
+                            value={data.txt.trim()}
+                            onChange={(e) => {
+                              setHeadsheetName(e.target.value);
+                            }}
                           ></input>
                         </td>
                         <td width={150}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            defaultValue={data.type.trim()}
+                            // defaultValue={data.type.trim()}
+                            value={data.type.trim()}
+                            onChange={(e) => {
+                              setHeadsheetType(e.target.value);
+                            }}
                           ></input>
                         </td>
                         <td width={150}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            defaultValue={data.no.trim()}
+                            // defaultValue={data.no.trim()}
+                            value={data.no.trim()}
+                            onChange={(e) => {
+                              setHeadsheetNo(e.target.value);
+                            }}
                           ></input>
                         </td>
                         <td width={100}>
                           <button
                             className="button-editnormal-tableShowinfo"
                             type="button"
+                            onClick={() => {
+                              console.log(data);
+                            }}
                           >
                             save
                           </button>
@@ -595,30 +872,48 @@ const ContentSetting = () => {
                               rows={5}
                               cols={40}
                               onChange={(e) => {
-                                setObjdetailId({
-                                  id: data.Id,
-                                  reuslt: e.target.value,
-                                });
+                                handleobjDetailedit(
+                                  objdetailTxt,
+                                  data.Id,
+                                  e.target.value,
+                                  "txt"
+                                );
                               }}
                             ></textarea>
                           </td>
                           <td>
                             <input
                               className="input-edit-tableShowinfo"
-                              type="text"
+                              type="number"
                               defaultValue={data.score ? data.score.trim() : ""}
                               onChange={(e) => {
                                 console.log(e.target.value);
+                                handleobjDetailedit(
+                                  objdetailscore,
+                                  data.Id,
+                                  e.target.value,
+                                  "score"
+                                );
                               }}
+                              onFocus={(e) => e.target.select()}
                             ></input>
                           </td>
                           <td>
                             <input
                               className="input-edit-tableShowinfo"
-                              type="text"
+                              type="number"
                               defaultValue={
                                 data.real_score ? data.real_score.trim() : ""
                               }
+                              onChange={(e) => {
+                                handleobjDetailedit(
+                                  objdetailrealscore,
+                                  data.Id,
+                                  e.target.value,
+                                  "realScore"
+                                );
+                              }}
+                              onFocus={(e) => e.target.select()}
                             ></input>
                           </td>
                           <td>
@@ -628,6 +923,15 @@ const ContentSetting = () => {
                               defaultValue={
                                 data.score_type ? data.score_type.trim() : ""
                               }
+                              onChange={(e) => {
+                                handleobjDetailedit(
+                                  objdetailscoretype,
+                                  data.Id,
+                                  e.target.value,
+                                  "scoreType"
+                                );
+                              }}
+                              onFocus={(e) => e.target.select()}
                             ></input>
                           </td>
                           <td>
@@ -636,7 +940,7 @@ const ContentSetting = () => {
                               type="button"
                               onClick={() => {
                                 console.log("ไอดีเช็ค", data.Id);
-                                console.log("เทสเก็บข้อมูล");
+                                console.log("เทสเก็บข้อมูล", objdetailTxt);
                                 handleEditSheetdetail(data.Id);
                               }}
                             >
