@@ -2079,16 +2079,6 @@ html .btnsubmit-infoContentsetting-modal button, body .btnsubmit-infoContentsett
   html .content-contentSetting, body .content-contentSetting {
     height: 90%;
   }
-  html .moblie-contentSetting, body .moblie-contentSetting {
-    display: block;
-    height: 95%;
-    width: 100%;
-    scroll-snap-type: mandatory;
-    overflow: auto;
-  }
-  html .normal-table-type, body .normal-table-type {
-    display: none;
-  }
 }
 @media only screen and (max-width: 360px) {
   html .header-nav-contentSetting, body .header-nav-contentSetting {
@@ -2102,6 +2092,19 @@ html .btnsubmit-infoContentsetting-modal button, body .btnsubmit-infoContentsett
     height: 100%;
     font-size: 11px;
     font-weight: bold;
+  }
+  html .moblie-contentSetting, body .moblie-contentSetting {
+    display: block;
+    height: 95%;
+    width: 100%;
+    scroll-snap-type: mandatory;
+    overflow: auto;
+  }
+  html .normal-table-type, body .normal-table-type {
+    display: none;
+  }
+  html .normal-contentSetting, body .normal-contentSetting {
+    display: none;
   }
 }
 html .body-content-contentReport, body .body-content-contentReport {

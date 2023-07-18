@@ -2166,16 +2166,6 @@ $colorBGnav:#e0e0e0;
     .content-contentSetting{
         height: 90%;
     }
-    .moblie-contentSetting{
-        display: block;
-        height: 95%;
-        width: 100%;
-        scroll-snap-type: mandatory;
-        overflow: auto;
-    }
-    .normal-table-type{
-        display: none;
-    }
 }
 @media only screen and (max-width:360px) {
     .header-nav-contentSetting{
@@ -2190,6 +2180,19 @@ $colorBGnav:#e0e0e0;
         height: 100%;
         font-size: 11px;
         font-weight: bold;
+    }
+    .moblie-contentSetting{
+        display: block;
+        height: 95%;
+        width: 100%;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+    }
+    .normal-table-type{
+        display: none;
+    }
+    .normal-contentSetting{
+        display: none;
     }
 }
 }

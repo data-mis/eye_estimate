@@ -1291,6 +1291,11 @@ const ContentWork = (props) => {
 
   const handleCheckShowSpecialType = (typesheet) => {
     let headSpecial = (status) => {
+      if (
+        !docGetId("boxinfoheadSpecial") ||
+        !docGetId("boxeditinfoheadSpecial")
+      )
+        return;
       if (status) {
         docGetId("boxinfoheadSpecial").style.display = "block";
         docGetId("boxeditinfoheadSpecial").style.display = "block";
@@ -1300,6 +1305,11 @@ const ContentWork = (props) => {
       }
     };
     let reportSpecial = (status) => {
+      if (
+        !docGetId("boxinforeportSpecial") ||
+        !docGetId("boxeditinforeportSpecial")
+      )
+        return;
       if (status) {
         docGetId("boxinforeportSpecial").style.display = "block";
         docGetId("boxeditinforeportSpecial").style.display = "block";
@@ -1309,6 +1319,17 @@ const ContentWork = (props) => {
       }
     };
     let groupandstudent = (status) => {
+      if (
+        !docGetId("boxinfoGroupselect") ||
+        !docGetId("boxbtnGroupselect") ||
+        !docGetId("boxinfoselectstudent") ||
+        !docGetId("boxbtnStudentselect") ||
+        !docGetId("boxeditinfoGroupselect") ||
+        !docGetId("boxeditbtnGroupselect") ||
+        !docGetId("boxeditinfoStudentselect") ||
+        !docGetId("boxeditbtnStudentselect")
+      )
+        return;
       if (status) {
         docGetId("boxinfoGroupselect").style.display = "block";
         docGetId("boxbtnGroupselect").style.display = "block";
@@ -1370,7 +1391,7 @@ const ContentWork = (props) => {
       });
       handleCheckShowSpecialType(data[0].code);
       setSelectDataworktype(data[0].Id);
-      setSelectCodework(data[0].code)
+      setSelectCodework(data[0].code);
       handleCheckDayformonth(
         selectYear - 543,
         selectMonth,

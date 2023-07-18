@@ -84,19 +84,6 @@ const FetchControlSetting = {
       throw error;
     }
   },
-  fetchgetsheetchoice: async function (info, token) {
-    let request = requestOption("POST", info, token);
-    let httpfetch = `${http}/sheet/get_sheet_detail_choice`;
-
-    try {
-      let resHeadsheet = await fetch(httpfetch, request).then((res) => {
-        return res.json();
-      });
-      return resHeadsheet;
-    } catch (error) {
-      throw error;
-    }
-  },
   fetchAddnewSheet: async function (info, token) {
     let request = requestOption("POST", info, token);
     let httpfetch = `${http}/sheet/add_sheet`;
@@ -155,6 +142,61 @@ const FetchControlSetting = {
 
     try {
       let res = await fetch(httpfetch, request).then((res) => {
+        return "finish";
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchgetsheetchoice: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let httpfetch = `${http}/sheet/get_sheet_detail_choice`;
+
+    try {
+      let resHeadsheet = await fetch(httpfetch, request).then((res) => {
+        return res.json();
+      });
+      return resHeadsheet;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchAddChoice: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let httpfetch = `${http}/sheet/add_sheet_detail_choice`;
+
+    try {
+      let res = await fetch(httpfetch, request).then((res) => {
+        // return res.json();
+        return "finish";
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchUpChoice: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let httpfetch = `${http}/sheet/update_sheet_detail_choice`;
+
+    try {
+      let res = await fetch(httpfetch, request).then((res) => {
+        // return res.json();
+        return "finish";
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchDelChoice: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let httpfetch = `${http}/sheet/delete_sheet_detail_choice`;
+
+    try {
+      let res = await fetch(httpfetch, request).then((res) => {
+        // return res.json();
         return "finish";
       });
       return res;

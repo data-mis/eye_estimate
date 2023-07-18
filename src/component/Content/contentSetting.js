@@ -15,6 +15,7 @@ const ContentSetting = () => {
   const [idsheetworktype, setIdsheetworktype] = useState("");
   const [idsheetdetail, setIdsheetdetail] = useState("");
   const [idsheetHead, setIdsheetHead] = useState("");
+  const [idchoicesheet, setIdchoicesheet] = useState("");
 
   const [dataworklisttype, setDataworklisttype] = useState([]);
   const [dataHeaderlist, setDataHeaderlist] = useState([]);
@@ -36,9 +37,15 @@ const ContentSetting = () => {
   const [sheeteditend, setSheeteditend] = useState("");
 
   //Editheadersheet
-  const [headsheetName, setHeadsheetName] = useState("");
-  const [headsheetType, setHeadsheetType] = useState("");
-  const [headsheetNo, setHeadsheetNo] = useState("");
+  const [headsheetName, setHeadsheetName] = useState([{ id: "", result: "" }]);
+  const [headsheetType, setHeadsheetType] = useState([{ id: "", result: "" }]);
+  const [headsheetNo, setHeadsheetNo] = useState([{ id: "", result: "" }]);
+
+  //choicesheet
+  const [choicesheet, setChoicesheet] = useState([{ id: "", result: "" }]);
+  const [choicescore, setChoicescore] = useState([{ id: "", result: "" }]);
+  const [choiceno, setChoiceno] = useState([{ id: "", result: "" }]);
+  const [choicetype, setChoicetype] = useState([{ id: "", result: "" }]);
 
   //detailobj
   const [objdetailTxt, setObjdetailTxt] = useState([{ id: "", result: "" }]);
@@ -64,6 +71,9 @@ const ContentSetting = () => {
     },
   ]);
   const [objdetailtxt, setObjdetailtxt] = useState([{ id: "", result: "" }]);
+
+  //noteSheet
+  const [notesheet, setNotesheet] = useState("");
 
   const docGetId = (id) => {
     return document.getElementById(id);
@@ -292,6 +302,7 @@ const ContentSetting = () => {
     };
     FetchControlSetting.fetchgetsheetdetail(objectdetailsheet, token).then(
       (data) => {
+        console.log("ดูรายละเอียด sheet !", data);
         setDataDetaillist(data);
         let arrTxt = [],
           arrScore = [],
@@ -376,6 +387,27 @@ const ContentSetting = () => {
       case "scoreType":
         setObjdetailscoretype(forset);
         break;
+      case "headsheet":
+        setHeadsheetName(forset);
+        break;
+      case "headtype":
+        setHeadsheetType(forset);
+        break;
+      case "headno":
+        setHeadsheetNo(forset);
+        break;
+      case "choicesheet":
+        setChoicesheet(forset);
+        break;
+      case "choicescore":
+        setChoicescore(forset);
+        break;
+      case "choiceno":
+        setChoiceno(forset);
+        break;
+      case "choicetype":
+        setChoicetype(forset);
+        break;
     }
   };
 
@@ -390,13 +422,31 @@ const ContentSetting = () => {
         }
       });
       arrRes.push({ id: id, result: result });
-      // console.log("arrRes", arrRes);
+      console.log("arrRes", arrRes);
       casetypeSetdetail(arrRes, type);
     } else {
       // setObjdetailTxt([{ id: id, result: result }]);
       let arrResempty = [{ id: id, result: result }];
-      // console.log(">>>", arrResempty);
+      console.log(">>>", arrResempty);
       casetypeSetdetail(arrResempty, type);
+    }
+  };
+
+  const handleshowingvalue = (inputobj, dataobj, dataid) => {
+    // console.log("ตัวid >>", dataid);
+    // console.log("แสดงค่า", inputobj);
+    let result,
+      check = false;
+    inputobj.map((ele) => {
+      if (ele.id === dataid) {
+        result = ele.result;
+        check = true;
+      }
+    });
+    if (check) {
+      return result;
+    } else {
+      return dataobj;
     }
   };
 
@@ -415,12 +465,91 @@ const ContentSetting = () => {
     FetchControlSetting.fetchDelsheethead(objDelsheethead, usertoken);
   };
 
+  const handleUpheadsheet = (
+    idsheetHead,
+    txtsheethead,
+    typesheethead,
+    nosheethead
+  ) => {
+    console.log(idsheetHead);
+    if (!idsheetHead) return;
+    let txtresult, typeresult, noresult;
+    headsheetName.map((ele) => {
+      if (idsheetHead === ele.id) {
+        txtresult = ele.result;
+      }
+    });
+    headsheetType.map((ele) => {
+      if (idsheetHead === ele.id) {
+        typeresult = ele.result;
+      }
+    });
+    headsheetNo.map((ele) => {
+      if (idsheetHead === ele.id) {
+        noresult = ele.result;
+      }
+    });
+    let objectUpsheet = {
+      id: idsheetHead,
+      txt: txtresult ? txtresult : txtsheethead,
+      type: typeresult ? typeresult : typesheethead,
+      no: noresult ? noresult : nosheethead,
+    };
+    // console.log("up this obj>>", objectUpsheet);
+    FetchControlSetting.fetchUpsheethead(objectUpsheet, usertoken).then(
+      (message) => {
+        console.log(message);
+      }
+    );
+  };
+
+  const handleEditChoice = (
+    DchoiceId,
+    DchoiceTxt,
+    DchoiceScore,
+    DchoiceType,
+    DchoiceNo
+  ) => {
+    if (!DchoiceId) return;
+    let txtresult, scoreresult, typeresult, noresult;
+    choicesheet.map((ele) => {
+      if (ele.id === DchoiceId) {
+        txtresult = ele.result;
+      }
+    });
+    choicescore.map((ele) => {
+      if (ele.id === DchoiceId) {
+        scoreresult = ele.result;
+      }
+    });
+    choicetype.map((ele) => {
+      if (ele.id === DchoiceId) {
+        typeresult = ele.result;
+      }
+    });
+    choiceno.map((ele) => {
+      if (ele.id === DchoiceId) {
+        noresult = ele.result;
+      }
+    });
+    let objUp = {
+      id: DchoiceId,
+      txt: txtresult ? txtresult : DchoiceTxt,
+      score: scoreresult ? scoreresult : DchoiceScore,
+      type: typeresult ? typeresult : DchoiceType,
+      no: noresult ? noresult : DchoiceNo,
+    };
+    // console.log("this up choice obj is >>>", objUp);
+    // FetchControlSetting.fetchUpChoice(objup, usertoken).then((message)=>{console.log(message)})
+  };
+
   useEffect(() => {
     handleGetWorklisttype(usertoken);
   }, []);
 
   useEffect(() => {
     if (!idsheetworktype) return;
+    console.log("ทำงานเปลี่ยน sheetwork", idsheetworktype);
     handleGetHeadsheet(idsheetworktype, usertoken);
     handleGetsheetdetail(idsheetworktype, usertoken);
   }, [idsheetworktype]);
@@ -475,7 +604,7 @@ const ContentSetting = () => {
         {/* ส่วนของชนิดการประเมิน */}
         <div className="box-table-type">
           <div className="tablebox-boxtabletype">
-            <table className="table-show-info" style={{ width: "800px" }}>
+            {/* <table className="table-show-info" style={{ width: "800px" }}>
               <thead>
                 <tr>
                   <th>{"ชื่อ"}</th>
@@ -502,14 +631,121 @@ const ContentSetting = () => {
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> */}
+            {dataworklisttype[0] ? (
+              <table className="table-show-info tableshowworklisttype-setting">
+                <thead>
+                  <tr>
+                    <th>{"ชื่อ"}</th>
+                    <th>{"เริ่ม"}</th>
+                    <th>{"ถึง"}</th>
+                    <th>{"แก้ไข"}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataworklisttype.map((data, index) => {
+                    return (
+                      <tr
+                        className="tableTR-setting-worklisttype"
+                        id={`tr-settingworklisttype-${index}`}
+                        key={index}
+                        onClick={() => {
+                          HolderlineonTable(
+                            "tableTR-setting-worklisttype",
+                            `tr-settingworklisttype-`,
+                            index
+                          );
+                          setIdsheetworktype(data.Id);
+                        }}
+                      >
+                        <td width={"50%"}>{data.name}</td>
+                        <td width={"20%"}>{data.start}</td>
+                        <td width={"20%"}>{data.stop}</td>
+                        <td width={"10%"}>
+                          <button
+                            className="btn-edit-tableShowinfo"
+                            type="button"
+                            onClick={() => {
+                              // console.log("data eidt sheet >>>", data);
+                              setSheeteditId(data.Id);
+                              setSheeteditdocName(data.name);
+                              setSheeteditstart(data.start);
+                              setSheeteditend(data.stop);
+                              handleOpenModalbox("modalEditheaderTypeSetting");
+                            }}
+                          >
+                            <i className="bi-three-dots"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <Spinnerpage></Spinnerpage>
+            )}
           </div>
         </div>
         {/* ส่วนหัวข้อเรื่อง */}
         <div className="nav-boxtable-type">
           <span>{"header"}</span>
-          <button type="button">{"เพิ่ม Header"}</button>
-          <button type="button">{"ลบ Header"}</button>
+          <button
+            type="button"
+            onClick={() => {
+              // console.log("sheetId", idsheetworktype)
+
+              Swal.fire({
+                title: "หัวข้อเรื่องแบบประเมิน",
+                text: "ต้องการเพิ่ม หัวข้อเรื่อง ใช่หรือไม่ ?",
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "ตกลง",
+                cancelButtonText: "ยกเลิก",
+              }).then((res) => {
+                if (res.isConfirmed) {
+                  // console.log("เพิ่มหัวข้อเรื่อง");
+                  handleAddsheetHead(idsheetworktype);
+                  handleGetHeadsheet(idsheetworktype, usertoken);
+                }
+              });
+            }}
+          >
+            {"เพิ่ม Header"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              // console.log("Id del", idsheetHead);
+              if (idsheetHead) {
+                Swal.fire({
+                  title: "หัวข้อเรื่องแบบประเมิน",
+                  text: "ต้องการลบ หัวข้อเรื่อง ใช่หรือไม่ ?",
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: "ตกลง",
+                  cancelButtonText: "ยกเลิก",
+                }).then((res) => {
+                  if (res.isConfirmed) {
+                    // console.log("ลบหัวข้อที่เลือก");
+                    handleDelsheetHead(idsheetHead);
+                    handleGetHeadsheet(idsheetworktype, usertoken);
+                  }
+                });
+              } else {
+                Swal.fire({
+                  title: "หัวข้อเรื่องแบบประเมิน",
+                  text: "กรุณาเลือกหัวข้อที่จะลบก่อน",
+                  showConfirmButton: false,
+                  showCancelButton: false,
+                  icon: "warning",
+                  timer: 1200,
+                });
+              }
+            }}
+          >
+            {"ลบ Header"}
+          </button>
         </div>
         <div className="box-table-type">
           <div className="tablebox-boxtabletype">
@@ -523,7 +759,115 @@ const ContentSetting = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {dataHeaderlist.map((data, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className="tableshow-headinfo"
+                      id={`trshow-headinfo-${index}`}
+                      onClick={() => {
+                        HolderlineonTable(
+                          "tableshow-headinfo",
+                          "trshow-headinfo-",
+                          index
+                        );
+                        console.log("headsheet>>>", data);
+                        setIdsheetHead(data.Id);
+                      }}
+                    >
+                      <td width={250}>
+                        <input
+                          className="input-editnormal-tableShowinfo"
+                          type="text"
+                          value={handleshowingvalue(
+                            headsheetName,
+                            data.txt.trim(),
+                            data.Id
+                          )}
+                          onChange={(e) => {
+                            handleobjDetailedit(
+                              headsheetName,
+                              data.Id,
+                              e.target.value,
+                              "headsheet"
+                            );
+                          }}
+                          onFocus={(e) => e.target.select()}
+                        ></input>
+                      </td>
+                      <td width={150}>
+                        <input
+                          className="input-editnormal-tableShowinfo"
+                          type="text"
+                          value={handleshowingvalue(
+                            headsheetType,
+                            data.type.trim(),
+                            data.Id
+                          )}
+                          onChange={(e) => {
+                            handleobjDetailedit(
+                              headsheetType,
+                              data.Id,
+                              e.target.value,
+                              "headtype"
+                            );
+                          }}
+                          onFocus={(e) => e.target.select()}
+                        ></input>
+                      </td>
+                      <td width={150}>
+                        <input
+                          className="input-editnormal-tableShowinfo"
+                          type="text"
+                          value={handleshowingvalue(
+                            headsheetNo,
+                            data.no.trim(),
+                            data.Id
+                          )}
+                          onChange={(e) => {
+                            handleobjDetailedit(
+                              headsheetNo,
+                              data.Id,
+                              e.target.value,
+                              "headno"
+                            );
+                          }}
+                          onFocus={(e) => e.target.select()}
+                        ></input>
+                      </td>
+                      <td width={100}>
+                        <button
+                          className="button-editnormal-tableShowinfo"
+                          type="button"
+                          onClick={() => {
+                            Swal.fire({
+                              title: "หัวข้อเรื่องแบบประเมิน",
+                              text: "ต้องการ แก้ไข หัวข้อแบบประเมิน ใช่หรือไม่ ?",
+                              showConfirmButton: true,
+                              showCancelButton: true,
+                              confirmButtonText: "ตกลง",
+                              cancelButtonText: "ยกเลิก",
+                            }).then((res) => {
+                              if (res.isConfirmed) {
+                                handleUpheadsheet(
+                                  data.Id,
+                                  data.txt,
+                                  data.type,
+                                  data.no
+                                );
+                              }
+                            });
+
+                            // console.log(data);
+                          }}
+                        >
+                          save
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {/* <tr>
                   <td width={250}>{"(ชื่อ)"}</td>
                   <td width={50}>{"(ชนิด)"}</td>
                   <td width={50}>{"(ลำดับ)"}</td>
@@ -532,7 +876,7 @@ const ContentSetting = () => {
                       <i className="bi-three-dots"></i>
                     </button>
                   </td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           </div>
@@ -540,7 +884,7 @@ const ContentSetting = () => {
         {/* ส่วนแสดงรายละเอียดหัวข้อต่างๆ */}
         <div className="box-table-detail">
           <div className="tablebox-boxtabletype">
-            <table className="table-show-info">
+            {/* <table className="table-show-info">
               <thead>
                 <tr>
                   <th>{"รายละเอียด"}</th>
@@ -580,14 +924,227 @@ const ContentSetting = () => {
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> */}
+            {dataDetaillist[0] ? (
+              <table className="table-show-info">
+                <thead>
+                  <tr>
+                    <th>{"รายละเอียด"}</th>
+                    <th>{"Score"}</th>
+                    <th>{"R.score"}</th>
+                    <th>{"Type"}</th>
+                    <th>{"แก้ไข"}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dataDetaillist.map((data, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className="tableshow-detail-setting"
+                        id={`tr-detailsheet-${index}`}
+                        onClick={() => {
+                          HolderlineonTable(
+                            "tableshow-detail-setting",
+                            "tr-detailsheet-",
+                            index
+                          );
+                          setIdsheetdetail(data.Id);
+                          handleGetChoicedetail(data.Id, usertoken);
+                        }}
+                      >
+                        <td>
+                          <textarea
+                            className="textarea-input-contentSetting"
+                            defaultValue={
+                              objdetailTxt.result
+                                ? objdetailTxt.result
+                                : data.txt.trim()
+                            }
+                            rows={5}
+                            cols={40}
+                            onChange={(e) => {
+                              handleobjDetailedit(
+                                objdetailTxt,
+                                data.Id,
+                                e.target.value,
+                                "txt"
+                              );
+                            }}
+                          ></textarea>
+                        </td>
+                        <td>
+                          <input
+                            className="input-edit-tableShowinfo"
+                            type="number"
+                            defaultValue={
+                              objdetailscore.result
+                                ? objdetailscore.result
+                                : data.score.trim()
+                            }
+                            onChange={(e) => {
+                              console.log(e.target.value);
+                              handleobjDetailedit(
+                                objdetailscore,
+                                data.Id,
+                                e.target.value,
+                                "score"
+                              );
+                            }}
+                            onFocus={(e) => e.target.select()}
+                          ></input>
+                        </td>
+                        <td>
+                          <input
+                            className="input-edit-tableShowinfo"
+                            type="number"
+                            defaultValue={
+                              objdetailrealscore.result
+                                ? objdetailrealscore.result
+                                : data.real_score.trim()
+                            }
+                            onChange={(e) => {
+                              handleobjDetailedit(
+                                objdetailrealscore,
+                                data.Id,
+                                e.target.value,
+                                "realScore"
+                              );
+                            }}
+                            onFocus={(e) => e.target.select()}
+                          ></input>
+                        </td>
+                        <td>
+                          <input
+                            className="input-edit-tableShowinfo"
+                            type="text"
+                            defaultValue={
+                              objdetailscoretype.result
+                                ? objdetailscoretype.result
+                                : data.score_type.trim()
+                            }
+                            onChange={(e) => {
+                              handleobjDetailedit(
+                                objdetailscoretype,
+                                data.Id,
+                                e.target.value,
+                                "scoreType"
+                              );
+                            }}
+                            onFocus={(e) => e.target.select()}
+                          ></input>
+                        </td>
+                        <td>
+                          <button
+                            className="btn-edit-Detail"
+                            type="button"
+                            onClick={() => {
+                              Swal.fire({
+                                title: "แก้ไขรายละเอียด sheet",
+                                text: "ต้องการแก้ไข รายละเอียด ใช่หรือไม่ ?",
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: "ตกลง",
+                                cancelButtonText: "ยกเลิก",
+                              }).then((res) => {
+                                if (res.isConfirmed) {
+                                  handleEditSheetdetail(data.Id);
+                                }
+                              });
+
+                              handleEditSheetdetail(data.Id);
+                            }}
+                          >
+                            <i className="bi-three-dots"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <Spinnerpage />
+            )}
           </div>
         </div>
         {/* ส่วนระดับคะแนนตัวเลือกที่จะประเมิน */}
         <div className="nav-boxtable-type">
           <span>{"ตัวเลือก"}</span>
-          <button type="button">{"เพิ่มตัวเลือก"}</button>
-          <button type="button">{"ลบตัวเลือก"}</button>
+          <button
+            type="button"
+            onClick={() => {
+              console.log("detailID>>>", idsheetdetail);
+              if (idsheetdetail) {
+                Swal.fire({
+                  title: "จัดการตัวเลือก",
+                  text: "ต้องการ เพิ่ม ตัวเลือก ใช่ หรือ ไม่ ?",
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: "ตกลง",
+                  cancelButtonText: "ยกเลิก",
+                }).then((res) => {
+                  if (res.isConfirmed) {
+                    console.log("เพิ่ม choice");
+                    let objadd = {
+                      sheet_detail_id: idsheetdetail,
+                    };
+                    // FetchControlSetting.fetchAddChoice(objadd, usertoken).then(
+                    //   (message) => {
+                    //     console.log(message);
+                    //   }
+                    // );
+                  }
+                });
+              } else {
+                Swal.fire({
+                  icon: "warning",
+                  title: "จัดการตัวเลือก",
+                  text: "กรุณาเลือก รายละเอียด ก่อนทำรายการ",
+                  showConfirmButton: false,
+                  showCancelButton: false,
+                  timer: 1200,
+                });
+              }
+            }}
+          >
+            {"เพิ่มตัวเลือก"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (idchoicesheet) {
+                Swal.fire({
+                  title: "จัดการตัวเลือก",
+                  text: "ต้องการ ลบ ตัวเลือก ใช่ หรือ ไม่ ?",
+                  icon: "warning",
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: "ตกลง",
+                  cancelButtonText: "ยกเลิก",
+                }).then((res) => {
+                  if (res.isConfirmed) {
+                    console.log("ลบ choice");
+                    let objdel = {
+                      id: idchoicesheet,
+                    };
+                    // FetchControlSetting.fetchDelChoice(objdel,usertoken).then((message)=>{console.log(message)})
+                  }
+                });
+              } else {
+                Swal.fire({
+                  icon: "warning",
+                  title: "จัดการตัวเลือก",
+                  text: "กรุณาเลือก ตัวเลือก ก่อนทำรายการ",
+                  showConfirmButton: false,
+                  showCancelButton: false,
+                  timer: 1200,
+                });
+              }
+            }}
+          >
+            {"ลบตัวเลือก"}
+          </button>
         </div>
         <div className="box-table-type">
           <div className="tablebox-boxtabletype">
@@ -602,7 +1159,143 @@ const ContentSetting = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {dataChoicedetail.map((data, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className="tableshow-score-setting"
+                      id={`trshow-score-${index}`}
+                      onClick={() => {
+                        HolderlineonTable(
+                          "tableshow-score-setting",
+                          "trshow-score-",
+                          index
+                        );
+                        setIdchoicesheet(data.Id);
+                      }}
+                    >
+                      <td width={250}>
+                        <input
+                          className="input-editnormal-tableShowinfo"
+                          type="text"
+                          // value={choicesheet ? choicesheet : data.txt.trim()}
+                          value={handleshowingvalue(
+                            choicesheet,
+                            data.txt.trim(),
+                            data.Id
+                          )}
+                          onChange={(e) => {
+                            // setChoicesheet(e.target.value);
+                            handleobjDetailedit(
+                              choicesheet,
+                              data.Id,
+                              e.target.value,
+                              "choicesheet"
+                            );
+                          }}
+                          onFocus={(e) => e.target.select()}
+                        ></input>
+                      </td>
+                      <td width={100}>
+                        <input
+                          className="input-editnormal-tableShowinfo"
+                          type="text"
+                          value={
+                            // choicescore ? choicescore : data.score.trim()
+                            handleshowingvalue(
+                              choicescore,
+                              data.score.trim(),
+                              data.Id
+                            )
+                          }
+                          onChange={(e) => {
+                            // setChoicescore(e.target.value);
+                            handleobjDetailedit(
+                              choicescore,
+                              data.Id,
+                              e.target.value,
+                              "choicescore"
+                            );
+                          }}
+                          onFocus={(e) => e.target.select()}
+                        ></input>
+                      </td>
+                      <td width={100}>
+                        <input
+                          className="input-editnormal-tableShowinfo"
+                          type="text"
+                          // value={choiceno ? choiceno : data.no.trim()}
+                          value={handleshowingvalue(
+                            choiceno,
+                            data.no.trim(),
+                            data.Id
+                          )}
+                          onChange={(e) => {
+                            // setChoiceno(e.target.value);
+                            handleobjDetailedit(
+                              choiceno,
+                              data.Id,
+                              e.target.value,
+                              "choiceno"
+                            );
+                          }}
+                          onFocus={(e) => e.target.select()}
+                        ></input>
+                      </td>
+                      <td width={100}>
+                        <input
+                          className="input-editnormal-tableShowinfo"
+                          type="text"
+                          // value={choicetype ? choicetype : data.type.trim()}
+                          value={handleshowingvalue(
+                            choicetype,
+                            data.type.trim(),
+                            data.Id
+                          )}
+                          onChange={(e) => {
+                            // setChoicetype(e.target.value);
+                            handleobjDetailedit(
+                              choicetype,
+                              data.Id,
+                              e.target.value,
+                              "choicetype"
+                            );
+                          }}
+                          onFocus={(e) => e.target.select()}
+                        ></input>
+                      </td>
+                      <td width={100}>
+                        <button
+                          type="button"
+                          className="btn-edit-tableShowinfo"
+                          onClick={() => {
+                            Swal.fire({
+                              title: "จัดการตัวเลือก",
+                              text: "ต้องการ แก้ไข ตัวเลือก ใช่หรือไม่ ?",
+                              showConfirmButton: true,
+                              showCancelButton: true,
+                              confirmButtonText: "ตกลง",
+                              cancelButtonText: "ยกเลิก",
+                            }).then((res) => {
+                              if (res.isConfirmed) {
+                                handleEditChoice(
+                                  data.Id,
+                                  data.txt,
+                                  data.score,
+                                  data.type,
+                                  data.no
+                                );
+                              }
+                            });
+                          }}
+                        >
+                          <i className="bi-three-dots"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {/* <tr>
                   <td>{"(ตัวเลือก)"}</td>
                   <td>{"(คะแนน)"}</td>
                   <td>{"(ลำดับ)"}</td>
@@ -612,7 +1305,7 @@ const ContentSetting = () => {
                       <i className="bi-three-dots"></i>
                     </button>
                   </td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           </div>
@@ -622,7 +1315,13 @@ const ContentSetting = () => {
           <div className="nav-boxtable-type">
             <span>{"หมายเหตุ"}</span>
           </div>
-          <textarea className="textarea-contentSetting"></textarea>
+          <textarea
+            className="textarea-contentSetting"
+            onChange={(e) => {
+              setNotesheet(e.target.value);
+            }}
+            onFocus={(e) => e.target.select}
+          ></textarea>
         </div>
       </div>
       <div className="normal-contentSetting">
@@ -705,6 +1404,7 @@ const ContentSetting = () => {
                   if (res.isConfirmed) {
                     // console.log("เพิ่มหัวข้อเรื่อง");
                     handleAddsheetHead(idsheetworktype);
+                    handleGetHeadsheet(idsheetworktype, usertoken);
                   }
                 });
               }}
@@ -727,6 +1427,7 @@ const ContentSetting = () => {
                     if (res.isConfirmed) {
                       // console.log("ลบหัวข้อที่เลือก");
                       handleDelsheetHead(idsheetHead);
+                      handleGetHeadsheet(idsheetworktype, usertoken);
                     }
                   });
                 } else {
@@ -758,7 +1459,6 @@ const ContentSetting = () => {
                 </thead>
                 <tbody>
                   {dataHeaderlist.map((data, index) => {
-                    console.log(data);
                     return (
                       <tr
                         key={index}
@@ -770,7 +1470,7 @@ const ContentSetting = () => {
                             "trshow-headinfo-",
                             index
                           );
-                          // console.log("headID>>>",data.Id)
+                          console.log("headsheet>>>", data);
                           setIdsheetHead(data.Id);
                         }}
                       >
@@ -778,32 +1478,60 @@ const ContentSetting = () => {
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            value={data.txt.trim()}
+                            value={handleshowingvalue(
+                              headsheetName,
+                              data.txt.trim(),
+                              data.Id
+                            )}
                             onChange={(e) => {
-                              setHeadsheetName(e.target.value);
+                              handleobjDetailedit(
+                                headsheetName,
+                                data.Id,
+                                e.target.value,
+                                "headsheet"
+                              );
                             }}
+                            onFocus={(e) => e.target.select()}
                           ></input>
                         </td>
                         <td width={150}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            // defaultValue={data.type.trim()}
-                            value={data.type.trim()}
+                            value={handleshowingvalue(
+                              headsheetType,
+                              data.type.trim(),
+                              data.Id
+                            )}
                             onChange={(e) => {
-                              setHeadsheetType(e.target.value);
+                              handleobjDetailedit(
+                                headsheetType,
+                                data.Id,
+                                e.target.value,
+                                "headtype"
+                              );
                             }}
+                            onFocus={(e) => e.target.select()}
                           ></input>
                         </td>
                         <td width={150}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            // defaultValue={data.no.trim()}
-                            value={data.no.trim()}
+                            value={handleshowingvalue(
+                              headsheetNo,
+                              data.no.trim(),
+                              data.Id
+                            )}
                             onChange={(e) => {
-                              setHeadsheetNo(e.target.value);
+                              handleobjDetailedit(
+                                headsheetNo,
+                                data.Id,
+                                e.target.value,
+                                "headno"
+                              );
                             }}
+                            onFocus={(e) => e.target.select()}
                           ></input>
                         </td>
                         <td width={100}>
@@ -811,7 +1539,25 @@ const ContentSetting = () => {
                             className="button-editnormal-tableShowinfo"
                             type="button"
                             onClick={() => {
-                              console.log(data);
+                              Swal.fire({
+                                title: "หัวข้อเรื่องแบบประเมิน",
+                                text: "ต้องการ แก้ไข หัวข้อแบบประเมิน ใช่หรือไม่ ?",
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: "ตกลง",
+                                cancelButtonText: "ยกเลิก",
+                              }).then((res) => {
+                                if (res.isConfirmed) {
+                                  handleUpheadsheet(
+                                    data.Id,
+                                    data.txt,
+                                    data.type,
+                                    data.no
+                                  );
+                                }
+                              });
+
+                              // console.log(data);
                             }}
                           >
                             save
@@ -829,7 +1575,13 @@ const ContentSetting = () => {
             <div className="nav-boxtable-type">
               <span>{"หมายเหตุ"}</span>
             </div>
-            <textarea className="textarea-contentSetting"></textarea>
+            <textarea
+              className="textarea-contentSetting"
+              onChange={(e) => {
+                setNotesheet(e.target.value);
+              }}
+              onFocus={(e) => e.target.select()}
+            ></textarea>
           </div>
         </div>
         {/* ขนาดทั่วไป */}
@@ -868,7 +1620,11 @@ const ContentSetting = () => {
                           <td>
                             <textarea
                               className="textarea-input-contentSetting"
-                              defaultValue={data.txt ? data.txt.trim() : ""}
+                              defaultValue={
+                                objdetailTxt.result
+                                  ? objdetailTxt.result
+                                  : data.txt.trim()
+                              }
                               rows={5}
                               cols={40}
                               onChange={(e) => {
@@ -885,7 +1641,11 @@ const ContentSetting = () => {
                             <input
                               className="input-edit-tableShowinfo"
                               type="number"
-                              defaultValue={data.score ? data.score.trim() : ""}
+                              defaultValue={
+                                objdetailscore.result
+                                  ? objdetailscore.result
+                                  : data.score.trim()
+                              }
                               onChange={(e) => {
                                 console.log(e.target.value);
                                 handleobjDetailedit(
@@ -903,7 +1663,9 @@ const ContentSetting = () => {
                               className="input-edit-tableShowinfo"
                               type="number"
                               defaultValue={
-                                data.real_score ? data.real_score.trim() : ""
+                                objdetailrealscore.result
+                                  ? objdetailrealscore.result
+                                  : data.real_score.trim()
                               }
                               onChange={(e) => {
                                 handleobjDetailedit(
@@ -921,7 +1683,9 @@ const ContentSetting = () => {
                               className="input-edit-tableShowinfo"
                               type="text"
                               defaultValue={
-                                data.score_type ? data.score_type.trim() : ""
+                                objdetailscoretype.result
+                                  ? objdetailscoretype.result
+                                  : data.score_type.trim()
                               }
                               onChange={(e) => {
                                 handleobjDetailedit(
@@ -939,9 +1703,20 @@ const ContentSetting = () => {
                               className="btn-edit-Detail"
                               type="button"
                               onClick={() => {
-                                console.log("ไอดีเช็ค", data.Id);
-                                console.log("เทสเก็บข้อมูล", objdetailTxt);
-                                handleEditSheetdetail(data.Id);
+                                // console.log("ไอดีเช็ค", data.Id);
+                                // console.log("เทสเก็บข้อมูล", objdetailTxt);
+                                Swal.fire({
+                                  title: "แก้ไขรายละเอียด sheet",
+                                  text: "ต้องการแก้ไข รายละเอียด ใช่หรือไม่ ?",
+                                  showConfirmButton: true,
+                                  showCancelButton: true,
+                                  confirmButtonText: "ตกลง",
+                                  cancelButtonText: "ยกเลิก",
+                                }).then((res) => {
+                                  if (res.isConfirmed) {
+                                    handleEditSheetdetail(data.Id);
+                                  }
+                                });
                               }}
                             >
                               <i className="bi-three-dots"></i>
@@ -959,8 +1734,80 @@ const ContentSetting = () => {
           </div>
           <div className="nav-boxtable-type">
             <span>{"ตัวเลือก"}</span>
-            <button type="button">{"เพิ่ม ตัวเลือก"}</button>
-            <button type="button">{"ลบ ตัวเลือก"}</button>
+            <button
+              type="button"
+              onClick={() => {
+                console.log("detailID>>>", idsheetdetail);
+                if (idsheetdetail) {
+                  Swal.fire({
+                    title: "จัดการตัวเลือก",
+                    text: "ต้องการ เพิ่ม ตัวเลือก ใช่ หรือ ไม่ ?",
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "ตกลง",
+                    cancelButtonText: "ยกเลิก",
+                  }).then((res) => {
+                    if (res.isConfirmed) {
+                      console.log("เพิ่ม choice");
+                      let objadd = {
+                        sheet_detail_id: idsheetdetail,
+                      };
+                      // FetchControlSetting.fetchAddChoice(objadd, usertoken).then(
+                      //   (message) => {
+                      //     console.log(message);
+                      //   }
+                      // );
+                    }
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "warning",
+                    title: "จัดการตัวเลือก",
+                    text: "กรุณาเลือก รายละเอียด ก่อนทำรายการ",
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    timer: 1200,
+                  });
+                }
+              }}
+            >
+              {"เพิ่ม ตัวเลือก"}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (idchoicesheet) {
+                  Swal.fire({
+                    title: "จัดการตัวเลือก",
+                    text: "ต้องการ ลบ ตัวเลือก ใช่ หรือ ไม่ ?",
+                    icon: "warning",
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "ตกลง",
+                    cancelButtonText: "ยกเลิก",
+                  }).then((res) => {
+                    if (res.isConfirmed) {
+                      console.log("ลบ choice");
+                      let objdel = {
+                        id: idchoicesheet,
+                      };
+                      // FetchControlSetting.fetchDelChoice(objdel,usertoken).then((message)=>{console.log(message)})
+                    }
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "warning",
+                    title: "จัดการตัวเลือก",
+                    text: "กรุณาเลือก ตัวเลือก ก่อนทำรายการ",
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    timer: 1200,
+                  });
+                }
+              }}
+            >
+              {"ลบ ตัวเลือก"}
+            </button>
           </div>
           {/* ส่วนระดับคะแนนตัวเลือกที่จะประเมิน */}
           <div className="normal-table-type">
@@ -988,40 +1835,123 @@ const ContentSetting = () => {
                             "trshow-score-",
                             index
                           );
+                          setIdchoicesheet(data.Id);
                         }}
                       >
                         <td width={250}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            defaultValue={data.txt.trim()}
+                            // value={choicesheet ? choicesheet : data.txt.trim()}
+                            value={handleshowingvalue(
+                              choicesheet,
+                              data.txt.trim(),
+                              data.Id
+                            )}
+                            onChange={(e) => {
+                              // setChoicesheet(e.target.value);
+                              handleobjDetailedit(
+                                choicesheet,
+                                data.Id,
+                                e.target.value,
+                                "choicesheet"
+                              );
+                            }}
+                            onFocus={(e) => e.target.select()}
                           ></input>
                         </td>
                         <td width={100}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            defaultValue={data.score.trim()}
+                            value={
+                              // choicescore ? choicescore : data.score.trim()
+                              handleshowingvalue(
+                                choicescore,
+                                data.score.trim(),
+                                data.Id
+                              )
+                            }
+                            onChange={(e) => {
+                              // setChoicescore(e.target.value);
+                              handleobjDetailedit(
+                                choicescore,
+                                data.Id,
+                                e.target.value,
+                                "choicescore"
+                              );
+                            }}
+                            onFocus={(e) => e.target.select()}
                           ></input>
                         </td>
                         <td width={100}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            defaultValue={data.no.trim()}
+                            // value={choiceno ? choiceno : data.no.trim()}
+                            value={handleshowingvalue(
+                              choiceno,
+                              data.no.trim(),
+                              data.Id
+                            )}
+                            onChange={(e) => {
+                              // setChoiceno(e.target.value);
+                              handleobjDetailedit(
+                                choiceno,
+                                data.Id,
+                                e.target.value,
+                                "choiceno"
+                              );
+                            }}
+                            onFocus={(e) => e.target.select()}
                           ></input>
                         </td>
                         <td width={100}>
                           <input
                             className="input-editnormal-tableShowinfo"
                             type="text"
-                            defaultValue={data.type.trim()}
+                            // value={choicetype ? choicetype : data.type.trim()}
+                            value={handleshowingvalue(
+                              choicetype,
+                              data.type.trim(),
+                              data.Id
+                            )}
+                            onChange={(e) => {
+                              // setChoicetype(e.target.value);
+                              handleobjDetailedit(
+                                choicetype,
+                                data.Id,
+                                e.target.value,
+                                "choicetype"
+                              );
+                            }}
+                            onFocus={(e) => e.target.select()}
                           ></input>
                         </td>
                         <td width={100}>
                           <button
                             type="button"
                             className="btn-edit-tableShowinfo"
+                            onClick={() => {
+                              Swal.fire({
+                                title: "จัดการตัวเลือก",
+                                text: "ต้องการ แก้ไข ตัวเลือก ใช่หรือไม่ ?",
+                                showConfirmButton: true,
+                                showCancelButton: true,
+                                confirmButtonText: "ตกลง",
+                                cancelButtonText: "ยกเลิก",
+                              }).then((res) => {
+                                if (res.isConfirmed) {
+                                  handleEditChoice(
+                                    data.Id,
+                                    data.txt,
+                                    data.score,
+                                    data.type,
+                                    data.no
+                                  );
+                                }
+                              });
+                            }}
                           >
                             <i className="bi-three-dots"></i>
                           </button>
