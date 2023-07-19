@@ -770,6 +770,7 @@ const ContentDoctor = (props) => {
               onClick={() => {
                 handleOpenModalbox("boxModal");
                 setStatusCloseModal(false);
+                clearInputdocmodal();
               }}
             >
               {"เพิ่ม"}
@@ -780,11 +781,23 @@ const ContentDoctor = (props) => {
               onClick={() => {
                 console.log("ทำงานลบไอดี =>", holdIdData);
                 if (holdIdData) {
-                  let object = {
-                    id: holdIdData,
-                    stop: moment(new Date()).format("YYYY-MM-DD"),
-                  };
-                  handleDeleteDoc(object, usertoken);
+                  Swal.fire({
+                    icon: "question",
+                    title: "ลบรายการอาจารย์ !!!",
+                    text: "ต้องการจะ ลบ รายการที่เลือก ใช่ หรือ ไม่ ??",
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "ตกลง",
+                    cancelButtonText: "ยกเลิก",
+                  }).then((res) => {
+                    if (res.isConfirmed) {
+                      let object = {
+                        id: holdIdData,
+                        stop: moment(new Date()).format("YYYY-MM-DD"),
+                      };
+                      handleDeleteDoc(object, usertoken);
+                    }
+                  });
                 } else {
                   Swal.fire({
                     icon: "warning",

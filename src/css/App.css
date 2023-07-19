@@ -786,10 +786,15 @@ html .col-header, body .col-header {
 }
 html .input-year-groupStudent, html .input-search-groupStudent, body .input-year-groupStudent, body .input-search-groupStudent {
   width: 30%;
+  height: 35px;
   padding: 0px 5px;
 }
+html .btn-search-groupStudent, body .btn-search-groupStudent {
+  height: 35px;
+  width: 5%;
+}
 html .relative-btnBox, body .relative-btnBox {
-  height: 25px;
+  height: 35px;
   position: relative;
 }
 html .yearControllup, body .yearControllup {

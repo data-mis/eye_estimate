@@ -28,7 +28,11 @@ const ContentGroupStudent = (props) => {
   const [selectDataGroup, setSelectDataGroup] = useState();
   const [selectStudentEmpty, setSelectStudentEmpty] = useState();
   const [selectStudentingroup, setSelectStudentingroup] = useState();
+
   const [editNameGroup, setEditNameGroup] = useState();
+  const [editstartGroup, setEditstartGroup] = useState();
+  const [editendGroup, setEditendGroup] = useState();
+
   const [dataGroupAdvisor, setDataGroupAdvisor] = useState([]);
   const [dataGroupStudentEmpty, setDataGroupStudentEmpty] = useState([]);
   const [dataGroupStudentingroup, setDataGroupStudentingroup] = useState([]);
@@ -149,6 +153,34 @@ const ContentGroupStudent = (props) => {
         setYearSelectGroup(resdown);
         break;
     }
+  };
+
+  const handleSubmiteditgroup = (idgroup) => {
+    if (!idgroup) return;
+    let objecteditgroup = {
+      id: idgroup,
+      name: editNameGroup,
+      start: editstartGroup,
+      stop: editendGroup,
+    };
+    console.log(objecteditgroup);
+    Swal.fire({
+      title: "แก้ไขรายชื่อกลุ่ม !!",
+      text: "ต้องการแก้ไข รายชื่อกลุ่ม ใช่หรือไม่ ?",
+      icon: "question",
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "ตกลง",
+      cancelButtonText: "ยกเลิก",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        FetchControlGroup.fetchEditgroup(objecteditgroup, usertoken);
+        document.getElementById("boxEditGroupModal").style.display = "none";
+        setTimeout(() => {
+          handleDataGropstudent(yearSelectGroup, usertoken);
+        }, 200);
+      }
+    });
   };
 
   const ContentAddDoctorModal = () => {
@@ -306,7 +338,7 @@ const ContentGroupStudent = (props) => {
           <div className="inputname-inputeditGroupAllmodal">
             <input
               type="text"
-              value={data ? data.name : ""}
+              value={editNameGroup ? editNameGroup : data ? data.name : ""}
               onChange={(e) => {
                 setEditNameGroup(e.target.value);
               }}
@@ -321,7 +353,15 @@ const ContentGroupStudent = (props) => {
                 <span>{"เริ่ม"}</span>
               </div>
               <div className="input-grid-editGroupAllmodal">
-                <input type="date"></input>
+                <input
+                  type="date"
+                  value={
+                    editstartGroup ? editstartGroup : data ? data.start : ""
+                  }
+                  onChange={(e) => {
+                    setEditstartGroup(e.target.value);
+                  }}
+                ></input>
               </div>
             </div>
             <div className="boxgrid-inputdate-editGroupAllmodal">
@@ -329,11 +369,23 @@ const ContentGroupStudent = (props) => {
                 <span>{"สิ้นสุด"}</span>
               </div>
               <div className="input-grid-editGroupAllmodal">
-                <input type="date"></input>
+                <input
+                  type="date"
+                  value={editendGroup ? editendGroup : data ? data.stop : ""}
+                  onChange={(e) => {
+                    setEditendGroup(e.target.value);
+                  }}
+                ></input>
               </div>
             </div>
           </div>
-          <div className="boxsubmit-button-editGroupAllmodal">
+          <div
+            className="boxsubmit-button-editGroupAllmodal"
+            onClick={() => {
+              console.log("TEST !!! edit");
+              handleSubmiteditgroup(data ? data.Id : "");
+            }}
+          >
             <button type="button">{"แก้ไข"}</button>
           </div>
         </div>
@@ -355,7 +407,7 @@ const ContentGroupStudent = (props) => {
         });
       }
     } else {
-      console.log("ไม่มีครูไม่มีmeq");
+      // console.log("ไม่มีครูไม่มีmeq");
       setInputAddvisorID1({});
       setInputAddvisorID2({});
       setInputMEQ1(0);
@@ -375,14 +427,17 @@ const ContentGroupStudent = (props) => {
   };
 
   const handleDataGroupAdvisor = async (tokenuser) => {
-    await FetchControlGroup.fetchGetGroupStudentAdvisor(tokenuser).then((res) => {
-      setDataGroupAdvisor(res);
-    });
+    await FetchControlGroup.fetchGetGroupStudentAdvisor(tokenuser).then(
+      (res) => {
+        setDataGroupAdvisor(res);
+      }
+    );
   };
 
   const handleDataGroupStudentemptygroup = async (tokenuser) => {
     await FetchControlGroup.fetchGetGroupStudentemptygroup(tokenuser).then(
       (data) => {
+        // console.log("ข้อมูลนศพ ที่ว่าง");
         setDataGroupStudentEmpty(data);
       }
     );
@@ -401,6 +456,7 @@ const ContentGroupStudent = (props) => {
     let object = { grp_id: idgroup };
     await FetchControlGroup.fetchGetGroupStudentingroup(object, tokenuser).then(
       (data) => {
+        // console.log("ข้อมูลนศพ ในกลุ่ม");
         setDataGroupStudentingroup(data);
       }
     );
@@ -436,10 +492,13 @@ const ContentGroupStudent = (props) => {
     // console.log("objectAddstudentingroup=>", object);
     // console.log("tokenfetch>>", tokenuser);
     handleClearHoldlineandselectdata();
-    handleDataGroupStudentemptygroup(tokenuser);
-    // FetchControlGroup.fetchAddGroupStudent(object, tokenuser).then((message) => {
-    //   console.log(message);
-    // });
+    FetchControlGroup.fetchAddGroupStudent(object, tokenuser).then(
+      (message) => {
+        console.log(message);
+        handleDataGroupStudentemptygroup(tokenuser);
+        handleDataGroupstudentingroup(idstudent, tokenuser);
+      }
+    );
   };
 
   const handleDelgroupstudentingroup = (idstudent, idgroup, tokenuser) => {
@@ -456,12 +515,13 @@ const ContentGroupStudent = (props) => {
     let object = { id: idstudent };
     console.log("delete object=>", object);
     handleClearHoldlineandselectdata();
-    handleDataGroupstudentingroup(idgroup, tokenuser);
-    // FetchControlGroup.fetchDeleteGroupstudentingroup(object, tokenuser).then(
-    //   (message) => {
-    //     console.log(message);
-    //   }
-    // );
+    FetchControlGroup.fetchDeleteGroupstudentingroup(object, tokenuser).then(
+      (message) => {
+        console.log(message);
+        handleDataGroupStudentemptygroup(tokenuser);
+        handleDataGroupstudentingroup(idstudent, tokenuser);
+      }
+    );
   };
 
   const handleAddadvisoringroup = (
@@ -495,15 +555,40 @@ const ContentGroupStudent = (props) => {
   const handleAddGroupforgroup = (year, tokenuser) => {
     let object = { year: year };
     if (year) {
-      // FetchControlGroup.fetchAddGroupforGroup(object,tokenuser)
+      console.log("เพิ่มกลุ่ม >>", object);
+      Swal.fire({
+        title: "เพิ่มรายชื่อกลุ่ม !!",
+        text: "ต้องการ เพิ่ม รายชื่อกลุ่ม ใช่หรือไม่ ?",
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          FetchControlGroup.fetchAddGroupforGroup(object, tokenuser);
+        }
+      });
     }
   };
 
   const handleDeleteGroupforgroup = (groupid, tokenuser) => {
+    if (!groupid) return;
     let object = { id: groupid };
     if (groupid) {
       console.log("object deletegroupforgroup =>", object);
-      // FetchControlGroup.fetchDeleteGroupforgroup(object,tokenuser)
+      Swal.fire({
+        title: "ลบ รายชื่อกลุ่ม !!",
+        text: "ต้องการ ลบ รายชื่อกลุ่ม ใช่ หรือ ไม่ ?",
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        confirmButtonText: "ยกเลิก",
+        icon: "question",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          FetchControlGroup.fetchDeleteGroupforgroup(object, tokenuser);
+        }
+      });
     }
   };
 
@@ -576,6 +661,7 @@ const ContentGroupStudent = (props) => {
           ></input>
           <button
             type="button"
+            className="btn-search-groupStudent"
             onClick={() => {
               if (searchgroup) {
                 console.log("ไม่ว่าง");
@@ -627,13 +713,16 @@ const ContentGroupStudent = (props) => {
                           );
                         }}
                       >
-                        <td >{`${data.name}`}</td>
-                        <td >{`${data.start}`}</td>
-                        <td >{`${data.stop}`}</td>
+                        <td>{`${data.name}`}</td>
+                        <td>{`${data.start}`}</td>
+                        <td>{`${data.stop}`}</td>
                         <td>
                           <button
                             type="button"
                             onClick={() => {
+                              setEditNameGroup(data.name);
+                              setEditstartGroup(data.start);
+                              setEditendGroup(data.stop);
                               handleOpenModalbox("boxEditGroupModal");
                             }}
                           >
@@ -711,7 +800,20 @@ const ContentGroupStudent = (props) => {
                   </tbody>
                 </table>
               ) : (
-                <Spinnerpage></Spinnerpage>
+                <table className="table-show-info" style={{ width: "550px" }}>
+                  <thead>
+                    <tr>
+                      <th>{"รหัส"}</th>
+                      <th>{"ชื่อ"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>{""}</th>
+                      <th>{""}</th>
+                    </tr>
+                  </tbody>
+                </table>
               )
             ) : (
               <table className="table-show-info" style={{ width: "550px" }}>
@@ -735,6 +837,7 @@ const ContentGroupStudent = (props) => {
               type="button"
               className="btnAdd-inControllStudent"
               onClick={() => {
+                console.log("มันต้องเพิ่มเข้ากลุ่ม ?");
                 handleAddDataGroupstudent(
                   selectStudentEmpty ? selectStudentEmpty.id : "",
                   selectDataGroup ? selectDataGroup.Id : "",

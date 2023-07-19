@@ -5,6 +5,7 @@ import { handleOpenModalbox } from "../config/modalConfig";
 import Cookies from "universal-cookie";
 import { HolderlineonTable } from "../config/holdlinetable";
 import FetchControlStudent from "../data/fetchControlStudent";
+import Swal from "sweetalert2";
 
 const ContentStudent = (props) => {
   const testFileFolder = "../../../public/picture/student";
@@ -34,8 +35,8 @@ const ContentStudent = (props) => {
   const [mdinputLname, setMdinputLname] = useState("");
   const [mdinputType, setMdinputType] = useState("");
   const [mdinputidStudent, setMdinputidStudent] = useState("");
-  const [mdinputDoctor, setMdinputDoctor] = useState("");
-  const [mdinputGroup, setMdinputGroup] = useState("");
+  const [mdinputDoctor, setMdinputDoctor] = useState({ id: "", name: "" });
+  const [mdinputGroup, setMdinputGroup] = useState({ id: "", name: "" });
   const [mdinputStartdate, setMdinputStartdate] = useState("0000-00-00");
   const [mdinputStopdate, setMdinputStopdate] = useState("0000-00-00");
 
@@ -98,7 +99,7 @@ const ContentStudent = (props) => {
   //ดึงข้อมูลกลุ่มนศพ
   const handleFatchGroup = (year) => {
     let ayear = { year: parseInt(year) - 543 };
-    console.log("ayear", ayear);
+    // console.log("ayear", ayear);
     if (!localStorage.getItem("groupName")) {
       FetchControlStudent.fetchGetGroup(ayear, usertoken).then((data) => {
         let nameGroup = [];
@@ -294,6 +295,7 @@ const ContentStudent = (props) => {
     FetchControlStudent.fetchGetImage({ std_id: StudentId.trim() }, token).then(
       (data) => {
         if (data) {
+          console.log("!>>", data);
           setPicURL(`http://${data.url}`);
         }
       }
@@ -1153,7 +1155,10 @@ const ContentStudent = (props) => {
       id: data.advisor_id ? data.advisor_id.trim() : "",
       name: data.advisor_name ? data.advisor_name.trim() : "",
     });
-    setMdinputGroup({ id: data.grp_id.trim(), name: data.grp_name.trim() });
+    setMdinputGroup({
+      id: data.grp_id.trim(),
+      name: data.grop_name ? data.grp_name.trim() : "",
+    });
     setMdinputStartdate(data.start.trim());
     setMdinputStopdate(data.stop.trim());
   };
@@ -1334,7 +1339,8 @@ const ContentStudent = (props) => {
                   id={`table-tr-${index}`}
                   key={index}
                   onClick={() => {
-                    console.log("handle list !=>", data);
+                    // console.log("อันนี้โฮ ลาย อันแรกนิ");
+                    // console.log("handle list !=>", data);
                     HolderlineonTable(
                       "table-tr-studentinfo",
                       "table-tr-",
@@ -1342,7 +1348,6 @@ const ContentStudent = (props) => {
                     );
                     setIdStudent(data.Id);
                     setNumberStudent(data.std_id);
-                    showURLimageStudent(data.std_id, usertoken);
                     setMcq(data.mcq);
                     setOsce({ OSCE1: data.osce1, OSCE2: data.osce2 });
                     setMeq({ MEQ1: data.meq1, MEQ2: data.meq2 });
@@ -1369,6 +1374,7 @@ const ContentStudent = (props) => {
                         setStatusCloseModal(false);
                         handleEditDataStudent(data);
                         setStatusConStudentbox("edit");
+                        showURLimageStudent(data.std_id, usertoken);
                       }}
                     >
                       <i className="bi-three-dots"></i>
@@ -1381,7 +1387,21 @@ const ContentStudent = (props) => {
                 <tr
                   key={index}
                   onClick={() => {
-                    console.log("handle list !=>", data);
+                    // console.log("หากไม่มีการจัดการ search");
+                    // console.log("handle list !=>", data);
+                    HolderlineonTable(
+                      "table-tr-studentinfo",
+                      "table-tr-",
+                      index
+                    );
+                    setIdStudent(data.Id);
+                    setNumberStudent(data.std_id);
+                    setMcq(data.mcq);
+                    setOsce({ OSCE1: data.osce1, OSCE2: data.osce2 });
+                    setMeq({ MEQ1: data.meq1, MEQ2: data.meq2 });
+                    setBook(data.book);
+                    setIsHoldaLine(true);
+                    handleSelectLinetable(index);
                   }}
                 >
                   <td>{data.ttl ? data.ttl.trim() : ""}</td>
@@ -1398,6 +1418,7 @@ const ContentStudent = (props) => {
                       className="btn-edit-tableInfoStudent"
                       onClick={() => {
                         console.log("Edit button");
+                        console.log("แก้ไข ข้อที่ 2");
                       }}
                     >
                       <i className="bi-three-dots"></i>
@@ -1439,6 +1460,7 @@ const ContentStudent = (props) => {
                       setStatusCloseModal(false);
                       handleEditDataStudent(object);
                       setStatusConStudentbox("edit");
+                      console.log("แก้ไข อันที่ 3");
                     }}
                   >
                     <i className="bi-three-dots"></i>
@@ -1459,6 +1481,7 @@ const ContentStudent = (props) => {
               setStatusCloseModal(false);
               setStatusConStudentbox("add");
               clearMdinput();
+              showURLimageStudent("000000", usertoken);
             }}
           >
             {"เพิ่ม"}
@@ -1469,19 +1492,27 @@ const ContentStudent = (props) => {
             className="btnDelStudent"
             type="button"
             onClick={async (e) => {
-              e.preventDefault();
-              if (idStudent.toString() !== "28") return;
-              let object = { id: idStudent };
-
-              await FetchControlStudent.fetchDelete(object, usertoken).then(
-                (message) => {
-                  console.log(message);
-                  if (message.status) {
-                    handleFatch();
-                  }
+              Swal.fire({
+                title: "ลบรายการ!!",
+                text: "ต้องการ ลบ รายการนักเรียนที่เลือก ใช่ หรือ ไม่",
+                icon: "question",
+                showConfirmButton: true,
+                showCancelButton: true,
+              }).then((res) => {
+                if (res.isConfirmed) {
+                  if (!idStudent) return;
+                  let object = { id: idStudent };
+                  FetchControlStudent.fetchDelete(object, usertoken).then(
+                    (message) => {
+                      console.log(message);
+                      if (message.status) {
+                        handleFatch();
+                      }
+                    }
+                  );
+                  setStatusDel(true);
                 }
-              );
-              setStatusDel(true);
+              });
             }}
           >
             {"ลบ"}

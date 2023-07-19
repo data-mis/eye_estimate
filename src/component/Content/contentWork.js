@@ -1226,6 +1226,7 @@ const ContentWork = (props) => {
                     className="box-infosearch-modalsrcstudent"
                     key={index}
                     onClick={() => {
+                      console.log("ดาต้า นศพ >>", data);
                       if (mode) {
                         setEditstudentEst({
                           id: data.id.trim(),
@@ -1257,11 +1258,18 @@ const ContentWork = (props) => {
                     key={index}
                     onClick={() => {
                       if (mode) {
+                        console.log("ดาต้า นศพ >>", data);
+                        // let objstudent = {
+                        //   id: data.id.trim(),
+                        //   name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
+                        // };
+                        // console.log("objstudent >>", objstudent);
                         setEditstudentEst({
                           id: data.id.trim(),
                           name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
                         });
                       } else {
+                        console.log("omg");
                         setStudentEst({
                           id: data.id.trim(),
                           name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
@@ -1708,7 +1716,7 @@ const ContentWork = (props) => {
           sheet_id: editTypesheetwork.id,
           sheet_code: editTypesheetwork.code,
           advisor_id: editadvisorDocest.id,
-          grp_id: editgroupStudentest.id,
+          student_id: editstudentEst.id,
           date: editdateEst,
           time_begin: edittimebeginest,
           time_end: edittimeendest,
@@ -2229,11 +2237,6 @@ const ContentWork = (props) => {
                     id="tableshowinfoestimation"
                   >
                     <thead className="thaeadShowinfo">
-                      {/* <tr>
-                        <th colSpan={8}>
-                          {titlegetwork ? `${titlegetwork}` : "หัวข้อ"}
-                        </th>
-                      </tr> */}
                       <tr>
                         <th style={{ backgroundColor: "#00897b" }}>
                           {"วันที่"}
@@ -2278,7 +2281,7 @@ const ContentWork = (props) => {
                                 >{`${data.time_begin}-${data.time_end}`}</td>
                                 <td width={50}>{data.name}</td>
                                 <td width={300}>{data.advisor_name}</td>
-                                <td width={300}>{data.studentname}</td>
+                                <td width={300}>{data.student_name}</td>
                                 <td width={50}>
                                   <button>
                                     <i className="bi-chevron-up"></i>
@@ -2333,7 +2336,7 @@ const ContentWork = (props) => {
                               >{`${data.time_begin}-${data.time_end}`}</td>
                               <td width={50}>{data.name}</td>
                               <td width={300}>{data.advisor_name}</td>
-                              <td width={300}>{data.studentname}</td>
+                              <td width={300}>{data.student_name}</td>
                               <td width={50}>
                                 <button
                                   onClick={() => {
@@ -2549,6 +2552,7 @@ const ContentWork = (props) => {
                   }).then((result) => {
                     if (result.isConfirmed) {
                       console.log("เอาละนะ จะลบแล้วนะ", dataselectworkinfo);
+                      //ยังไม่มีการลบ
                     }
                   });
                 } else {

@@ -120,6 +120,19 @@ const FetchControlGroup = {
       throw error;
     }
   },
+  fetchEditgroup: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/group/edit_group`;
+
+    try {
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default FetchControlGroup;

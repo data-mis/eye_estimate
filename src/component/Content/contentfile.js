@@ -84,11 +84,11 @@ const ContentFile = (props) => {
       }).then((result) => {
         if (result.isConfirmed) {
           console.log("ลบไฟล์");
-          // FetchControlWork.fetchDelStudentfilework(object, usertoken).then(
-          //   (data) => {
-          //     console.log(data);
-          //   }
-          // );
+          FetchControlWork.fetchDelStudentfilework(object, usertoken).then(
+            (data) => {
+              console.log(data);
+            }
+          );
         }
       });
     } else {
