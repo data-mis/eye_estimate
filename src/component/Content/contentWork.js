@@ -590,29 +590,29 @@ const ContentWork = (props) => {
                   <div>
                     <input
                       type="radio"
-                      value={"จักษุ1(ช)"}
+                      value={"1"}
                       onChange={(e) => {
                         setReportWard(e.target.value);
                       }}
-                      checked={reportWard === "จักษุ1(ช)"}
+                      checked={reportWard === "1"}
                     ></input>
                     <span>{"จักษุ1(ช)"}</span>
                     <input
                       type="radio"
-                      value={"จักษุ2(ญ)"}
+                      value={"2"}
                       onChange={(e) => {
                         setReportWard(e.target.value);
                       }}
-                      checked={reportWard === "จักษุ2(ญ)"}
+                      checked={reportWard === "2"}
                     ></input>
                     <span>{"จักษุ2(ญ)"}</span>
                     <input
                       type="radio"
-                      value={"พิเศษ"}
+                      value={"3"}
                       onChange={(e) => {
                         setReportWard(e.target.value);
                       }}
-                      checked={reportWard === "พิเศษ"}
+                      checked={reportWard === "3"}
                     ></input>
                     <span>{"พิเศษ"}</span>
                   </div>
@@ -937,6 +937,9 @@ const ContentWork = (props) => {
                   className="input-rowinput-modalboxContentwork"
                   type="date"
                   defaultValue={editdateEst !== undefined ? editdateEst : ""}
+                  onChange={(e) => {
+                    setEditdateEst(e.target.value);
+                  }}
                 ></input>
               </div>
             </div>
@@ -950,6 +953,9 @@ const ContentWork = (props) => {
                     type="time"
                     className="inputtime-timeSTS"
                     defaultValue={edittimebeginest}
+                    onChange={(e) => {
+                      setEdittimebeginest(e.target.value);
+                    }}
                   ></input>
                 </div>
                 <span style={{ margin: "0 5px" }}>{"ถึง"}</span>
@@ -958,6 +964,9 @@ const ContentWork = (props) => {
                     type="time"
                     className="inputtime-timeSTS"
                     defaultValue={edittimeendest}
+                    onChange={(e) => {
+                      setEdittimeendest(e.target.value);
+                    }}
                   ></input>
                 </div>
               </div>
@@ -1039,7 +1048,6 @@ const ContentWork = (props) => {
               </div>
             </div>
           </div>
-
           <div
             className="inforeport-special-boxcontentwork"
             id="boxeditinforeportSpecial"
@@ -1053,29 +1061,29 @@ const ContentWork = (props) => {
                   <div>
                     <input
                       type="radio"
-                      value={"จักษุ(ช)"}
+                      value={"1"}
                       onChange={(e) => {
                         setEditreportWard(e.target.value);
                       }}
-                      checked={editreportWard === "จักษุ(ช)"}
+                      checked={editreportWard === "1"}
                     ></input>
                     <span>{"จักษุ(ช)"}</span>
                     <input
                       type="radio"
-                      value={"จักษุ(ญ)"}
+                      value={"2"}
                       onChange={(e) => {
                         setEditreportWard(e.target.value);
                       }}
-                      checked={editreportWard === "จักษุ(ญ)"}
+                      checked={editreportWard === "2"}
                     ></input>
                     <span>{"จักษุ(ญ)"}</span>
                     <input
                       type="radio"
-                      value={"พิเศษ"}
+                      value={"3"}
                       onChange={(e) => {
                         setEditreportWard(e.target.value);
                       }}
-                      checked={editreportWard === "พิเศษ"}
+                      checked={editreportWard === "3"}
                     ></input>
                     <span>{"พิเศษ"}</span>
                   </div>
@@ -1447,6 +1455,7 @@ const ContentWork = (props) => {
       complete: radioComplete,
     };
 
+    console.log("object >>>", object);
     handleworkgetworkdata(object, token);
   };
 
@@ -1507,10 +1516,12 @@ const ContentWork = (props) => {
               break;
             case "วันที่ส่งรายงานผู้ป่วย":
               //**พี่ปูจะส่งมาเป็น คศ */
-              setEditreportDateSendpatient(ele.txt_val);
-              // let datesent = moment(ele.txt_val)
-              //   .add(-543, "year")
-              //   .format("YYYY-MM-DD");
+              // setEditreportDateSendpatient(ele.txt_val);
+              let date = ele.txt_val.split("-");
+              let dateplus = `${parseInt(date[2]) - 543}-${date[1]}-${date[0]}`;
+              console.log("วันที่ส่งรายงานผู้ป่วย คศ. >>", dateplus);
+              setEditreportDateSendpatient(dateplus);
+
               // setEditreportDateSendpatient(datesent);
               break;
           }
@@ -1556,24 +1567,30 @@ const ContentWork = (props) => {
           txt3: "เลขที่โรงพยาบาล",
           txt_val3: reportHosnumber,
           txt5: "วันที่ผู้ป่วย Admit",
-          txt_val5: reportDateadmit,
+          txt_val5: reportDateadmit
+            ? moment(reportDateadmit).add(543, "year").format("DD-MM-YYYY")
+            : "",
           txt6: "วันที่จ่าย/รับผู้ป่วย",
-          txt_val6: moment(reportDateSendpatient)
-            .add(543, "year")
-            .format("DD-MM-YYYY"),
+          txt_val6: reportDateSendpatient
+            ? moment(reportDateSendpatient)
+                .add(543, "year")
+                .format("DD-MM-YYYY")
+            : "",
           txt7: "วันที่ส่งรายงานผู้ป่วย",
-          txt_val7: moment(reportDateCommit)
-            .add(543, "year")
-            .format("DD-MM-YYYY"),
+          txt_val7: reportDateCommit
+            ? moment(reportDateCommit).add(543, "year").format("DD-MM-YYYY")
+            : "",
           txt_val6_1: reportDateSendpatient,
           txt_val7_1: reportDateCommit,
         };
         console.log("object for add report>>>", objectreport);
         addDetailinputclear();
         docGetId("boxAddworkDoctor").style.display = "none";
-        FetchControlWork.fetchAdddetailwork().then((message) => {
-          console.log(message);
-        });
+        // FetchControlWork.fetchAdddetailwork(objectreport, token).then(
+        //   (message) => {
+        //     console.log(message);
+        //   }
+        // );
         break;
       case "02": //**progressnote */
         let objectprogressnote = {
@@ -1709,6 +1726,47 @@ const ContentWork = (props) => {
     console.log("look this null>>", editstudentEst);
     switch (casecode) {
       case "01":
+        console.log(">>>", editreportDateSendpatient);
+        let objeditReport = {
+          sheet_code: editTypesheetwork.code,
+          sheet_id: editTypesheetwork.id,
+          advisor_id: editadvisorDocest.id,
+          student_id: editstudentEst.id,
+          date: editdateEst,
+          time_begin: edittimebeginest,
+          time_end: edittimeendest,
+          caption: "หอผู้ป่วย",
+          txt: editreportWard,
+          txt1: "การวินิจฉัย",
+          txt_val1: editreportDiagnosis,
+          txt2: "ชื่อผู้ป่วย",
+          txt_val2: editreportPatient,
+          txt3: "เลขที่โรงพยาบาล",
+          txt_val3: editreportHosnumber,
+          txt5: "วันที่ผู้ป่วย Admit",
+          txt_val5: editreportDateadmit,
+          txt6: "วันที่จ่าย/รับผู้ป่วย",
+          txt_val6: editreportDateSendpatient
+            ? moment(editreportDateSendpatient)
+                .add(543, "year")
+                .format("DD-MM-YYYY")
+            : "",
+          txt7: "วันที่ส่งรายงานผู้ป่วย",
+          txt_val7: editreportDateCommit
+            ? moment(editreportDateCommit).add(543, "year").format("DD-MM-YYYY")
+            : "",
+          txt_val6_1: editreportDateSendpatient,
+          txt_val7_1: editreportDateCommit,
+        };
+        console.log("edit for add report>>>", objeditReport);
+        addDetailinputclear();
+        docGetId("boxEditworkDoctor").style.display = "none";
+        FetchControlWork.fetchEditdetailwork(objeditReport, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
+
         break;
       case "02":
         let editobjectprogressnote = {
@@ -1836,6 +1894,39 @@ const ContentWork = (props) => {
         );
         break;
     }
+  };
+
+  const handleDeletedetailwork = (data, tokenuser) => {
+    let objIdworkdetail = {
+      work_id: data.Id,
+    };
+    // console.log("ลบโดย data นี้ >>>", objIdworkdetail);
+    // console.log("token", tokenuser);
+
+    FetchControlWork.fetchcheckgetworkdetail(objIdworkdetail, tokenuser).then(
+      (res) => {
+        console.log(res);
+        if (res.status) {
+          Swal.fire({
+            icon: "warning",
+            title: "ลบรายละเอียดการประเมิน !!",
+            text: "ต้องการ ลบ รายละเอียดการประเมิน ใช่ หรือ ไม่ ?",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "ตกลง",
+            cancelButtonText: "ยกเลิก",
+          }).then((res) => {
+            if (res.isConfirmed) {
+              console.log("ทำการลบต่อไป");
+              // FetchControlWork.fetchdeleteworkdetail(
+              //   objIdworkdetail,
+              //   tokenuser
+              // );
+            }
+          });
+        }
+      }
+    );
   };
 
   const handlecaseEditwork = (code, aData) => {
@@ -2551,8 +2642,8 @@ const ContentWork = (props) => {
                     cancelButtonColor: "#e51c23",
                   }).then((result) => {
                     if (result.isConfirmed) {
-                      console.log("เอาละนะ จะลบแล้วนะ", dataselectworkinfo);
                       //ยังไม่มีการลบ
+                      handleDeletedetailwork(dataselectworkinfo, usertoken);
                     }
                   });
                 } else {

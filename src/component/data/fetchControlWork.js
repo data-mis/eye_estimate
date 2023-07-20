@@ -191,5 +191,31 @@ const FetchControlWork = {
       throw error;
     }
   },
+  fetchcheckgetworkdetail: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/ck_get_work`;
+
+    try {
+      let resImage = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return resImage;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchdeleteworkdetail: async function (info, token) {
+    let request = requestOption("POST", info, token);
+    let http = `${HttpConfig()}/work/delete_work`;
+
+    try {
+      let resImage = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return resImage;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default FetchControlWork;

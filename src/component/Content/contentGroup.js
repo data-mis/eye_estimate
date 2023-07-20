@@ -319,6 +319,30 @@ const ContentGroupStudent = (props) => {
           <button
             className="btn-save-addDoctorMEQ"
             type="submit"
+            onClick={() => {
+              // console.log("บันทึก อาจารย์รับผิดชอบกลุ่ม");
+              Swal.fire({
+                title: "เพิ่มอาจารย์ที่รับผิดชอบ !!",
+                text: "ต้องการ เพิ่ม อาจารย์ที่รับผิดชอบ ใช่ หรือ ไม่",
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "ตกลง",
+                cancelButtonText: "ยกเลิก",
+                icon: "question",
+              }).then((res) => {
+                if (res.isConfirmed) {
+                  console.log("เพิ่มอาจารย์ ที่ปรึกษา +++");
+                  handleAddadvisoringroup(
+                    selectDataGroup ? selectDataGroup.Id : "",
+                    inputAddvisorId1 ? inputAddvisorId1.id : "",
+                    inputAddvisorId2 ? inputAddvisorId2.id : "",
+                    inputMEQ1 ? inputMEQ1 : "",
+                    inputMEQ2 ? inputMEQ2 : "",
+                    usertoken
+                  );
+                }
+              });
+            }}
           >{`บันทึก`}</button>
         </form>
       </div>
@@ -544,12 +568,18 @@ const ContentGroupStudent = (props) => {
 
     let object = {
       id: groupid,
-      teacher1: teacher1,
-      teacher2: teacher2,
+      teacher1: teacher1 ? teacher1 : "",
+      teacher2: teacher2 ? teacher2 : "",
       meq1: meq1,
       meq2: meq2,
     };
     console.log("addAdvisoringroup =>", object);
+    FetchControlGroup.fetchAddGroupadvisorgroup(object, tokenuser).then(
+      (res) => {
+        console.log(res);
+        handleDataGropstudent(yearSelectGroup, tokenuser);
+      }
+    );
   };
 
   const handleAddGroupforgroup = (year, tokenuser) => {
@@ -930,6 +960,7 @@ const ContentGroupStudent = (props) => {
               </table>
             )}
           </div>
+          {/* อาจารย์ที่รับผิดชอบ */}
           <div className="box-doctorInput-ControllStudent">
             <div className="row-doctorInputControllStudent">
               <div className="row-input-doctorInputControllStudent">
@@ -941,6 +972,9 @@ const ContentGroupStudent = (props) => {
                       className="input-textadvisor-addDoctorMEQ"
                       onFocus={(e) => e.target.select()}
                       value={inputAddvisorId1.name ? inputAddvisorId1.name : ""}
+                      onClick={() => {
+                        handleDropDoctorMEQ(1);
+                      }}
                       required
                       readOnly
                     ></input>
@@ -1003,6 +1037,9 @@ const ContentGroupStudent = (props) => {
                       className="input-textadvisor-addDoctorMEQ"
                       value={inputAddvisorId2.name ? inputAddvisorId2.name : ""}
                       onFocus={(e) => e.target.select()}
+                      onClick={() => {
+                        handleDropDoctorMEQ(2);
+                      }}
                       required
                       readOnly
                     ></input>
@@ -1062,15 +1099,28 @@ const ContentGroupStudent = (props) => {
                 className="btn-submit-groupStudent"
                 type="button"
                 onClick={() => {
-                  console.log("บันทึก อาจารย์รับผิดชอบกลุ่ม");
-                  handleAddadvisoringroup(
-                    selectDataGroup ? selectDataGroup.Id : "",
-                    inputAddvisorId1 ? inputAddvisorId1.id : "",
-                    inputAddvisorId2 ? inputAddvisorId2.id : "",
-                    inputMEQ1 ? inputMEQ1 : "",
-                    inputMEQ2 ? inputMEQ2 : "",
-                    usertoken
-                  );
+                  // console.log("บันทึก อาจารย์รับผิดชอบกลุ่ม");
+                  Swal.fire({
+                    title: "เพิ่มอาจารย์ที่รับผิดชอบ !!",
+                    text: "ต้องการ เพิ่ม อาจารย์ที่รับผิดชอบ ใช่ หรือ ไม่",
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "ตกลง",
+                    cancelButtonText: "ยกเลิก",
+                    icon: "question",
+                  }).then((res) => {
+                    if (res.isConfirmed) {
+                      console.log("เพิ่มอาจารย์ ที่ปรึกษา +++");
+                      handleAddadvisoringroup(
+                        selectDataGroup ? selectDataGroup.Id : "",
+                        inputAddvisorId1 ? inputAddvisorId1.id : "",
+                        inputAddvisorId2 ? inputAddvisorId2.id : "",
+                        inputMEQ1 ? inputMEQ1 : "",
+                        inputMEQ2 ? inputMEQ2 : "",
+                        usertoken
+                      );
+                    }
+                  });
                 }}
               >
                 {"บันทึก"}
