@@ -1547,25 +1547,32 @@ const ContentWork = (props) => {
 
   const handleSubmitAddnewWork = (token) => {
     let typecase = inputtypeestimation.code;
+    let passtofetch = true;
 
     switch (typecase) {
       case "01": //**report*/
         let objectreport = {
-          sheet_code: inputtypeestimation.code,
-          sheet_id: inputtypeestimation.id,
-          advisor_id: advisorDocest.id,
-          student_id: studentEst.id,
-          date: dateEst,
-          time_begin: timebeginest,
-          time_end: timeendest,
+          sheet_code: inputtypeestimation.code
+            ? inputtypeestimation.code
+            : (passtofetch = false),
+          sheet_id: inputtypeestimation.id
+            ? inputtypeestimation.id
+            : (passtofetch = false),
+          advisor_id: advisorDocest.id
+            ? advisorDocest.id
+            : (passtofetch = false),
+          student_id: studentEst.id ? studentEst.id : (passtofetch = false),
+          date: dateEst ? dateEst : (passtofetch = false),
+          time_begin: timebeginest ? timebeginest : (passtofetch = false),
+          time_end: timeendest ? timeendest : (passtofetch = false),
           caption: "หอผู้ป่วย",
-          txt: reportWard,
+          txt: reportWard ? reportWard : (passtofetch = false),
           txt1: "การวินิจฉัย",
-          txt_val1: reportDiagnosis,
+          txt_val1: reportDiagnosis ? reportDiagnosis : (passtofetch = false),
           txt2: "ชื่อผู้ป่วย",
-          txt_val2: reportPatient,
+          txt_val2: reportPatient ? reportPatient : (passtofetch = false),
           txt3: "เลขที่โรงพยาบาล",
-          txt_val3: reportHosnumber,
+          txt_val3: reportHosnumber ? reportHosnumber : (passtofetch = false),
           txt5: "วันที่ผู้ป่วย Admit",
           txt_val5: reportDateadmit
             ? moment(reportDateadmit).add(543, "year").format("DD-MM-YYYY")
@@ -1583,132 +1590,252 @@ const ContentWork = (props) => {
           txt_val6_1: reportDateSendpatient,
           txt_val7_1: reportDateCommit,
         };
-        console.log("object for add report>>>", objectreport);
-        addDetailinputclear();
-        docGetId("boxAddworkDoctor").style.display = "none";
-        // FetchControlWork.fetchAdddetailwork(objectreport, token).then(
-        //   (message) => {
-        //     console.log(message);
-        //   }
-        // );
+
+        if (passtofetch) {
+          console.log("object for add report>>>", objectreport);
+          addDetailinputclear();
+          docGetId("boxAddworkDoctor").style.display = "none";
+          FetchControlWork.fetchAdddetailwork(objectreport, token).then(
+            (message) => {
+              console.log(message);
+            }
+          );
+        } else {
+          Swal.fire({
+            title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+            icon: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1200,
+          });
+        }
         break;
       case "02": //**progressnote */
         let objectprogressnote = {
-          sheet_code: inputtypeestimation.code,
-          sheet_id: inputtypeestimation.id,
-          advisor_id: advisorDocest.id,
-          student_id: studentEst.id,
-          date: dateEst,
-          time_begin: timebeginest,
-          time_end: timeendest,
+          sheet_code: inputtypeestimation.code
+            ? inputtypeestimation.code
+            : (passtofetch = false),
+          sheet_id: inputtypeestimation.id
+            ? inputtypeestimation.id
+            : (passtofetch = false),
+          advisor_id: advisorDocest.id
+            ? advisorDocest.id
+            : (passtofetch = false),
+          student_id: studentEst.id ? studentEst.id : (passtofetch = false),
+          date: dateEst ? dateEst : (passtofetch = false),
+          time_begin: timebeginest ? timebeginest : (passtofetch = false),
+          time_end: timeendest ? timeendest : (passtofetch = false),
         };
-        console.log("object for add progressnote >>>", objectprogressnote);
-        addDetailinputclear();
-        docGetId("boxAddworkDoctor").style.display = "none";
-        FetchControlWork.fetchAdddetailwork(objectprogressnote, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        if (passtofetch) {
+          console.log("object for add progressnote >>>", objectprogressnote);
+          addDetailinputclear();
+          docGetId("boxAddworkDoctor").style.display = "none";
+          FetchControlWork.fetchAdddetailwork(objectprogressnote, token).then(
+            (message) => {
+              console.log(message);
+            }
+          );
+        } else {
+          Swal.fire({
+            title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+            icon: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1200,
+          });
+        }
+
         break;
       case "03": //**opd teaching */
         let objectteaching = {
-          sheet_code: inputtypeestimation.code,
-          sheet_id: inputtypeestimation.id,
-          advisor_id: advisorDocest.id,
-          grp_id: groupStudentest.id,
-          date: dateEst,
-          time_begin: timebeginest,
-          time_end: timeendest,
+          sheet_code: inputtypeestimation.code
+            ? inputtypeestimation.code
+            : (passtofetch = false),
+          sheet_id: inputtypeestimation.id
+            ? inputtypeestimation.id
+            : (passtofetch = false),
+          advisor_id: advisorDocest.id
+            ? advisorDocest.id
+            : (passtofetch = false),
+          grp_id: groupStudentest.id
+            ? groupStudentest.id
+            : (passtofetch = false),
+          date: dateEst ? dateEst : (passtofetch = false),
+          time_begin: timebeginest ? timebeginest : (passtofetch = false),
+          time_end: timeendest ? timeendest : (passtofetch = false),
         };
-        console.log("object for add teaching >>>", objectteaching);
-        addDetailinputclear();
-        docGetId("boxAddworkDoctor").style.display = "none";
-        FetchControlWork.fetchAdddetailwork(objectteaching, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        if (passtofetch) {
+          console.log("object for add teaching >>>", objectteaching);
+          addDetailinputclear();
+          docGetId("boxAddworkDoctor").style.display = "none";
+          FetchControlWork.fetchAdddetailwork(objectteaching, token).then(
+            (message) => {
+              console.log(message);
+            }
+          );
+        } else {
+          Swal.fire({
+            title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+            icon: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1200,
+          });
+        }
+
         break;
       case "04": //**wardround*/
         let objectwardround = {
-          sheet_code: inputtypeestimation.code,
-          sheet_id: inputtypeestimation.id,
-          advisor_id: advisorDocest.id,
-          grp_id: groupStudentest.id,
-          date: dateEst,
-          time_begin: timebeginest,
-          time_end: timeendest,
+          sheet_code: inputtypeestimation.code
+            ? inputtypeestimation.code
+            : (passtofetch = false),
+          sheet_id: inputtypeestimation.id
+            ? inputtypeestimation.id
+            : (passtofetch = false),
+          advisor_id: advisorDocest.id
+            ? advisorDocest.id
+            : (passtofetch = false),
+          grp_id: groupStudentest.id
+            ? groupStudentest.id
+            : (passtofetch = false),
+          date: dateEst ? dateEst : (passtofetch = false),
+          time_begin: timebeginest ? timebeginest : (passtofetch = false),
+          time_end: timeendest ? timeendest : (passtofetch = false),
         };
-        console.log("object for add wardrond >>>", objectwardround);
-        addDetailinputclear();
-        docGetId("boxAddworkDoctor").style.display = "none";
-        FetchControlWork.fetchAdddetailwork(objectwardround, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        if (passtofetch) {
+          console.log("object for add wardrond >>>", objectwardround);
+          addDetailinputclear();
+          docGetId("boxAddworkDoctor").style.display = "none";
+          FetchControlWork.fetchAdddetailwork(objectwardround, token).then(
+            (message) => {
+              console.log(message);
+            }
+          );
+        } else {
+          Swal.fire({
+            title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+            icon: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1200,
+          });
+        }
+
         break;
       case "05": //**case & topic นำเสนอ */
         let objectcasetopicShow = {
-          sheet_code: inputtypeestimation.code,
-          sheet_id: inputtypeestimation.id,
-          advisor_id: advisorDocest.id,
-          grp_id: groupStudentest.id,
-          date: dateEst,
-          time_begin: timebeginest,
-          time_end: timeendest,
-          txt_val: topicest.name,
+          sheet_code: inputtypeestimation.code
+            ? inputtypeestimation.code
+            : (passtofetch = false),
+          sheet_id: inputtypeestimation.id
+            ? inputtypeestimation.id
+            : (passtofetch = false),
+          advisor_id: advisorDocest.id
+            ? advisorDocest.id
+            : (passtofetch = false),
+          grp_id: groupStudentest.id
+            ? groupStudentest.id
+            : (passtofetch = false),
+          date: dateEst ? dateEst : (passtofetch = false),
+          time_begin: timebeginest ? timebeginest : (passtofetch = false),
+          time_end: timeendest ? timeendest : (passtofetch = false),
+          txt_val: topicest.name ? topicest.name : (passtofetch = false),
         };
-        console.log("object for add objectcaseshow >>>", objectcasetopicShow);
-        addDetailinputclear();
-        docGetId("boxAddworkDoctor").style.display = "none";
-        FetchControlWork.fetchAdddetailwork(objectcasetopicShow, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        if (passtofetch) {
+          console.log("object for add objectcaseshow >>>", objectcasetopicShow);
+
+          addDetailinputclear();
+          docGetId("boxAddworkDoctor").style.display = "none";
+          FetchControlWork.fetchAdddetailwork(objectcasetopicShow, token).then(
+            (message) => {
+              console.log(message);
+            }
+          );
+        } else {
+          Swal.fire({
+            title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+            icon: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1200,
+          });
+        }
         break;
       case "06": //**case & topic ผู้ร่วม */
         let objectcasecoop = {
-          sheet_code: inputtypeestimation.code,
-          sheet_id: inputtypeestimation.id,
-          advisor_id: advisorDocest.id,
-          grp_id: groupStudentest.id,
-          date: dateEst,
-          time_begin: timebeginest,
-          time_end: timeendest,
-          txt_val: topicest,
+          sheet_code: inputtypeestimation.code
+            ? inputtypeestimation.code
+            : (passtofetch = false),
+          sheet_id: inputtypeestimation.id
+            ? inputtypeestimation.id
+            : (passtofetch = false),
+          advisor_id: advisorDocest.id ? advisorDocest : (passtofetch = false),
+          grp_id: groupStudentest.id ? groupStudentest : (passtofetch = false),
+          date: dateEst ? dateEst : (passtofetch = false),
+          time_begin: timebeginest ? timebeginest : (passtofetch = false),
+          time_end: timeendest ? timeendest : (passtofetch = false),
+          txt_val: topicest ? topicest : (passtofetch = false),
         };
-        console.log("object for add objectcasecoop >>>", objectcasecoop);
-        addDetailinputclear();
-        docGetId("boxAddworkDoctor").style.display = "none";
-        FetchControlWork.fetchAdddetailwork(objectcasecoop, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        if (passtofetch) {
+          console.log("object for add objectcasecoop >>>", objectcasecoop);
+          addDetailinputclear();
+          docGetId("boxAddworkDoctor").style.display = "none";
+          FetchControlWork.fetchAdddetailwork(objectcasecoop, token).then(
+            (message) => {
+              console.log(message);
+            }
+          );
+        } else {
+          Swal.fire({
+            title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+            icon: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1200,
+          });
+        }
+
         break;
       case "07": //**flipped classroom */
         let objectflipped = {
-          sheet_code: inputtypeestimation.code,
-          sheet_id: inputtypeestimation.id,
-          advisor_id: advisorDocest.id,
-          grp_id: groupStudentest.id,
-          date: dateEst,
-          time_begin: timebeginest,
-          time_end: timeendest,
+          sheet_code: inputtypeestimation.code
+            ? inputtypeestimation.code
+            : (passtofetch = false),
+          sheet_id: inputtypeestimation.id
+            ? inputtypeestimation.id
+            : (passtofetch = false),
+          advisor_id: advisorDocest.id
+            ? advisorDocest.id
+            : (passtofetch = true),
+          grp_id: groupStudentest.id
+            ? groupStudentest.id
+            : (passtofetch = true),
+          date: dateEst ? dateEst : (passtofetch = true),
+          time_begin: timebeginest ? timebeginest : (passtofetch = true),
+          time_end: timeendest ? timeendest : (passtofetch = true),
         };
-        console.log("object for add flipped >>>", objectflipped);
-        addDetailinputclear();
-        docGetId("boxAddworkDoctor").style.display = "none";
-        FetchControlWork.fetchAdddetailwork(objectflipped, token).then(
-          (message) => {
-            console.log(message);
-          }
-        );
+        if (passtofetch) {
+          console.log("object for add flipped >>>", objectflipped);
+          addDetailinputclear();
+          docGetId("boxAddworkDoctor").style.display = "none";
+          FetchControlWork.fetchAdddetailwork(objectflipped, token).then(
+            (message) => {
+              console.log(message);
+            }
+          );
+        } else {
+          Swal.fire({
+            title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+            icon: "warning",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1200,
+          });
+        }
+
         break;
     }
+    handleAllgroupinfowork();
   };
 
   const clearCloseAddeditmodal = () => {
@@ -1918,11 +2045,25 @@ const ContentWork = (props) => {
           }).then((res) => {
             if (res.isConfirmed) {
               console.log("ทำการลบต่อไป");
-              // FetchControlWork.fetchdeleteworkdetail(
-              //   objIdworkdetail,
-              //   tokenuser
-              // );
+              FetchControlWork.fetchdeleteworkdetail(
+                objIdworkdetail,
+                tokenuser
+              ).then(() => {
+                handleAllgroupinfowork();
+                setDataselectworkinfo("");
+                clearHolderlineTable("tableTR-workinfosheet");
+              });
             }
+          });
+        } else {
+          console.log("ทำการลบไป status = 0");
+          FetchControlWork.fetchdeleteworkdetail(
+            objIdworkdetail,
+            tokenuser
+          ).then(() => {
+            handleAllgroupinfowork();
+            setDataselectworkinfo("");
+            clearHolderlineTable("tableTR-workinfosheet");
           });
         }
       }

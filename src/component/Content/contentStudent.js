@@ -146,7 +146,15 @@ const ContentStudent = (props) => {
           let datafrom = new FormData();
           datafrom.append("file", newfile);
           datafrom.append("std_id", `${idStudent}`);
-          FetchControlStudent.fetchImgae(datafrom, usertoken);
+          FetchControlStudent.fetchImgae(datafrom, usertoken).then(() => {
+            Swal.fire({
+              title: "อัพโหลดรูปภาพ สำเร็จ!!!",
+              icon: "success",
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 1200,
+            });
+          });
         } catch (error) {
           console.log(error.response?.data);
         }
@@ -183,7 +191,6 @@ const ContentStudent = (props) => {
       !mdinputType ||
       !mdinputidStudent ||
       !mdinputDoctor.id ||
-      !mdinputGroup.id ||
       !mdinputStartdate ||
       !mdinputStopdate
     ) {
@@ -379,6 +386,17 @@ const ContentStudent = (props) => {
                       setMdinputTtl(e.target.value);
                     }
                   }}
+                  onClick={() => {
+                    if (!btnTtl) {
+                      getID("divBoxTtlDrop").style.position = "relative";
+                      getID("dropDowninputBoxTll").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxTtlDrop").style.position = "static";
+                      getID("dropDowninputBoxTll").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                   readOnly={statusReadonly}
                   disabled={statusReadonly}
                 ></input>
@@ -485,6 +503,17 @@ const ContentStudent = (props) => {
                       setMdinputType(e.target.value);
                     }
                   }}
+                  onClick={() => {
+                    if (!btnTtl) {
+                      getID("divBoxTypeDrop").style.position = "relative";
+                      getID("dropDowninputBoxType").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxTypeDrop").style.position = "static";
+                      getID("dropDowninputBoxType").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                 ></input>
                 <button
                   className="btn-dropdown-input"
@@ -560,6 +589,17 @@ const ContentStudent = (props) => {
                   value={mdinputDoctor.name}
                   readOnly
                   disabled={statusReadonly}
+                  onClick={() => {
+                    if (!btnTtl) {
+                      getID("divBoxDoctorDrop").style.position = "relative";
+                      getID("dropDowninputBoxDoctor").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxDoctorDrop").style.position = "static";
+                      getID("dropDowninputBoxDoctor").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                 ></input>
                 <button
                   type="button"
@@ -609,6 +649,18 @@ const ContentStudent = (props) => {
                   value={mdinputGroup.name}
                   readOnly
                   disabled={statusReadonly}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!btnTtl) {
+                      getID("divBoxGrupDrop").style.position = "relative";
+                      getID("dropDowinputBoxGroup").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxGrupDrop").style.position = "static";
+                      getID("dropDowinputBoxGroup").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                 ></input>
                 <button
                   type="button"
@@ -805,6 +857,17 @@ const ContentStudent = (props) => {
                       setMdinputTtl(e.target.value);
                     }
                   }}
+                  onClick={() => {
+                    if (!btnTtl) {
+                      getID("divBoxTtlDrop").style.position = "relative";
+                      getID("dropDowninputBoxTll").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxTtlDrop").style.position = "static";
+                      getID("dropDowninputBoxTll").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                 ></input>
                 <button
                   className="btn-dropdown-input"
@@ -902,6 +965,17 @@ const ContentStudent = (props) => {
                       setMdinputType(e.target.value);
                     }
                   }}
+                  onClick={() => {
+                    if (!btnTtl) {
+                      getID("divBoxTypeDrop").style.position = "relative";
+                      getID("dropDowninputBoxType").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxTypeDrop").style.position = "static";
+                      getID("dropDowninputBoxType").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                 ></input>
                 <button
                   className="btn-dropdown-input"
@@ -972,6 +1046,17 @@ const ContentStudent = (props) => {
                   className="Modalinput-perfessor"
                   type="text"
                   value={mdinputDoctor.name}
+                  onClick={() => {
+                    if (!btnTtl) {
+                      getID("divBoxDoctorDrop").style.position = "relative";
+                      getID("dropDowninputBoxDoctor").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxDoctorDrop").style.position = "static";
+                      getID("dropDowninputBoxDoctor").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                   readOnly
                 ></input>
                 <button
@@ -1019,6 +1104,18 @@ const ContentStudent = (props) => {
                   className="Modalinput-group"
                   type="text"
                   value={mdinputGroup.name}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!btnTtl) {
+                      getID("divBoxGrupDrop").style.position = "relative";
+                      getID("dropDowinputBoxGroup").style.display = "block";
+                      setBtnTtl(true);
+                    } else {
+                      getID("divBoxGrupDrop").style.position = "static";
+                      getID("dropDowinputBoxGroup").style.display = "none";
+                      setBtnTtl(false);
+                    }
+                  }}
                   readOnly
                 ></input>
                 <button
@@ -1157,7 +1254,7 @@ const ContentStudent = (props) => {
     });
     setMdinputGroup({
       id: data.grp_id.trim(),
-      name: data.grop_name ? data.grp_name.trim() : "",
+      name: data.grp_name ? data.grp_name.trim() : "",
     });
     setMdinputStartdate(data.start.trim());
     setMdinputStopdate(data.stop.trim());

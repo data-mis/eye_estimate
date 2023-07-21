@@ -151,11 +151,6 @@ const FetchControlWork = {
     let http = `${HttpConfig()}/work/upload_image_student_file`;
 
     try {
-      // let messageup = await fetch(request, http).then((res) => {
-      //   return res.json();
-      // });
-      // return messageup;
-
       await fetch(http, request).then((res) =>
         res.json().then((data) => {
           console.log(data);
@@ -210,7 +205,7 @@ const FetchControlWork = {
 
     try {
       let resImage = await fetch(http, request).then((res) => {
-        return res.json();
+        console.log("delete finish");
       });
       return resImage;
     } catch (error) {

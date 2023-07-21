@@ -64,7 +64,7 @@ export function searchStudent(textsearch, datastudent) {
   console.log("datasearchstudent>>", datastudent);
   console.log("this textsearch >>", search);
   datastudent.map((data) => {
-    if (data.std_id.trim().match(search)) {
+    if (data.id.trim().match(search)) {
       resultarr.push(data);
     } else if (data.name.trim().match(search)) {
       resultarr.push(data);

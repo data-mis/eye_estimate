@@ -540,7 +540,7 @@ const ContentSetting = () => {
       no: noresult ? noresult : DchoiceNo,
     };
     // console.log("this up choice obj is >>>", objUp);
-    // FetchControlSetting.fetchUpChoice(objup, usertoken).then((message)=>{console.log(message)})
+    FetchControlSetting.fetchUpChoice(objUp, usertoken).then((message)=>{console.log(message)})
   };
 
   useEffect(() => {
@@ -1752,11 +1752,13 @@ const ContentSetting = () => {
                       let objadd = {
                         sheet_detail_id: idsheetdetail,
                       };
-                      // FetchControlSetting.fetchAddChoice(objadd, usertoken).then(
-                      //   (message) => {
-                      //     console.log(message);
-                      //   }
-                      // );
+                      FetchControlSetting.fetchAddChoice(
+                        objadd,
+                        usertoken
+                      ).then((message) => {
+                        console.log(message);
+                        handleGetChoicedetail(idsheetdetail,usertoken);
+                      });
                     }
                   });
                 } else {
