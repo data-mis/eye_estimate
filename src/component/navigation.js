@@ -20,6 +20,7 @@ const NavigationPage = () => {
   const [statusClosemenu, setstatusClosemenu] = useState(false);
   const [openModalSlide, setOpenModalSlide] = useState(true);
   const [dataContent, setDataContent] = useState();
+  const [stopprocess, setStopprocess] = useState(false);
 
   const docGetId = (id) => {
     return document.getElementById(id);
@@ -50,16 +51,16 @@ const NavigationPage = () => {
       case "student":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
 
-        return <ContentStudent></ContentStudent>;
+        return <ContentStudent close={setModeContent}></ContentStudent>;
 
       case "doctor":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
 
-        return <ContentDoctor></ContentDoctor>;
+        return <ContentDoctor close={setModeContent}></ContentDoctor>;
       case "groupStudent":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
 
-        return <ContentGroupStudent></ContentGroupStudent>;
+        return <ContentGroupStudent close={setModeContent}></ContentGroupStudent>;
 
       case "workDoctor":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
@@ -67,24 +68,32 @@ const NavigationPage = () => {
           <ContentWork
             upfile={setModeContent}
             workinfoselected={setSelectworkinfo}
+            close={setModeContent}
           ></ContentWork>
         );
 
       case "assessmentForm":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
-        return <ContentSetting></ContentSetting>;
+        return <ContentSetting close={setModeContent}></ContentSetting>;
 
       case "report":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
-        return <ContentReport></ContentReport>;
+        return <ContentReport close={setModeContent}></ContentReport>;
 
       case "file":
         return (
           <ContentFile
             selectinfo={selectworkinfo}
             backtowork={setModeContent}
+            close={setModeContent}
           ></ContentFile>
         );
+      case "logout":
+        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
+        localStorage.clear();
+        cookie.remove("token");
+        navigat("/");
+        break;
       default:
         return (
           <div className="body-mainDefault">
@@ -120,6 +129,9 @@ const NavigationPage = () => {
         docGetId("btnMenu-ModalSetting").style.visibility = "visible";
       }, 500);
       setTimeout(() => {
+        docGetId("btnMenu-Modallogout").style.visibility = "visible";
+      }, 600);
+      setTimeout(() => {
         docGetId("btnMenu-ModalReport").style.visibility = "visible";
         docGetId("btn-threeDots").style.display = "none";
         docGetId("btn-x").style.display = "block";
@@ -128,6 +140,9 @@ const NavigationPage = () => {
       docGetId("modalSlideContent").style.animation =
         "closeSlideBar 0.75s normal";
       docGetId("modalSlideContent").style.height = "0";
+      setTimeout(() => {
+        docGetId("btnMenu-Modallogout").style.visibility = "hidden";
+      }, 5);
       setTimeout(() => {
         docGetId("btnMenu-ModalReport").style.visibility = "hidden";
       }, 10);
@@ -282,6 +297,18 @@ const NavigationPage = () => {
               }}
             >
               {"รายงาน"}
+            </button>
+          </div>
+          <div className="btn-menu-navigatepage" style={{ display: "none" }}>
+            <button
+              id="btnMenu-logout"
+              className="navigatMenuBTN"
+              onClick={(e) => {
+                removeholdbtnmenu(e);
+                setModeContent("logout");
+              }}
+            >
+              {"logout"}
             </button>
           </div>
         </div>

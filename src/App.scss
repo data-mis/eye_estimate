@@ -263,9 +263,17 @@ $colorBGnav:#e0e0e0;
         display: block;
     }
 }
+@media only screen and (max-width:360px) {
+    .btn-logout-navigatepage{
+        display: none;
+    }
+}
 @media only screen and (max-height:360px) {
     .show-content-box{
         height: 90vh;
+    }
+    .btn-logout-navigatepage{
+        display: none;
     }
 }
 }
@@ -588,6 +596,10 @@ $colorBGnav:#e0e0e0;
             width: 25%;
             height: 60%;
             margin-left: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            padding-left: 5px;
+
         }
         .btn-navDoctor-search{
             width: 7%;
@@ -1970,6 +1982,12 @@ $colorBGnav:#e0e0e0;
             justify-content: center;
             align-items: center;
         }
+        .boxCol-navheader button{
+            width: 80%;
+            height: 80%;
+            font-weight: bold;
+            font-size: 16px;
+        }
     .btn-nav-menuclose{
         display: none;
     }
@@ -2461,7 +2479,7 @@ $colorBGnav:#e0e0e0;
             text-align: center;
         }
     .body-filecontent{
-        border: 2px solid red;
+        // border: 2px solid red;
         height: 95%;
         display: grid;
         grid-template-columns: 20% 80%;

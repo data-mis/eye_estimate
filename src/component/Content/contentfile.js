@@ -49,9 +49,13 @@ const ContentFile = (props) => {
         filesend.append("student_id", infowork.student_id);
         filesend.append("grp_id", infowork.grp_id);
 
-        FetchControlWork.fetchUpstudentfilework(filesend, usertoken);
-
-        // document.getElementById("modalProgressbar").style.display = "block";
+        // console.log("filesend formdata >>",filesend.get("file"))
+        // console.log("filesend formdata >>",filesend.get("work_id"))
+        FetchControlWork.fetchUpstudentfilework(filesend, usertoken).then(
+          () => {
+            handlegetstudentfile(infowork.Id);
+          }
+        );
 
         Swal.fire({
           // title: "อัพโหลดไฟล์",
@@ -61,6 +65,8 @@ const ContentFile = (props) => {
           timer: 1700,
           background: "none",
         });
+
+        // document.getElementById("modalProgressbar").style.display = "block";
       } else {
         console.log("ยกเลิกอัพ");
       }
@@ -269,7 +275,7 @@ const ContentFile = (props) => {
                     "inputfilemobile-pdf-filecontent"
                   )[0].value = "";
                 } else {
-                  handleselectfile();
+                  handleselectfile(props.selectinfo);
                 }
               }}
             ></input>
@@ -319,12 +325,16 @@ const ContentFile = (props) => {
                           className="card-info-filecontent"
                           key={index}
                           onClick={() => {
-                            setUrlpdf("https://www.orimi.com/pdf-test.pdf");
                             handleopendropdownlistpdf(boxdroplistinfo);
                             setInfofilename({
                               filename: data.file_real,
                               date: data.date,
                             });
+                            handleshowstudentimage(
+                              props.selectinfo.Id,
+                              data.work_date,
+                              data.file_name
+                            );
                           }}
                         >
                           <span>{data.file_real}</span>

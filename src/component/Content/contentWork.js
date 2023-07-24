@@ -70,7 +70,7 @@ const ContentWork = (props) => {
   const [timeendest, setTimeendest] = useState("");
   const [topicest, setTopicest] = useState({ id: "", code: "", name: "" });
 
-  const [reportWard, setReportWard] = useState("จักษุ1(ช)");
+  const [reportWard, setReportWard] = useState("1");
   const [reportDiagnosis, setReportDiagnosis] = useState("");
   const [reportDateadmit, setReportDateadmit] = useState("");
   const [reportPatient, setReportPatient] = useState("");
@@ -2190,7 +2190,15 @@ const ContentWork = (props) => {
           </button>
         </div>
         <div className="box-btnclosebody-contentwork">
-          <button className="btn-closebody-contentwork">{"ปิด"}</button>
+          <button
+            className="btn-closebody-contentwork"
+            type="button"
+            onClick={() => {
+              props.close("close");
+            }}
+          >
+            {"ปิด"}
+          </button>
         </div>
       </div>
       <div className="menu-nav-contentwork">

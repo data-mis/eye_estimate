@@ -1408,7 +1408,14 @@ const ContentStudent = (props) => {
           </div>
         </div>
         <div className="menu-close">
-          <button>{"ปิด"}</button>
+          <button
+            type="button"
+            onClick={() => {
+              props.close("close");
+            }}
+          >
+            {"ปิด"}
+          </button>
         </div>
       </div>
       <div className="info-show-contentStudent">

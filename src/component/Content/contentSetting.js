@@ -8,7 +8,7 @@ import { HolderlineonTable } from "../config/holdlinetable";
 import Swal from "sweetalert2";
 import moment from "moment/moment";
 
-const ContentSetting = () => {
+const ContentSetting = (props) => {
   const cookie = new Cookies();
   const usertoken = cookie.get("token");
 
@@ -540,7 +540,9 @@ const ContentSetting = () => {
       no: noresult ? noresult : DchoiceNo,
     };
     // console.log("this up choice obj is >>>", objUp);
-    FetchControlSetting.fetchUpChoice(objUp, usertoken).then((message)=>{console.log(message)})
+    FetchControlSetting.fetchUpChoice(objUp, usertoken).then((message) => {
+      console.log(message);
+    });
   };
 
   useEffect(() => {
@@ -591,9 +593,10 @@ const ContentSetting = () => {
         </div>
         <div className="boxCol-navheader">
           <button
-            className="btn-nav-menuopen"
-            id="btnOpenNavmenu"
             type="button"
+            onClick={() => {
+              props.close("close");
+            }}
           >
             {"ปิด"}
           </button>
@@ -1757,7 +1760,7 @@ const ContentSetting = () => {
                         usertoken
                       ).then((message) => {
                         console.log(message);
-                        handleGetChoicedetail(idsheetdetail,usertoken);
+                        handleGetChoicedetail(idsheetdetail, usertoken);
                       });
                     }
                   });

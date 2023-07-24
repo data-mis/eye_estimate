@@ -694,7 +694,13 @@ const ContentDoctor = (props) => {
           </button>
         </div>
         <div className="box-nav-content">
-          <button type="button" className="btn-close-ctDoctor">
+          <button
+            type="button"
+            className="btn-close-ctDoctor"
+            onClick={() => {
+              props.close("close");
+            }}
+          >
             {"ปิด"}
           </button>
         </div>

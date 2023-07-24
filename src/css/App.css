@@ -241,9 +241,17 @@ html .header-mainDefault, body .header-mainDefault {
     display: block;
   }
 }
+@media only screen and (max-width: 360px) {
+  html .btn-logout-navigatepage, body .btn-logout-navigatepage {
+    display: none;
+  }
+}
 @media only screen and (max-height: 360px) {
   html .show-content-box, body .show-content-box {
     height: 90vh;
+  }
+  html .btn-logout-navigatepage, body .btn-logout-navigatepage {
+    display: none;
   }
 }
 html .body-content-ctStudent, body .body-content-ctStudent {
@@ -550,6 +558,9 @@ html .input-navDoctor-search, body .input-navDoctor-search {
   width: 25%;
   height: 60%;
   margin-left: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  padding-left: 5px;
 }
 html .btn-navDoctor-search, body .btn-navDoctor-search {
   width: 7%;
@@ -1892,6 +1903,12 @@ html .boxCol-navheader, body .boxCol-navheader {
   justify-content: center;
   align-items: center;
 }
+html .boxCol-navheader button, body .boxCol-navheader button {
+  width: 80%;
+  height: 80%;
+  font-weight: bold;
+  font-size: 16px;
+}
 html .btn-nav-menuclose, body .btn-nav-menuclose {
   display: none;
 }
@@ -2366,7 +2383,6 @@ html .namefile-filecontent, body .namefile-filecontent {
   text-align: center;
 }
 html .body-filecontent, body .body-filecontent {
-  border: 2px solid red;
   height: 95%;
   display: grid;
   grid-template-columns: 20% 80%;

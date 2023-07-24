@@ -65,6 +65,16 @@ const ModalSlideBar = (props) => {
           >
             <Icon icon="mdi:file-outline"></Icon>
           </button>
+          <button
+            id="btnMenu-Modallogout"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              props.settingContent("logout");
+            }}
+          >
+            <i className="bi-box-arrow-left"></i>
+          </button>
         </div>
       </div>
     </div>

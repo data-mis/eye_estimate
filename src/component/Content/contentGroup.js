@@ -706,7 +706,13 @@ const ContentGroupStudent = (props) => {
           </button>
         </div>
         <div className="col-header">
-          <button type="button" className="btn-close-groupStudent">
+          <button
+            type="button"
+            className="btn-close-groupStudent"
+            onClick={() => {
+              props.close("close");
+            }}
+          >
             {"ปิด"}
           </button>
         </div>
