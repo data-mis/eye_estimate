@@ -1769,8 +1769,8 @@ const ContentWork = (props) => {
           sheet_id: inputtypeestimation.id
             ? inputtypeestimation.id
             : (passtofetch = false),
-          advisor_id: advisorDocest.id ? advisorDocest : (passtofetch = false),
-          grp_id: groupStudentest.id ? groupStudentest : (passtofetch = false),
+          advisor_id: advisorDocest.id ? advisorDocest.id : (passtofetch = false),
+          grp_id: groupStudentest.id ? groupStudentest.id : (passtofetch = false),
           date: dateEst ? dateEst : (passtofetch = false),
           time_begin: timebeginest ? timebeginest : (passtofetch = false),
           time_end: timeendest ? timeendest : (passtofetch = false),
@@ -2123,6 +2123,10 @@ const ContentWork = (props) => {
     handlegetworkstudent(usertoken);
     handlegetworktopic("case_topic", usertoken);
   }, []);
+
+  useEffect(() => {
+    handleAllgroupinfowork()
+  }, [selectYear]);
 
   useEffect(() => {
     if (selectgrp.name) {

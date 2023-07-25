@@ -6,6 +6,7 @@ import Cookies from "universal-cookie";
 import { HolderlineonTable } from "../config/holdlinetable";
 import FetchControlStudent from "../data/fetchControlStudent";
 import Swal from "sweetalert2";
+import Spinnerpage from "../config/spinnerpage";
 
 const ContentStudent = (props) => {
   const testFileFolder = "../../../public/picture/student";
@@ -17,6 +18,7 @@ const ContentStudent = (props) => {
 
   const [idStudent, setIdStudent] = useState();
   const [numberStudent, setNumberStudent] = useState();
+  const [groupStudent, setGroupstudent] = useState([]);
 
   const [mcq, setMcq] = useState();
   const [osce, setOsce] = useState();
@@ -100,19 +102,30 @@ const ContentStudent = (props) => {
   const handleFatchGroup = (year) => {
     let ayear = { year: parseInt(year) - 543 };
     // console.log("ayear", ayear);
-    if (!localStorage.getItem("groupName")) {
-      FetchControlStudent.fetchGetGroup(ayear, usertoken).then((data) => {
-        let nameGroup = [];
-        console.log(">>", data);
-        data.map((ele) => {
-          nameGroup.push({
-            id: ele.id.trim() ? ele.id.trim() : "",
-            name: ele.name ? ele.name.trim() : "",
-          });
+    // if (!localStorage.getItem("groupName")) {
+    //   FetchControlStudent.fetchGetGroup(ayear, usertoken).then((data) => {
+    //     let nameGroup = [];
+    //     console.log(">>", data);
+    //     data.map((ele) => {
+    //       nameGroup.push({
+    //         id: ele.id.trim() ? ele.id.trim() : "",
+    //         name: ele.name ? ele.name.trim() : "",
+    //       });
+    //     });
+    //     localStorage.setItem("groupName", JSON.stringify(nameGroup));
+    //   });
+    // }
+    FetchControlStudent.fetchGetGroup(ayear, usertoken).then((data) => {
+      let nameGroup = [];
+      console.log(">>", data);
+      data.map((ele) => {
+        nameGroup.push({
+          id: ele.id.trim() ? ele.id.trim() : "",
+          name: ele.name ? ele.name.trim() : "",
         });
-        localStorage.setItem("groupName", JSON.stringify(nameGroup));
       });
-    }
+      setGroupstudent(nameGroup);
+    });
   };
 
   const handleUploadPicture = async (data, idStudent) => {
@@ -681,7 +694,7 @@ const ContentStudent = (props) => {
                 >
                   <i className="bi-caret-down"></i>
                 </button>
-                <div className="box-dropDown-full" id="dropDowinputBoxGroup">
+                {/* <div className="box-dropDown-full" id="dropDowinputBoxGroup">
                   {localStorage.getItem("groupName")
                     ? JSON.parse(localStorage.getItem("groupName")).map(
                         (data, index) => (
@@ -698,6 +711,26 @@ const ContentStudent = (props) => {
                         )
                       )
                     : ""}
+                </div> */}
+                <div className="box-dropDown-full" id="dropDowinputBoxGroup">
+                  {groupStudent[0] ? (
+                    groupStudent.map((data, index) => {
+                      return (
+                        <button
+                          type="button"
+                          key={index}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setMdinputGroup(data);
+                          }}
+                        >
+                          {data.name}
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <Spinnerpage></Spinnerpage>
+                  )}
                 </div>
               </div>
             </div>
@@ -1136,7 +1169,7 @@ const ContentStudent = (props) => {
                 >
                   <i className="bi-caret-down"></i>
                 </button>
-                <div className="box-dropDown-full" id="dropDowinputBoxGroup">
+                {/* <div className="box-dropDown-full" id="dropDowinputBoxGroup">
                   {localStorage.getItem("groupName")
                     ? JSON.parse(localStorage.getItem("groupName")).map(
                         (data, index) => (
@@ -1153,6 +1186,26 @@ const ContentStudent = (props) => {
                         )
                       )
                     : ""}
+                </div> */}
+                <div className="box-dropDown-full" id="dropDowinputBoxGroup">
+                  {groupStudent[0] ? (
+                    groupStudent.map((data, index) => {
+                      return (
+                        <button
+                          type="button"
+                          key={index}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setMdinputGroup(data);
+                          }}
+                        >
+                          {data.name}
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <Spinnerpage></Spinnerpage>
+                  )}
                 </div>
               </div>
             </div>
@@ -1387,24 +1440,27 @@ const ContentStudent = (props) => {
             </div>
           </div>
           <div className="box-menu-2">
-            <span>{"ค้นหา"}</span>
-            <input
-              type="text"
-              onChange={(e) => {
-                setSearchtext(e.target.value);
-              }}
-              onFocus={(e) => {
-                e.target.select();
-              }}
-            ></input>
-            <button
-              type="button"
-              onClick={() => {
+            <form
+              className="form-search-student"
+              onSubmit={(e) => {
+                e.preventDefault();
                 setDataSearch(searching(searchtext, dataStudent));
               }}
             >
-              <i className="bi-search"></i>
-            </button>
+              <span>{"ค้นหา"}</span>
+              <input
+                type="text"
+                onChange={(e) => {
+                  setSearchtext(e.target.value);
+                }}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+              ></input>
+              <button type="submit">
+                <i className="bi-search"></i>
+              </button>
+            </form>
           </div>
         </div>
         <div className="menu-close">
@@ -1479,6 +1535,7 @@ const ContentStudent = (props) => {
                         handleEditDataStudent(data);
                         setStatusConStudentbox("edit");
                         showURLimageStudent(data.std_id, usertoken);
+                        console.log("เมื่อกดแก้ไข !!!");
                       }}
                     >
                       <i className="bi-three-dots"></i>

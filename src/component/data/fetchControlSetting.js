@@ -50,7 +50,8 @@ const FetchControlSetting = {
 
     try {
       let resHeadsheet = await fetch(httpfetch, request).then((res) => {
-        return res.json();
+        // return res.json();
+        return "success add"
       });
       return resHeadsheet;
     } catch (error) {

@@ -612,7 +612,7 @@ const ContentGroupStudent = (props) => {
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonText: "ตกลง",
-        confirmButtonText: "ยกเลิก",
+        cancelButtonText: "ยกเลิก",
         icon: "question",
       }).then((res) => {
         if (res.isConfirmed) {
@@ -652,7 +652,7 @@ const ContentGroupStudent = (props) => {
           <input
             type="text"
             className="input-year-groupStudent"
-            value={yearSelectGroup}
+            value={yearSelectGroup+543}
             onChange={(e) => {
               setYearSelectGroup(e.target.value);
             }}
@@ -680,19 +680,10 @@ const ContentGroupStudent = (props) => {
           </div>
         </div>
         <div className="col-header">
-          <span>{"ค้นหา"}</span>
-          <input
-            type="text"
-            className="input-search-groupStudent"
-            onChange={(e) => {
-              setSearchgroup(e.target.value);
-            }}
-            onFocus={(e) => e.target.select()}
-          ></input>
-          <button
-            type="button"
-            className="btn-search-groupStudent"
-            onClick={() => {
+          <form
+            className="form-search-group"
+            onSubmit={(e) => {
+              e.preventDefault();
               if (searchgroup) {
                 console.log("ไม่ว่าง");
                 setDataGroupall(searchGroupcontent(searchgroup, dataGroupall));
@@ -702,8 +693,19 @@ const ContentGroupStudent = (props) => {
               }
             }}
           >
-            <i className="bi-search"></i>
-          </button>
+            <span>{"ค้นหา"}</span>
+            <input
+              type="text"
+              className="input-search-groupStudent"
+              onChange={(e) => {
+                setSearchgroup(e.target.value);
+              }}
+              onFocus={(e) => e.target.select()}
+            ></input>
+            <button type="submit" className="btn-search-groupStudent">
+              <i className="bi-search"></i>
+            </button>
+          </form>
         </div>
         <div className="col-header">
           <button

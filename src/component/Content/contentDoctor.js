@@ -672,26 +672,28 @@ const ContentDoctor = (props) => {
           <span>{"ข้อมูล อาจารย์"}</span>
         </div>
         <div className="nav-box-search">
-          <span>{"ค้นหา"}</span>
-          <input
-            type="text"
-            className="input-navDoctor-search"
-            onChange={(e) => {
-              setSearchtext(e.target.value);
-            }}
-            onFocus={(e) => e.target.select()}
-          ></input>
-          <button
-            type="button"
-            className="btn-navDoctor-search"
-            onClick={() => {
+          <form
+            className="form-search-doctor"
+            onSubmit={(e) => {
+              e.preventDefault();
               if (dataTeacher[0]) {
                 handleSearchingDatadoctor(searchtext, dataTeacher);
               }
             }}
           >
-            <i className="bi-search"></i>
-          </button>
+            <span>{"ค้นหา"}</span>
+            <input
+              type="text"
+              className="input-navDoctor-search"
+              onChange={(e) => {
+                setSearchtext(e.target.value);
+              }}
+              onFocus={(e) => e.target.select()}
+            ></input>
+            <button type="submit" className="btn-navDoctor-search">
+              <i className="bi-search"></i>
+            </button>
+          </form>
         </div>
         <div className="box-nav-content">
           <button

@@ -93,11 +93,11 @@ const ContentSetting = (props) => {
     }).then((res) => {
       if (res.isConfirmed) {
         console.log("ob sheetid", objectSheetid);
-        // FetchControlSetting.fetchaddsheetdetail(objectSheetid, token).then(
-        //   (message) => {
-        //     console.log(message);
-        //   }
-        // );
+        FetchControlSetting.fetchaddsheetdetail(objectSheetid, token).then(
+          (message) => {
+            console.log(message);
+          }
+        );
       }
     });
   };
@@ -270,7 +270,7 @@ const ContentSetting = (props) => {
 
   const handleGetWorklisttype = (token) => {
     FetchControlSetting.fetchSettingworklistdata(token).then((data) => {
-      // console.log("listworktype::>", data);
+      console.log("listworktype::>", data);
       setDataworklisttype(data);
       setIdsheetworktype(data[0].Id);
       setTimeout(() => {
@@ -659,6 +659,8 @@ const ContentSetting = (props) => {
                             index
                           );
                           setIdsheetworktype(data.Id);
+                          setNotesheet(data.note);
+                          console.log("เลือกโชว์ตัวดาต้า >>", data);
                         }}
                       >
                         <td width={"50%"}>{data.name}</td>
@@ -766,12 +768,12 @@ const ContentSetting = (props) => {
                   return (
                     <tr
                       key={index}
-                      className="tableshow-headinfo"
-                      id={`trshow-headinfo-${index}`}
+                      className="tableshow-headinfo1"
+                      id={`trshow-headinfo1-${index}`}
                       onClick={() => {
                         HolderlineonTable(
-                          "tableshow-headinfo",
-                          "trshow-headinfo-",
+                          "tableshow-headinfo1",
+                          "trshow-headinfo1-",
                           index
                         );
                         console.log("headsheet>>>", data);
@@ -1166,12 +1168,12 @@ const ContentSetting = (props) => {
                   return (
                     <tr
                       key={index}
-                      className="tableshow-score-setting"
-                      id={`trshow-score-${index}`}
+                      className="tableshow-score-setting1"
+                      id={`trshow-score1-${index}`}
                       onClick={() => {
                         HolderlineonTable(
-                          "tableshow-score-setting",
-                          "trshow-score-",
+                          "tableshow-score-setting1",
+                          "trshow-score1-",
                           index
                         );
                         setIdchoicesheet(data.Id);
@@ -1320,6 +1322,7 @@ const ContentSetting = (props) => {
           </div>
           <textarea
             className="textarea-contentSetting"
+            value={notesheet}
             onChange={(e) => {
               setNotesheet(e.target.value);
             }}
@@ -1346,16 +1349,18 @@ const ContentSetting = (props) => {
                     {dataworklisttype.map((data, index) => {
                       return (
                         <tr
-                          className="tableTR-setting-worklisttype"
-                          id={`tr-settingworklisttype-${index}`}
+                          className="tableTR-setting-worklisttype1"
+                          id={`tr-settingworklisttype1-${index}`}
                           key={index}
                           onClick={() => {
                             HolderlineonTable(
-                              "tableTR-setting-worklisttype",
-                              `tr-settingworklisttype-`,
+                              "tableTR-setting-worklisttype1",
+                              `tr-settingworklisttype1-`,
                               index
                             );
                             setIdsheetworktype(data.Id);
+                            console.log("เลือกโชว์ตัวดาต้า >>", data);
+                            setNotesheet(data.note);
                           }}
                         >
                           <td width={"50%"}>{data.name}</td>
@@ -1580,6 +1585,7 @@ const ContentSetting = (props) => {
             </div>
             <textarea
               className="textarea-contentSetting"
+              value={notesheet}
               onChange={(e) => {
                 setNotesheet(e.target.value);
               }}
@@ -1608,12 +1614,12 @@ const ContentSetting = (props) => {
                       return (
                         <tr
                           key={index}
-                          className="tableshow-detail-setting"
-                          id={`tr-detailsheet-${index}`}
+                          className="tableshow-detail-setting1"
+                          id={`tr-detailsheet1-${index}`}
                           onClick={() => {
                             HolderlineonTable(
-                              "tableshow-detail-setting",
-                              "tr-detailsheet-",
+                              "tableshow-detail-setting1",
+                              "tr-detailsheet1-",
                               index
                             );
                             setIdsheetdetail(data.Id);

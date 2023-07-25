@@ -100,7 +100,7 @@ const FetchControlGroup = {
 
     try {
       let res = await fetch(http, request).then((res) => {
-        return res.json();
+        return "this add done";
       });
       return res;
     } catch (error) {

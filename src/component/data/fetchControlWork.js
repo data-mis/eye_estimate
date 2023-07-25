@@ -178,6 +178,7 @@ const FetchControlWork = {
     let http = `${HttpConfig()}/work/get_image_student_file`;
 
     try {
+      console.log("imagestudentfile check >>",info)
       let resImage = await fetch(http, request).then((res) => {
         return res.json();
       });

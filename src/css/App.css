@@ -350,6 +350,14 @@ html .box-menu-2, body .box-menu-2 {
   justify-content: center;
   background-color: #e0e0e0;
 }
+html .form-search-student, body .form-search-student {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cfd8dc;
+}
 html .box-menu-2 span, body .box-menu-2 span {
   padding-right: 10px;
   background-color: #e0e0e0;
@@ -554,9 +562,15 @@ html .nav-box-search, body .nav-box-search {
   display: flex;
   align-items: center;
 }
+html .form-search-doctor, body .form-search-doctor {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
 html .input-navDoctor-search, body .input-navDoctor-search {
   width: 25%;
-  height: 60%;
+  height: 35px;
   margin-left: 10px;
   font-weight: bold;
   font-size: 16px;
@@ -564,7 +578,7 @@ html .input-navDoctor-search, body .input-navDoctor-search {
 }
 html .btn-navDoctor-search, body .btn-navDoctor-search {
   width: 7%;
-  height: 60%;
+  height: 35px;
 }
 html .btn-close-ctDoctor, body .btn-close-ctDoctor {
   width: 80%;
@@ -792,6 +806,12 @@ html .hander-content-groupStudent, body .hander-content-groupStudent {
   background-color: #e0e0e0;
 }
 html .col-header, body .col-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+html .form-search-group, body .form-search-group {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

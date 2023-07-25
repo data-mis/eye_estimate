@@ -8,7 +8,7 @@ const docuClassid = (id) => {
 
 export const HolderlineonTable = (classid, idtable, index) => {
   let leghtTR = docuClassid(classid).length;
-
+  console.log("!!?holdline>>", leghtTR);
   for (let t = 0; t < leghtTR; t++) {
     docuClassid(classid)[t].style.border = "2px solid black";
   }
