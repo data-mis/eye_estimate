@@ -73,3 +73,15 @@ export function searchStudent(textsearch, datastudent) {
   // console.log("ผลการค้นหารายชื่อ นศพ >>", resultarr);
   return resultarr;
 }
+
+export function searchAdvisor(textsearch, datasearch) {
+  let search = escapeRegExp(textsearch);
+  let resultsearch = [];
+
+  datasearch.map((data) => {
+    if (data.advisor_name.trim().match(search)) {
+      resultsearch.push(data);
+    }
+  });
+  return resultsearch;
+}

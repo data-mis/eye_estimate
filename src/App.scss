@@ -1712,28 +1712,28 @@ $colorBGnav:#e0e0e0;
         display: none;
     }
     //modalsrcstudent
-    .content-modalsrcstudent{
+    .content-modalsrcstudent,.content-modalsrcAdvisor{
         border: 2px solid $colorBorderDrop;
         padding: 15px;
     }
-    .title-bar-modalsrcstudent{
+    .title-bar-modalsrcstudent,.title-bar-modalsrcAdvisor{
         display: flex;
         justify-content: center;
     }
-    .inputsearchstudent-modalsrcstudent{
+    .inputsearchstudent-modalsrcstudent,.inputsearchstudent-modalsrcAdvisor{
         width: 75%;
         height: 25px;
         padding: 5px;
         margin-right: 10px;
         border: 2px solid $colorBorderDrop;
     }
-    .btntitle-searchstudent-modalsrcstudent{
+    .btntitle-searchstudent-modalsrcstudent,.btntitle-searchstudent-modalsrcAdvisor{
         width: 20%;
         height: auto;
         margin: 0 5px;
         font-weight: bold;
     }
-    .showinfo-search-modalsrcstudent{
+    .showinfo-search-modalsrcstudent,.showinfo-search-modalsrcAdvisor{
         border: 2px solid $colorBorderDrop;
         margin-top: 10px;
         height: 180px;
@@ -1751,7 +1751,16 @@ $colorBGnav:#e0e0e0;
         display: grid;
         grid-template-columns: auto 70%;
     }
-        .box-infosearch-modalsrcstudent:hover{
+    .box-infosearch-modalsrcAdvisor{
+        width: 100%;
+        height: auto;
+        margin: 5px auto;
+        padding: 5px;
+        border-right: 2px solid $colorBorderDrop;
+        border-bottom: 2px solid $colorBorderDrop;
+        display: block;
+    }
+        .box-infosearch-modalsrcstudent:hover,.box-infosearch-modalsrcAdvisor:hover{
             background-color: $colorBGheader;
         }
         .idstudent-span-modalsrcstudent{

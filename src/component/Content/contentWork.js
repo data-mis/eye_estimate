@@ -11,7 +11,7 @@ import {
   HolderlineonTable,
   clearHolderlineTable,
 } from "../config/holdlinetable";
-import { searchGroupcontent, searchStudent } from "../config/searchConfig";
+import { searchAdvisor, searchGroupcontent, searchStudent } from "../config/searchConfig";
 import Swal from "sweetalert2";
 
 const ContentWork = (props) => {
@@ -54,6 +54,7 @@ const ContentWork = (props) => {
   const [getstudentwork, setGetstudentwork] = useState([]);
   const [gettopicwork, setGettopicwork] = useState([]);
   const [datasearchstudent, setDatasearchstudent] = useState([]);
+  const [datasearchAdvisor, setDatasearchAdvisor] = useState([]);
   const [dataselectworkinfo, setDataselectworkinfo] = useState("");
 
   //เก็บwork
@@ -330,7 +331,8 @@ const ContentWork = (props) => {
               type="text"
               value={advisorDocest.name}
               onClick={() => {
-                handleOpenDropdown("dropInfoPersonport", "boxPersonport");
+                // handleOpenDropdown("dropInfoPersonport", "boxPersonport");
+                handleOpenModalbox("boxSearchAdvisor");
               }}
               readOnly
             ></input>
@@ -1205,6 +1207,7 @@ const ContentWork = (props) => {
   };
 
   //**modal searchstudent */
+  //แสดงของอาจารย์ด้วยนะ-----*
   const handleSearchstudentmodal = (mode) => {
     return (
       <div className="content-modalsrcstudent">
@@ -1300,6 +1303,88 @@ const ContentWork = (props) => {
             <span className="idstudent-span-modalsrcstudent">{`(รหัส)`}</span>
             <span className="idstudent-span-modalsrcstudent">{`(ชื่อนศพ)`}</span>
           </div> */}
+        </div>
+      </div>
+    );
+  };
+
+  const handleSearchAdvisormodal = (mode) => {
+    return (
+      <div className="content-modalsrcAdvisor">
+        <div className="title-bar-modalsrcAdvisor">
+          <input
+            className="inputsearchstudent-modalsrcAdvisor"
+            type="text"
+            onChange={(e) => {
+              setDatasearchAdvisor(
+                searchAdvisor(e.target.value, getworklistwork)
+              );
+            }}
+          ></input>
+          <button
+            className="btntitle-searchstudent-modalsrcAdvisor"
+            type="button"
+            onClick={() => {
+              docGetId("boxSearchAdvisor").style.display = "none";
+            }}
+          >{`ยกเลิก`}</button>
+        </div>
+        <div className="showinfo-search-modalsrcAdvisor">
+          {datasearchAdvisor[0]
+            ? datasearchAdvisor.map((data, index) => {
+                return (
+                  <div
+                    className="box-infosearch-modalsrcAdvisor"
+                    key={index}
+                    onClick={() => {
+                      if (mode) {
+                        setEditadvisorDocest({
+                          id: data.id,
+                          name: data.advisor_name,
+                        });
+                      } else {
+                        setAdvisorDocest({
+                          id: data.id,
+                          name: data.advisor_name,
+                        });
+                      }
+
+                      docGetId("boxSearchAdvisor").style.display = "none";
+                    }}
+                  >
+                    <span className="idstudent-span-modalsrcstudent">
+                      {data.advisor_name}
+                    </span>
+                  </div>
+                );
+              })
+            : getworklistwork.map((data, index) => {
+                return (
+                  <div
+                    className="box-infosearch-modalsrcAdvisor"
+                    key={index}
+                    onClick={() => {
+                      if (mode) {
+                        setEditadvisorDocest({
+                          id: data.id,
+                          name: data.advisor_name,
+                        });
+                      } else {
+                        setAdvisorDocest({
+                          id: data.id,
+                          name: data.advisor_name,
+                        });
+                      }
+
+                      docGetId("boxSearchAdvisor").style.display = "none";
+                    }}
+                  >
+                    <span className="idstudent-span-modalsrcstudent">
+                      {data.advisor_name}
+                    </span>
+                  </div>
+                );
+              })}
         </div>
       </div>
     );
@@ -1769,8 +1854,12 @@ const ContentWork = (props) => {
           sheet_id: inputtypeestimation.id
             ? inputtypeestimation.id
             : (passtofetch = false),
-          advisor_id: advisorDocest.id ? advisorDocest.id : (passtofetch = false),
-          grp_id: groupStudentest.id ? groupStudentest.id : (passtofetch = false),
+          advisor_id: advisorDocest.id
+            ? advisorDocest.id
+            : (passtofetch = false),
+          grp_id: groupStudentest.id
+            ? groupStudentest.id
+            : (passtofetch = false),
           date: dateEst ? dateEst : (passtofetch = false),
           time_begin: timebeginest ? timebeginest : (passtofetch = false),
           time_end: timeendest ? timeendest : (passtofetch = false),
@@ -2125,7 +2214,7 @@ const ContentWork = (props) => {
   }, []);
 
   useEffect(() => {
-    handleAllgroupinfowork()
+    handleAllgroupinfowork();
   }, [selectYear]);
 
   useEffect(() => {
@@ -2641,31 +2730,6 @@ const ContentWork = (props) => {
                     </tbody>
                   </table>
                 )}
-
-                {/* <table className="table-show-info">
-                  <thead className="thaeadShowinfo">
-                    <tr>
-                      <th>{"วันที่"}</th>
-                      <th>{"เวลา"}</th>
-                      <th>{"กลุ่ม"}</th>
-                      <th>{"อาจารย์"}</th>
-                      <th>{"นักศึกษา"}</th>
-                      <th>{"UP"}</th>
-                      <th>{"C"}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{"(วันที่)"}</td>
-                      <td>{"(เวลา)"}</td>
-                      <td>{"(กลุ่ม)"}</td>
-                      <td>{"(อาจารย์)"}</td>
-                      <td>{"(นักศึกษา)"}</td>
-                      <td>{"(UP)"}</td>
-                      <td>{"(C)"}</td>
-                    </tr>
-                  </tbody>
-                </table> */}
               </div>
             </div>
           </div>
@@ -2839,6 +2903,14 @@ const ContentWork = (props) => {
         thisTitle={"ค้นหานศพ"}
         statusClose={setStatusClosemodal}
         content={handleSearchstudentmodal(statusEditwork)}
+        styleconfignav={{ display: "none" }}
+        styleconfigbody={{ width: "400px" }}
+      ></ModalBox>
+      <ModalBox
+        idbox={"boxSearchAdvisor"}
+        thistitle={"ค้นหาอาจารย์"}
+        statusClose={setStatusClosemodal}
+        content={handleSearchAdvisormodal(statusEditwork)}
         styleconfignav={{ display: "none" }}
         styleconfigbody={{ width: "400px" }}
       ></ModalBox>

@@ -1648,28 +1648,28 @@ html .inputradio-special-boxcontentwork input, body .inputradio-special-boxconte
 html #boxinfoheadSpecial, html #boxinforeportSpecial, body #boxinfoheadSpecial, body #boxinforeportSpecial {
   display: none;
 }
-html .content-modalsrcstudent, body .content-modalsrcstudent {
+html .content-modalsrcstudent, html .content-modalsrcAdvisor, body .content-modalsrcstudent, body .content-modalsrcAdvisor {
   border: 2px solid #9e9e9e;
   padding: 15px;
 }
-html .title-bar-modalsrcstudent, body .title-bar-modalsrcstudent {
+html .title-bar-modalsrcstudent, html .title-bar-modalsrcAdvisor, body .title-bar-modalsrcstudent, body .title-bar-modalsrcAdvisor {
   display: flex;
   justify-content: center;
 }
-html .inputsearchstudent-modalsrcstudent, body .inputsearchstudent-modalsrcstudent {
+html .inputsearchstudent-modalsrcstudent, html .inputsearchstudent-modalsrcAdvisor, body .inputsearchstudent-modalsrcstudent, body .inputsearchstudent-modalsrcAdvisor {
   width: 75%;
   height: 25px;
   padding: 5px;
   margin-right: 10px;
   border: 2px solid #9e9e9e;
 }
-html .btntitle-searchstudent-modalsrcstudent, body .btntitle-searchstudent-modalsrcstudent {
+html .btntitle-searchstudent-modalsrcstudent, html .btntitle-searchstudent-modalsrcAdvisor, body .btntitle-searchstudent-modalsrcstudent, body .btntitle-searchstudent-modalsrcAdvisor {
   width: 20%;
   height: auto;
   margin: 0 5px;
   font-weight: bold;
 }
-html .showinfo-search-modalsrcstudent, body .showinfo-search-modalsrcstudent {
+html .showinfo-search-modalsrcstudent, html .showinfo-search-modalsrcAdvisor, body .showinfo-search-modalsrcstudent, body .showinfo-search-modalsrcAdvisor {
   border: 2px solid #9e9e9e;
   margin-top: 10px;
   height: 180px;
@@ -1687,7 +1687,16 @@ html .box-infosearch-modalsrcstudent, body .box-infosearch-modalsrcstudent {
   display: grid;
   grid-template-columns: auto 70%;
 }
-html .box-infosearch-modalsrcstudent:hover, body .box-infosearch-modalsrcstudent:hover {
+html .box-infosearch-modalsrcAdvisor, body .box-infosearch-modalsrcAdvisor {
+  width: 100%;
+  height: auto;
+  margin: 5px auto;
+  padding: 5px;
+  border-right: 2px solid #9e9e9e;
+  border-bottom: 2px solid #9e9e9e;
+  display: block;
+}
+html .box-infosearch-modalsrcstudent:hover, html .box-infosearch-modalsrcAdvisor:hover, body .box-infosearch-modalsrcstudent:hover, body .box-infosearch-modalsrcAdvisor:hover {
   background-color: #cfd8dc;
 }
 html .idstudent-span-modalsrcstudent, body .idstudent-span-modalsrcstudent {
