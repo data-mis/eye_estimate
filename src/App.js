@@ -6,7 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/admin_estimate">
       <Routes>
         <Route path="/" element={<LoginPage></LoginPage>}></Route>
         <Route path="/Main" element={<NavigationPage></NavigationPage>}></Route>
