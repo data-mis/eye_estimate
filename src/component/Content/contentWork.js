@@ -1925,6 +1925,12 @@ const ContentWork = (props) => {
         break;
     }
     handleAllgroupinfowork();
+    Swal.fire({
+      icon: "success",
+      showConfirmButton: false,
+      showCancelButton: false,
+      timer: 720,
+    });
   };
 
   const clearCloseAddeditmodal = () => {
@@ -2110,6 +2116,12 @@ const ContentWork = (props) => {
         );
         break;
     }
+    Swal.fire({
+      icon: "success",
+      showConfirmButton: false,
+      showCancelButton: false,
+      timer: 720,
+    });
   };
 
   const handleDeletedetailwork = (data, tokenuser) => {

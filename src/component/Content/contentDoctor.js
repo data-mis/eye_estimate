@@ -609,6 +609,12 @@ const ContentDoctor = (props) => {
       usertoken
     ).then((message) => {
       console.log(message);
+      Swal.fire({
+        icon: "success",
+        showConfirmButton: false,
+        showCancelButton: false,
+        timer: 720,
+      });
       return message.status;
     });
     if (status) {
@@ -624,6 +630,12 @@ const ContentDoctor = (props) => {
       usertoken
     ).then((message) => {
       console.log(message);
+      Swal.fire({
+        icon: "success",
+        showConfirmButton: false,
+        showCancelButton: false,
+        timer: 750,
+      });
       return message.status;
     });
     if (status) {
