@@ -49,6 +49,7 @@ export function searchDoctorcontent(text, data) {
 export function searchGroupcontent(textsearch, datagroup) {
   let search = escapeRegExp(textsearch);
   let totalarr = [];
+  console.log(search, datagroup);
   datagroup.map((ele) => {
     if (ele.name.trim().match(search)) {
       totalarr.push(ele);

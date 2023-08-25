@@ -260,6 +260,13 @@ const ContentStudent = (props) => {
           console.log(message);
           if (message.status) {
             handleFatch();
+            Swal.fire({
+              icon: "success",
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 1200,
+              background: "none",
+            });
           }
         }
       );
@@ -1253,6 +1260,13 @@ const ContentStudent = (props) => {
                 onClick={(e) => {
                   e.preventDefault();
                   handleSubmitEditInfoStudent();
+                  Swal.fire({
+                    icon: "success",
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    timer: 1200,
+                    background: "none",
+                  });
                 }}
               >
                 {"แก้ไข"}
@@ -1818,6 +1832,13 @@ const ContentStudent = (props) => {
                       console.log(message);
                       if (message.status) {
                         handleFatch();
+                        Swal.fire({
+                          icon: "success",
+                          showConfirmButton: false,
+                          showCancelButton: false,
+                          background: "none",
+                          timer: 1200,
+                        });
                       }
                     }
                   );

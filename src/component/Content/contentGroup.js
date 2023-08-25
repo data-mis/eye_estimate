@@ -25,6 +25,7 @@ const ContentGroupStudent = (props) => {
   );
 
   const [dataGroupall, setDataGroupall] = useState([]);
+  const [dataGroupforsearch, setDataGroupforsearch] = useState([]);
   const [selectDataGroup, setSelectDataGroup] = useState();
   const [selectStudentEmpty, setSelectStudentEmpty] = useState();
   const [selectStudentingroup, setSelectStudentingroup] = useState();
@@ -446,6 +447,7 @@ const ContentGroupStudent = (props) => {
     await FetchControlGroup.fetchGetGroupStudentgroup(object, tokenuser).then(
       (data) => {
         setDataGroupall(data);
+        setDataGroupforsearch(data);
       }
     );
   };
@@ -652,7 +654,7 @@ const ContentGroupStudent = (props) => {
           <input
             type="text"
             className="input-year-groupStudent"
-            value={yearSelectGroup+543}
+            value={yearSelectGroup + 543}
             onChange={(e) => {
               setYearSelectGroup(e.target.value);
             }}
@@ -686,7 +688,9 @@ const ContentGroupStudent = (props) => {
               e.preventDefault();
               if (searchgroup) {
                 console.log("ไม่ว่าง");
-                setDataGroupall(searchGroupcontent(searchgroup, dataGroupall));
+                setDataGroupall(
+                  searchGroupcontent(searchgroup, dataGroupforsearch)
+                );
               } else {
                 console.log("ว่าง");
                 handleDataGropstudent(yearSelectGroup, usertoken);
@@ -881,6 +885,13 @@ const ContentGroupStudent = (props) => {
                   selectDataGroup ? selectDataGroup.Id : "",
                   usertoken
                 );
+                Swal.fire({
+                  icon: "success",
+                  showCancelButton: false,
+                  showConfirmButton: false,
+                  background: "none",
+                  timer: 1200,
+                });
               }}
             >
               {"เพิ่มเข้ากลุ่ม"}
@@ -894,6 +905,13 @@ const ContentGroupStudent = (props) => {
                   selectDataGroup ? selectDataGroup.Id : "",
                   usertoken
                 );
+                Swal.fire({
+                  icon: "success",
+                  showCancelButton: false,
+                  showConfirmButton: false,
+                  background: "none",
+                  timer: 1200,
+                });
               }}
             >
               {"ลบออกจากกลุ่ม"}
