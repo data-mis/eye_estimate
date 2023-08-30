@@ -654,7 +654,7 @@ const ContentGroupStudent = (props) => {
           <input
             type="text"
             className="input-year-groupStudent"
-            value={yearSelectGroup + 543}
+            value={yearSelectGroup}
             onChange={(e) => {
               setYearSelectGroup(e.target.value);
             }}
@@ -1201,7 +1201,7 @@ const ContentGroupStudent = (props) => {
             <button
               type="button"
               onClick={() => {
-                if (selectDataGroup !== "") {
+                if (selectDataGroup) {
                   handleDeleteGroupforgroup(selectDataGroup.Id, usertoken);
                 } else {
                   Swal.fire({

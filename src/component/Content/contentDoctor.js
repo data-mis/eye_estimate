@@ -28,6 +28,7 @@ const ContentDoctor = (props) => {
   const [stopdoc, setStopdoc] = useState("0000-00-00");
 
   const [dataTeacher, setDataTeacher] = useState([]);
+  const [datasearchteacher, setDatasearchteacher] = useState([]);
   const [dataSelectEdit, setDataSelectEdit] = useState([]);
   const [searchtext, setSearchtext] = useState("");
   const [holdIdData, setHoldidData] = useState("");
@@ -597,8 +598,9 @@ const ContentDoctor = (props) => {
   const handleSearchingDatadoctor = (search, data) => {
     let thissearchdata = searchDoctorcontent(search, data);
     if (thissearchdata[0]) {
-      setDataTeacher(thissearchdata);
+      setDatasearchteacher(thissearchdata);
     } else {
+      setDatasearchteacher("");
       dataDoctorTeacherFull();
     }
   };
@@ -738,7 +740,88 @@ const ContentDoctor = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {dataTeacher.map((data, index) => {
+                {datasearchteacher[0] ? (
+                  datasearchteacher.map((data, index) => {
+                    return (
+                      <tr
+                        className="tableTR"
+                        id={`tr-${index}`}
+                        key={index}
+                        onClick={() => {
+                          // console.log("holding add id =>", data.Id);
+                          setHoldidData(data.Id);
+                          HolderlineonTable("tableTR", "tr-", index);
+                        }}
+                      >
+                        <td width={100}>{data.adv_id}</td>
+                        <td width={80}>{data.ttl}</td>
+                        <td width={150}>{data.name}</td>
+                        <td width={150}>{data.lname}</td>
+                        <td width={80}>{`******`}</td>
+                        <td width={150}>{data.start}</td>
+                        <td width={150}>{data.stop}</td>
+                        <td width={200}>{data.email}</td>
+                        <td width={200}>{data.line_id}</td>
+                        <td width={50}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setHoldidData(data.Id);
+                              handleEditvalueset(data);
+                              setDataSelectEdit(data);
+                              handleOpenModalbox("editDocModal");
+                              setStatusCloseModal(false);
+                            }}
+                          >
+                            <i className="bi-three-dots"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : dataTeacher[0] ? (
+                  dataTeacher.map((data, index) => {
+                    return (
+                      <tr
+                        className="tableTR"
+                        id={`tr-${index}`}
+                        key={index}
+                        onClick={() => {
+                          // console.log("holding add id =>", data.Id);
+                          setHoldidData(data.Id);
+                          HolderlineonTable("tableTR", "tr-", index);
+                        }}
+                      >
+                        <td width={100}>{data.adv_id}</td>
+                        <td width={80}>{data.ttl}</td>
+                        <td width={150}>{data.name}</td>
+                        <td width={150}>{data.lname}</td>
+                        <td width={80}>{`******`}</td>
+                        <td width={150}>{data.start}</td>
+                        <td width={150}>{data.stop}</td>
+                        <td width={200}>{data.email}</td>
+                        <td width={200}>{data.line_id}</td>
+                        <td width={50}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setHoldidData(data.Id);
+                              handleEditvalueset(data);
+                              setDataSelectEdit(data);
+                              handleOpenModalbox("editDocModal");
+                              setStatusCloseModal(false);
+                            }}
+                          >
+                            <i className="bi-three-dots"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <Spinnerpage></Spinnerpage>
+                )}
+                {/* {dataTeacher.map((data, index) => {
                   return (
                     <tr
                       className="tableTR"
@@ -775,7 +858,7 @@ const ContentDoctor = (props) => {
                       </td>
                     </tr>
                   );
-                })}
+                })} */}
               </tbody>
             </table>
           ) : (

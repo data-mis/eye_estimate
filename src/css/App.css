@@ -598,7 +598,6 @@ html .content-table, body .content-table {
   margin: 5px;
 }
 html .content-menu, body .content-menu {
-  border: 1px solid rebeccapurple;
   display: flex;
   position: relative;
 }

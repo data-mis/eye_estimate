@@ -20,7 +20,7 @@
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://11.0.0.1/admin_estimate/",
+  "homepage": "https://163.44.197.219/studentEstimate/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

@@ -11,7 +11,11 @@ import {
   HolderlineonTable,
   clearHolderlineTable,
 } from "../config/holdlinetable";
-import { searchAdvisor, searchGroupcontent, searchStudent } from "../config/searchConfig";
+import {
+  searchAdvisor,
+  searchGroupcontent,
+  searchStudent,
+} from "../config/searchConfig";
 import Swal from "sweetalert2";
 
 const ContentWork = (props) => {
@@ -56,6 +60,8 @@ const ContentWork = (props) => {
   const [datasearchstudent, setDatasearchstudent] = useState([]);
   const [datasearchAdvisor, setDatasearchAdvisor] = useState([]);
   const [dataselectworkinfo, setDataselectworkinfo] = useState("");
+
+  const [topicnameShowedit, setTopicnameShowedit] = useState("");
 
   //เก็บwork
   const [inputtypeestimation, setInputtypeestimation] = useState({
@@ -1000,12 +1006,15 @@ const ContentWork = (props) => {
                   className="input-rowinput-modalboxContentwork"
                   type="text"
                   onClick={() => {
+                    console.log("topic this a >", edittopicest);
                     handleOpenDropdown(
                       "dropInfotopicEdit",
                       "boxtopicrelativeboxEdit"
                     );
                   }}
-                  value={edittopicest.name}
+                  value={
+                    topicnameShowedit ? topicnameShowedit : edittopicest.name
+                  }
                   readOnly
                 ></input>
                 <button
@@ -1029,6 +1038,7 @@ const ContentWork = (props) => {
                           className="info-dropinfotype"
                           key={index}
                           onClick={() => {
+                            setTopicnameShowedit("");
                             setEdittopicest({
                               title: data.title,
                               name: data.name,
@@ -2172,7 +2182,7 @@ const ContentWork = (props) => {
   };
 
   const handlecaseEditwork = (code, aData) => {
-    console.log(">>>>", aData);
+    console.log("aData paramator this =>", aData);
     setWorkIdeditwork(aData.Id);
     setEditTypesheetwork({
       id: aData.sheet_id,
@@ -2202,7 +2212,7 @@ const ContentWork = (props) => {
         handlegetworkhead(aData.Id, usertoken);
         break;
       case "05":
-        console.log("data>>", aData);
+        console.log("sheetCode 05 data =>>", aData);
         setEdittopicest({
           title: aData.txt !== null ? aData.txt : "",
           name: aData.txt_val !== null ? aData.txt_val : "",
@@ -2443,9 +2453,15 @@ const ContentWork = (props) => {
         <div className="contentwork-buttonAll">
           <button
             type="button"
-            onClick={() => {
-              setSelectgrp({ id: "", name: "" });
-              handleAllgroupinfowork();
+            onClick={(e) => {
+              setSelectradioComplete(parseInt(1));
+              handleCheckDayformonth(
+                selectYear - 543,
+                selectMonth,
+                selectDataworktype,
+                e.target.value,
+                usertoken
+              );
             }}
           >
             {"งานทั้งหมด"}
@@ -2696,8 +2712,9 @@ const ContentWork = (props) => {
                               <td width={50}>
                                 <button
                                   onClick={() => {
-                                    console.log("this a data=>", data);
-                                    console.log("this >>>", selectCodework);
+                                    // console.log("data is this=>",data)
+                                    // console.log("this >>>", selectCodework);
+                                    setTopicnameShowedit(data.topic);
                                     setDataeditwork(data);
                                     setStatusEditwork(true);
                                     handlecaseEditwork(selectCodework, data);
