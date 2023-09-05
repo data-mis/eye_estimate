@@ -419,6 +419,9 @@ html .btnAddStudent, html .btnDelStudent, body .btnAddStudent, body .btnDelStude
   color: #fefefe;
   border: none;
 }
+html .btnAddStudent:hover, html .btnDelStudent:hover, body .btnAddStudent:hover, body .btnDelStudent:hover {
+  background-color: #37474f;
+}
 html .btnAddStudent:active, html .btnDelStudent:active, body .btnAddStudent:active, body .btnDelStudent:active {
   border: 5px solid #546e7a;
   background-color: #37474f;
@@ -613,8 +616,14 @@ html .content-menu-btn, body .content-menu-btn {
   width: 90%;
   height: 5%;
   margin: 5px auto;
-  font-size: 16px;
+  font-size: large;
   font-weight: bold;
+  color: white;
+  border: 2px solid #9e9e9e;
+  background-color: #607d8b;
+}
+html .content-menu-btn:hover, body .content-menu-btn:hover {
+  background-color: #37474f;
 }
 html .header-inboxModal, body .header-inboxModal {
   width: 100%;
@@ -849,6 +858,8 @@ html .yearControlldown, body .yearControlldown {
 html .btn-close-groupStudent, body .btn-close-groupStudent {
   height: 85%;
   width: 80%;
+  font-weight: bold;
+  font-size: large;
 }
 html .content-groupStudent, body .content-groupStudent {
   height: 95%;
@@ -946,6 +957,14 @@ html .btn-menu-boxGroupStudent button, body .btn-menu-boxGroupStudent button {
   height: 100%;
   display: block;
   margin: auto;
+  font-size: large;
+  font-weight: bold;
+  background-color: #607d8b;
+  color: white;
+  border: 2px solid #9e9e9e;
+}
+html .btn-menu-boxGroupStudent button:hover, body .btn-menu-boxGroupStudent button:hover {
+  background-color: #37474f;
 }
 html .box-btnmodal-adding, body .box-btnmodal-adding {
   width: 100%;
@@ -1429,8 +1448,14 @@ html .boxcontent-contentwork, body .boxcontent-contentwork {
   height: 85%;
 }
 html .colbox-contentwork, body .colbox-contentwork {
-  width: 100%;
-  height: 750px;
+  border: 2px solid #9e9e9e;
+  height: 95%;
+  width: 95%;
+  display: block;
+  margin: auto;
+  scroll-snap-type: mandatory;
+  overflow: auto;
+  background-color: #e0e0e0;
 }
 html .row-info-contentwork, body .row-info-contentwork {
   width: 100%;
@@ -1482,6 +1507,14 @@ html .btn-menu-contentwork, body .btn-menu-contentwork {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: large;
+  font-weight: bold;
+  background-color: #607d8b;
+  color: white;
+  border: 2px solid #9e9e9e;
+}
+html .btn-menu-contentwork:hover, body .btn-menu-contentwork:hover {
+  background-color: #37474f;
 }
 html .title-header-contentwork, body .title-header-contentwork {
   height: 5%;
@@ -1953,6 +1986,16 @@ html .col-btnboxheader, body .col-btnboxheader {
   justify-content: end;
   align-self: center;
 }
+html .btn-typeBGhover, body .btn-typeBGhover {
+  border: 2px solid #9e9e9e;
+  background-color: #607d8b;
+  color: white;
+  font-size: large;
+  font-weight: bold;
+}
+html .btn-typeBGhover:hover, body .btn-typeBGhover:hover {
+  background-color: #37474f;
+}
 html .col-btnboxheader button, body .col-btnboxheader button {
   width: auto;
   height: 100%;
@@ -2391,7 +2434,6 @@ html .content-filecontent, body .content-filecontent {
   width: 100%;
 }
 html .title-nav-filecontent, body .title-nav-filecontent {
-  border: 2px solid green;
   height: 5%;
   width: 100%;
   display: flex;
@@ -2410,6 +2452,18 @@ html .namefile-filecontent, body .namefile-filecontent {
   font-size: 18px;
   text-align: center;
 }
+html .btn-backprocess, body .btn-backprocess {
+  border: 2px solid #9e9e9e;
+  height: 40px;
+  width: auto;
+  font-weight: bold;
+  font-size: large;
+  background-color: #e0e0e0;
+}
+html .btn-backprocess:hover, body .btn-backprocess:hover {
+  background-color: #37474f;
+  color: #e0e0e0;
+}
 html .body-filecontent, body .body-filecontent {
   height: 95%;
   display: grid;
@@ -2417,7 +2471,6 @@ html .body-filecontent, body .body-filecontent {
   padding: 5px;
 }
 html .menu-select-filecontent, body .menu-select-filecontent {
-  border: 2px solid blue;
   height: 100%;
   width: 100%;
   display: block;

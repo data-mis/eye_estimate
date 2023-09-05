@@ -79,9 +79,13 @@ export function searchAdvisor(textsearch, datasearch) {
   let search = escapeRegExp(textsearch);
   let resultsearch = [];
 
+  console.log("datasearch is =>", datasearch);
+
   datasearch.map((data) => {
-    if (data.advisor_name.trim().match(search)) {
-      resultsearch.push(data);
+    if (data.advisor_name) {
+      if (data.advisor_name.trim().match(search)) {
+        resultsearch.push(data);
+      }
     }
   });
   return resultsearch;

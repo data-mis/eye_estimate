@@ -81,6 +81,7 @@ const FetchControlWork = {
     }
   },
   fetchEditdetailwork: async function (info, token) {
+    console.log("check info to update!!!!",info)
     let request = requestOption("POST", info, token);
     let http = `${HttpConfig()}/work/edit_work`;
 

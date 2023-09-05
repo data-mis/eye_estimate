@@ -117,7 +117,6 @@ const ContentStudent = (props) => {
     // }
     FetchControlStudent.fetchGetGroup(ayear, usertoken).then((data) => {
       let nameGroup = [];
-      console.log(">>", data);
       data.map((ele) => {
         nameGroup.push({
           id: ele.id.trim() ? ele.id.trim() : "",

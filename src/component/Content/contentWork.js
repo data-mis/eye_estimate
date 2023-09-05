@@ -519,6 +519,13 @@ const ContentWork = (props) => {
               onClick={() => {
                 console.log("saveAddwork>>");
                 handleSubmitAddnewWork(usertoken);
+                handleCheckDayformonth(
+                  selectYear - 543,
+                  selectMonth,
+                  selectDataworktype,
+                  selectradioComplete,
+                  usertoken
+                );
               }}
             >
               {"บันทึก"}
@@ -986,6 +993,13 @@ const ContentWork = (props) => {
               type="button"
               onClick={() => {
                 handleSubmitEditwork(usertoken);
+                handleCheckDayformonth(
+                  selectYear - 543,
+                  selectMonth,
+                  selectDataworktype,
+                  selectradioComplete,
+                  usertoken
+                );
               }}
             >
               {"บันทึกแก้ไข"}
@@ -1128,8 +1142,6 @@ const ContentWork = (props) => {
                         <input
                           type="date"
                           defaultValue={editreportDateadmit}
-                          pattern="\d{2}-\d{2}-\d{4}"
-                          placeholder="dd-mm-yyyy"
                           onChange={(e) => {
                             setEditreportDateadmit(e.target.value);
                           }}
@@ -1515,6 +1527,7 @@ const ContentWork = (props) => {
 
   const handleworklistworkadvisor = (token) => {
     FetchControlWork.fetchworklistworkadvisor(token).then((data) => {
+      console.log(":-)...>",data)
       setGetworklistwork(data);
       handleworkestimationlistwork(data[0].id, token);
     });
@@ -1550,7 +1563,7 @@ const ContentWork = (props) => {
       complete: radioComplete,
     };
 
-    console.log("object >>>", object);
+    // console.log("object >>>", object);
     handleworkgetworkdata(object, token);
   };
 
@@ -1644,6 +1657,8 @@ const ContentWork = (props) => {
     let typecase = inputtypeestimation.code;
     let passtofetch = true;
 
+    console.log("case is >>>",typecase)
+
     switch (typecase) {
       case "01": //**report*/
         let objectreport = {
@@ -1685,7 +1700,7 @@ const ContentWork = (props) => {
           txt_val6_1: reportDateSendpatient,
           txt_val7_1: reportDateCommit,
         };
-
+        console.log("case 1 passtofetch =>",passtofetch)
         if (passtofetch) {
           console.log("object for add report>>>", objectreport);
           addDetailinputclear();
@@ -1695,6 +1710,12 @@ const ContentWork = (props) => {
               console.log(message);
             }
           );
+          Swal.fire({
+            icon: "success",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 720,
+          });
         } else {
           Swal.fire({
             title: "กรุณากรอกข้อมูลให้ครบถ้วน",
@@ -1728,6 +1749,12 @@ const ContentWork = (props) => {
           FetchControlWork.fetchAdddetailwork(objectprogressnote, token).then(
             (message) => {
               console.log(message);
+              Swal.fire({
+                icon: "success",
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 720,
+              });
             }
           );
         } else {
@@ -1766,6 +1793,12 @@ const ContentWork = (props) => {
           FetchControlWork.fetchAdddetailwork(objectteaching, token).then(
             (message) => {
               console.log(message);
+              Swal.fire({
+                icon: "success",
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 720,
+              });
             }
           );
         } else {
@@ -1804,6 +1837,12 @@ const ContentWork = (props) => {
           FetchControlWork.fetchAdddetailwork(objectwardround, token).then(
             (message) => {
               console.log(message);
+              Swal.fire({
+                icon: "success",
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 720,
+              });
             }
           );
         } else {
@@ -1844,6 +1883,12 @@ const ContentWork = (props) => {
           FetchControlWork.fetchAdddetailwork(objectcasetopicShow, token).then(
             (message) => {
               console.log(message);
+              Swal.fire({
+                icon: "success",
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 720,
+              });
             }
           );
         } else {
@@ -1882,6 +1927,12 @@ const ContentWork = (props) => {
           FetchControlWork.fetchAdddetailwork(objectcasecoop, token).then(
             (message) => {
               console.log(message);
+              Swal.fire({
+                icon: "success",
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 720,
+              });
             }
           );
         } else {
@@ -1920,6 +1971,12 @@ const ContentWork = (props) => {
           FetchControlWork.fetchAdddetailwork(objectflipped, token).then(
             (message) => {
               console.log(message);
+              Swal.fire({
+                icon: "success",
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 720,
+              });
             }
           );
         } else {
@@ -1935,12 +1992,7 @@ const ContentWork = (props) => {
         break;
     }
     handleAllgroupinfowork();
-    Swal.fire({
-      icon: "success",
-      showConfirmButton: false,
-      showCancelButton: false,
-      timer: 720,
-    });
+    
   };
 
   const clearCloseAddeditmodal = () => {
@@ -1957,7 +2009,7 @@ const ContentWork = (props) => {
     console.log("case >>>", casecode);
     console.log("look this null>>", editstudentEst);
     switch (casecode) {
-      case "01":
+      case "01": //ประเมินรายงาน
         console.log(">>>", editreportDateSendpatient);
         let objeditReport = {
           sheet_code: editTypesheetwork.code,
@@ -2000,7 +2052,7 @@ const ContentWork = (props) => {
         );
 
         break;
-      case "02":
+      case "02": //แบบฟอร์ม Progressnote
         let editobjectprogressnote = {
           work_id: workIdeditwork,
           sheet_id: editTypesheetwork.id,
@@ -2021,7 +2073,7 @@ const ContentWork = (props) => {
           console.log(message);
         });
         break;
-      case "03":
+      case "03": //OPD teaching
         let editobjectOPDteaching = {
           work_id: workIdeditwork,
           sheet_id: editTypesheetwork.id,
@@ -2041,7 +2093,7 @@ const ContentWork = (props) => {
           }
         );
         break;
-      case "04":
+      case "04": //ward round
         let editobjectwardround = {
           work_id: workIdeditwork,
           sheet_id: editTypesheetwork.id,
@@ -2061,7 +2113,7 @@ const ContentWork = (props) => {
           }
         );
         break;
-      case "05":
+      case "05": //Case&Topic ผู้นำเสนอ
         let editobjectcasttopicshow = {
           work_id: workIdeditwork,
           sheet_id: editTypesheetwork.id,
@@ -2071,9 +2123,9 @@ const ContentWork = (props) => {
           date: editdateEst,
           time_begin: edittimebeginest,
           time_end: edittimeendest,
-          txt_val: edittopicest,
+          txt_val: edittopicest.name,
         };
-        console.log("edit caseshow >>", editobjectcasttopicshow);
+        // console.log("edit caseshow >>", editobjectcasttopicshow);
         docGetId("boxEditworkDoctor").style.display = "none";
         editDetailinputclear();
         FetchControlWork.fetchEditdetailwork(
@@ -2083,7 +2135,7 @@ const ContentWork = (props) => {
           console.log(message);
         });
         break;
-      case "06":
+      case "06": //Case&topic ผู้ร่วม
         let editobjectcasecoop = {
           work_id: workIdeditwork,
           sheet_id: editTypesheetwork.id,
@@ -2104,7 +2156,7 @@ const ContentWork = (props) => {
           }
         );
         break;
-      case "07":
+      case "07": //Flipped classroom
         let objectflipped = {
           work_id: workIdeditwork,
           sheet_id: editTypesheetwork.id,
@@ -2155,7 +2207,7 @@ const ContentWork = (props) => {
             cancelButtonText: "ยกเลิก",
           }).then((res) => {
             if (res.isConfirmed) {
-              console.log("ทำการลบต่อไป");
+              // console.log("ทำการลบต่อไป");
               FetchControlWork.fetchdeleteworkdetail(
                 objIdworkdetail,
                 tokenuser
@@ -2167,7 +2219,7 @@ const ContentWork = (props) => {
             }
           });
         } else {
-          console.log("ทำการลบไป status = 0");
+          // console.log("ทำการลบไป status = 0");
           FetchControlWork.fetchdeleteworkdetail(
             objIdworkdetail,
             tokenuser
@@ -2249,6 +2301,9 @@ const ContentWork = (props) => {
     if (!statusClosemodal) return;
     // console.log("ทำงานปิดmodal");
     clearCloseAddeditmodal();
+    addDetailinputclear();
+    editDetailinputclear();
+    
   }, [statusClosemodal]);
 
   return (
@@ -2644,7 +2699,13 @@ const ContentWork = (props) => {
                                 <td width={300}>{data.advisor_name}</td>
                                 <td width={300}>{data.student_name}</td>
                                 <td width={50}>
-                                  <button>
+                                  <button
+                                  onClick={() => {
+                                    console.log("UPPPP");
+                                    props.upfile("file");
+                                    props.workinfoselected(data);
+                                  }}
+                                  >
                                     <i className="bi-chevron-up"></i>
                                   </button>
                                 </td>
@@ -2865,6 +2926,7 @@ const ContentWork = (props) => {
               onClick={() => {
                 handleOpenModalbox("boxAddworkDoctor");
                 handleCheckShowSpecialType(inputtypeestimation.code);
+                setStatusEditwork(false);
               }}
             >
               {"เพิ่ม"}

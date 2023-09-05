@@ -64,7 +64,7 @@ const FetchControlSetting = {
 
     try {
       let resHeadsheet = await fetch(httpfetch, request).then((res) => {
-        return res.json();
+        return {message:"success"}
       });
       return resHeadsheet;
     } catch (error) {
@@ -91,7 +91,7 @@ const FetchControlSetting = {
 
     try {
       let res = await fetch(httpfetch, request).then((res) => {
-        return res.json();
+        return "success add sheet"
       });
       return res;
     } catch (error) {
@@ -104,7 +104,7 @@ const FetchControlSetting = {
 
     try {
       let res = await fetch(httpfetch, request).then((res) => {
-        return res.json();
+        return "success edit sheet"
       });
       return res;
     } catch (error) {

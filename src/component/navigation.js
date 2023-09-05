@@ -295,6 +295,7 @@ const NavigationPage = () => {
                 removeholdbtnmenu(e);
                 setModeContent("report");
               }}
+              disabled
             >
               {"รายงาน"}
             </button>

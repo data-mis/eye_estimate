@@ -96,6 +96,7 @@ const ContentSetting = (props) => {
         FetchControlSetting.fetchaddsheetdetail(objectSheetid, token).then(
           (message) => {
             console.log(message);
+            handleGetsheetdetail(idsheetworktype, usertoken);
           }
         );
       }
@@ -121,6 +122,7 @@ const ContentSetting = (props) => {
         FetchControlSetting.fetchdelsheetdetail(objectdetailid, token).then(
           (message) => {
             console.log(message);
+            handleGetsheetdetail(idsheetworktype, usertoken);
           }
         );
       }
@@ -141,6 +143,7 @@ const ContentSetting = (props) => {
             <input
               className="inputinfo-editsheet-setting"
               type="text"
+              value={sheetdocName}
               onChange={(e) => {
                 setSheetdocName(e.target.value);
               }}
@@ -155,6 +158,7 @@ const ContentSetting = (props) => {
               <input
                 className="inputinfo-editsheet-setting"
                 type="date"
+                value={sheetstart}
                 onChange={(e) => {
                   setSheetstart(moment(e.target.value).format("YYYY-MM-DD"));
                 }}
@@ -165,6 +169,7 @@ const ContentSetting = (props) => {
               <input
                 className="inputinfo-editsheet-setting"
                 type="date"
+                value={sheetend}
                 onChange={(e) => {
                   setSheetend(moment(e.target.value).format("YYYY-MM-DD"));
                 }}
@@ -185,6 +190,12 @@ const ContentSetting = (props) => {
       </div>
     );
   };
+  const handlecloseclearModalAddSheetEstimation = () => {
+    setSheetdocName("");
+    setSheetstart("");
+    setSheetend("");
+    document.getElementById("modalAddDocument").style.display = "none";
+  };
 
   const handleAddsheetEstimation = () => {
     if (!sheetdocName || !sheetstart) return;
@@ -193,8 +204,21 @@ const ContentSetting = (props) => {
       start: sheetstart,
       stop: sheetend === "" ? "0000-00-00" : sheetend,
     };
-    console.log(">>>", objFetch);
-    // FetchControlSetting.fetchAddnewSheet(objFetch, usertoken);
+    // console.log(">>>", objFetch);
+    FetchControlSetting.fetchAddnewSheet(objFetch, usertoken).then(
+      (message) => {
+        console.log(message);
+        handlecloseclearModalAddSheetEstimation();
+        handleGetWorklisttype(usertoken);
+        Swal.fire({
+          icon: "success",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1700,
+          background: "none",
+        });
+      }
+    );
   };
 
   const handleEditsheetEstimation = () => {
@@ -204,8 +228,21 @@ const ContentSetting = (props) => {
       start: sheeteditstart,
       stop: sheeteditend,
     };
-    console.log(">>>", objFetchedit);
-    // FetchControlSetting.fetchEditSheet(objFetchedit, usertoken);
+    FetchControlSetting.fetchEditSheet(objFetchedit, usertoken).then(
+      (message) => {
+        console.log(message);
+        document.getElementById("modalEditheaderTypeSetting").style.display =
+          "none";
+        handleGetWorklisttype(usertoken);
+        Swal.fire({
+          icon: "success",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 1200,
+          background: "none",
+        });
+      }
+    );
   };
 
   const handleContentEditHeadertype = () => {
@@ -304,6 +341,21 @@ const ContentSetting = (props) => {
       (data) => {
         console.log("ดูรายละเอียด sheet !", data);
         setDataDetaillist(data);
+        data.map((ele) => {
+          setObjdetailTxt(...objdetailTxt, { id: ele.Id, result: ele.txt });
+          setObjdetailscore(...objdetailscore, {
+            id: ele.Id,
+            result: ele.score,
+          });
+          setObjdetailrealscore(...objdetailrealscore, {
+            id: ele.Id,
+            result: ele.real_score,
+          });
+          setObjdetailscoretype(...objdetailscoretype, {
+            id: ele.Id,
+            result: ele.score_type,
+          });
+        });
         let arrTxt = [],
           arrScore = [],
           arrRealscore = [],
@@ -374,6 +426,7 @@ const ContentSetting = (props) => {
   };
 
   const casetypeSetdetail = (forset, type) => {
+    console.log("object for set ===>", forset);
     switch (type) {
       case "txt":
         setObjdetailTxt(forset);
@@ -545,6 +598,38 @@ const ContentSetting = (props) => {
     });
   };
 
+  const handleTimecheck = (time) => {
+    let count = 0;
+    while (count <= time) {
+      console.log("count>>", count);
+      if (count === time) {
+        return (
+          <table className="table-show-info">
+            <thead>
+              <tr>
+                <th>{"รายละเอียด"}</th>
+                <th>{"Score"}</th>
+                <th>{"R.score"}</th>
+                <th>{"Type"}</th>
+                <th>{"แก้ไข"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>{"-"}</tr>
+              <tr>{"-"}</tr>
+              <tr>{"-"}</tr>
+              <tr>{"-"}</tr>
+              <tr>{"-"}</tr>
+              <tr>{"-"}</tr>
+            </tbody>
+          </table>
+        );
+      } else {
+        return <Spinnerpage></Spinnerpage>;
+      }
+    }
+  };
+
   useEffect(() => {
     handleGetWorklisttype(usertoken);
   }, []);
@@ -556,6 +641,14 @@ const ContentSetting = (props) => {
     handleGetsheetdetail(idsheetworktype, usertoken);
   }, [idsheetworktype]);
 
+  useEffect(() => {
+    if (statusCloseModalAdddoc) {
+      console.log("close is doing =>", statusCloseModalAdddoc);
+      setStatusCloseModalAdddoc(false);
+      handlecloseclearModalAddSheetEstimation();
+    }
+  }, [statusCloseModalAdddoc]);
+
   return (
     <div className="body-contentSetting">
       <div className="header-nav-contentSetting">
@@ -563,6 +656,7 @@ const ContentSetting = (props) => {
           <div className="btn-boxHeader">
             <div className="col-btnboxheader">
               <button
+                className="btn-typeBGhover"
                 type="button"
                 onClick={() => {
                   handleOpenModalbox("modalAddDocument");
@@ -573,6 +667,7 @@ const ContentSetting = (props) => {
             </div>
             <div className="col-btnboxheader">
               <button
+                className="btn-typeBGhover"
                 type="button"
                 onClick={() => {
                   addDetailsheet(idsheetworktype, usertoken);
@@ -581,6 +676,7 @@ const ContentSetting = (props) => {
                 {"เพิ่มรายละเอียด"}
               </button>
               <button
+                className="btn-typeBGhover"
                 type="button"
                 onClick={() => {
                   delDetailsheet(idsheetdetail, usertoken);
@@ -889,47 +985,6 @@ const ContentSetting = (props) => {
         {/* ส่วนแสดงรายละเอียดหัวข้อต่างๆ */}
         <div className="box-table-detail">
           <div className="tablebox-boxtabletype">
-            {/* <table className="table-show-info">
-              <thead>
-                <tr>
-                  <th>{"รายละเอียด"}</th>
-                  <th>{"score"}</th>
-                  <th>{"R.score"}</th>
-                  <th>{"type"}</th>
-                  <th>{"บันทึก"}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <textarea className="textarea-input-contentSetting"></textarea>
-                  </td>
-                  <td>
-                    <input
-                      className="input-edit-tableShowinfo"
-                      type="text"
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      className="input-edit-tableShowinfo"
-                      type="text"
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      className="input-edit-tableShowinfo"
-                      type="text"
-                    ></input>
-                  </td>
-                  <td>
-                    <button className="btn-edit-Detail">
-                      <i className="bi-three-dots"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table> */}
             {dataDetaillist[0] ? (
               <table className="table-show-info">
                 <thead>
@@ -961,7 +1016,7 @@ const ContentSetting = (props) => {
                         <td>
                           <textarea
                             className="textarea-input-contentSetting"
-                            defaultValue={
+                            value={
                               objdetailTxt.result
                                 ? objdetailTxt.result
                                 : data.txt.trim()
@@ -982,7 +1037,7 @@ const ContentSetting = (props) => {
                           <input
                             className="input-edit-tableShowinfo"
                             type="number"
-                            defaultValue={
+                            value={
                               objdetailscore.result
                                 ? objdetailscore.result
                                 : data.score.trim()
@@ -1003,7 +1058,7 @@ const ContentSetting = (props) => {
                           <input
                             className="input-edit-tableShowinfo"
                             type="number"
-                            defaultValue={
+                            value={
                               objdetailrealscore.result
                                 ? objdetailrealscore.result
                                 : data.real_score.trim()
@@ -1023,7 +1078,7 @@ const ContentSetting = (props) => {
                           <input
                             className="input-edit-tableShowinfo"
                             type="text"
-                            defaultValue={
+                            value={
                               objdetailscoretype.result
                                 ? objdetailscoretype.result
                                 : data.score_type.trim()
@@ -1602,7 +1657,7 @@ const ContentSetting = (props) => {
                 <table className="table-show-info">
                   <thead>
                     <tr>
-                      <th>{"รายละเอียด"}</th>
+                      <th>{"รายละเอียด2"}</th>
                       <th>{"Score"}</th>
                       <th>{"R.score"}</th>
                       <th>{"Type"}</th>
@@ -1629,14 +1684,14 @@ const ContentSetting = (props) => {
                           <td>
                             <textarea
                               className="textarea-input-contentSetting"
-                              defaultValue={
-                                objdetailTxt.result
-                                  ? objdetailTxt.result
-                                  : data.txt.trim()
-                              }
+                              value={objdetailTxt[index].result}
                               rows={5}
                               cols={40}
                               onChange={(e) => {
+                                console.log(
+                                  "ข้อความที่จะกรอกทั้งหมด =>",
+                                  e.target.value
+                                );
                                 handleobjDetailedit(
                                   objdetailTxt,
                                   data.Id,
@@ -1650,11 +1705,7 @@ const ContentSetting = (props) => {
                             <input
                               className="input-edit-tableShowinfo"
                               type="number"
-                              defaultValue={
-                                objdetailscore.result
-                                  ? objdetailscore.result
-                                  : data.score.trim()
-                              }
+                              value={objdetailscore[index].result}
                               onChange={(e) => {
                                 console.log(e.target.value);
                                 handleobjDetailedit(
@@ -1671,11 +1722,7 @@ const ContentSetting = (props) => {
                             <input
                               className="input-edit-tableShowinfo"
                               type="number"
-                              defaultValue={
-                                objdetailrealscore.result
-                                  ? objdetailrealscore.result
-                                  : data.real_score.trim()
-                              }
+                              value={objdetailrealscore[index].result}
                               onChange={(e) => {
                                 handleobjDetailedit(
                                   objdetailrealscore,
@@ -1691,11 +1738,7 @@ const ContentSetting = (props) => {
                             <input
                               className="input-edit-tableShowinfo"
                               type="text"
-                              defaultValue={
-                                objdetailscoretype.result
-                                  ? objdetailscoretype.result
-                                  : data.score_type.trim()
-                              }
+                              value={objdetailscoretype[index].result}
                               onChange={(e) => {
                                 handleobjDetailedit(
                                   objdetailscoretype,
@@ -1737,7 +1780,25 @@ const ContentSetting = (props) => {
                   </tbody>
                 </table>
               ) : (
-                <Spinnerpage />
+                <table className="table-show-info">
+                  <thead>
+                    <tr>
+                      <th>{"รายละเอียด"}</th>
+                      <th>{"Score"}</th>
+                      <th>{"R.score"}</th>
+                      <th>{"Type"}</th>
+                      <th>{"แก้ไข"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>{"-"}</tr>
+                    <tr>{"-"}</tr>
+                    <tr>{"-"}</tr>
+                    <tr>{"-"}</tr>
+                    <tr>{"-"}</tr>
+                    <tr>{"-"}</tr>
+                  </tbody>
+                </table>
               )}
             </div>
           </div>

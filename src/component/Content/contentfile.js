@@ -162,12 +162,13 @@ const ContentFile = (props) => {
           readOnly
         ></input>
         <button
+          className="btn-backprocess"
           type="button"
           onClick={() => {
             props.backtowork("workDoctor");
           }}
         >
-          {"close"}
+          {"ย้อนกลับ"}
         </button>
       </div>
       <div className="body-filecontent">

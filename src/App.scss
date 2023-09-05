@@ -453,6 +453,9 @@ $colorBGnav:#e0e0e0;
             color: #fefefe;
             border: none;
         }
+            .btnAddStudent:hover,.btnDelStudent:hover{
+                background-color: $colorBTNbghover;
+            }
             .btnAddStudent:active,.btnDelStudent:active{
                 border: 5px solid $colorBTNhover;
                 background-color: $colorBTNbghover;
@@ -652,9 +655,15 @@ $colorBGnav:#e0e0e0;
             width: 90%;
             height: 5%;
             margin: 5px auto;
-            font-size: 16px;
+            font-size: large;
             font-weight: bold;
+            color: white;
+            border: 2px solid $colorBorderDrop;
+            background-color: $colorBGmenu;
         }
+            .content-menu-btn:hover{
+                background-color: $colorBTNbghover;
+            }
 //content modal
 .header-inboxModal{
     width: 100%;
@@ -893,6 +902,8 @@ $colorBGnav:#e0e0e0;
     .btn-close-groupStudent{
         height: 85%;
         width: 80%;
+        font-weight: bold;
+        font-size: large;
     }
 .content-groupStudent{
     height: 95%;
@@ -992,7 +1003,15 @@ $colorBGnav:#e0e0e0;
                 height: 100%;
                 display: block;
                 margin: auto;
+                font-size: large;
+                font-weight: bold;
+                background-color: $colorBGmenu;
+                color: white;
+                border: 2px solid $colorBorderDrop;
             }
+                .btn-menu-boxGroupStudent button:hover{
+                    background-color: $colorBTNbghover;
+                }
 .box-btnmodal-adding{
     width: 100%;
     height: 10%;
@@ -1487,8 +1506,17 @@ $colorBGnav:#e0e0e0;
         height: 85%;
     }
     .colbox-contentwork{
-        width: 100%;
-        height: 750px;
+        // width: 100%;
+        // height: 750px;
+        // border: 2px solid ;
+        border: 2px solid $colorBorderDrop;
+        height: 95%;
+        width: 95%;
+        display: block;
+        margin: auto;
+        scroll-snap-type: mandatory;
+        overflow: auto;
+        background-color: $colorBGnav;
     }
         .row-info-contentwork{
             width: 100%;
@@ -1540,7 +1568,15 @@ $colorBGnav:#e0e0e0;
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
+            font-size: large;
+            font-weight: bold;
+            background-color: $colorBGmenu;
+            color: white;
+            border: 2px solid $colorBorderDrop;
         }
+            .btn-menu-contentwork:hover{
+                background-color: $colorBTNbghover;
+            }
     .title-header-contentwork{
         height: 5%;
         width: 100%;
@@ -2032,6 +2068,16 @@ $colorBGnav:#e0e0e0;
         justify-content: end;
         align-self: center;
     }
+        .btn-typeBGhover{
+            border: 2px solid $colorBorderDrop;
+            background-color: $colorBGmenu;
+            color: white;
+            font-size: large;
+            font-weight: bold;
+        }
+            .btn-typeBGhover:hover{
+                background-color: $colorBTNbghover;
+            }
     .col-btnboxheader button{
         width: auto;
         height: 100%;
@@ -2487,7 +2533,6 @@ $colorBGnav:#e0e0e0;
         width: 100%;
     }
     .title-nav-filecontent{
-        border: 2px solid green;
         height: 5%;
         width: 100%;
         display: flex;
@@ -2506,6 +2551,18 @@ $colorBGnav:#e0e0e0;
             font-size: 18px;
             text-align: center;
         }
+        .btn-backprocess{
+            border: 2px solid $colorBorderDrop;
+            height: 40px;
+            width: auto;
+            font-weight: bold;
+            font-size: large;
+            background-color: $colorBGnav;
+        }
+            .btn-backprocess:hover{
+                background-color: $colorBTNbghover;
+                color: $colorBGnav;
+            }
     .body-filecontent{
         // border: 2px solid red;
         height: 95%;
@@ -2514,7 +2571,6 @@ $colorBGnav:#e0e0e0;
         padding: 5px;
     }
     .menu-select-filecontent{
-        border: 2px solid blue;
         height: 100%;
         width: 100%;
         display: block;
