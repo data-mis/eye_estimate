@@ -56,6 +56,10 @@ const FetchControlDoctor = {
       console.log("httpDel", http);
       console.log("del->", info);
       console.log("reqestDel", request);
+      let res = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      return res;
     } catch (error) {
       throw error;
     }

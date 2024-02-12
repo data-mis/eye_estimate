@@ -12,7 +12,7 @@ import FetchControlDoctor from "../data/fetchControlDoctor";
 
 const ContentDoctor = (props) => {
   const cookie = new Cookies();
-  const usertoken = cookie.get("token");
+  const usertoken = cookie.get("tokenEye");
 
   const [statusCloseModal, setStatusCloseModal] = useState(false);
   const [statusDropttl, setStatusDropttl] = useState(false);
@@ -595,6 +595,22 @@ const ContentDoctor = (props) => {
     setDataTeacher(fetchdata);
   };
 
+  const dataDoctorTeacherDelete = async (object,token) => {
+    await FetchControlDoctor.fetchDeleteDoctorteacher(object,token).then((message) => {
+      console.log("อัพเดทรายการ", message.status);
+
+      if (message.status === true) {
+        Swal.fire({
+          icon: "success",
+          title: "อัพเดทรายการ อาจารย์ หยุดหน้าที่เรียบร้อย !!!",
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1800,
+        });
+      }
+    });
+  };
+
   const handleSearchingDatadoctor = (search, data) => {
     let thissearchdata = searchDoctorcontent(search, data);
     if (thissearchdata[0]) {
@@ -648,9 +664,10 @@ const ContentDoctor = (props) => {
   };
 
   const handleDeleteDoc = (object, usertoken) => {
-    // console.log("delinfo>>>", object);
+    console.log("ตรงนี้ token มีนิ", usertoken);
     //ยังไม่ได้ fetch
-    dataDoctorTeacherFull();
+    // dataDoctorTeacherFull(); //อันนี้ดึงข้อมูล น่าจะผิด
+    dataDoctorTeacherDelete(object, usertoken);
     clearInputdocmodal();
     setHoldidData("");
   };

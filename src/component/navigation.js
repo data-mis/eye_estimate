@@ -10,6 +10,7 @@ import ContentWork from "./Content/contentWork";
 import ContentSetting from "./Content/contentSetting";
 import ContentReport from "./Content/contentReport";
 import ContentFile from "./Content/contentfile";
+import Swal from "sweetalert2";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
@@ -91,7 +92,7 @@ const NavigationPage = () => {
       case "logout":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
         localStorage.clear();
-        cookie.remove("token");
+        cookie.remove("tokenEye");
         navigat("/");
         break;
       default:
@@ -172,7 +173,14 @@ const NavigationPage = () => {
 
   const handleClearinglogout = () => {
     localStorage.clear();
-    cookie.remove("token");
+    cookie.remove("tokenEye");
+    Swal.fire({
+      title: "ออกจากระบบ !!!",
+      text: "ออกจากระบบเรียบร้อยแล้ว !!!",
+      icon: "warning",
+      showConfirmButton: false,
+      timer: 1700,
+    });
     navigat("/");
   };
 

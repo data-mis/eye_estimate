@@ -7,7 +7,7 @@ import { HolderlineonTable } from "../config/holdlinetable";
 
 const ContentFile = (props) => {
   const cookies = new Cookies();
-  const usertoken = cookies.get("token");
+  const usertoken = cookies.get("tokenEye");
   const fileSelectPDF = useRef(null);
   const mobilefileSelectPDF = useRef(null);
   const [boxdroplistinfo, setBoxdroplistinfo] = useState(false);
