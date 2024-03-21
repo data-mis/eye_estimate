@@ -57,6 +57,7 @@ const FetchControlWork = {
     }
   },
   fetchworkgetwork: async function (info, token) {
+    console.log("อินโฟ คือมีไร บอกสิ", info);
     let request = requestOption("POST", info, token);
     let http = `${HttpConfig()}/work/get_work`;
 
@@ -81,7 +82,7 @@ const FetchControlWork = {
     }
   },
   fetchEditdetailwork: async function (info, token) {
-    console.log("check info to update!!!!",info)
+    console.log("check info to update!!!!", info);
     let request = requestOption("POST", info, token);
     let http = `${HttpConfig()}/work/edit_work`;
 
@@ -179,7 +180,7 @@ const FetchControlWork = {
     let http = `${HttpConfig()}/work/get_image_student_file`;
 
     try {
-      console.log("imagestudentfile check >>",info)
+      console.log("imagestudentfile check >>", info);
       let resImage = await fetch(http, request).then((res) => {
         return res.json();
       });
@@ -210,6 +211,19 @@ const FetchControlWork = {
         console.log("delete finish");
       });
       return resImage;
+    } catch (error) {
+      throw error;
+    }
+  },
+  fetchgetImagecomment: async function (info) {
+    try {
+      let result = await fetch(
+        `${HttpConfig()}/student/getupload_image_comment`,
+        requestOption("POST", info, "")
+      ).then((res) => {
+        return res.json();
+      });
+      return result;
     } catch (error) {
       throw error;
     }

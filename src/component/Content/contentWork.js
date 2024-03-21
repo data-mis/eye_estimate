@@ -1527,7 +1527,7 @@ const ContentWork = (props) => {
 
   const handleworklistworkadvisor = (token) => {
     FetchControlWork.fetchworklistworkadvisor(token).then((data) => {
-      console.log(":-)...>",data)
+      // console.log(":-)...>",data)
       setGetworklistwork(data);
       handleworkestimationlistwork(data[0].id, token);
     });
@@ -1543,7 +1543,7 @@ const ContentWork = (props) => {
   const handleworkgetworkdata = (infoOpp, token) => {
     FetchControlWork.fetchworkgetwork(infoOpp, token).then((data) => {
       setGetworkgetwork(data);
-      // console.log("รายละเอียดข้อมูลงาน>>>", data);
+      console.log("รายละเอียดข้อมูลงาน>>>", data);
     });
   };
 
@@ -2762,7 +2762,7 @@ const ContentWork = (props) => {
                               <td width={50}>
                                 <button
                                   onClick={() => {
-                                    console.log("UPPPP");
+                                    // console.log("UPPPP");
                                     props.upfile("file");
                                     props.workinfoselected(data);
                                   }}

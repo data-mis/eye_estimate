@@ -2594,8 +2594,51 @@ $colorBGnav:#e0e0e0;
         }
     .box-showfile{
         width: 100%;
-        height: 440px;
+        height: 340px;
         margin-top: 15px;
+    }
+    .boxshow-comment-img{
+        border: 2px solid $colorBorderDrop;
+        width: 100%;
+        height: 180px;
+        scroll-snap-type: mandatory;
+        overflow-y: auto;
+        padding: 5px 15px;
+    }
+    .img-peviewshow{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        position: relative;
+        margin: 5px;
+        img{
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 2px;
+            width: 80px;
+            height:80px;
+        }
+        img:hover{
+            box-shadow: 0 0 2px 1px rgba(27, 119, 39, 0.8);
+        }
+        
+    }
+    .box-btndownload{
+        padding: 5px 0;
+        display: flex;
+        button{
+            border: 1px solid $colorBGmenu;
+            border-radius:2px;
+            padding: 5px;
+            font-size: 16px;
+            background-color: $colorBGmenu;
+            color: #fefefe;
+        }
+        button:hover{
+            background-color: $colorBTNbghover;
+        }
     }
     .show-file-filecontent{
         height: 100%;

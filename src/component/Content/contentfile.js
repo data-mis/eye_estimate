@@ -15,7 +15,8 @@ const ContentFile = (props) => {
   const [urlpdf, setUrlpdf] = useState("");
   const [infofilename, setInfofilename] = useState({ filename: "", date: "" });
   const [idfile, setIdfile] = useState("");
-
+  const [imageurldata, setImageurldata] = useState([]);
+  const [imgchoose, setImgchoose] = useState([]);
   const PDFviewer = () => {
     // const url = `https://www.orimi.com/pdf-test.pdf`;
 
@@ -147,10 +148,57 @@ const ContentFile = (props) => {
     }
   };
 
+  const handlegetimgcomment = (idstudentcode) => {
+    if (!idstudentcode) return;
+    let info_body = {
+      std_id: idstudentcode,
+    };
+    FetchControlWork.fetchgetImagecomment(info_body).then((data) => {
+      if (data.status) {
+        let arr_res = [];
+        data.result.map((res) => {
+          arr_res.push(`https://${res.url}`);
+        });
+        setImageurldata(arr_res);
+      }
+    });
+  };
+
+  const handleDownloadImage = () => {
+    if (!imgchoose) return;
+    try {
+      imgchoose.map((img, imgindex) => {
+       const xhr = new XMLHttpRequest();
+        xhr.open("GET", img, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.responseType = "blob";
+        xhr.onload = () => {
+          const blob = xhr.response;
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = `comment-${props.selectinfo.student_code}-${imgindex}.jpeg`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        };
+        xhr.send();
+      });
+    } catch (error) {
+      console.error("download image error", error);
+    }
+  };
+
   useEffect(() => {
-    // console.log("selectedinfo >>>", props.selectinfo);
+    console.log("selectedinfo >>>", props.selectinfo);
     handlegetstudentfile(props.selectinfo.Id);
+    handlegetimgcomment(props.selectinfo.student_code);
   }, []);
+
+  useEffect(() => {
+    console.log("imgchoose", imgchoose);
+  }, [imgchoose]);
 
   return (
     <div className="content-filecontent">
@@ -259,6 +307,78 @@ const ContentFile = (props) => {
                 </div>
               )}
             </div>
+          </div>
+          <h3>{"รายการรูป คอมเม้น"}</h3>
+          <div className="boxshow-comment-img">
+            {imageurldata[0]
+              ? imageurldata.map((ele, index_ele) => {
+                  return (
+                    <div className="img-peviewshow" key={index_ele}>
+                      <img
+                        src={ele}
+                        id={`imgID-${index_ele}`}
+                        onClick={() => {
+                          Swal.fire({
+                            imageUrl: `${ele}`,
+                            showConfirmButton: false,
+                            showCloseButton: true,
+                            background: "none",
+                          });
+                        }}
+                      ></img>
+                      <div>
+                        <input
+                          type="checkbox"
+                          onClick={() => {
+                            if (imgchoose[0]) {
+                              let pass = true;
+                              let arr_chk = [];
+                              imgchoose.map((chk) => {
+                                if (chk === ele) {
+                                  pass = false;
+                                  document.getElementById(
+                                    `imgID-${index_ele}`
+                                  ).style.boxShadow = "none";
+                                } else {
+                                  arr_chk.push(chk);
+                                }
+                              });
+                              if (pass) {
+                                //ใหม่เพิ่มเข้า
+                                setImgchoose([...imgchoose, ele]);
+                                document.getElementById(
+                                  `imgID-${index_ele}`
+                                ).style.boxShadow =
+                                  "0 0 2px 1px rgba(27, 119, 39, 0.8)";
+                              } else {
+                                //เก่าเพิ่มเข้า แต่ไม่นับที่เหมือนกัน
+                                setImgchoose(arr_chk);
+                              }
+                            } else {
+                              //ยังไม่ได้เพิ่ม
+                              setImgchoose([ele]);
+                              document.getElementById(
+                                `imgID-${index_ele}`
+                              ).style.boxShadow =
+                                "0 0 2px 1px rgba(27, 119, 39, 0.8)";
+                            }
+                          }}
+                        ></input>
+                      </div>
+                    </div>
+                  );
+                })
+              : ""}
+          </div>
+          <div className="box-btndownload">
+            <button
+              type="button"
+              onClick={() => {
+                handleDownloadImage();
+              }}
+            >
+              {"ดาวน์โหลด"}
+            </button>
           </div>
         </div>
         <div className="menu-mobile-filecontent">
