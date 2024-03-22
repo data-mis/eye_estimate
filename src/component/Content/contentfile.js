@@ -148,10 +148,11 @@ const ContentFile = (props) => {
     }
   };
 
-  const handlegetimgcomment = (idstudentcode) => {
+  const handlegetimgcomment = (idstudentcode,idwork) => {
     if (!idstudentcode) return;
     let info_body = {
       std_id: idstudentcode,
+      work_id: idwork,
     };
     FetchControlWork.fetchgetImagecomment(info_body).then((data) => {
       if (data.status) {
@@ -168,7 +169,7 @@ const ContentFile = (props) => {
     if (!imgchoose) return;
     try {
       imgchoose.map((img, imgindex) => {
-       const xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open("GET", img, true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.responseType = "blob";
@@ -193,7 +194,7 @@ const ContentFile = (props) => {
   useEffect(() => {
     console.log("selectedinfo >>>", props.selectinfo);
     handlegetstudentfile(props.selectinfo.Id);
-    handlegetimgcomment(props.selectinfo.student_code);
+    handlegetimgcomment(props.selectinfo.student_code, props.selectinfo.Id);
   }, []);
 
   useEffect(() => {
