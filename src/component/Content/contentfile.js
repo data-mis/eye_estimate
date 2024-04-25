@@ -17,13 +17,6 @@ const ContentFile = (props) => {
   const [idfile, setIdfile] = useState("");
   const [imageurldata, setImageurldata] = useState([]);
   const [imgchoose, setImgchoose] = useState([]);
-  const PDFviewer = () => {
-    // const url = `https://www.orimi.com/pdf-test.pdf`;
-
-    return (
-      <iframe src={urlpdf} style={{ width: "100%", height: "100%" }}></iframe>
-    );
-  };
 
   const handleselectfile = (infowork) => {
     let thisFile = fileSelectPDF.current.files[0];
@@ -129,8 +122,8 @@ const ContentFile = (props) => {
     // console.log("!->", object);
     FetchControlWork.fetchgetimagestudentfile(object, usertoken).then(
       (data) => {
-        console.log(">>>>>", data);
-        setUrlpdf(`http://${data.url}`);
+        // console.log(">>>>>", data.url);
+        setUrlpdf(`https://${data.url}`);
       }
     );
   };
@@ -148,7 +141,7 @@ const ContentFile = (props) => {
     }
   };
 
-  const handlegetimgcomment = (idstudentcode,idwork) => {
+  const handlegetimgcomment = (idstudentcode, idwork) => {
     if (!idstudentcode) return;
     let info_body = {
       std_id: idstudentcode,
@@ -200,6 +193,10 @@ const ContentFile = (props) => {
   useEffect(() => {
     console.log("imgchoose", imgchoose);
   }, [imgchoose]);
+
+  useEffect(() => {
+    console.log("ifream url", urlpdf);
+  }, [urlpdf]);
 
   return (
     <div className="content-filecontent">
@@ -476,7 +473,16 @@ const ContentFile = (props) => {
             </div>
           </div>
         </div>
-        <div className="show-file-filecontent">{PDFviewer()}</div>
+        <div className="show-file-filecontent">
+          {urlpdf !== "" ? (
+            <iframe
+              src={urlpdf}
+              style={{ width: "100%", height: "100%" }}
+            ></iframe>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       {/* <ModalBox
         idbox={"modalProgressbar"}

@@ -1595,7 +1595,13 @@ const ContentWork = (props) => {
         data.map((ele) => {
           switch (ele.txt.trim()) {
             case "หอผู้ป่วย":
-              setEditreportWard(ele.txt_val);
+              if(ele.txt_val === "จักษุ(ช)"){
+                setEditreportWard("1");
+              }else if(ele.txt_val === "จักษุ(ญ)"){
+                setEditreportWard("2");
+              }else if(ele.txt_val === "พิเศษ"){
+                setEditreportWard("3");
+              }
               break;
             case "การวินิจฉัย":
               setEditreportDiagnosis(ele.txt_val);
@@ -1608,7 +1614,10 @@ const ContentWork = (props) => {
               break;
             case "วันที่ผู้ป่วย Admit":
               //**พี่ปูจะส่งมาเป็น คศ */
-              setEditreportDateadmit(ele.txt_val);
+              let date_admit = ele.txt_val.split("-");
+              let dateplus_admit = `${parseInt(date_admit[2]) - 543}-${date_admit[1]}-${date_admit[0]}`;
+              
+              setEditreportDateadmit(dateplus_admit);
               // let dateAdmit = moment(ele.txt_val)
               //   .add(-543, "year")
               //   .format("YYYY-MM-DD");
@@ -1616,7 +1625,11 @@ const ContentWork = (props) => {
               break;
             case "วันที่จ่าย/รับผู้ป่วย":
               //**พี่ปูจะส่งมาเป็น คศ */
-              setEditreportDateCommit(ele.txt_val);
+              let date_jand = ele.txt_val.split("-");
+              let dateplus_jand = `${parseInt(date_jand[2]) - 543}-${date_jand[1]}-${date_jand[0]}`;
+              // setEditreportDateCommit(dateplus_jand);
+              setEditreportDateSendpatient(dateplus_jand);
+
               // let dateCommit = moment(ele.txt_val)
               //   .add(-543, "year")
               //   .format("YYYY-MM-DD");
@@ -1628,7 +1641,8 @@ const ContentWork = (props) => {
               let date = ele.txt_val.split("-");
               let dateplus = `${parseInt(date[2]) - 543}-${date[1]}-${date[0]}`;
               console.log("วันที่ส่งรายงานผู้ป่วย คศ. >>", dateplus);
-              setEditreportDateSendpatient(dateplus);
+              // setEditreportDateSendpatient(dateplus);
+              setEditreportDateCommit(dateplus);
 
               // setEditreportDateSendpatient(datesent);
               break;
@@ -1688,17 +1702,17 @@ const ContentWork = (props) => {
             ? moment(reportDateadmit).add(543, "year").format("DD-MM-YYYY")
             : "",
           txt6: "วันที่จ่าย/รับผู้ป่วย",
-          txt_val6: reportDateSendpatient
-            ? moment(reportDateSendpatient)
+          txt_val6: reportDateCommit
+            ? moment(reportDateCommit)
                 .add(543, "year")
                 .format("DD-MM-YYYY")
             : "",
           txt7: "วันที่ส่งรายงานผู้ป่วย",
-          txt_val7: reportDateCommit
-            ? moment(reportDateCommit).add(543, "year").format("DD-MM-YYYY")
+          txt_val7: reportDateSendpatient
+            ? moment(reportDateSendpatient).add(543, "year").format("DD-MM-YYYY")
             : "",
-          txt_val6_1: reportDateSendpatient,
-          txt_val7_1: reportDateCommit,
+          txt_val6_1: reportDateCommit,
+          txt_val7_1: reportDateSendpatient,
         };
         console.log("case 1 passtofetch =>",passtofetch)
         if (passtofetch) {
@@ -2012,6 +2026,7 @@ const ContentWork = (props) => {
       case "01": //ประเมินรายงาน
         console.log(">>>", editreportDateSendpatient);
         let objeditReport = {
+          work_id: workIdeditwork,
           sheet_code: editTypesheetwork.code,
           sheet_id: editTypesheetwork.id,
           advisor_id: editadvisorDocest.id,
@@ -2028,7 +2043,7 @@ const ContentWork = (props) => {
           txt3: "เลขที่โรงพยาบาล",
           txt_val3: editreportHosnumber,
           txt5: "วันที่ผู้ป่วย Admit",
-          txt_val5: editreportDateadmit,
+          txt_val5: editreportDateadmit ? moment(editreportDateadmit).add(543,"year").format("DD-MM-YYYY"):"",
           txt6: "วันที่จ่าย/รับผู้ป่วย",
           txt_val6: editreportDateSendpatient
             ? moment(editreportDateSendpatient)
@@ -2713,6 +2728,11 @@ const ContentWork = (props) => {
                                   <button
                                     onClick={() => {
                                       console.log("love");
+                                      setTopicnameShowedit(data.topic);
+                                      setDataeditwork(data);
+                                      setStatusEditwork(true);
+                                      handlecaseEditwork(selectCodework, data);
+                                      handleOpenModalbox("boxEditworkDoctor");
                                     }}
                                   >
                                     <i className="bi-three-dots"></i>

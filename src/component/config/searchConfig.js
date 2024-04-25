@@ -47,15 +47,19 @@ export function searchDoctorcontent(text, data) {
 }
 
 export function searchGroupcontent(textsearch, datagroup) {
-  let search = escapeRegExp(textsearch);
-  let totalarr = [];
-  console.log(search, datagroup);
-  datagroup.map((ele) => {
-    if (ele.name.trim().match(search)) {
-      totalarr.push(ele);
-    }
-  });
-  return totalarr;
+  try {
+    let search = escapeRegExp(textsearch);
+    let totalarr = [];
+    console.log(search, datagroup);
+    datagroup.map((ele) => {
+      if (ele.name.trim().match(search)) {
+        totalarr.push(ele);
+      }
+    });
+    return totalarr;
+  } catch (error) {
+    return [];
+  }
 }
 
 export function searchStudent(textsearch, datastudent) {
