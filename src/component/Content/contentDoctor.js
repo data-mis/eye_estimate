@@ -595,20 +595,22 @@ const ContentDoctor = (props) => {
     setDataTeacher(fetchdata);
   };
 
-  const dataDoctorTeacherDelete = async (object,token) => {
-    await FetchControlDoctor.fetchDeleteDoctorteacher(object,token).then((message) => {
-      console.log("อัพเดทรายการ", message.status);
+  const dataDoctorTeacherDelete = async (object, token) => {
+    await FetchControlDoctor.fetchDeleteDoctorteacher(object, token).then(
+      (message) => {
+        console.log("อัพเดทรายการ", message.status);
 
-      if (message.status === true) {
-        Swal.fire({
-          icon: "success",
-          title: "อัพเดทรายการ อาจารย์ หยุดหน้าที่เรียบร้อย !!!",
-          showConfirmButton: false,
-          showCancelButton: false,
-          timer: 1800,
-        });
+        if (message.status === true) {
+          Swal.fire({
+            icon: "success",
+            title: "อัพเดทรายการ อาจารย์ หยุดหน้าที่เรียบร้อย !!!",
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 1800,
+          });
+        }
       }
-    });
+    );
   };
 
   const handleSearchingDatadoctor = (search, data) => {
@@ -915,6 +917,7 @@ const ContentDoctor = (props) => {
                         id: holdIdData,
                         stop: moment(new Date()).format("YYYY-MM-DD"),
                       };
+                      console.log("object เมื่อลบ อาจารย์", object);
                       handleDeleteDoc(object, usertoken);
                     }
                   });

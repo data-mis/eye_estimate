@@ -4,6 +4,12 @@ import Cookies from "universal-cookie";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { HolderlineonTable } from "../config/holdlinetable";
+import { PDFDocument, rgb, scale, StandardFonts } from "pdf-lib";
+import pica from "pica";
+
+import * as pdfjsLib from "pdfjs-dist/webpack.mjs";
+import html2canvas from "html2canvas";
+import Compressor from "compressorjs";
 
 const ContentFile = (props) => {
   const cookies = new Cookies();
@@ -17,11 +23,27 @@ const ContentFile = (props) => {
   const [idfile, setIdfile] = useState("");
   const [imageurldata, setImageurldata] = useState([]);
   const [imgchoose, setImgchoose] = useState([]);
+  const [resizedFileURL, setResizedFileURL] = useState(null);
 
-  const handleselectfile = (infowork) => {
+  const handleselectfile = (infowork, filecompressor) => {
     let thisFile = fileSelectPDF.current.files[0];
-    console.log("filepdf >>>", thisFile);
-
+    console.log("filepdf >>>", filecompressor);
+    if (parseInt(filecompressor.size) > 16777216) {
+      Swal.fire({
+        icon: "warning",
+        title: "ขนาดไฟล์ !!!",
+        text: "ขนาดไฟล์เกินกำหนด !!",
+        showConfirmButton: false,
+        timer: 1800,
+      });
+      return;
+    }
+    console.log(
+      "ข้อมูลที่ทำการเพิ่ม",
+      infowork.Id,
+      infowork.student_id,
+      infowork.grp_id
+    );
     Swal.fire({
       titleText: `อัพโหลดไฟล์ \n${thisFile.name}`,
       icon: "question",
@@ -32,24 +54,25 @@ const ContentFile = (props) => {
       denyButtonText: "ยกเลิก",
     }).then((result) => {
       if (result.isConfirmed) {
-        let filepdf = new File([thisFile], `${thisFile.name}`, {
+        let filepdf = new File([filecompressor], `${thisFile.name}`, {
           type: thisFile.type,
         });
-
         let filesend = new FormData();
         filesend.append("file", filepdf);
         filesend.append("work_id", infowork.Id);
         filesend.append("work_date", moment(new Date()).format("YYYY-MM-DD"));
         filesend.append("student_id", infowork.student_id);
         filesend.append("grp_id", infowork.grp_id);
-
         // console.log("filesend formdata >>",filesend.get("file"))
         // console.log("filesend formdata >>",filesend.get("work_id"))
-        FetchControlWork.fetchUpstudentfilework(filesend, usertoken).then(
-          () => {
-            handlegetstudentfile(infowork.Id);
-          }
-        );
+        if (filesend.get("work_id") === infowork.Id) {
+          FetchControlWork.fetchUpstudentfilework(filesend, usertoken).then(
+            () => {
+              console.log("ไปดูได้เลย+++");
+              // handlegetstudentfile(infowork.Id);
+            }
+          );
+        }
 
         Swal.fire({
           // title: "อัพโหลดไฟล์",
@@ -66,6 +89,179 @@ const ContentFile = (props) => {
       }
     });
   };
+
+  //ทดสอบฝั่งชั่นเพื่อ resize pdf
+  async function compressPDF(inputBytes) {
+    try {
+      const pdfDoc = await PDFDocument.load(inputBytes);
+
+      // Create a new PDF document
+      const newPdfDoc = await PDFDocument.create();
+
+      // // Add pages from original document to new document
+      const copiedPages = await newPdfDoc.copyPages(
+        pdfDoc,
+        pdfDoc.getPageIndices()
+      );
+      copiedPages.forEach((page) => {
+        newPdfDoc.addPage(page);
+      });
+
+      // // Serialize the new PDF document
+      const newPdfBytes = await newPdfDoc.save();
+
+      return newPdfBytes;
+    } catch (error) {
+      console.log("ผิดอีกละ", error);
+    }
+  }
+
+  const handletrycompresspdf = (event) => {
+    const file = event.target.files[0]; // Get the first selected file
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const inputPdfBytes = new Uint8Array(event.target.result);
+
+        // Call the compressPDF function with inputPdfBytes
+        const compressedPdfBytes = await compressPDF(inputPdfBytes);
+
+        // Do something with the compressed PDF bytes, like save to a file or upload to a server
+        const blob = new Blob([compressedPdfBytes], {
+          type: "application/pdf",
+        });
+        const url_compresspdf = URL.createObjectURL(blob);
+        const taga = document.createElement("a");
+        taga.href = url_compresspdf;
+        taga.download = "trycompressPDF.pdf";
+        taga.click();
+        console.log(url_compresspdf);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
+  //ทดสอบการเปลี่ยนไฟล์ pdf เป็น img
+  const [imgtry_arr, setImgtry_arr] = useState([]);
+  const [viewheight, setViewheight] = useState(null);
+  const [viewwidth, setViewwidth] = useState(null);
+  const handletrypdftoimg = async (event) => {
+    const file_pdf = event.target.files[0];
+    if (file_pdf) {
+      const arr_resultbloa = [];
+      const reader_file = new FileReader();
+      reader_file.onload = async (e) => {
+        const pdfData = e.target.result;
+        const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+        // console.log("ในเมื่อยากรู้ว่า pdf มีทั้งหมดกี่หน้า :>", pdf.numPages);
+        const numofpages = pdf.numPages;
+        //วนก่อน
+        for (let numpages = 1; numpages <= numofpages; numpages++) {
+          //ทำการแปลงไฟล์ pdf เป็นรูปภาพ
+          const page = await pdf.getPage(numpages);
+          const viewport = page.getViewport({ scale: 2 });
+          setViewheight(viewport.height);
+          setViewwidth(viewport.width);
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          const renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+          };
+          await page.render(renderContext).promise;
+          // const canvasImage = await html2canvas(canvas); //ใช้ html2canvas
+          const imageDataUrl = canvas.toDataURL("image/jpeg");
+          new Compressor(dataURLtoFile(imageDataUrl, "converted.jpeg"), {
+            quality: 0.4,
+            success(result) {
+              // setImgtry(URL.createObjectURL(result));
+              //สร้าง object เพื่อรับค่าจาก compressor โดยให้อยู่ในรูปของ objectURL
+              let object_result = {
+                page: numpages,
+                imgres_bloa: URL.createObjectURL(result),
+              };
+              arr_resultbloa.push(object_result);
+              if (numpages === numofpages) {
+                // console.log("วนจบรอบท้่าย");
+                // console.log("arrforthis", arr_resultbloa);
+                setImgtry_arr(arr_resultbloa);
+              }
+            },
+            error(err) {
+              console.log("have a error !!!");
+              console.log(err);
+            },
+          });
+        }
+      };
+      reader_file.readAsArrayBuffer(file_pdf);
+    }
+  };
+
+  // ฟังก์ชันสำหรับแปลง Data URL เป็น File
+  const dataURLtoFile = (dataurl, filename) => {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const generatePDF = async (urlimg_arr) => {
+    // จัดการสร้างหน้า PDF
+    const pdfDoc = await PDFDocument.create();
+
+    //วนเพื่อนำรูป ไปวางใน pdf
+    for (const pageData of urlimg_arr) {
+      const page = pdfDoc.addPage([viewwidth, viewheight]);
+
+      const imgUrl = pageData.imgres_bloa;
+      const imgBytes = await fetch(imgUrl).then((res) => res.arrayBuffer());
+      const img = await pdfDoc.embedJpg(imgBytes);
+      const imgDims = img.scale(1);
+      page.drawImage(img, {
+        x: 0,
+        y: 0,
+        width: imgDims.width,
+        height: imgDims.height,
+      });
+    }
+
+    // สร้างไฟล์ PDF และส่งค่า
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    return blob;
+  };
+
+  useEffect(() => {
+    if (!imgtry_arr[0]) return;
+    console.log("ตอนนี้ length ของ arrayคือ =", imgtry_arr.length, imgtry_arr);
+    const urlpromiss = generatePDF(imgtry_arr);
+    urlpromiss.then((res) => {
+      console.log("urlpdfis", res);
+      // handleselectfile(props.selectinfo, res);
+      const urlpdf = URL.createObjectURL(res);
+      const tagA = document.createElement("a");
+      tagA.href = urlpdf;
+      tagA.download = "thisTESTpdf.pdf";
+      tagA.click();
+    });
+
+    // imgtry_arr.map((res, index) => {
+    // const taga = document.createElement("a");
+    // taga.href = res.imgres_bloa;
+    // taga.download = `trycompressJPEG_${res.index + 1}.jpeg`;
+    // taga.click();
+    // console.log(`trycompressJPEG_${index + 1}.jpeg`);
+    // console.log(`array[${index}]`, res.page);
+    // });
+  }, [imgtry_arr]);
 
   const handleDeleteFile = (workid) => {
     if (workid) {
@@ -221,6 +417,9 @@ const ContentFile = (props) => {
         <div className="menu-select-filecontent">
           <div className="box-menufile">
             <h2 style={{ marginLeft: "10px" }}>ตัวเลือก</h2>
+            <div className="boxmenufile-span-reason">
+              <span>{"ไม่สามารถอัพโหลดไฟล์ที่มีขนาดเกิน 16 MB"}</span>
+            </div>
             <input
               className="inputfile-pdf-filecontent"
               type="file"
@@ -233,7 +432,9 @@ const ContentFile = (props) => {
                     "inputfile-pdf-filecontent"
                   )[0].value = "";
                 } else {
-                  handleselectfile(props.selectinfo);
+                  // handleselectfile(props.selectinfo);
+                  // handletrycompresspdf(e);
+                  handletrypdftoimg(e);
                 }
               }}
             ></input>

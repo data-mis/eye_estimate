@@ -2480,6 +2480,13 @@ html .box-menufile, body .box-menufile {
   height: auto;
   margin-top: 10px;
 }
+html .box-menufile .boxmenufile-span-reason, body .box-menufile .boxmenufile-span-reason {
+  text-align: center;
+}
+html .box-menufile .boxmenufile-span-reason span, body .box-menufile .boxmenufile-span-reason span {
+  font-size: 13px;
+  color: red;
+}
 html .inputfile-pdf-filecontent, body .inputfile-pdf-filecontent {
   display: none;
 }
@@ -2594,7 +2601,7 @@ html .card-info-filecontent, body .card-info-filecontent {
   align-items: center;
   padding: 10px;
   width: 100%;
-  height: 50px;
+  height: auto;
   margin: 5px auto;
   font-weight: bold;
 }

@@ -145,6 +145,8 @@ const FetchControlWork = {
     }
   },
   fetchUpstudentfilework: async function (form, token) {
+    console.log("formdata is >>", form);
+    console.log("filesend formdata >>", form.get("work_id"));
     let request = {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
