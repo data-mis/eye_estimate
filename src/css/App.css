@@ -2597,13 +2597,17 @@ html .btn-del-filecontent:hover, body .btn-del-filecontent:hover {
 }
 html .card-info-filecontent, body .card-info-filecontent {
   border: 2px solid black;
-  display: block;
-  align-items: center;
-  padding: 10px;
+  display: flex;
+  padding: 10px 5px;
   width: 100%;
   height: auto;
   margin: 5px auto;
   font-weight: bold;
+}
+html .card-info-filecontent span, body .card-info-filecontent span {
+  width: 100%;
+  height: 100%;
+  word-wrap: break-word;
 }
 html .card-info-filecontent:hover, body .card-info-filecontent:hover {
   background-color: #546e7a;
@@ -2700,6 +2704,19 @@ html .menu-mobile-filecontent, body .menu-mobile-filecontent {
   html .show-file-filecontent, body .show-file-filecontent {
     height: 85%;
   }
+}
+html .waitprocess-box, body .waitprocess-box {
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  backdrop-filter: blur(3px);
 }
 html .modal-slideBar-body, body .modal-slideBar-body {
   display: none;

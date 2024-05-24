@@ -10,6 +10,7 @@ import pica from "pica";
 import * as pdfjsLib from "pdfjs-dist/webpack.mjs";
 import html2canvas from "html2canvas";
 import Compressor from "compressorjs";
+import Spinnerpage from "../config/spinnerpage";
 
 const ContentFile = (props) => {
   const cookies = new Cookies();
@@ -36,6 +37,7 @@ const ContentFile = (props) => {
         showConfirmButton: false,
         timer: 1800,
       });
+      fileSelectPDF.current.value = "";
       return;
     }
     console.log(
@@ -68,8 +70,7 @@ const ContentFile = (props) => {
         if (filesend.get("work_id") === infowork.Id) {
           FetchControlWork.fetchUpstudentfilework(filesend, usertoken).then(
             () => {
-              console.log("ไปดูได้เลย+++");
-              // handlegetstudentfile(infowork.Id);
+              handlegetstudentfile(infowork.Id);
             }
           );
         }
@@ -86,6 +87,7 @@ const ContentFile = (props) => {
         // document.getElementById("modalProgressbar").style.display = "block";
       } else {
         console.log("ยกเลิกอัพ");
+        fileSelectPDF.current.value = "";
       }
     });
   };
@@ -146,6 +148,7 @@ const ContentFile = (props) => {
   const [viewheight, setViewheight] = useState(null);
   const [viewwidth, setViewwidth] = useState(null);
   const handletrypdftoimg = async (event) => {
+    document.getElementById("processsWait").style.display = "flex";
     const file_pdf = event.target.files[0];
     if (file_pdf) {
       const arr_resultbloa = [];
@@ -186,6 +189,7 @@ const ContentFile = (props) => {
               if (numpages === numofpages) {
                 // console.log("วนจบรอบท้่าย");
                 // console.log("arrforthis", arr_resultbloa);
+                document.getElementById("processsWait").style.display = "none";
                 setImgtry_arr(arr_resultbloa);
               }
             },
@@ -213,8 +217,8 @@ const ContentFile = (props) => {
     return new File([u8arr], filename, { type: mime });
   };
 
+  // จัดการสร้างหน้า PDF
   const generatePDF = async (urlimg_arr) => {
-    // จัดการสร้างหน้า PDF
     const pdfDoc = await PDFDocument.create();
 
     //วนเพื่อนำรูป ไปวางใน pdf
@@ -241,16 +245,16 @@ const ContentFile = (props) => {
 
   useEffect(() => {
     if (!imgtry_arr[0]) return;
-    console.log("ตอนนี้ length ของ arrayคือ =", imgtry_arr.length, imgtry_arr);
+    // console.log("ตอนนี้ length ของ arrayคือ =", imgtry_arr.length, imgtry_arr);
     const urlpromiss = generatePDF(imgtry_arr);
     urlpromiss.then((res) => {
       console.log("urlpdfis", res);
-      // handleselectfile(props.selectinfo, res);
-      const urlpdf = URL.createObjectURL(res);
-      const tagA = document.createElement("a");
-      tagA.href = urlpdf;
-      tagA.download = "thisTESTpdf.pdf";
-      tagA.click();
+      handleselectfile(props.selectinfo, res);
+      // const urlpdf = URL.createObjectURL(res);
+      // const tagA = document.createElement("a");
+      // tagA.href = urlpdf;
+      // tagA.download = "thisTESTpdf.pdf";
+      // tagA.click();
     });
 
     // imgtry_arr.map((res, index) => {
@@ -417,9 +421,9 @@ const ContentFile = (props) => {
         <div className="menu-select-filecontent">
           <div className="box-menufile">
             <h2 style={{ marginLeft: "10px" }}>ตัวเลือก</h2>
-            <div className="boxmenufile-span-reason">
+            {/* <div className="boxmenufile-span-reason">
               <span>{"ไม่สามารถอัพโหลดไฟล์ที่มีขนาดเกิน 16 MB"}</span>
-            </div>
+            </div> */}
             <input
               className="inputfile-pdf-filecontent"
               type="file"
@@ -432,8 +436,7 @@ const ContentFile = (props) => {
                     "inputfile-pdf-filecontent"
                   )[0].value = "";
                 } else {
-                  // handleselectfile(props.selectinfo);
-                  // handletrycompresspdf(e);
+                  // handleselectfile(props.selectinfo); //อัพไฟล์โดยตรงอันเดิม
                   handletrypdftoimg(e);
                 }
               }}
@@ -595,7 +598,8 @@ const ContentFile = (props) => {
                     "inputfilemobile-pdf-filecontent"
                   )[0].value = "";
                 } else {
-                  handleselectfile(props.selectinfo);
+                  // handleselectfile(props.selectinfo); //อัพไฟล์โดยตรงอันเดิม
+                  handletrypdftoimg(e);
                 }
               }}
             ></input>
@@ -685,10 +689,9 @@ const ContentFile = (props) => {
           )}
         </div>
       </div>
-      {/* <ModalBox
-        idbox={"modalProgressbar"}
-        content={Contentprogressbar()}
-      ></ModalBox> */}
+      <div className="waitprocess-box" id="processsWait">
+        <Spinnerpage></Spinnerpage>
+      </div>
     </div>
   );
 };

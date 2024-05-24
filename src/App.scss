@@ -2703,13 +2703,17 @@ $colorBGnav:#e0e0e0;
         
     .card-info-filecontent{
         border: 2px solid black;
-        display: block;
-        align-items: center;
-        padding: 10px;
+        display: flex;
+        padding: 10px 5px;
         width: 100%;
         height: auto;
         margin: 5px auto;
         font-weight: bold;
+        span{
+            width: 100%;
+            height: 100%;
+            word-wrap: break-word;
+        }
     }
     .card-info-filecontent:hover{
         background-color: $colorBTNhover;
@@ -2811,6 +2815,19 @@ $colorBGnav:#e0e0e0;
         height: 85%;
     }
 }
+    .waitprocess-box{
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        z-index: 1;
+        backdrop-filter: blur(3px);
+    }
 }
 
 @mixin ModalSlideBar(){
