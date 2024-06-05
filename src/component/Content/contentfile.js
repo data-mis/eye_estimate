@@ -23,7 +23,9 @@ const ContentFile = (props) => {
   const [infofilename, setInfofilename] = useState({ filename: "", date: "" });
   const [idfile, setIdfile] = useState("");
   const [imageurldata, setImageurldata] = useState([]);
+  const [pdfurldata, setpdfurldata] = useState([]);
   const [imgchoose, setImgchoose] = useState([]);
+  const [holdingpdfcomment, setHoldingpdfcomment] = useState(null);
   const [resizedFileURL, setResizedFileURL] = useState(null);
 
   const handleselectfile = (infowork, filecompressor) => {
@@ -358,6 +360,24 @@ const ContentFile = (props) => {
     });
   };
 
+  const handlegetPDFcomment = (idstudentcode, idwork) => {
+    if (!idstudentcode) return;
+    let info_body = {
+      std_id: idstudentcode,
+      work_id: idwork,
+    };
+    FetchControlWork.fetchgetPdfcomment(info_body).then((data) => {
+      if (data.status) {
+        let arr_res = [];
+        data.result.map((res) => {
+          arr_res.push(`https://${res.url}`);
+        });
+        console.log("ตอนนี้มี comment pdf", arr_res);
+        setpdfurldata(arr_res);
+      }
+    });
+  };
+
   const handleDownloadImage = () => {
     if (!imgchoose) return;
     try {
@@ -384,10 +404,24 @@ const ContentFile = (props) => {
     }
   };
 
+  //แสดงรายการ PDF comment
+  const handleShowpdfcomment = (iddoc, urlpdfcomemnt) => {
+    console.log("เข้าเงื่อนไขเมื่อ holdingPDFcomment");
+    if (holdingpdfcomment) {
+      document
+        .getElementById(holdingpdfcomment)
+        .classList.remove("holdingpdfcomment");
+    }
+    setHoldingpdfcomment(iddoc); //กำหนดรายการที่ holding
+    document.getElementById(iddoc).classList.add("holdingpdfcomment");
+    setUrlpdf(urlpdfcomemnt);
+  };
+
   useEffect(() => {
     console.log("selectedinfo >>>", props.selectinfo);
     handlegetstudentfile(props.selectinfo.Id);
     handlegetimgcomment(props.selectinfo.student_code, props.selectinfo.Id);
+    handlegetPDFcomment(props.selectinfo.student_code, props.selectinfo.Id);
   }, []);
 
   useEffect(() => {
@@ -566,6 +600,26 @@ const ContentFile = (props) => {
                             }
                           }}
                         ></input>
+                      </div>
+                    </div>
+                  );
+                })
+              : ""}
+            {pdfurldata[0]
+              ? pdfurldata.map((ele_pdf, index_pdf) => {
+                  return (
+                    <div
+                      className="pdf-peviewshow"
+                      id={`pdfpeviewshow-${index_pdf}`}
+                      onClick={() => {
+                        handleShowpdfcomment(
+                          `pdfpeviewshow-${index_pdf}`,
+                          ele_pdf
+                        );
+                      }}
+                    >
+                      <div className="boxshowpdfcomment">
+                        <span>{`PDF-comment-${index_pdf + 1}`}</span>
                       </div>
                     </div>
                   );

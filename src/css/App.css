@@ -639,7 +639,7 @@ html .header-inboxModal span, body .header-inboxModal span {
   color: #fff3e0;
 }
 html .body-content-inboxModal, body .body-content-inboxModal {
-  height: 350px;
+  height: auto;
   width: 100%;
   display: block;
   padding: 0 20px;
@@ -2529,6 +2529,33 @@ html .img-peviewshow img, body .img-peviewshow img {
   height: 80px;
 }
 html .img-peviewshow img:hover, body .img-peviewshow img:hover {
+  box-shadow: 0 0 2px 1px rgba(27, 119, 39, 0.8);
+}
+html .pdf-peviewshow, body .pdf-peviewshow {
+  width: 94px;
+  height: auto;
+  display: inline-block;
+  position: relative;
+  margin: 2px 1px;
+}
+html .pdf-peviewshow .boxshowpdfcomment, body .pdf-peviewshow .boxshowpdfcomment {
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  margin-right: 2px;
+  width: auto;
+  height: auto;
+}
+html .pdf-peviewshow .boxshowpdfcomment span, body .pdf-peviewshow .boxshowpdfcomment span {
+  height: 100%;
+  width: 100%;
+  word-wrap: break-word;
+}
+html .pdf-peviewshow .boxshowpdfcomment:hover, body .pdf-peviewshow .boxshowpdfcomment:hover {
+  box-shadow: 0 0 2px 1px rgba(27, 119, 39, 0.8);
+}
+html .holdingpdfcomment, body .holdingpdfcomment {
   box-shadow: 0 0 2px 1px rgba(27, 119, 39, 0.8);
 }
 html .box-btndownload, body .box-btndownload {

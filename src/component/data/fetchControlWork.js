@@ -230,5 +230,18 @@ const FetchControlWork = {
       throw error;
     }
   },
+  fetchgetPdfcomment: async function (info) {
+    try {
+      let result = await fetch(
+        `${HttpConfig()}/student/getupload_PDF_comment`,
+        requestOption("POST", info, "")
+      ).then((res) => {
+        return res.json();
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 export default FetchControlWork;

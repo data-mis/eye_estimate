@@ -679,7 +679,7 @@ $colorBGnav:#e0e0e0;
         color: #fff3e0;
     }  
 .body-content-inboxModal{
-    height: 350px;
+    height: auto;
     width: 100%;
     display: block;
     padding: 0 20px;
@@ -2630,7 +2630,33 @@ $colorBGnav:#e0e0e0;
         img:hover{
             box-shadow: 0 0 2px 1px rgba(27, 119, 39, 0.8);
         }
-        
+    }
+    .pdf-peviewshow{
+        width: 94px;
+        height: auto;
+        display: inline-block;
+        position: relative;
+        margin: 2px 1px;
+        .boxshowpdfcomment{
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 2px;
+            width: auto;
+            height: auto;
+            span{
+                height: 100%;
+                width: 100%;
+                word-wrap: break-word;
+            }
+        }
+        .boxshowpdfcomment:hover{
+            box-shadow: 0 0 2px 1px rgba(27, 119, 39, 0.8);
+        }
+    }
+    .holdingpdfcomment{
+        box-shadow: 0 0 2px 1px rgba(27, 119, 39, 0.8);
     }
     .box-btndownload{
         padding: 5px 0;

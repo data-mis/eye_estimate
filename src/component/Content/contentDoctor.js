@@ -17,6 +17,7 @@ const ContentDoctor = (props) => {
   const [statusCloseModal, setStatusCloseModal] = useState(false);
   const [statusDropttl, setStatusDropttl] = useState(false);
   const [statusShowPIN, setStatusShowPIN] = useState(false);
+  const [statusShowPassword, setStatusShowPassword] = useState(false);
 
   const [usernamedoc, setUsernamedoc] = useState("");
   const [ttlDoc, setTtlDoc] = useState("");
@@ -26,6 +27,8 @@ const ContentDoctor = (props) => {
   const [PINdoc, setPINdoc] = useState("");
   const [startdoc, setStartdoc] = useState("0000-00-00");
   const [stopdoc, setStopdoc] = useState("0000-00-00");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [dataTeacher, setDataTeacher] = useState([]);
   const [datasearchteacher, setDatasearchteacher] = useState([]);
@@ -55,6 +58,8 @@ const ContentDoctor = (props) => {
     setPINdoc("");
     setStartdoc("0000-00-00");
     setStopdoc("0000-00-00");
+    setEmail("");
+    setPassword("");
   };
 
   const getDocId = (id) => {
@@ -119,6 +124,17 @@ const ContentDoctor = (props) => {
       setStatusShowPIN(false);
     }
   };
+  const handleSwithBtnPassword = (status) => {
+    if (status) {
+      getDocId("btnEyeHide-pass").style.display = "none";
+      getDocId("btnEyeShow-pass").style.display = "block";
+      setStatusShowPassword(true);
+    } else {
+      getDocId("btnEyeShow-pass").style.display = "none";
+      getDocId("btnEyeHide-pass").style.display = "block";
+      setStatusShowPassword(false);
+    }
+  };
 
   const contentInmodal = () => {
     return (
@@ -145,6 +161,8 @@ const ContentDoctor = (props) => {
                 pin: PINdoc,
                 start: startdoc,
                 stop: stopdoc,
+                email: email,
+                password: password,
               };
               handlesubmitAdddoc(object, usertoken);
             }}
@@ -347,6 +365,54 @@ const ContentDoctor = (props) => {
                 ></input>
               </div>
             </div>
+            {/* E-mail */}
+            <div className="box-input-contentInboxModal">
+              <span>{"E-mail :"}</span>
+              <div className="contentboxInput-InboxModal">
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  value={email ? email : ""}
+                ></input>
+              </div>
+            </div>
+            {/* รหัสผ่าน */}
+            <div className="box-input-contentInboxModal">
+              <span>{"รหัสผ่าน :"}</span>
+              <div className="contentboxInput-InboxModal relativeBox-PIN">
+                <input
+                  type={statusShowPassword ? "text" : "password"}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  value={password ? password : ""}
+                ></input>
+                <button
+                  className="btn-eyes-showtext-hide"
+                  id="btnEyeHide-pass"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSwithBtnPassword(true);
+                  }}
+                >
+                  <i className="bi-eye"></i>
+                </button>
+                <button
+                  className="btn-eyes-showtext-show"
+                  type="button"
+                  id="btnEyeShow-pass"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSwithBtnPassword(false);
+                  }}
+                >
+                  <i className="bi-eye-fill"></i>
+                </button>
+              </div>
+            </div>
             <div className="box-input-contentInboxModal">
               <div className="btnSubmit-boxContentInboxModal">
                 <button type="submit">{"บันทึก"}</button>
@@ -388,6 +454,8 @@ const ContentDoctor = (props) => {
                   pin: PINdoc,
                   start: startdoc,
                   stop: stopdoc,
+                  email: email,
+                  password: password,
                 };
                 handlesubmitEditdoc(object, usertoken);
               }
@@ -575,6 +643,35 @@ const ContentDoctor = (props) => {
                 ></input>
               </div>
             </div>
+            {/* Edit E-mail */}
+            <div className="box-input-contentInboxModal">
+              <span>{"E-mail :"}</span>
+              <div className="contentboxInput-InboxModal">
+                <input
+                  type="text"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  value={email ? email : data.email ? data.email : ""}
+                ></input>
+              </div>
+            </div>
+            {/* Editรหัสผ่าน */}
+            <div className="box-input-contentInboxModal">
+              <span>{"รหัสผ่าน :"}</span>
+              <div className="contentboxInput-InboxModal relativeBox-PIN">
+                <input
+                  type={"text"}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  onFocus={(e) => e.target.select()}
+                  value={
+                    password ? password : data.password ? data.password : ""
+                  }
+                ></input>
+              </div>
+            </div>
             <div className="box-input-contentInboxModal">
               <div className="btnSubmit-boxContentInboxModal">
                 <button type="submit">{"บันทึก"}</button>
@@ -684,6 +781,7 @@ const ContentDoctor = (props) => {
     setPINdoc(ele.pin ? ele.pin : "");
     setStartdoc(ele.start ? ele.start.trim() : "");
     setStopdoc(ele.stop ? ele.stop.trim() : "");
+    setEmail(ele.email ? ele.email.trim() : "");
   };
 
   useEffect(() => {
@@ -695,6 +793,7 @@ const ContentDoctor = (props) => {
       setPINdoc("");
       setTtlDoc("");
       setGenderDoc("male");
+      clearInputdocmodal();
     }
   }, [statusCloseModal]);
 
@@ -755,6 +854,7 @@ const ContentDoctor = (props) => {
                   <th>สิ้นสุด</th>
                   <th>Email</th>
                   <th>Line</th>
+                  <th>password</th>
                   <th>แก้ไข</th>
                 </tr>
               </thead>
@@ -781,6 +881,7 @@ const ContentDoctor = (props) => {
                         <td width={150}>{data.stop}</td>
                         <td width={200}>{data.email}</td>
                         <td width={200}>{data.line_id}</td>
+                        <td width={80}>{"******"}</td>
                         <td width={50}>
                           <button
                             type="button"
@@ -820,6 +921,7 @@ const ContentDoctor = (props) => {
                         <td width={150}>{data.stop}</td>
                         <td width={200}>{data.email}</td>
                         <td width={200}>{data.line_id}</td>
+                        <td width={80}>{"******"}</td>
                         <td width={50}>
                           <button
                             type="button"
