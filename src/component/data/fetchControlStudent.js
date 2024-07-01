@@ -1,7 +1,7 @@
 import { requestOption } from "./fetchConfig";
 import { HttpConfig } from "./httpConfig";
 
-const FetchControlStudent = { 
+const FetchControlStudent = {
   fetchStudent: async function (ayear, token) {
     let year = { year: parseInt(ayear) - 543 };
     let request = requestOption("POST", year, token);
@@ -117,11 +117,11 @@ const FetchControlStudent = {
     let http = `${HttpConfig()}/student/upload_image_student`;
 
     try {
-      fetch(http, request).then((res) =>
-        res.json().then((data) => {
-          console.log(data);
-        })
-      );
+      const data = await fetch(http, request).then((res) => {
+        return res.json();
+      });
+      console.log("?", data);
+      return data;
     } catch (error) {
       console.error(error);
     }

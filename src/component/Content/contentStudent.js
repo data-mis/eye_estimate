@@ -158,7 +158,8 @@ const ContentStudent = (props) => {
           let datafrom = new FormData();
           datafrom.append("file", newfile);
           datafrom.append("std_id", `${idStudent}`);
-          FetchControlStudent.fetchImgae(datafrom, usertoken).then(() => {
+          const res = await FetchControlStudent.fetchImgae(datafrom, usertoken);
+          if (res.status === true) {
             Swal.fire({
               title: "อัพโหลดรูปภาพ สำเร็จ!!!",
               icon: "success",
@@ -166,7 +167,7 @@ const ContentStudent = (props) => {
               showCancelButton: false,
               timer: 1200,
             });
-          });
+          }
         } catch (error) {
           console.log(error.response?.data);
         }
