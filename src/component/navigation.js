@@ -61,7 +61,9 @@ const NavigationPage = () => {
       case "groupStudent":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
 
-        return <ContentGroupStudent close={setModeContent}></ContentGroupStudent>;
+        return (
+          <ContentGroupStudent close={setModeContent}></ContentGroupStudent>
+        );
 
       case "workDoctor":
         docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
@@ -172,8 +174,8 @@ const NavigationPage = () => {
   };
 
   const handleClearinglogout = () => {
-    localStorage.clear();
     cookie.remove("tokenEye");
+    localStorage.clear();
     Swal.fire({
       title: "ออกจากระบบ !!!",
       text: "ออกจากระบบเรียบร้อยแล้ว !!!",

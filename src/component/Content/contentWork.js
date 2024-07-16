@@ -1932,7 +1932,7 @@ const ContentWork = (props) => {
           date: dateEst ? dateEst : (passtofetch = false),
           time_begin: timebeginest ? timebeginest : (passtofetch = false),
           time_end: timeendest ? timeendest : (passtofetch = false),
-          txt_val: topicest ? topicest : (passtofetch = false),
+          txt_val: topicest ? topicest.name : (passtofetch = false),
         };
         if (passtofetch) {
           console.log("object for add objectcasecoop >>>", objectcasecoop);
@@ -2160,7 +2160,7 @@ const ContentWork = (props) => {
           date: editdateEst,
           time_begin: edittimebeginest,
           time_end: edittimeendest,
-          txt_val: edittopicest,
+          txt_val: edittopicest.name,
         };
         console.log("edit edit casecoop", editobjectcasecoop);
         docGetId("boxEditworkDoctor").style.display = "none";
