@@ -243,5 +243,32 @@ const FetchControlWork = {
       throw error;
     }
   },
+  //linenotify
+  fetchLinenotify: async function (message, tokenline) {
+    try {
+      //เดี๋ยวจะต้องรับค่า tokenline มาเองนะจ๊ะ
+      let url_host = "https://datasoft.co.th:4100";
+      let url_test = "http://127.0.0.1:3200";
+      let objectforsend = {
+        // grptoken: "H7XB8a4YTbHjuLob0a7y5WYdh8o9ck2e1XrnFGNC66U",
+        grptoken: tokenline,
+        messagesend: message,
+      };
+      if (tokenline) {
+        await fetch(
+          `${url_host}/proxyLineNotify`,
+          requestOption("POST", objectforsend)
+        ).then((res) => {
+          if (res.status === 200) {
+            res.json().then((data) => {
+              console.log("notifyLineis", data);
+            });
+          }
+        });
+      }
+    } catch (error) {
+      console.error("error fail LineNotify", error);
+    }
+  },
 };
 export default FetchControlWork;

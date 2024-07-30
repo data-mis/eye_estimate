@@ -29,6 +29,7 @@ const ContentDoctor = (props) => {
   const [stopdoc, setStopdoc] = useState("0000-00-00");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [grpLine, setGrpLine] = useState("");
 
   const [dataTeacher, setDataTeacher] = useState([]);
   const [datasearchteacher, setDatasearchteacher] = useState([]);
@@ -60,6 +61,7 @@ const ContentDoctor = (props) => {
     setStopdoc("0000-00-00");
     setEmail("");
     setPassword("");
+    setGrpLine("");
   };
 
   const getDocId = (id) => {
@@ -163,6 +165,7 @@ const ContentDoctor = (props) => {
                 stop: stopdoc,
                 email: email,
                 password: password,
+                linegrp: grpLine,
               };
               handlesubmitAdddoc(object, usertoken);
             }}
@@ -413,6 +416,19 @@ const ContentDoctor = (props) => {
                 </button>
               </div>
             </div>
+            {/* Linegrp */}
+            <div className="box-input-contentInboxModal">
+              <span>{"Line Group :"}</span>
+              <div className="contentboxInput-InboxModal relativeBox-PIN">
+                <input
+                  type={statusShowPassword ? "text" : "password"}
+                  onChange={(e) => {
+                    setGrpLine(e.target.value);
+                  }}
+                  value={grpLine ? grpLine : ""}
+                ></input>
+              </div>
+            </div>
             <div className="box-input-contentInboxModal">
               <div className="btnSubmit-boxContentInboxModal">
                 <button type="submit">{"บันทึก"}</button>
@@ -456,6 +472,7 @@ const ContentDoctor = (props) => {
                   stop: stopdoc,
                   email: email,
                   password: password,
+                  linegrp: grpLine,
                 };
                 handlesubmitEditdoc(object, usertoken);
               }
@@ -672,6 +689,27 @@ const ContentDoctor = (props) => {
                 ></input>
               </div>
             </div>
+            {/* Linegrp */}
+            <div className="box-input-contentInboxModal">
+              <span>{"Line Group :"}</span>
+              <div className="contentboxInput-InboxModal relativeBox-PIN">
+                <input
+                  type={"text"}
+                  onChange={(e) => {
+                    if (e.target.value === "") {
+                      console.log("ตอนนี้ค่ามันว่างนะเว้ย", data.line_grp);
+                      setGrpLine(data.line_grp);
+                      return
+                    }
+                    setGrpLine(e.target.value);
+                  }}
+                  onFocus={(e) => e.target.select()}
+                  value={
+                    grpLine ? grpLine : data.line_grp ? btoa(data.line_grp) : ""
+                  }
+                ></input>
+              </div>
+            </div>
             <div className="box-input-contentInboxModal">
               <div className="btnSubmit-boxContentInboxModal">
                 <button type="submit">{"บันทึก"}</button>
@@ -854,6 +892,7 @@ const ContentDoctor = (props) => {
                   <th>สิ้นสุด</th>
                   <th>Email</th>
                   <th>Line</th>
+                  <th>LineGrp</th>
                   <th>password</th>
                   <th>แก้ไข</th>
                 </tr>
@@ -881,6 +920,7 @@ const ContentDoctor = (props) => {
                         <td width={150}>{data.stop}</td>
                         <td width={200}>{data.email}</td>
                         <td width={200}>{data.line_id}</td>
+                        <td width={80}>{"******"}</td>
                         <td width={80}>{"******"}</td>
                         <td width={50}>
                           <button
@@ -921,6 +961,7 @@ const ContentDoctor = (props) => {
                         <td width={150}>{data.stop}</td>
                         <td width={200}>{data.email}</td>
                         <td width={200}>{data.line_id}</td>
+                        <td width={80}>{"******"}</td>
                         <td width={80}>{"******"}</td>
                         <td width={50}>
                           <button

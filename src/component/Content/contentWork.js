@@ -69,7 +69,11 @@ const ContentWork = (props) => {
     code: "",
     name: "",
   });
-  const [advisorDocest, setAdvisorDocest] = useState({ id: "", name: "" });
+  const [advisorDocest, setAdvisorDocest] = useState({
+    id: "",
+    name: "",
+    linegrp: "",
+  });
   const [groupStudentest, setGroupStudentest] = useState({ id: "", name: "" });
   const [studentEst, setStudentEst] = useState({ id: "", name: "" });
   const [dateEst, setDateEst] = useState("");
@@ -93,7 +97,7 @@ const ContentWork = (props) => {
           name: getsheetwork[0].name,
         })
       : setInputtypeestimation({ id: "", code: "", name: "" });
-    setAdvisorDocest({ id: "", name: "" });
+    setAdvisorDocest({ id: "", name: "", linegrp: "" });
     setGroupStudentest({ id: "", name: "" });
     setStudentEst({ id: "", name: "" });
     setDateEst("");
@@ -365,6 +369,7 @@ const ContentWork = (props) => {
                         setAdvisorDocest({
                           id: data.id,
                           name: data.advisor_name,
+                          linegrp: data.line_grp,
                         });
                         handleOpenDropdown(
                           "dropInfoPersonport",
@@ -1363,11 +1368,13 @@ const ContentWork = (props) => {
                         setEditadvisorDocest({
                           id: data.id,
                           name: data.advisor_name,
+                          linegrp: data.line_grp,
                         });
                       } else {
                         setAdvisorDocest({
                           id: data.id,
                           name: data.advisor_name,
+                          linegrp: data.line_grp,
                         });
                       }
 
@@ -1390,11 +1397,13 @@ const ContentWork = (props) => {
                         setEditadvisorDocest({
                           id: data.id,
                           name: data.advisor_name,
+                          linegrp: data.line_grp,
                         });
                       } else {
                         setAdvisorDocest({
                           id: data.id,
                           name: data.advisor_name,
+                          linegrp: data.line_grp,
                         });
                       }
 
@@ -1527,7 +1536,7 @@ const ContentWork = (props) => {
 
   const handleworklistworkadvisor = (token) => {
     FetchControlWork.fetchworklistworkadvisor(token).then((data) => {
-      // console.log(":-)...>",data)
+      // console.log(":-)...>", data);
       setGetworklistwork(data);
       handleworkestimationlistwork(data[0].id, token);
     });
@@ -1595,11 +1604,11 @@ const ContentWork = (props) => {
         data.map((ele) => {
           switch (ele.txt.trim()) {
             case "หอผู้ป่วย":
-              if(ele.txt_val === "จักษุ(ช)"){
+              if (ele.txt_val === "จักษุ(ช)") {
                 setEditreportWard("1");
-              }else if(ele.txt_val === "จักษุ(ญ)"){
+              } else if (ele.txt_val === "จักษุ(ญ)") {
                 setEditreportWard("2");
-              }else if(ele.txt_val === "พิเศษ"){
+              } else if (ele.txt_val === "พิเศษ") {
                 setEditreportWard("3");
               }
               break;
@@ -1615,8 +1624,10 @@ const ContentWork = (props) => {
             case "วันที่ผู้ป่วย Admit":
               //**พี่ปูจะส่งมาเป็น คศ */
               let date_admit = ele.txt_val.split("-");
-              let dateplus_admit = `${parseInt(date_admit[2]) - 543}-${date_admit[1]}-${date_admit[0]}`;
-              
+              let dateplus_admit = `${parseInt(date_admit[2]) - 543}-${
+                date_admit[1]
+              }-${date_admit[0]}`;
+
               setEditreportDateadmit(dateplus_admit);
               // let dateAdmit = moment(ele.txt_val)
               //   .add(-543, "year")
@@ -1626,7 +1637,9 @@ const ContentWork = (props) => {
             case "วันที่จ่าย/รับผู้ป่วย":
               //**พี่ปูจะส่งมาเป็น คศ */
               let date_jand = ele.txt_val.split("-");
-              let dateplus_jand = `${parseInt(date_jand[2]) - 543}-${date_jand[1]}-${date_jand[0]}`;
+              let dateplus_jand = `${parseInt(date_jand[2]) - 543}-${
+                date_jand[1]
+              }-${date_jand[0]}`;
               // setEditreportDateCommit(dateplus_jand);
               setEditreportDateSendpatient(dateplus_jand);
 
@@ -1645,6 +1658,8 @@ const ContentWork = (props) => {
               setEditreportDateCommit(dateplus);
 
               // setEditreportDateSendpatient(datesent);
+              break;
+            default:
               break;
           }
         });
@@ -1669,9 +1684,14 @@ const ContentWork = (props) => {
 
   const handleSubmitAddnewWork = (token) => {
     let typecase = inputtypeestimation.code;
+    let caseName = inputtypeestimation.name;
+    let tokenline = advisorDocest.linegrp;
     let passtofetch = true;
+    // console.log("case is >>>", typecase);
+    // console.log("อาจารย์คนไหนจะรู้ได้ไง ??",advisorDocest)
+    let messageline = `แจ้งเตือนการประเมินนักศึกษาแพทย์ Estimate หัวข้อ ${caseName} ลิงค์ Estimate : https://datasoft.co.th/estimate`;
 
-    console.log("case is >>>",typecase)
+    FetchControlWork.fetchLinenotify(messageline, tokenline);
 
     switch (typecase) {
       case "01": //**report*/
@@ -1703,18 +1723,18 @@ const ContentWork = (props) => {
             : "",
           txt6: "วันที่จ่าย/รับผู้ป่วย",
           txt_val6: reportDateCommit
-            ? moment(reportDateCommit)
-                .add(543, "year")
-                .format("DD-MM-YYYY")
+            ? moment(reportDateCommit).add(543, "year").format("DD-MM-YYYY")
             : "",
           txt7: "วันที่ส่งรายงานผู้ป่วย",
           txt_val7: reportDateSendpatient
-            ? moment(reportDateSendpatient).add(543, "year").format("DD-MM-YYYY")
+            ? moment(reportDateSendpatient)
+                .add(543, "year")
+                .format("DD-MM-YYYY")
             : "",
           txt_val6_1: reportDateCommit,
           txt_val7_1: reportDateSendpatient,
         };
-        console.log("case 1 passtofetch =>",passtofetch)
+        console.log("case 1 passtofetch =>", passtofetch);
         if (passtofetch) {
           console.log("object for add report>>>", objectreport);
           addDetailinputclear();
@@ -1724,6 +1744,7 @@ const ContentWork = (props) => {
               console.log(message);
             }
           );
+          //เพิ่มการส่ง LINERnotify
           Swal.fire({
             icon: "success",
             showConfirmButton: false,
@@ -2004,9 +2025,10 @@ const ContentWork = (props) => {
         }
 
         break;
+      default:
+        break;
     }
     handleAllgroupinfowork();
-    
   };
 
   const clearCloseAddeditmodal = () => {
@@ -2043,7 +2065,9 @@ const ContentWork = (props) => {
           txt3: "เลขที่โรงพยาบาล",
           txt_val3: editreportHosnumber,
           txt5: "วันที่ผู้ป่วย Admit",
-          txt_val5: editreportDateadmit ? moment(editreportDateadmit).add(543,"year").format("DD-MM-YYYY"):"",
+          txt_val5: editreportDateadmit
+            ? moment(editreportDateadmit).add(543, "year").format("DD-MM-YYYY")
+            : "",
           txt6: "วันที่จ่าย/รับผู้ป่วย",
           txt_val6: editreportDateSendpatient
             ? moment(editreportDateSendpatient)
@@ -2192,6 +2216,7 @@ const ContentWork = (props) => {
           }
         );
         break;
+        default:break;
     }
     Swal.fire({
       icon: "success",
@@ -2318,7 +2343,6 @@ const ContentWork = (props) => {
     clearCloseAddeditmodal();
     addDetailinputclear();
     editDetailinputclear();
-    
   }, [statusClosemodal]);
 
   return (
@@ -2715,11 +2739,11 @@ const ContentWork = (props) => {
                                 <td width={300}>{data.student_name}</td>
                                 <td width={50}>
                                   <button
-                                  onClick={() => {
-                                    console.log("UPPPP");
-                                    props.upfile("file");
-                                    props.workinfoselected(data);
-                                  }}
+                                    onClick={() => {
+                                      console.log("UPPPP");
+                                      props.upfile("file");
+                                      props.workinfoselected(data);
+                                    }}
                                   >
                                     <i className="bi-chevron-up"></i>
                                   </button>
