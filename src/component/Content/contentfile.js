@@ -69,6 +69,9 @@ const ContentFile = (props) => {
         filesend.append("grp_id", infowork.grp_id);
         // console.log("filesend formdata >>",filesend.get("file"))
         // console.log("filesend formdata >>",filesend.get("work_id"))
+        // console.log("filesend formdata >>",filesend.get("work_date"))
+        // console.log("filesend formdata >>",filesend.get("student_id"))
+        // console.log("filesend formdata >>",filesend.get("grp_id"))
         if (filesend.get("work_id") === infowork.Id) {
           FetchControlWork.fetchUpstudentfilework(filesend, usertoken).then(
             () => {

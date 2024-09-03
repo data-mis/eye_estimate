@@ -748,6 +748,8 @@ const ContentWork = (props) => {
 
   //**modal editwork */
   const handleEditworkmodal = () => {
+    console.log("ดุรายการ !!! topicnameshowedit |>", topicnameShowedit);
+    console.log("ดุรายการ !!! edittopicest |>", edittopicest.name);
     return (
       <div className="body-modalbox-contentwork">
         {/* แบบประเมิน */}
@@ -1032,7 +1034,10 @@ const ContentWork = (props) => {
                     );
                   }}
                   value={
-                    topicnameShowedit ? topicnameShowedit : edittopicest.name
+                    edittopicest.name ? edittopicest.name :
+                    topicnameShowedit === "" || topicnameShowedit === null
+                      ? ""
+                      : topicnameShowedit
                   }
                   readOnly
                 ></input>
@@ -1687,7 +1692,7 @@ const ContentWork = (props) => {
     let caseName = inputtypeestimation.name;
     let tokenline = advisorDocest.linegrp;
     let passtofetch = true;
-    // console.log("case is >>>", typecase);
+    console.log("case is !!!>>>", advisorDocest);
     // console.log("อาจารย์คนไหนจะรู้ได้ไง ??",advisorDocest)
     let messageline = `แจ้งเตือนการประเมินนักศึกษาแพทย์ Estimate หัวข้อ ${caseName} ลิงค์ Estimate : https://datasoft.co.th/estimate`;
 
@@ -2164,7 +2169,7 @@ const ContentWork = (props) => {
           time_end: edittimeendest,
           txt_val: edittopicest.name,
         };
-        // console.log("edit caseshow >>", editobjectcasttopicshow);
+        console.log("edit caseshow >>", editobjectcasttopicshow);
         docGetId("boxEditworkDoctor").style.display = "none";
         editDetailinputclear();
         FetchControlWork.fetchEditdetailwork(
@@ -2216,7 +2221,8 @@ const ContentWork = (props) => {
           }
         );
         break;
-        default:break;
+      default:
+        break;
     }
     Swal.fire({
       icon: "success",
@@ -2751,7 +2757,10 @@ const ContentWork = (props) => {
                                 <td width={50}>
                                   <button
                                     onClick={() => {
-                                      console.log("love");
+                                      // console.log(
+                                      //   "dataTopic มีไหม filter |",
+                                      //   data.topic
+                                      // );
                                       setTopicnameShowedit(data.topic);
                                       setDataeditwork(data);
                                       setStatusEditwork(true);
@@ -2818,6 +2827,10 @@ const ContentWork = (props) => {
                                 <button
                                   onClick={() => {
                                     // console.log("data is this=>",data)
+                                    // console.log(
+                                    //   "dataTopic มีไหม |",
+                                    //   data.topic
+                                    // );
                                     // console.log("this >>>", selectCodework);
                                     setTopicnameShowedit(data.topic);
                                     setDataeditwork(data);

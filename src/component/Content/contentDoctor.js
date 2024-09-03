@@ -697,15 +697,15 @@ const ContentDoctor = (props) => {
                   type={"text"}
                   onChange={(e) => {
                     if (e.target.value === "") {
-                      console.log("ตอนนี้ค่ามันว่างนะเว้ย", data.line_grp);
+                      // console.log("ตอนนี้ค่ามันว่างนะเว้ย", data.line_grp);
                       setGrpLine(data.line_grp);
-                      return
+                      return;
                     }
                     setGrpLine(e.target.value);
                   }}
                   onFocus={(e) => e.target.select()}
                   value={
-                    grpLine ? grpLine : data.line_grp ? btoa(data.line_grp) : ""
+                    grpLine ? btoa(grpLine) : data.line_grp ? btoa(data.line_grp) : ""
                   }
                 ></input>
               </div>
@@ -810,7 +810,7 @@ const ContentDoctor = (props) => {
   };
 
   const handleEditvalueset = (ele) => {
-    // console.log(ele);
+    console.log(ele);
     setUsernamedoc(ele.adv_id ? ele.adv_id.trim() : "");
     setTtlDoc(ele.ttl ? ele.ttl.trim() : "");
     setNamedoc(ele.name ? ele.name.trim() : "");
@@ -820,6 +820,7 @@ const ContentDoctor = (props) => {
     setStartdoc(ele.start ? ele.start.trim() : "");
     setStopdoc(ele.stop ? ele.stop.trim() : "");
     setEmail(ele.email ? ele.email.trim() : "");
+    setGrpLine(ele.line_grp ? ele.line_grp.trim() : "");
   };
 
   useEffect(() => {
