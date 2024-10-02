@@ -1034,8 +1034,9 @@ const ContentWork = (props) => {
                     );
                   }}
                   value={
-                    edittopicest.name ? edittopicest.name :
-                    topicnameShowedit === "" || topicnameShowedit === null
+                    edittopicest.name
+                      ? edittopicest.name
+                      : topicnameShowedit === "" || topicnameShowedit === null
                       ? ""
                       : topicnameShowedit
                   }
@@ -1289,7 +1290,7 @@ const ContentWork = (props) => {
                       {data.std_id}
                     </span>
                     <span className="idstudent-span-modalsrcstudent">
-                      {data.ttl + " " + data.name + data.lname}
+                      {data.ttl + " " + data.name.trim() + data.lname.trim() + `(${parseInt(data.year) + 543})`}
                     </span>
                   </div>
                 );
@@ -1326,7 +1327,7 @@ const ContentWork = (props) => {
                       {data.std_id}
                     </span>
                     <span className="idstudent-span-modalsrcstudent">
-                      {data.ttl + " " + data.name + data.lname}
+                      {data.ttl + " " + data.name.trim() + data.lname.trim() + `(${parseInt(data.year) + 543})`}
                     </span>
                   </div>
                 );
