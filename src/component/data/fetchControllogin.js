@@ -25,7 +25,7 @@ export const FetchLogin = async (user, pwd, navigat) => {
       } else if (result.status) {
         //fasle
         setCookieLogin(result.token);
-        navigat("/main");
+        navigat(`/main?timestamp=${new Date().getTime()}`);
       }
     } catch (error) {
       console.error(error);

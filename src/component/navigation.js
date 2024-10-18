@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import ContentStudent from "./Content/contentStudent";
 import ModalSlideBar from "./modal/modalSlideBar";
 import Cookies, { Cookie } from "universal-cookie";
-import { TryCheckCookie, checkCookieOut } from "./config/cookieConfig";
+import {
+  TryCheckCookie,
+  checkCookieOut,
+  removeitCookie,
+} from "./config/cookieConfig";
 import { useNavigate } from "react-router-dom";
 import ContentDoctor from "./Content/contentDoctor";
 import ContentGroupStudent from "./Content/contentGroup";
@@ -11,6 +15,7 @@ import ContentSetting from "./Content/contentSetting";
 import ContentReport from "./Content/contentReport";
 import ContentFile from "./Content/contentfile";
 import Swal from "sweetalert2";
+import { versioncheck } from "./config/versioncheck";
 
 const NavigationPage = () => {
   const cookie = new Cookies();
@@ -22,6 +27,8 @@ const NavigationPage = () => {
   const [openModalSlide, setOpenModalSlide] = useState(true);
   const [dataContent, setDataContent] = useState();
   const [stopprocess, setStopprocess] = useState(false);
+  const [versionis, setVersionis] = useState("");
+  const [checkisver, setCheckisver] = useState(null);
 
   const docGetId = (id) => {
     return document.getElementById(id);
@@ -91,17 +98,17 @@ const NavigationPage = () => {
             close={setModeContent}
           ></ContentFile>
         );
-      case "logout":
-        docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
-        localStorage.clear();
-        cookie.remove("tokenEye");
-        navigat("/");
-        break;
+      // case "logout":
+      //   docGetId(`btnMenu-${content}`).classList.add("holdBTNmenuNavigatepage");
+      //   localStorage.clear();
+      //   cookie.remove("studentEyeToken");
+      //   navigat("/");
+      //   break;
       default:
         return (
           <div className="body-mainDefault">
             <div className="header-mainDefault">
-              <h1>{"Version 0.1"}</h1>
+              <h1>{`Version ${versionis}`}</h1>
             </div>
           </div>
         );
@@ -174,7 +181,6 @@ const NavigationPage = () => {
   };
 
   const handleClearinglogout = () => {
-    cookie.remove("tokenEye");
     localStorage.clear();
     Swal.fire({
       title: "ออกจากระบบ !!!",
@@ -183,14 +189,36 @@ const NavigationPage = () => {
       showConfirmButton: false,
       timer: 1700,
     });
-    navigat("/");
+    removeitCookie();
+    setTimeout(() => {
+      if(cookie.get("studentEyeToken")){
+        removeitCookie();
+        navigat("/")
+      }else{
+        navigat("/")
+      }
+    }, 200);
+   
   };
 
   useEffect(() => {
     if (!checkCookieOut()) {
       return navigat("/");
     }
+    versioncheck();
+    setCheckisver(true);
   }, []);
+
+  useEffect(() => {
+    if (!checkisver) return;
+    if (localStorage.getItem("verstdES")) {
+      let localversionStdEs = localStorage.getItem("verstdES");
+      setVersionis(localversionStdEs);
+    } else {
+      versioncheck();
+      setCheckisver(null);
+    }
+  }, [checkisver]);
 
   useEffect(() => {
     if (statusClosemenu) {

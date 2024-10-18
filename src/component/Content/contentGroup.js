@@ -14,7 +14,7 @@ import FetchControlGroup from "../data/fetchControlGroup";
 
 const ContentGroupStudent = (props) => {
   const cookie = new Cookies();
-  const usertoken = cookie.get("tokenEye");
+  const usertoken = cookie.get("studentEyeToken");
 
   const docGetId = (id) => {
     return document.getElementById(id);

@@ -56,7 +56,7 @@ const ContentStudent = (props) => {
   const [statusCloseModal, setStatusCloseModal] = useState(false);
 
   const cookie = new Cookies();
-  const usertoken = cookie.get("tokenEye");
+  const usertoken = cookie.get("studentEyeToken");
 
   const getID = (id) => {
     return document.getElementById(id);

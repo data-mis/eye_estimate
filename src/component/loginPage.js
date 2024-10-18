@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FetchLogin } from "./data/fetchControllogin";
+import { removeitCookie } from "./config/cookieConfig";
 
 const LoginPage = () => {
   const [username, SetUsername] = useState();
@@ -11,7 +12,7 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    FetchLogin(username,password,navigate)
+    FetchLogin(username, password, navigate);
   };
 
   const docGetId = (id) => {
@@ -29,6 +30,10 @@ const LoginPage = () => {
       setTypeInput("password");
     }
   };
+
+  useEffect(() => {
+    removeitCookie();
+  }, []);
 
   return (
     <div className="content-Login-admin-estimate">

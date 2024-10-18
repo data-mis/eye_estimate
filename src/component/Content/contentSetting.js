@@ -10,7 +10,7 @@ import moment from "moment/moment";
 
 const ContentSetting = (props) => {
   const cookie = new Cookies();
-  const usertoken = cookie.get("tokenEye");
+  const usertoken = cookie.get("studentEyeToken");
 
   const [idsheetworktype, setIdsheetworktype] = useState("");
   const [idsheetdetail, setIdsheetdetail] = useState("");

@@ -27,7 +27,7 @@ const ContentWork = (props) => {
   };
 
   const cookie = new Cookies();
-  const usertoken = cookie.get("tokenEye");
+  const usertoken = cookie.get("studentEyeToken");
 
   const [selectYear, setSelectYear] = useState(
     parseInt(new Date().getFullYear()) + 543
@@ -75,7 +75,11 @@ const ContentWork = (props) => {
     linegrp: "",
   });
   const [groupStudentest, setGroupStudentest] = useState({ id: "", name: "" });
-  const [studentEst, setStudentEst] = useState({ id: "", name: "" });
+  const [studentEst, setStudentEst] = useState({
+    id: "",
+    name: "",
+    std_id: "",
+  });
   const [dateEst, setDateEst] = useState("");
   const [timebeginest, setTimebeginest] = useState("");
   const [timeendest, setTimeendest] = useState("");
@@ -99,12 +103,12 @@ const ContentWork = (props) => {
       : setInputtypeestimation({ id: "", code: "", name: "" });
     setAdvisorDocest({ id: "", name: "", linegrp: "" });
     setGroupStudentest({ id: "", name: "" });
-    setStudentEst({ id: "", name: "" });
+    setStudentEst({ id: "", name: "", std_id: "" });
     setDateEst("");
     setTimebeginest("");
     setTimeendest("");
     setTopicest({ id: "", code: "", name: "" });
-    setReportWard("จักษุ1(ช)");
+    setReportWard("1");
     setReportDiagnosis("");
     setReportDateadmit("");
     setReportPatient("");
@@ -652,6 +656,7 @@ const ContentWork = (props) => {
                         onChange={(e) => {
                           setReportDiagnosis(e.target.value);
                         }}
+                        value={reportDiagnosis}
                       ></input>
                     </div>
                   </div>
@@ -667,6 +672,7 @@ const ContentWork = (props) => {
                           onChange={(e) => {
                             setReportDateadmit(e.target.value);
                           }}
+                          value={reportDateadmit}
                         ></input>
                       </div>
                     </div>
@@ -685,6 +691,7 @@ const ContentWork = (props) => {
                         onChange={(e) => {
                           setReportPatient(e.target.value);
                         }}
+                        value={reportPatient}
                       ></input>
                     </div>
                   </div>
@@ -699,6 +706,7 @@ const ContentWork = (props) => {
                           onChange={(e) => {
                             setReportDateCommit(e.target.value);
                           }}
+                          value={reportDateCommit}
                         ></input>
                       </div>
                     </div>
@@ -717,6 +725,7 @@ const ContentWork = (props) => {
                         onChange={(e) => {
                           setReportHosnumber(e.target.value);
                         }}
+                        value={reportHosnumber}
                       ></input>
                     </div>
                   </div>
@@ -733,6 +742,7 @@ const ContentWork = (props) => {
                           onChange={(e) => {
                             setReportDateSendpatient(e.target.value);
                           }}
+                          value={reportDateSendpatient}
                         ></input>
                       </div>
                     </div>
@@ -748,8 +758,8 @@ const ContentWork = (props) => {
 
   //**modal editwork */
   const handleEditworkmodal = () => {
-    console.log("ดุรายการ !!! topicnameshowedit |>", topicnameShowedit);
-    console.log("ดุรายการ !!! edittopicest |>", edittopicest.name);
+    // console.log("ดุรายการ !!! topicnameshowedit |>", topicnameShowedit);
+    // console.log("ดุรายการ !!! edittopicest |>", edittopicest.name);
     return (
       <div className="body-modalbox-contentwork">
         {/* แบบประเมิน */}
@@ -1277,9 +1287,11 @@ const ContentWork = (props) => {
                           name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
                         });
                       } else {
+                        console.log("ข้อมูลนศพ ค้นหา", data);
                         setStudentEst({
                           id: data.id.trim(),
                           name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
+                          std_id: data.std_id.trim(),
                         });
                       }
 
@@ -1290,7 +1302,11 @@ const ContentWork = (props) => {
                       {data.std_id}
                     </span>
                     <span className="idstudent-span-modalsrcstudent">
-                      {data.ttl + " " + data.name.trim() + data.lname.trim() + `(${parseInt(data.year) + 543})`}
+                      {data.ttl +
+                        " " +
+                        data.name.trim() +
+                        data.lname.trim() +
+                        `(${parseInt(data.year) + 543})`}
                     </span>
                   </div>
                 );
@@ -1313,10 +1329,11 @@ const ContentWork = (props) => {
                           name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
                         });
                       } else {
-                        console.log("omg");
+                        console.log("ข้อมูลนศพ ไม่ได้ค้นหา", data);
                         setStudentEst({
                           id: data.id.trim(),
                           name: `${data.ttl.trim()} ${data.name.trim()} ${data.lname.trim()}`,
+                          std_id: data.std_id.trim(),
                         });
                       }
 
@@ -1327,7 +1344,11 @@ const ContentWork = (props) => {
                       {data.std_id}
                     </span>
                     <span className="idstudent-span-modalsrcstudent">
-                      {data.ttl + " " + data.name.trim() + data.lname.trim() + `(${parseInt(data.year) + 543})`}
+                      {data.ttl +
+                        " " +
+                        data.name.trim() +
+                        data.lname.trim() +
+                        `(${parseInt(data.year) + 543})`}
                     </span>
                   </div>
                 );
@@ -1693,11 +1714,20 @@ const ContentWork = (props) => {
     let caseName = inputtypeestimation.name;
     let tokenline = advisorDocest.linegrp;
     let passtofetch = true;
-    console.log("case is !!!>>>", advisorDocest);
+    // console.log("case is !!!>>>", advisorDocest);
     // console.log("อาจารย์คนไหนจะรู้ได้ไง ??",advisorDocest)
-    let messageline = `แจ้งเตือนการประเมินนักศึกษาแพทย์ Estimate หัวข้อ ${caseName} ลิงค์ Estimate : https://datasoft.co.th/estimate`;
-
-    FetchControlWork.fetchLinenotify(messageline, tokenline);
+    // let messageline = `ท่านได้รับการงานประเมิน Estimate \nหัวข้อ ${caseName} \nลิงค์ Estimate : https://datasoft.co.th/estimate`;
+    // let messageobject_line = {
+    //   topic: caseName,
+    //   date: dateEst
+    //     ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+    //     : "--/--/----",
+    //   timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+    //     timeendest ? timeendest : "00:00"
+    //   }`,
+    // };
+    //ส่งแจ้งเตือน LINE OA
+    // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
 
     switch (typecase) {
       case "01": //**report*/
@@ -1747,16 +1777,48 @@ const ContentWork = (props) => {
           docGetId("boxAddworkDoctor").style.display = "none";
           FetchControlWork.fetchAdddetailwork(objectreport, token).then(
             (message) => {
-              console.log(message);
+              // console.log(message);
+              // console.log("addDetailwork Datais ==>", message);
+              // console.log("ข้อมูลที่จะใช้เมื่อแจ้งเตือนรายการ", caseName);
+              // console.log(
+              //   "ข้อมูลที่จะใช้เมื่อแจ้งเตือน ชื่อนักศึกษา",
+              //   studentEst
+              // );
+              if (message.status === true) {
+                //แจ้งเตือนหัวข้อผ่าน LINE OA
+                let messageobject_line = {
+                  topic: caseName,
+                  date: dateEst
+                    ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+                    : "--/--/----",
+                  timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+                    timeendest ? timeendest : "00:00"
+                  }`,
+                  studentname: studentEst.name,
+                  linkis: `https://datasoft.co.th/estimate/assessment/${
+                    studentEst.std_id
+                  }/${null}/${inputtypeestimation.id}/${
+                    message.work_id
+                  }?timestamp=${new Date().getTime()}`,
+                  casemsg: typecase,
+                };
+                // console.log(
+                //   "เรียกดู object ก่อนจะส่งแจ้งเตือน LINE OA ===>",
+                //   messageobject_line
+                // );
+                // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
+                //ยิงไปที่ PHP แทน
+                FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              }
             }
           );
           //เพิ่มการส่ง LINERnotify
-          Swal.fire({
-            icon: "success",
-            showConfirmButton: false,
-            showCancelButton: false,
-            timer: 720,
-          });
+          // Swal.fire({
+          //   icon: "success",
+          //   showConfirmButton: false,
+          //   showCancelButton: false,
+          //   timer: 720,
+          // });
         } else {
           Swal.fire({
             title: "กรุณากรอกข้อมูลให้ครบถ้วน",
@@ -1789,13 +1851,38 @@ const ContentWork = (props) => {
           docGetId("boxAddworkDoctor").style.display = "none";
           FetchControlWork.fetchAdddetailwork(objectprogressnote, token).then(
             (message) => {
-              console.log(message);
-              Swal.fire({
-                icon: "success",
-                showConfirmButton: false,
-                showCancelButton: false,
-                timer: 720,
-              });
+              if (message.status === true) {
+                //แจ้งเตือนหัวข้อผ่าน LINE OA
+                let messageobject_line = {
+                  topic: caseName,
+                  date: dateEst
+                    ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+                    : "--/--/----",
+                  timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+                    timeendest ? timeendest : "00:00"
+                  }`,
+                  studentname: studentEst.name,
+                  linkis: `https://datasoft.co.th/estimate/assessment/${
+                    studentEst.std_id
+                  }/${null}/${inputtypeestimation.id}/${
+                    message.work_id
+                  }?timestamp=${new Date().getTime()}`,
+                  casemsg: typecase,
+                };
+                // console.log(
+                //   "เรียกดู object ก่อนจะส่งแจ้งเตือน LINE OA ===>",
+                //   messageobject_line
+                // );
+                // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
+                //ยิงไปที่ PHP แทน
+                FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              }
+              // Swal.fire({
+              //   icon: "success",
+              //   showConfirmButton: false,
+              //   showCancelButton: false,
+              //   timer: 720,
+              // });
             }
           );
         } else {
@@ -1833,13 +1920,32 @@ const ContentWork = (props) => {
           docGetId("boxAddworkDoctor").style.display = "none";
           FetchControlWork.fetchAdddetailwork(objectteaching, token).then(
             (message) => {
-              console.log(message);
-              Swal.fire({
-                icon: "success",
-                showConfirmButton: false,
-                showCancelButton: false,
-                timer: 720,
-              });
+              //แจ้งเตือนหัวข้อผ่าน LINE OA
+              let messageobject_line = {
+                topic: caseName,
+                date: dateEst
+                  ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+                  : "--/--/----",
+                timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+                  timeendest ? timeendest : "00:00"
+                }`,
+                group: groupStudentest.name,
+                linkis: `https://datasoft.co.th/estimate/grouplistHL/${
+                  groupStudentest.id
+                }/${inputtypeestimation.id}/${
+                  message.work_id
+                }?timestamp=${new Date().getTime()}`,
+                casemsg: typecase,
+              };
+              // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
+              //ยิงไปที่ PHP แทน
+              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              // Swal.fire({
+              //   icon: "success",
+              //   showConfirmButton: false,
+              //   showCancelButton: false,
+              //   timer: 720,
+              // });
             }
           );
         } else {
@@ -1877,13 +1983,39 @@ const ContentWork = (props) => {
           docGetId("boxAddworkDoctor").style.display = "none";
           FetchControlWork.fetchAdddetailwork(objectwardround, token).then(
             (message) => {
-              console.log(message);
-              Swal.fire({
-                icon: "success",
-                showConfirmButton: false,
-                showCancelButton: false,
-                timer: 720,
-              });
+              // console.log("addDetailwork Datais ==>", message);
+              // console.log(
+              //   "ข้อมูลที่จะใช้เมื่อแจ้งเตือนรายการ",
+              //   caseName,
+              //   groupStudentest
+              // );
+              //แจ้งเตือนหัวข้อผ่าน LINE OA
+              let messageobject_line = {
+                topic: caseName,
+                date: dateEst
+                  ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+                  : "--/--/----",
+                timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+                  timeendest ? timeendest : "00:00"
+                }`,
+                group: groupStudentest.name,
+                linkis: `https://datasoft.co.th/estimate/grouplistHL/${
+                  groupStudentest.id
+                }/${inputtypeestimation.id}/${
+                  message.work_id
+                }?timestamp=${new Date().getTime()}`,
+                casemsg: typecase,
+              };
+              // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
+              //ยิงไปที่ PHP แทน
+              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+
+              // Swal.fire({
+              //   icon: "success",
+              //   showConfirmButton: false,
+              //   showCancelButton: false,
+              //   timer: 720,
+              // });
             }
           );
         } else {
@@ -1923,13 +2055,33 @@ const ContentWork = (props) => {
           docGetId("boxAddworkDoctor").style.display = "none";
           FetchControlWork.fetchAdddetailwork(objectcasetopicShow, token).then(
             (message) => {
-              console.log(message);
-              Swal.fire({
-                icon: "success",
-                showConfirmButton: false,
-                showCancelButton: false,
-                timer: 720,
-              });
+              //แจ้งเตือนหัวข้อผ่าน LINE OA
+              let messageobject_line = {
+                topic: caseName,
+                date: dateEst
+                  ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+                  : "--/--/----",
+                timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+                  timeendest ? timeendest : "00:00"
+                }`,
+                group: groupStudentest.name,
+                linkis: `https://datasoft.co.th/estimate/grouplistHL/${
+                  groupStudentest.id
+                }/${inputtypeestimation.id}/${
+                  message.work_id
+                }?timestamp=${new Date().getTime()}`,
+                casemsg: typecase,
+                casetopic: topicest.name,
+              };
+              // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
+              //ยิงไปที่ PHP แทน
+              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              // Swal.fire({
+              //   icon: "success",
+              //   showConfirmButton: false,
+              //   showCancelButton: false,
+              //   timer: 720,
+              // });
             }
           );
         } else {
@@ -1967,13 +2119,33 @@ const ContentWork = (props) => {
           docGetId("boxAddworkDoctor").style.display = "none";
           FetchControlWork.fetchAdddetailwork(objectcasecoop, token).then(
             (message) => {
-              console.log(message);
-              Swal.fire({
-                icon: "success",
-                showConfirmButton: false,
-                showCancelButton: false,
-                timer: 720,
-              });
+              //แจ้งเตือนหัวข้อผ่าน LINE OA
+              let messageobject_line = {
+                topic: caseName,
+                date: dateEst
+                  ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+                  : "--/--/----",
+                timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+                  timeendest ? timeendest : "00:00"
+                }`,
+                group: groupStudentest.name,
+                linkis: `https://datasoft.co.th/estimate/grouplistHL/${
+                  groupStudentest.id
+                }/${inputtypeestimation.id}/${
+                  message.work_id
+                }?timestamp=${new Date().getTime()}`,
+                casemsg: typecase,
+                casetopic: topicest.name,
+              };
+              // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
+              //ยิงไปที่ PHP แทน
+              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              // Swal.fire({
+              //   icon: "success",
+              //   showConfirmButton: false,
+              //   showCancelButton: false,
+              //   timer: 720,
+              // });
             }
           );
         } else {
@@ -2011,13 +2183,32 @@ const ContentWork = (props) => {
           docGetId("boxAddworkDoctor").style.display = "none";
           FetchControlWork.fetchAdddetailwork(objectflipped, token).then(
             (message) => {
-              console.log(message);
-              Swal.fire({
-                icon: "success",
-                showConfirmButton: false,
-                showCancelButton: false,
-                timer: 720,
-              });
+              //แจ้งเตือนหัวข้อผ่าน LINE OA
+              let messageobject_line = {
+                topic: caseName,
+                date: dateEst
+                  ? moment(dateEst).add(543, "year").format("DD/MM/YYYY")
+                  : "--/--/----",
+                timeis: `${timebeginest ? timebeginest : "00:00"} - ${
+                  timeendest ? timeendest : "00:00"
+                }`,
+                group: groupStudentest.name,
+                linkis: `https://datasoft.co.th/estimate/grouplistHL/${
+                  groupStudentest.id
+                }/${inputtypeestimation.id}/${
+                  message.work_id
+                }?timestamp=${new Date().getTime()}`,
+                casemsg: typecase,
+              };
+              // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
+              //ยิงไปที่ PHP แทน
+              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              // Swal.fire({
+              //   icon: "success",
+              //   showConfirmButton: false,
+              //   showCancelButton: false,
+              //   timer: 720,
+              // });
             }
           );
         } else {
@@ -2048,8 +2239,8 @@ const ContentWork = (props) => {
 
   const handleSubmitEditwork = (token) => {
     let casecode = editTypesheetwork.code;
-    console.log("case >>>", casecode);
-    console.log("look this null>>", editstudentEst);
+    // console.log("case >>>", casecode);
+    // console.log("look this null>>", editstudentEst);
     switch (casecode) {
       case "01": //ประเมินรายงาน
         console.log(">>>", editreportDateSendpatient);
@@ -2350,6 +2541,7 @@ const ContentWork = (props) => {
     clearCloseAddeditmodal();
     addDetailinputclear();
     editDetailinputclear();
+    setStatusClosemodal(false);
   }, [statusClosemodal]);
 
   return (

@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { requestOption } from "./fetchConfig";
 import { HttpConfig } from "./httpConfig";
 
@@ -75,7 +76,12 @@ const FetchControlWork = {
     let http = `${HttpConfig()}/work/add_work`;
 
     try {
-      await fetch(http, request);
+      return await fetch(http, request).then((res) =>
+        res.json().then((data) => {
+          console.log("datafetch adddetailwork", data);
+          return data;
+        })
+      );
       return "add success";
     } catch (error) {
       throw error;
@@ -244,30 +250,104 @@ const FetchControlWork = {
     }
   },
   //linenotify
-  fetchLinenotify: async function (message, tokenline) {
+  fetchLinenotify: async function (message, usertokenline) {
+    let url_host = "https://datasoft.co.th:4100";
+    let url_test = "http://127.0.0.1:3200";
     try {
       //เดี๋ยวจะต้องรับค่า tokenline มาเองนะจ๊ะ
-      let url_host = "https://datasoft.co.th:4100";
-      let url_test = "http://127.0.0.1:3200";
       let objectforsend = {
         // grptoken: "H7XB8a4YTbHjuLob0a7y5WYdh8o9ck2e1XrnFGNC66U",
-        grptoken: tokenline,
-        messagesend: message,
+        userIdline: usertokenline,
+        messageline: message,
+        tokenline:
+          "a1WgRpp1JcYxXzRvvIgFb1GRBwfsx1aWRO2jBjnAF+8ZkR5+bChmQ1+1sy4algb7EHqklOJyaReHBbHGyzC92sZ4WQJNz/Bg2Nzyu9QpFFu1JQ+QoNQMoBISvZykmw5XJ/bKoxnG/u43XzHIpKnUiQdB04t89/1O/w1cDnyilFU=",
       };
-      if (tokenline) {
+      if (usertokenline) {
         await fetch(
-          `${url_host}/proxyLineNotify`,
+          `${url_host}/sendmessageLINEoa_addworklist`,
           requestOption("POST", objectforsend)
         ).then((res) => {
-          if (res.status === 200) {
-            res.json().then((data) => {
-              console.log("notifyLineis", data);
+          if (res.ok) {
+            console.log("message LINE is send !!!");
+            Swal.fire({
+              icon: "success",
+              title: "สำเร็จ !!!",
+              text: "ส่งรายการแจ้งเตือนไปยัง LINE OA",
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 2500,
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "ไม่สำเร็จ !!!",
+              text: "ไม่สามารถส่งรายการแจ้งเตือนไปยัง LINE OA",
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 2500,
             });
           }
         });
       }
     } catch (error) {
       console.error("error fail LineNotify", error);
+      Swal.fire({
+        icon: "error",
+        title: "LineNotify Fail !!!",
+        text: `userIdLine : ${usertokenline}\n FetchURL : ${url_host} \n error : ${error}`,
+        showConfirmButton: true,
+        confirmButtonText: "ปิด",
+        showCancelButton: false,
+      });
+    }
+  },
+
+  //linenotify rest API PHP
+  fetchLinenotifyPHP: async function (message, usertokenline) {
+    let objectforsendPHP = {
+      tokenline:
+        "a1WgRpp1JcYxXzRvvIgFb1GRBwfsx1aWRO2jBjnAF+8ZkR5+bChmQ1+1sy4algb7EHqklOJyaReHBbHGyzC92sZ4WQJNz/Bg2Nzyu9QpFFu1JQ+QoNQMoBISvZykmw5XJ/bKoxnG/u43XzHIpKnUiQdB04t89/1O/w1cDnyilFU=",
+      messageline: message,
+      userIdline: usertokenline,
+    };
+    try {
+      if (usertokenline) {
+        await fetch(
+          `${HttpConfig()}/messageOA/addworkNotify`,
+          requestOption("POST", objectforsendPHP)
+        ).then((res) => {
+          if (res.ok) {
+            console.log("message LINE is send !!!");
+            Swal.fire({
+              icon: "success",
+              title: "สำเร็จ !!!",
+              text: "ส่งรายการแจ้งเตือนไปยัง LINE OA",
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 2500,
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "ไม่สำเร็จ !!!",
+              text: "ไม่สามารถส่งรายการแจ้งเตือนไปยัง LINE OA",
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 2500,
+            });
+          }
+        });
+      }
+    } catch (error) {
+      console.error("error fail LineNotify", error);
+      Swal.fire({
+        icon: "error",
+        title: "LineNotify Fail !!!",
+        text: `userIdLine : ${usertokenline}\n FetchURL : ${HttpConfig()} \n error : ${error}`,
+        showConfirmButton: true,
+        confirmButtonText: "ปิด",
+        showCancelButton: false,
+      });
     }
   },
 };

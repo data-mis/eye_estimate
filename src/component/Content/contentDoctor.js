@@ -12,7 +12,7 @@ import FetchControlDoctor from "../data/fetchControlDoctor";
 
 const ContentDoctor = (props) => {
   const cookie = new Cookies();
-  const usertoken = cookie.get("tokenEye");
+  const usertoken = cookie.get("studentEyeToken");
 
   const [statusCloseModal, setStatusCloseModal] = useState(false);
   const [statusDropttl, setStatusDropttl] = useState(false);

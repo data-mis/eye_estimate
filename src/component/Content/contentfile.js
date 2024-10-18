@@ -14,7 +14,7 @@ import Spinnerpage from "../config/spinnerpage";
 
 const ContentFile = (props) => {
   const cookies = new Cookies();
-  const usertoken = cookies.get("tokenEye");
+  const usertoken = cookies.get("studentEyeToken");
   const fileSelectPDF = useRef(null);
   const mobilefileSelectPDF = useRef(null);
   const [boxdroplistinfo, setBoxdroplistinfo] = useState(false);
