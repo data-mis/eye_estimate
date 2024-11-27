@@ -17,6 +17,7 @@ import {
   searchStudent,
 } from "../config/searchConfig";
 import Swal from "sweetalert2";
+import FetchControlGroup from "../data/fetchControlGroup";
 
 const ContentWork = (props) => {
   const docGetId = (id) => {
@@ -424,8 +425,33 @@ const ContentWork = (props) => {
                       key={index}
                       className="info-dropinfotype"
                       onClick={() => {
-                        setGroupStudentest({ id: data.id, name: data.name });
-                        handleOpenDropdown("dropInfogroup", "boxAgroup");
+                        //เพิ่มการเช็คนักศึกษาภายในกลุ่มนั้น ๆ!!!!
+                        FetchControlGroup.fetchGetGroupStudentingroup(
+                          { grp_id: data.id },
+                          usertoken
+                        ).then((res) => {
+                          if (res[0]) {
+                            setGroupStudentest({
+                              id: data.id,
+                              name: data.name,
+                            });
+                            handleOpenDropdown("dropInfogroup", "boxAgroup");
+                          } else {
+                            handleOpenDropdown("dropInfogroup", "boxAgroup");
+                            setGroupStudentest({
+                              id: "",
+                              name: "",
+                            });
+                            Swal.fire({
+                              icon: "info",
+                              title: "ไม่พบรายชื่อนักศึกษาแพทย์!!!",
+                              text: "ไม่พบรายชื่อนักศึกษาแพทย์ในกลุ่มดังกล่าว !!!",
+                              showConfirmButton: false,
+                              showCancelButton: false,
+                              timer: 1800,
+                            });
+                          }
+                        });
                       }}
                     >
                       <span>{`${data.name}`}</span>
@@ -1808,7 +1834,10 @@ const ContentWork = (props) => {
                 // );
                 // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
                 //ยิงไปที่ PHP แทน
-                FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+                FetchControlWork.fetchLinenotifyPHP(
+                  messageobject_line,
+                  tokenline
+                );
               }
             }
           );
@@ -1875,7 +1904,10 @@ const ContentWork = (props) => {
                 // );
                 // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
                 //ยิงไปที่ PHP แทน
-                FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+                FetchControlWork.fetchLinenotifyPHP(
+                  messageobject_line,
+                  tokenline
+                );
               }
               // Swal.fire({
               //   icon: "success",
@@ -1939,7 +1971,10 @@ const ContentWork = (props) => {
               };
               // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
               //ยิงไปที่ PHP แทน
-              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              FetchControlWork.fetchLinenotifyPHP(
+                messageobject_line,
+                tokenline
+              );
               // Swal.fire({
               //   icon: "success",
               //   showConfirmButton: false,
@@ -2008,7 +2043,10 @@ const ContentWork = (props) => {
               };
               // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
               //ยิงไปที่ PHP แทน
-              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              FetchControlWork.fetchLinenotifyPHP(
+                messageobject_line,
+                tokenline
+              );
 
               // Swal.fire({
               //   icon: "success",
@@ -2075,7 +2113,10 @@ const ContentWork = (props) => {
               };
               // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
               //ยิงไปที่ PHP แทน
-              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              FetchControlWork.fetchLinenotifyPHP(
+                messageobject_line,
+                tokenline
+              );
               // Swal.fire({
               //   icon: "success",
               //   showConfirmButton: false,
@@ -2139,7 +2180,10 @@ const ContentWork = (props) => {
               };
               // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
               //ยิงไปที่ PHP แทน
-              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              FetchControlWork.fetchLinenotifyPHP(
+                messageobject_line,
+                tokenline
+              );
               // Swal.fire({
               //   icon: "success",
               //   showConfirmButton: false,
@@ -2202,7 +2246,10 @@ const ContentWork = (props) => {
               };
               // FetchControlWork.fetchLinenotify(messageobject_line, tokenline);
               //ยิงไปที่ PHP แทน
-              FetchControlWork.fetchLinenotifyPHP(messageobject_line,tokenline)
+              FetchControlWork.fetchLinenotifyPHP(
+                messageobject_line,
+                tokenline
+              );
               // Swal.fire({
               //   icon: "success",
               //   showConfirmButton: false,

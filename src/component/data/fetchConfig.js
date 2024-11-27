@@ -3,8 +3,8 @@ export const requestOption = (method, objectBody, token) => {
     method: method,
     headers: {
       "content-type": "application/json",
-      "Cache-Control": "no-cache,no-store,must-revalidate",
-      Pragma: "no-cache",
+      // "Cache-Control": "no-cache,no-store,must-revalidate",
+      // Pragma: "no-cache",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(objectBody),
